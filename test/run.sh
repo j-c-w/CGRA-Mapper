@@ -1,1 +1,1 @@
-opt -load ../src/libmapperPass.so -mapperPass kernel.bc
+opt -load ../src/libmapperPass.so -mapperPass kernel.bc "$@"

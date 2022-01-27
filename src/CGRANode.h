@@ -57,13 +57,14 @@ class CGRANode {
     bool m_canLoad;
     bool m_canCall;
     bool m_supportComplex;
+	bool m_build_cgra;
     int** m_regs_duration;
     int** m_regs_timing;
     vector<list<pair<DFGNode*, int>>*> m_dfgNodesWithOccupyStatus;
 	list<OperationNumber> *operations;
 
   public:
-    CGRANode(int, int, int, list<OperationNumber>*);
+    CGRANode(int, int, int, list<OperationNumber>*, bool);
 //    CGRANode(int, int, int, int, int);
     void setRegConstraint(int);
     void setCtrlMemConstraint(int);

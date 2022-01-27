@@ -12,6 +12,7 @@
 #include <llvm/Pass.h>
 #include <llvm/Analysis/LoopInfo.h>
 #include <llvm/Analysis/LoopIterator.h>
+#include <llvm/Support/CommandLine.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string>
@@ -26,6 +27,8 @@ using namespace std;
 using json = nlohmann::json;
 
 void addDefaultKernels(map<string, list<int>*>*);
+
+cl::opt<bool> BuildCGRA("build", cl::desc("Build the CGRA from the code rather than mapping to it."));
 
 namespace {
 
@@ -154,7 +157,7 @@ namespace {
       //       heterogeneity is
       DFG* dfg = new DFG(t_F, targetLoops, targetEntireFunction, precisionAware,
                          heterogeneity, execLatency, pipelinedOpt);
-      CGRA* cgra = new CGRA(rows, columns, heterogeneity, additionalFunc, opmap);
+      CGRA* cgra = new CGRA(rows, columns, heterogeneity, additionalFunc, opmap, BuildCGRA);
       cgra->setRegConstraint(regConstraint);
       cgra->setCtrlMemConstraint(ctrlMemConstraint);
       cgra->setBypassConstraint(bypassConstraint);

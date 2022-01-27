@@ -24,7 +24,7 @@
 //  m_canLoad = false;
 //}
 
-CGRANode::CGRANode(int t_id, int t_x, int t_y, list<OperationNumber>* ops) {
+CGRANode::CGRANode(int t_id, int t_x, int t_y, list<OperationNumber>* ops, bool build_cgra) {
   m_id = t_id;
   m_currentCtrlMemItems = 0;
   m_disabled = false;
@@ -44,6 +44,7 @@ CGRANode::CGRANode(int t_id, int t_x, int t_y, list<OperationNumber>* ops) {
   m_regs_duration = NULL;
   m_regs_timing = NULL;
   operations = ops;
+  m_build_cgra = build_cgra;
 }
 
 // FIXME: should handle the case that the data is maintained in the registers
@@ -189,13 +190,13 @@ bool CGRANode::canSupport(DFGNode* t_opt) {
   }
 
 
-  if (constrain_operations) {
+  if (m_build_cgra) {
+	  return true;
+  } else {
 	  bool supported = std::find(operations->begin(), operations->end(), t_opt->getOperation()) != operations->end();
 	  cout << "Operation " << t_opt->getOperation() << "is supported: " << supported << endl;
 
 	  return supported;
-  } else {
-	  return true;
   }
 }
 

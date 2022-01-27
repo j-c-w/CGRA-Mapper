@@ -36,9 +36,9 @@ void kernel(float input[], float output[], float coefficient[])
 	  // CGRA Generated from this:
       //output[j] += 1.0 - (input[i]) * coefficient[i] * 13.0;
 	  // Fails on this:
-      // output[j] += 1.0 - (input[i]) * coefficient[i] / 13.0;
+      output[j] += 1.0 - (input[i]) * coefficient[i] / 13.0;
 	  // Apply rewrite rule X / Y == X * (1 / Y)
-      output[j] += 1.0 - (input[i]) * coefficient[i] * (1.0 / 13.0);
+      // output[j] += 1.0 - (input[i]) * coefficient[i] * (1.0 / 13.0);
     }
 //  }
 }

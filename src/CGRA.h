@@ -25,7 +25,7 @@ class CGRA {
     void disable();
 
   public:
-    CGRA(int, int, bool, map<string, list<int>*>*, map<int, map<int, list<OperationNumber>*>*>*);
+    CGRA(int, int, bool, map<string, list<int>*>*, map<int, map<int, list<OperationNumber>*>*>*, bool);
     CGRANode ***nodes;
     CGRALink **links;
     int getFUCount();

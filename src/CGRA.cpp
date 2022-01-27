@@ -13,7 +13,8 @@
 
 CGRA::CGRA(int t_rows, int t_columns, bool t_heterogeneity,
            map<string, list<int>*>* t_additionalFunc,
-		   map<int, map<int, list<OperationNumber>*>*> *operations) {
+		   map<int, map<int, list<OperationNumber>*>*> *operations,
+		   bool build_cgra) {
   m_rows = t_rows;
   m_columns = t_columns;
   m_FUCount = t_rows * t_columns;
@@ -27,7 +28,7 @@ CGRA::CGRA(int t_rows, int t_columns, bool t_heterogeneity,
   for(int i=0; i<t_rows; ++i) {
     nodes[i] = new CGRANode*[t_columns];
     for (int j=0; j<t_columns; ++j) {
-      nodes[i][j] = new CGRANode(node_id++, j, i, (*((*operations)[i]))[j]);
+      nodes[i][j] = new CGRANode(node_id++, j, i, (*((*operations)[i]))[j], build_cgra);
     }
   }
 
