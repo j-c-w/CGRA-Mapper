@@ -1,5 +1,5 @@
 {
-  "kernel"              : "_Z6kernelPfS_S_",
+  "kernel"              : "_Z6kernelPiS_S_",
   "targetFunction"      : false,
   "targetNested"        : true,
   "targetLoopsID"       : [0, 1],
@@ -7,7 +7,7 @@
   "row"                 : 4,
   "column"              : 4,
   "precisionAware"      : true,
-  "heterogeneity"       : false,
+  "heterogeneity"       : true,
   "isTrimmedDemo"       : true,
   "heuristicMapping"    : true,
   "bypassConstraint"    : 4,
@@ -15,13 +15,37 @@
   "ctrlMemConstraint"   : 200,
   "regConstraint"       : 8,
   "optLatency"          : {
-                            "load" : 2,
                             "store": 2
                           },
-  "optPipelined"        : ["load", "store"],
+  "optPipelined"        : ["store"],
   "additionalFunc"      : {
-                            "load" : [4],
                             "store": [4]
-                          }
+                          },
+  "operations": {
+	  "0": {
+		  "0": [],
+		  "1": [],
+		  "2": [],
+		  "3": []
+	  },
+	  "1": {
+		  "0": [],
+		  "1": ["getelementptrload", "icmpbr", "getelementptrload", "icmpbr", "getelementptrload", "icmpbr"],
+		  "2": ["add", "add", "add"],
+		  "3": ["getelementptrload", "getelementptrload", "getelementptrload"]
+	  },
+	  "2": {
+		  "0": [],
+		  "1": ["fsub", "fpext", "fsub", "fpext", "fsub", "fpext"],
+		  "2": ["phi", "fmul", "phi", "fmul", "phi", "fmul"],
+		  "3": ["fpext", "fpext"]
+	  },
+	  "3": {
+		  "0": ["store", "store"],
+		  "1": ["fadd", "fmul", "fadd", "fmul", "fadd", "fmul"],
+		  "2": ["fptrunc", "fptrunc"],
+		  "3": ["phi", "phi"]
+	  }
+  }
 }
 

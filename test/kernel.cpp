@@ -1,4 +1,5 @@
 #define NTAPS 32
+#include <math.h>
 
 float input[NTAPS];
 float output[NTAPS];
@@ -32,7 +33,12 @@ void kernel(float input[], float output[], float coefficient[])
 
 //  for(j=0; j< NTAPS; ++j) {
     for (i = 0; i < NTAPS; ++i) {
-      output[j] += input[i] * coefficient[i];
+	  // CGRA Generated from this:
+      //output[j] += 1.0 - (input[i]) * coefficient[i] * 13.0;
+	  // Fails on this:
+      // output[j] += 1.0 - (input[i]) * coefficient[i] / 13.0;
+	  // Apply rewrite rule X / Y == X * (1 / Y)
+      output[j] += 1.0 - (input[i]) * coefficient[i] * (1.0 / 13.0);
     }
 //  }
 }

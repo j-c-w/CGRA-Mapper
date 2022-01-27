@@ -9,3 +9,9 @@ build*/
 *.ll
 *.dot
 *.bc
+CMakeFiles/
+tags
+**/Makefile
+CMakeCache.txt
+src/libmapperPass.so
+**/*.cmake

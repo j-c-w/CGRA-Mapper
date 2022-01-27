@@ -15,6 +15,7 @@
 #include <list>
 #include <map>
 #include <fstream>
+#include "json.hpp"
 
 //#include <nlohmann/json.hpp>
 //using json = nlohmann::json;
@@ -335,7 +336,11 @@ map<CGRANode*, int>* Mapper::calculateCost(CGRA* t_cgra, DFG* t_dfg,
       map<CGRANode*, int>* tempPath = NULL;
       if (t_fu->canSupport(t_dfgNode))
         tempPath = dijkstra_search(t_cgra, t_dfg, t_II, pre,
-            t_dfgNode, t_fu);
+            t_dfgNode, t_fu); 
+	  else {
+		  cout << "Failed to support " << t_dfgNode->getOperation() << " on node " << t_fu->getX() << ", " << t_fu->getY() << endl;
+		  t_fu->print_operations();
+	  }
       if (tempPath == NULL)
         return NULL;
       else if ((*tempPath)[t_fu] >= m_maxMappingCycle) {
@@ -354,8 +359,11 @@ map<CGRANode*, int>* Mapper::calculateCost(CGRA* t_cgra, DFG* t_dfg,
   //       of it has been mapped.
   // TODO: should also consider the current config mem iterms.
   if (!isAnyPredDFGNodeMapped) {
-    if (!t_fu->canSupport(t_dfgNode))
+    if (!t_fu->canSupport(t_dfgNode)) {
+		  cout << "Failed to support " << t_dfgNode->getOperation() << " on node " << t_fu->getX() << ", " << t_fu->getY() << endl;
+		  t_fu->print_operations();
       return NULL;
+	}
     int cycle = 0;
     while (cycle < m_maxMappingCycle) {
       if (t_fu->canOccupy(t_dfgNode, cycle, t_II)) {
@@ -503,6 +511,14 @@ void Mapper::showSchedule(CGRA* t_cgra, DFG* t_dfg, int t_II,
   if (showCycleBoundary < 2 * t_II) {
     showCycleBoundary = 2 * t_II;
   }
+  // For outputing generated CGRA operations.
+  auto op_map = new map<string, map<string, list<string>*>*>();
+  for (int i = 0; i < t_cgra->getRows(); i ++) {
+	  (*op_map)[to_string(i)] = new map<string, list<string>*>;
+	  for (int j = 0; j < t_cgra->getRows(); j ++) {
+		  (*(*op_map)[to_string(i)])[to_string(j)] = new list<string>();
+	  }
+  }
   if (t_isStaticElasticCGRA)
     showCycleBoundary = t_dfg->getNodeCount();
   while (cycle <= showCycleBoundary) {
@@ -533,10 +549,11 @@ void Mapper::showSchedule(CGRA* t_cgra, DFG* t_dfg, int t_II,
         }
         string str_fu;
         if (fu_occupied) {
+			(*(*op_map)[to_string(i)])[to_string(j)]->push_front(dfgNode -> getOperation());
           if (t_dfg->getID(dfgNode) < 10)
-            str_fu = "[  " + to_string(dfgNode->getID()) + "  ]";
+            str_fu = "[  " + to_string(dfgNode->getID()) + " " + dfgNode->getOperation() + "  ]";
           else
-            str_fu = "[ " + to_string(dfgNode->getID()) + "  ]";
+            str_fu = "[ " + to_string(dfgNode->getID()) + " " + dfgNode->getOperation() + "  ]";
         } else {
           str_fu = "[     ]";
         }
@@ -605,6 +622,32 @@ void Mapper::showSchedule(CGRA* t_cgra, DFG* t_dfg, int t_II,
     ++cycle;
   }
   errs()<<"II: "<<t_II<<"\n";
+
+  cout << "Operations used were: " << endl;
+  cout << "{" << endl;
+  for (int i = 0; i < t_cgra->getRows(); i ++) {
+	  cout << "\"" << i << "\": {" << endl;
+	  for (int j = 0; j < t_cgra->getColumns(); j ++) {
+		  cout << "\"" << j << "\": [";
+		  bool isfirst = true;
+		  for (auto elem : *(*(*op_map)[to_string(i)])[to_string(j)]) {
+			  if (isfirst)
+				  cout << "\"" << elem << "\"";
+			  else
+				  cout << ", \"" << elem << "\"";
+			  isfirst = false;
+		  }
+		  if (j != t_cgra->getColumns() - 1)
+			  cout << "]," << endl;
+		  else
+			  cout << "]" << endl;
+	  }
+	  if (i != t_cgra->getRows() - 1)
+		  cout << "}," << endl;
+	  else
+		  cout << "}" << endl;
+  }
+  cout << "}" << endl;
 }
 
 void Mapper::generateJSON(CGRA* t_cgra, DFG* t_dfg, int t_II,

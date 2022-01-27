@@ -9,6 +9,7 @@
  */
 
 #include "DFGNode.h"
+#include "OperationMap.hpp"
 
 DFGNode::DFGNode(int t_id, bool t_precisionAware, Instruction* t_inst,
                  StringRef t_stringRef) {
@@ -500,4 +501,9 @@ void DFGNode::removeConst() {
 
 int DFGNode::getNumConst() {
   return m_numConst;
+}
+
+OperationNumber DFGNode::getOperation() {
+	return m_opcodeName;
+	// return std::string("fadd");
 }

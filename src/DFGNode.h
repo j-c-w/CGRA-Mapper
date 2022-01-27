@@ -22,6 +22,7 @@
 #include <iostream>
 
 #include "DFGEdge.h"
+#include "OperationMap.hpp"
 
 using namespace llvm;
 using namespace std;
@@ -123,6 +124,7 @@ class DFGNode {
     void setPipelinable();
     bool isPipelinable();
     bool shareFU(DFGNode*);
+	OperationNumber getOperation();
 };
 
 #endif

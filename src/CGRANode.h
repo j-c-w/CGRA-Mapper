@@ -13,6 +13,7 @@
 
 #include "CGRALink.h"
 #include "DFGNode.h"
+#include "OperationMap.hpp"
 #include <iostream>
 //#include <llvm/IR/Function.h>
 //#include <llvm/IR/Value.h>
@@ -59,9 +60,10 @@ class CGRANode {
     int** m_regs_duration;
     int** m_regs_timing;
     vector<list<pair<DFGNode*, int>>*> m_dfgNodesWithOccupyStatus;
+	list<OperationNumber> *operations;
 
   public:
-    CGRANode(int, int, int);
+    CGRANode(int, int, int, list<OperationNumber>*);
 //    CGRANode(int, int, int, int, int);
     void setRegConstraint(int);
     void setCtrlMemConstraint(int);
@@ -108,6 +110,7 @@ class CGRANode {
     void allocateReg(int, int, int, int);
     int* getRegsAllocation(int);
     void disable();
+	void print_operations();
 };
 
 #endif

@@ -13,10 +13,13 @@
 #include <llvm/Analysis/LoopInfo.h>
 #include <llvm/Analysis/LoopIterator.h>
 #include <stdio.h>
+#include <stdlib.h>
+#include <string>
 #include <fstream>
 #include <iostream>
 #include "json.hpp"
 #include "Mapper.h"
+#include "OperationMap.hpp"
 
 using namespace llvm;
 using namespace std;
@@ -58,6 +61,7 @@ namespace {
       map<string, int>* execLatency = new map<string, int>();
       list<string>* pipelinedOpt    = new list<string>();
       map<string, list<int>*>* additionalFunc = new map<string, list<int>*>();
+	  map<int, map<int, list<OperationNumber>*>*>* opmap = new map<int, map<int, list<OperationNumber>*>*>();
 
       // Set the target function and loop.
       map<string, list<int>*>* functionWithLoop = new map<string, list<int>*>();
@@ -81,6 +85,26 @@ namespace {
           // cout<<"add index "<<loops[i]<<endl;
           (*functionWithLoop)[param["kernel"]]->push_back(loops[i]);
         }
+
+		// load ops.
+	  for (int row = 0; row < rows; row ++) {
+		  auto submap = new map<int, list<OperationNumber>*>();
+		  for (int col = 0; col < columns; col ++) {
+			  list<OperationNumber> *opslist = new list<OperationNumber>();
+			  /* cout << "Adding row " << endl; */
+			  /* cout << std::to_string(row) << endl; */
+			  /* cout << std::to_string(col) << endl; */
+			  /* cout << param["operations"][std::to_string(row)] << endl; */
+			  for (auto item : param["operations"][std::to_string(row)][std::to_string(col)].items()) {
+				  opslist->push_front(item.value());
+				  std::cout << item.value() << "added" << endl;
+			  }
+			  ( *submap )[col] = opslist;
+		  }
+
+		  (*opmap)[row] = submap;
+	  }
+
 
         // Configuration for customizable CGRA.
         rows                  = param["row"];
@@ -130,7 +154,7 @@ namespace {
       //       heterogeneity is
       DFG* dfg = new DFG(t_F, targetLoops, targetEntireFunction, precisionAware,
                          heterogeneity, execLatency, pipelinedOpt);
-      CGRA* cgra = new CGRA(rows, columns, heterogeneity, additionalFunc);
+      CGRA* cgra = new CGRA(rows, columns, heterogeneity, additionalFunc, opmap);
       cgra->setRegConstraint(regConstraint);
       cgra->setCtrlMemConstraint(ctrlMemConstraint);
       cgra->setBypassConstraint(bypassConstraint);

@@ -25,6 +25,7 @@
 
 #include "DFGNode.h"
 #include "DFGEdge.h"
+#include "OperationMap.hpp"
 
 using namespace llvm;
 using namespace std;
@@ -37,6 +38,7 @@ class DFG {
     bool m_precisionAware;
     list<DFGNode*>* m_orderedNodes;
     list<Loop*>* m_targetLoops;
+	Function &m_function;
 
     //edges of data flow
     list<DFGEdge*> m_DFGEdges;
@@ -103,4 +105,5 @@ class DFG {
     void showOpcodeDistribution();
     void generateDot(Function&, bool);
     void generateJSON();
+	OperationNumber getOperation();
 };

@@ -13,7 +13,7 @@
 
 DFG::DFG(Function& t_F, list<Loop*>* t_loops, bool t_targetFunction,
          bool t_precisionAware, bool t_heterogeneity,
-         map<string, int>* t_execLatency, list<string>* t_pipelinedOpt) {
+         map<string, int>* t_execLatency, list<string>* t_pipelinedOpt): m_function(t_F) {
   m_num = 0;
   m_targetFunction = t_targetFunction;
   m_targetLoops = t_loops;
@@ -759,6 +759,7 @@ void DFG::initExecLatency(map<string, int>* t_execLatency) {
     targetOpt.insert(iter->first);
   }
   for (DFGNode* node: nodes) {
+	  cout << "Looking at node " << node->getOpcodeName() << "\n";
     if (t_execLatency->find(node->getOpcodeName()) != t_execLatency->end()) {
       string opcodeName = node->getOpcodeName();
       node->setExecLatency((*t_execLatency)[opcodeName]);
@@ -1376,5 +1377,12 @@ void DFG::detectMemDataDependency() {
 // TODO: Certain opcode can be eliminated, such as bitcast, etc.
 void DFG::eliminateOpcode(string t_opcodeName) {
 
+}
+
+OperationNumber DFG::getOperation() {
+  /// return IntAdd;
+  // return std::string("fadd");
+  // cout<<"*** current function: "<<m_function.getName().data()<<"\n";
+  return m_function.getName().data();
 }
 

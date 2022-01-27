@@ -9,6 +9,7 @@
  */
 
 #include "CGRANode.h"
+#include "OperationMap.hpp"
 #include <stdio.h>
 
 #define SINGLE_OCCUPY     0 // A single-cycle opt is in the FU
@@ -23,7 +24,7 @@
 //  m_canLoad = false;
 //}
 
-CGRANode::CGRANode(int t_id, int t_x, int t_y) {
+CGRANode::CGRANode(int t_id, int t_x, int t_y, list<OperationNumber>* ops) {
   m_id = t_id;
   m_currentCtrlMemItems = 0;
   m_disabled = false;
@@ -42,7 +43,7 @@ CGRANode::CGRANode(int t_id, int t_x, int t_y) {
   // m_fuOccupied = new int[1];
   m_regs_duration = NULL;
   m_regs_timing = NULL;
-
+  operations = ops;
 }
 
 // FIXME: should handle the case that the data is maintained in the registers
@@ -186,7 +187,16 @@ bool CGRANode::canSupport(DFGNode* t_opt) {
       (t_opt->hasCombined() and !supportComplex() )){
     return false;
   }
-  return true;
+
+
+  if (constrain_operations) {
+	  bool supported = std::find(operations->begin(), operations->end(), t_opt->getOperation()) != operations->end();
+	  cout << "Operation " << t_opt->getOperation() << "is supported: " << supported << endl;
+
+	  return supported;
+  } else {
+	  return true;
+  }
 }
 
 bool CGRANode::canOccupy(DFGNode* t_opt, int t_cycle, int t_II) {
@@ -464,4 +474,11 @@ void CGRANode::disable() {
   for (CGRALink* link: m_outLinks) {
     link->disable();
   }
+}
+
+void CGRANode::print_operations() {
+	for (auto op : *operations) {
+		std::cout << op << ", ";
+	}
+	std::cout << std::endl;
 }
