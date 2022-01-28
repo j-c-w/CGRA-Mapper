@@ -1,5 +1,23 @@
-<pre>
-========================================================
+Jackson's Additional Steps:
+
+Building:
+
+ - Get nix (https://nixos.org/)
+ - nix-shell # fetches dependencies
+ - mkdir build; cd build
+ - cmake ..
+ - make
+
+Running example:
+ - cd test
+ - vim kernel.cpp # edit the loop to contain whatever.
+ - ./run.sh --build # builds a cgra for that loop.  Copy the JSON part of the output into the param.json file under the "operation": ... field
+ - vim kernel.cpp # edit this again to change it
+ - ./run.sh # without build, tries to compile the loop to that particular cgra configuration.
+ - If run.sh 'fails', it won't terminate.
+ - Apply some rewrite rules by hand and try and make it work :)
+
+<pre> ========================================================
 
   _____________  ___     __  ___                      
  / ___/ ___/ _ \/ _ |   /  |/  /__ ____  ___  ___ ____
