@@ -22,5 +22,5 @@ shift
 for file in $(find $1 -name "loop*.c"); do
 	cp $file kernel.cpp
 	./compile.sh
-	(timeout 2 ./run.sh && echo "Succeeded in building $file") || echo "Failed to build $file"
+	(timeout 2 ./run.sh && echo "Succeeded in building $file") || echo "Failed to build $file for reason $?"
 done
