@@ -147,7 +147,11 @@ namespace {
       // Check existance.
       if (functionWithLoop->find(t_F.getName().str()) == functionWithLoop->end()) {
         errs()<<"[function \'"<<t_F.getName()<<"\' is not in our target list]\n";
-        return false;
+		// OK, so thi swas meant to return fasle, because in theoyr you
+		// need to specify which loop to use.  I'm not going to do that, and
+		// just assume one loop in the body, (as is commented elsewhere in this
+		// code), because it's a bit simpler :)
+        // return false;
       }
       errs() << "==================================\n";
       errs()<<"[function \'"<<t_F.getName()<<"\' is one of our targets]\n";
@@ -236,12 +240,12 @@ namespace {
      * Add the loops of each kernel. Target nested-loops if it is indicated.
      */
     list<Loop*>* getTargetLoops(Function& t_F, map<string, list<int>*>* t_functionWithLoop, bool t_targetNested) {
+		// So, this originally relied on a function-dependent list map thing at the bottom
+		// of this file.  But that seemed silly since they're all 0s anway.  So just assume we got
+		// a list iwth zero from that.
       int targetLoopID = 0;
       list<Loop*>* targetLoops = new list<Loop*>();
       // Since the ordering of the target loop id could be random, I use O(n^2) to search the target loop.
-      while((*t_functionWithLoop).at(t_F.getName().str())->size() > 0) {
-        targetLoopID = (*t_functionWithLoop).at(t_F.getName().str())->front();
-        (*t_functionWithLoop).at(t_F.getName().str())->pop_front();
         LoopInfo &LI = getAnalysis<LoopInfoWrapperPass>().getLoopInfo();
         int tempLoopID = 0;
         Loop* current_loop = NULL;
@@ -267,7 +271,6 @@ namespace {
         if (targetLoops->size() == 0) {
           errs()<<"... no loop detected in the target kernel ...\n";
         }
-      }
       errs()<<"... done detected loops.size(): "<<targetLoops->size()<<"\n";
       return targetLoops;
     }

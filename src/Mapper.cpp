@@ -623,31 +623,35 @@ void Mapper::showSchedule(CGRA* t_cgra, DFG* t_dfg, int t_II,
   }
   errs()<<"II: "<<t_II<<"\n";
 
-  cout << "Operations used were: " << endl;
-  cout << "{" << endl;
+  ofstream ofile;
+  ofile.open("operations.json", std::ofstream::out | std::ofstream::trunc);
+
+  cout << "Operations used written to file operations.json" << endl;
+  ofile << "{" << endl;
   for (int i = 0; i < t_cgra->getRows(); i ++) {
-	  cout << "\"" << i << "\": {" << endl;
+	  ofile << "\"" << i << "\": {" << endl;
 	  for (int j = 0; j < t_cgra->getColumns(); j ++) {
-		  cout << "\"" << j << "\": [";
+		  ofile << "\"" << j << "\": [";
 		  bool isfirst = true;
 		  for (auto elem : *(*(*op_map)[to_string(i)])[to_string(j)]) {
 			  if (isfirst)
-				  cout << "\"" << elem << "\"";
+				  ofile << "\"" << elem << "\"";
 			  else
-				  cout << ", \"" << elem << "\"";
+				  ofile << ", \"" << elem << "\"";
 			  isfirst = false;
 		  }
 		  if (j != t_cgra->getColumns() - 1)
-			  cout << "]," << endl;
+			  ofile << "]," << endl;
 		  else
-			  cout << "]" << endl;
+			  ofile << "]" << endl;
 	  }
 	  if (i != t_cgra->getRows() - 1)
-		  cout << "}," << endl;
+		  ofile << "}," << endl;
 	  else
-		  cout << "}" << endl;
+		  ofile << "}" << endl;
   }
-  cout << "}" << endl;
+  ofile << "}" << endl;
+  ofile.close();
 }
 
 void Mapper::generateJSON(CGRA* t_cgra, DFG* t_dfg, int t_II,
