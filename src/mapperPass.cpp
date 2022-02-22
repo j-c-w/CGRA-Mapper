@@ -199,36 +199,33 @@ namespace {
       }
       // Heuristic algorithm (hill climbing) to get a valid mapping within
       // a acceptable II.
-      bool success = false;
-      if (!isStaticElasticCGRA) {
-        errs() << "==================================\n";
-        if (heuristicMapping) {
-          errs() << "[heuristic]\n";
-          II = mapper->heuristicMap(cgra, dfg, II, isStaticElasticCGRA);
-        } else {
-          errs() << "[exhaustive]\n";
-          II = mapper->exhaustiveMap(cgra, dfg, II, isStaticElasticCGRA);
-        }
-      }
+	  // Jackson's Code Starts Here:
+	  // Get the winning DFG.
+	  DFG *winning_dfg;
+
+	  list<DFG> *generated_dfgs = rewrite_for_CGRA(cgra, dfg);
+
+	  for (DFG *dfg : generated_dfgs) {
+		  int this_II = mapper->heuristicMap(cgra, dfg, II, isStaticElasticCGRA);
+
+		  if (this_II < min_II && this_II > 0) {
+			  min_II = this_II;
+			  winning_dfg = dfg;
+		  }
+	  }
 
       // Partially exhaustive search to try to map the DFG onto
       // the static elastic CGRA.
-
-      if (isStaticElasticCGRA and !success) {
-        errs() << "==================================\n";
-        errs() << "[exhaustive]\n";
-        II = mapper->exhaustiveMap(cgra, dfg, II, isStaticElasticCGRA);
-      }
 
       // Show the mapping and routing results with JSON output.
       if (II == -1)
         errs() << "[fail]\n";
       else {
-        mapper->showSchedule(cgra, dfg, II, isStaticElasticCGRA);
+        mapper->showSchedule(cgra, winning_dfg, II, isStaticElasticCGRA);
         errs() << "==================================\n";
         errs() << "[success]\n";
         errs() << "==================================\n";
-        mapper->generateJSON(cgra, dfg, II, isStaticElasticCGRA);
+        mapper->generateJSON(cgra, winning_dfg, II, isStaticElasticCGRA);
         errs() << "[Output Json]\n";
       }
       errs() << "==================================\n";

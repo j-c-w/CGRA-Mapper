@@ -186,6 +186,13 @@ bool DFGNode::isAdd() {
   return false;
 }
 
+bool DFGNode::isSub() {
+	if (m_opcodeName.compare("sub") == 0 or
+			m_opcodeName.compare("fsub") == 0)
+		return true;
+	return false;
+}
+
 bool DFGNode::isCmp() {
   if (m_opcodeName.compare("icmp") == 0 or m_opcodeName.compare("cmp") == 0)
     return true;
