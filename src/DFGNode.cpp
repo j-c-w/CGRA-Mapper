@@ -9,7 +9,7 @@
  */
 
 #include "DFGNode.h"
-#include "OperationMap.hpp"
+#include "OperationMap.h"
 
 DFGNode::DFGNode(int t_id, bool t_precisionAware, Instruction* t_inst,
                  StringRef t_stringRef) {
@@ -36,6 +36,12 @@ DFGNode::DFGNode(int t_id, bool t_precisionAware, Instruction* t_inst,
   m_isPredicater = false;
   m_patternNodes = new list<DFGNode*>();
   initType();
+}
+
+DFGNode::setInstruction(Instruction *inst, StringRef name) {
+	m_opcodeName = inst->getOpcodeName();
+	m_stringRef = name;
+	m_inst = inst;
 }
 
 int DFGNode::getID() {
@@ -476,6 +482,18 @@ void DFGNode::cutEdges() {
   if (m_succNodes != NULL) {
     m_succNodes = NULL;
   }
+}
+
+DFGEdge *DFGNode::getPredEdge(int index) {
+	auto it = m_inEdges.begin();
+	std::advance(it, index);
+	return *it;
+}
+
+DFGEdge *DFGNode::setPredEdge(int index, DFGEdge *edge) {
+	auto it = m_inEdges.begin();
+	std::advance(it, index);
+	*it = edge;
 }
 
 bool DFGNode::isSuccessorOf(DFGNode* t_dfgNode) {

@@ -13,7 +13,7 @@
 
 #include "CGRALink.h"
 #include "DFGNode.h"
-#include "OperationMap.hpp"
+#include "OperationMap.h"
 #include <iostream>
 //#include <llvm/IR/Function.h>
 //#include <llvm/IR/Value.h>

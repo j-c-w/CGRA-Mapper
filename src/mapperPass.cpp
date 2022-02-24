@@ -20,7 +20,8 @@
 #include <iostream>
 #include "json.hpp"
 #include "Mapper.h"
-#include "OperationMap.hpp"
+#include "OperationMap.h"
+#include "Rewriter.h"
 
 using namespace llvm;
 using namespace std;
@@ -203,9 +204,10 @@ namespace {
 	  // Get the winning DFG.
 	  DFG *winning_dfg;
 
-	  list<DFG> *generated_dfgs = rewrite_for_CGRA(cgra, dfg);
+	  list<DFG*> *generated_dfgs = rewrite_for_CGRA(cgra, dfg);
 
-	  for (DFG *dfg : generated_dfgs) {
+	  int min_II = -1;
+	  for (DFG *dfg : *generated_dfgs) {
 		  int this_II = mapper->heuristicMap(cgra, dfg, II, isStaticElasticCGRA);
 
 		  if (this_II < min_II && this_II > 0) {
@@ -213,6 +215,8 @@ namespace {
 			  winning_dfg = dfg;
 		  }
 	  }
+	  II = min_II;
+	  /// end jackson's code.
 
       // Partially exhaustive search to try to map the DFG onto
       // the static elastic CGRA.

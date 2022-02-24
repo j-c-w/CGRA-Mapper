@@ -22,7 +22,7 @@
 #include <iostream>
 
 #include "DFGEdge.h"
-#include "OperationMap.hpp"
+#include "OperationMap.h"
 
 using namespace llvm;
 using namespace std;
@@ -79,6 +79,7 @@ class DFGNode {
     bool isBranch();
     bool isPhi();
     bool isAdd();
+    bool isSub();
     bool isMul();
     bool isCmp();
     bool isBitcast();
@@ -87,11 +88,14 @@ class DFGNode {
     bool hasCombined();
     void setCombine();
     void addPatternPartner(DFGNode*);
+	void setInstruction(Instruction *, StringRef) {
     Instruction* getInst();
     StringRef getStringRef();
     string getOpcodeName();
     list<DFGNode*>* getPredNodes();
     list<DFGNode*>* getSuccNodes();
+	DFGEdge *getPredEdge(int);
+	DFGEdge *setPredEdge(int, DFGEdge);
     bool isSuccessorOf(DFGNode*);
     bool isPredecessorOf(DFGNode*);
     bool isOneOfThem(list<DFGNode*>*);

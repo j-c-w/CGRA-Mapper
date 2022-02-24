@@ -9,7 +9,7 @@
  */
 
 #include "CGRA.h"
-#include "OperationMap.hpp"
+#include "OperationMap.h"
 
 CGRA::CGRA(int t_rows, int t_columns, bool t_heterogeneity,
            map<string, list<int>*>* t_additionalFunc,

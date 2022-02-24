@@ -17,6 +17,9 @@
 #include <fstream>
 #include "json.hpp"
 
+// todo --- what should this be?
+#define MAX_II_DEPTH 20
+
 //#include <nlohmann/json.hpp>
 //using json = nlohmann::json;
 
@@ -1257,6 +1260,12 @@ int Mapper::heuristicMap(CGRA* t_cgra, DFG* t_dfg, int t_II,
     else if (t_isStaticElasticCGRA) {
       break;
     }
+
+	// Break from loop if we have done too many.
+	if (t_II > MAX_II_DEPTH){
+
+		break;
+	}
     ++t_II;
   }
   if (!fail)

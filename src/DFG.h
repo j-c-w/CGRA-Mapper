@@ -25,7 +25,7 @@
 
 #include "DFGNode.h"
 #include "DFGEdge.h"
-#include "OperationMap.hpp"
+#include "OperationMap.h"
 
 using namespace llvm;
 using namespace std;

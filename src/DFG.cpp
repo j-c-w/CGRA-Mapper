@@ -11,6 +11,42 @@
 #include <fstream>
 #include "DFG.h"
 
+DFG::DFG(DFG &old) {
+	m_num = old.num;
+	m_targetFunction = old.m_targetFunction;
+
+	m_targetLoops = old.m_targetLoops;
+	m_orderedNodes = old.m_orderedNodes;
+	m_CDFGFused = old.m_CDFGFused;
+	m_cycleNodeLists = new list<list<DFGNode*>*>();
+	m_precisionAware = t_precisionAware;
+
+	// TODO --- construct from the other DFG's
+	// node list, not the random crap here.
+	construct(old.m_targetFunction);
+  // if (t_heterogeneity) { I added this function, (JCW) and we
+	// always use heterogeneity :)
+    calculateCycles();
+//    combine("phi", "add");
+    combine("and", "xor");
+//    combine("br", "phi");
+//    combine("add", "icmp");
+//    combine("xor", "add");
+    combineCmpBranch();
+    combine("icmp", "br");
+    combine("getelementptr", "load");
+    tuneForPattern();
+
+//    calculateCycles();
+////    combine("icmp", "br");
+//    combine("xor", "add");
+//    tuneForPattern();
+  // }
+//  trimForStandalone();
+  initExecLatency(t_execLatency);
+  initPipelinedOpt(t_pipelinedOpt);
+}
+
 DFG::DFG(Function& t_F, list<Loop*>* t_loops, bool t_targetFunction,
          bool t_precisionAware, bool t_heterogeneity,
          map<string, int>* t_execLatency, list<string>* t_pipelinedOpt): m_function(t_F) {
@@ -1385,4 +1421,3 @@ OperationNumber DFG::getOperation() {
   // cout<<"*** current function: "<<m_function.getName().data()<<"\n";
   return m_function.getName().data();
 }
-

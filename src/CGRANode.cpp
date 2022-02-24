@@ -9,7 +9,7 @@
  */
 
 #include "CGRANode.h"
-#include "OperationMap.hpp"
+#include "OperationMap.h"
 #include <stdio.h>
 
 #define SINGLE_OCCUPY     0 // A single-cycle opt is in the FU
