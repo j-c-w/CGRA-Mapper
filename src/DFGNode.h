@@ -88,7 +88,7 @@ class DFGNode {
     bool hasCombined();
     void setCombine();
     void addPatternPartner(DFGNode*);
-	void setInstruction(Instruction *, StringRef) {
+	void setInstruction(Instruction *, StringRef);
     Instruction* getInst();
     StringRef getStringRef();
     string getOpcodeName();

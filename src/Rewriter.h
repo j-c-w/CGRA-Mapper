@@ -25,10 +25,17 @@ class SubToAddNeg: RewriteRule {
 				// Replace this node with an add node and change
 				// the children.
 
+				// Clearly, this is not a full llvm instruction def --- the question is, is it good enough?
+				// I don't think we pass anything back to LLVM, so maybe this is enough?
+				Instruction *addInstruction = new Instruction(llvm::Instruction::Add, 0, nullptr, 0, nullptr);
+
+				Instruction *mulInstruction = new Instruction(llvm::Instruction::Mul, 0, nullptr, 0, nullptr);
+				Instruction *minusOneInstruction = new Instruction(llvm::IntegerType(32), 0, nullptr, 0, nullptr);
+
 				// Not really sure how to modify this stuff?
-				DFGNode *new_node = new DFGNode(inserted_ids++, false, llvm::Instruction::Mul, "Mul");
-				DFGNode *minus_one = new DFGNode(inserted_ids++, false, llvm::Instruction::Mul, "Mul");
-				dfgNode->setInstruction(llvm::Instruction::Add, "Add");
+				DFGNode *new_node = new DFGNode(inserted_ids++, false, mulInstruction, "Mul");
+				DFGNode *minus_one = new DFGNode(inserted_ids++, false, minusOneInstruction, "-1");
+				dfgNode->setInstruction(addInstruction, "Add");
 				bool is_first = true;
 
 				// Splice this in:
