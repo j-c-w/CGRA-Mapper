@@ -25,6 +25,7 @@ add_library(mapperPass MODULE
     CGRA.cpp
     Mapper.h
     Mapper.cpp
+	Rewriter.cpp
 )
 
 # Use C++11 to compile our pass (i.e., supply -std=c++11).
