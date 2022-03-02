@@ -68,6 +68,7 @@ class DFGNode {
     int getID();
     void setID(int);
     void setLevel(int);
+	string asString();
     int getLevel();
     bool isMapped();
     void setMapped();

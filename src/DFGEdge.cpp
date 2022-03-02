@@ -25,6 +25,16 @@ DFGEdge::DFGEdge(int t_id, DFGNode* t_src, DFGNode* t_dst, bool t_isCtrlEdge) {
   m_src->addPredicatee(m_dst);
 }
 
+std::string DFGEdge::asString() {
+	std::string result = std::string("(");
+	result.append(getSrc()->getOpcodeName());
+	result.append(", ");
+	result.append(getDst()->getOpcodeName());
+	result.append(")");
+
+	return result;
+}
+
 void DFGEdge::setID(int t_id) {
   m_id = t_id;
 }

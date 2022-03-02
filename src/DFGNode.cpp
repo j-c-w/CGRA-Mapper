@@ -38,7 +38,7 @@ DFGNode::DFGNode(int t_id, bool t_precisionAware, Instruction* t_inst,
   initType();
 }
 
-DFGNode::setInstruction(Instruction *inst, StringRef name) {
+void DFGNode::setInstruction(Instruction *inst, StringRef name) {
 	m_opcodeName = inst->getOpcodeName();
 	m_stringRef = name;
 	m_inst = inst;
@@ -46,6 +46,20 @@ DFGNode::setInstruction(Instruction *inst, StringRef name) {
 
 int DFGNode::getID() {
   return m_id;
+}
+
+std::string DFGNode::asString() {
+	std::string node_string =
+		"Node " + m_opcodeName + " with edges (in: ";
+	for (DFGEdge *e : m_inEdges) {
+		node_string.append(e->asString());
+	}
+	node_string.append("), (out: ");
+	for (DFGEdge *e : m_outEdges) {
+		node_string.append(e->asString());
+	}
+	node_string.append(")");
+	return node_string;
 }
 
 void DFGNode::setID(int t_id) {
@@ -488,12 +502,6 @@ DFGEdge *DFGNode::getPredEdge(int index) {
 	auto it = m_inEdges.begin();
 	std::advance(it, index);
 	return *it;
-}
-
-DFGEdge *DFGNode::setPredEdge(int index, DFGEdge *edge) {
-	auto it = m_inEdges.begin();
-	std::advance(it, index);
-	*it = edge;
 }
 
 bool DFGNode::isSuccessorOf(DFGNode* t_dfgNode) {

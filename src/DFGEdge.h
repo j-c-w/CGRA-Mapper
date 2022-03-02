@@ -15,6 +15,7 @@
 #include <llvm/Support/FileSystem.h>
 
 #include "DFGNode.h"
+#include <string>
 
 using namespace llvm;
 
@@ -38,6 +39,7 @@ class DFGEdge
     void connect(DFGNode*, DFGNode*);
     DFGNode* getConnectedNode(DFGNode*);
     bool isCtrlEdge();
+	std::string asString();
 };
 
 #endif

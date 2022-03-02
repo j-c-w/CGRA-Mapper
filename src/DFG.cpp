@@ -11,19 +11,22 @@
 #include <fstream>
 #include "DFG.h"
 
-DFG::DFG(DFG &old) {
-	m_num = old.num;
+DFG::DFG(DFG &old): m_function(old.m_function) {
+	m_num = old.m_num;
 	m_targetFunction = old.m_targetFunction;
 
 	m_targetLoops = old.m_targetLoops;
 	m_orderedNodes = old.m_orderedNodes;
 	m_CDFGFused = old.m_CDFGFused;
 	m_cycleNodeLists = new list<list<DFGNode*>*>();
-	m_precisionAware = t_precisionAware;
+	m_precisionAware = old.m_precisionAware;
+
+	m_initExecLatency = old.m_initExecLatency;
+	m_initPipelinedOpt = old.m_initPipelinedOpt;
 
 	// TODO --- construct from the other DFG's
 	// node list, not the random crap here.
-	construct(old.m_targetFunction);
+	construct(old.m_function);
   // if (t_heterogeneity) { I added this function, (JCW) and we
 	// always use heterogeneity :)
     calculateCycles();
@@ -43,8 +46,8 @@ DFG::DFG(DFG &old) {
 //    tuneForPattern();
   // }
 //  trimForStandalone();
-  initExecLatency(t_execLatency);
-  initPipelinedOpt(t_pipelinedOpt);
+  initExecLatency(m_initExecLatency);
+  initPipelinedOpt(m_initPipelinedOpt);
 }
 
 DFG::DFG(Function& t_F, list<Loop*>* t_loops, bool t_targetFunction,
@@ -57,6 +60,8 @@ DFG::DFG(Function& t_F, list<Loop*>* t_loops, bool t_targetFunction,
   m_CDFGFused = false;
   m_cycleNodeLists = new list<list<DFGNode*>*>();
   m_precisionAware = t_precisionAware;
+  m_initPipelinedOpt = t_pipelinedOpt;
+  m_initExecLatency = t_execLatency;
 
   construct(t_F);
 //  tuneForBranch();

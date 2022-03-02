@@ -44,6 +44,10 @@ class DFG {
     list<DFGEdge*> m_DFGEdges;
     list<DFGEdge*> m_ctrlEdges;
 
+	// Just some stuff to allow cloning
+	list<string> *m_initPipelinedOpt;
+	map<string, int> *m_initExecLatency;
+
     string changeIns2Str(Instruction* ins);
     //get value's name or inst's content
     StringRef getValueName(Value* v);
@@ -87,6 +91,7 @@ class DFG {
     bool isMinimumAndHasNotBeenVisited(set<DFGNode*>*, map<DFGNode*, int>*, DFGNode*);
 
   public:
+	DFG(DFG &old);
     DFG(Function&, list<Loop*>*, bool, bool, bool, map<string, int>*, list<string>*);
     list<list<DFGNode*>*>* m_cycleNodeLists;
     //initial ordering of insts
