@@ -36,10 +36,17 @@ class SubToAddNeg: public RewriteRule {
 				cout << "Found sub:" << endl;
 				cout << dfgNode->asString() << endl;
 
+				// See https://stackoverflow.com/questions/40649380/replacing-instructions-in-llvm-ir
 				// Get the args for this instruction:
+				llvm::Instruction *existingInstruction = dfgNode->getInst();
 
+				IRBuilder<> builder(existingInstruction);
+				Value *lhs = op->getOperand(0);
+				Value *rhs = op->getOperate(1);
+
+				Instruction *
 				// Create the new add node:
-				Instruction add_instruction = 
+				// llvm::Instruction add_instruction = 
 				DFGNode *addNode = new DFGNode(inserted_ids ++, false, add_instruction, "InsertedAdd");
 				// TODO --- create the multiply node also.
 
