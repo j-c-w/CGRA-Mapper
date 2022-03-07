@@ -10,6 +10,7 @@
 
 #include "DFGNode.h"
 #include "OperationMap.h"
+#include <iostream>
 
 DFGNode::DFGNode(int t_id, bool t_precisionAware, Instruction* t_inst,
                  StringRef t_stringRef) {
@@ -207,6 +208,7 @@ bool DFGNode::isAdd() {
 }
 
 bool DFGNode::isSub() {
+	cout << m_opcodeName << endl;
 	if (m_opcodeName.compare("sub") == 0 or
 			m_opcodeName.compare("fsub") == 0)
 		return true;
