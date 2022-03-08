@@ -207,13 +207,17 @@ namespace {
 	  list<DFG*> *generated_dfgs = rewrite_for_CGRA(cgra, dfg);
 
 	  int min_II = -1;
+	  int dfg_no = 0;
 	  for (DFG *dfg : *generated_dfgs) {
+		  cout << "Starting mapper for new DFG (Number " << ++dfg_no << ")" << endl;
+		  cout << "DFG is : " << dfg->asString() << endl;
 		  int this_II = mapper->heuristicMap(cgra, dfg, II, isStaticElasticCGRA);
 
-		  if (this_II < min_II && this_II > 0) {
+		  if ((this_II < min_II || min_II < 0) && this_II > 0) {
 			  min_II = this_II;
 			  winning_dfg = dfg;
 		  }
+		  cout << "DFG Number " << dfg_no << " had II " << this_II << endl;
 	  }
 	  II = min_II;
 	  /// end jackson's code.

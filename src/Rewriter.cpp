@@ -15,7 +15,7 @@ list<DFG*> *rewrite_for_CGRA(CGRA *cgra, DFG *dfg) {
 	results->push_back(dfg); // unapplied DFG.
 
 	for (RewriteRule* r : rewrites) {
-		cout << "Running rule " << r->toString() << endl;
+		// cout << "Running rule " << r->toString() << endl;
 		// Note the current copy-constructor re-initializes
 		// from the original function, doesn't deep
 		// copy the structures modified so far (although

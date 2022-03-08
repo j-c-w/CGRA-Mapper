@@ -90,6 +90,16 @@ DFG::DFG(Function& t_F, list<Loop*>* t_loops, bool t_targetFunction,
 
 }
 
+std::string DFG::asString() {
+	std::string graph = "Graph: ";
+	for (DFGNode *n : nodes) {
+		if (n != nullptr)
+			graph = graph + n->asString() + ", ";
+	}
+
+	return graph;
+}
+
 // FIXME: only combine operations of mul+alu and alu+cmp for now,
 //        since these two are the most common patterns across all
 //        the kernels.
@@ -139,6 +149,16 @@ void DFG::tuneForPattern() {
   for (DFGNode* dfgNode: *removeNodes) {
     nodes.remove(dfgNode);
   }
+}
+
+void DFG::removeNode(DFGNode *node) {
+	nodes.remove(node);
+}
+
+void DFG::removeNodes(list<DFGNode*> *nodes) {
+	for (DFGNode * n : *nodes) {
+		removeNode(n);
+	}
 }
 
 void DFG::combineCmpBranch() {

@@ -32,10 +32,13 @@ class DFGEdge
   public:
     DFGEdge(int, DFGNode*, DFGNode*);
     DFGEdge(int, DFGNode*, DFGNode*, bool);
+
     void setID(int);
     int getID();
     DFGNode* getSrc();
     DFGNode* getDst();
+	void setSrc(DFGNode*);
+	void setDst(DFGNode*);
     void connect(DFGNode*, DFGNode*);
     DFGNode* getConnectedNode(DFGNode*);
     bool isCtrlEdge();

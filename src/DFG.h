@@ -108,6 +108,9 @@ class DFG {
     bool isLoad(DFGNode*);
     bool isStore(DFGNode*);
     void showOpcodeDistribution();
+	std::string asString();
+	void removeNode(DFGNode *node);
+	void removeNodes(list<DFGNode *>*);
     void generateDot(Function&, bool);
     void generateJSON();
 	OperationNumber getOperation();

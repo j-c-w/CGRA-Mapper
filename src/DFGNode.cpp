@@ -207,10 +207,10 @@ bool DFGNode::isAdd() {
   return false;
 }
 
-bool DFGNode::isSub() {
+bool DFGNode::isIntSub() {
 	cout << m_opcodeName << endl;
-	if (m_opcodeName.compare("sub") == 0 or
-			m_opcodeName.compare("fsub") == 0)
+	if (m_opcodeName.compare("sub") == 0) // or
+			//m_opcodeName.compare("fsub") == 0)
 		return true;
 	return false;
 }
@@ -434,6 +434,14 @@ void DFGNode::initType() {
     m_optType = "Unfamiliar: " + m_opcodeName;
     m_fuType = "Unknown";
   }
+}
+
+list<DFGEdge*> DFGNode::getInEdges() {
+	return m_inEdges;
+}
+
+list<DFGEdge*> DFGNode::getOutEdges() {
+	return m_outEdges;
 }
 
 list<DFGNode*>* DFGNode::getPredNodes() {

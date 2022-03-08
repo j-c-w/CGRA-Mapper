@@ -80,7 +80,7 @@ class DFGNode {
     bool isBranch();
     bool isPhi();
     bool isAdd();
-    bool isSub();
+    bool isIntSub();
     bool isMul();
     bool isCmp();
     bool isBitcast();
@@ -97,6 +97,8 @@ class DFGNode {
     list<DFGNode*>* getSuccNodes();
 	DFGEdge *getPredEdge(int);
 	DFGEdge *setPredEdge(int, DFGEdge);
+	list<DFGEdge *> getInEdges();
+	list<DFGEdge *> getOutEdges();
     bool isSuccessorOf(DFGNode*);
     bool isPredecessorOf(DFGNode*);
     bool isOneOfThem(list<DFGNode*>*);
