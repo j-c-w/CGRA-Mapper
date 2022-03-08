@@ -31,6 +31,15 @@ void addDefaultKernels(map<string, list<int>*>*);
 
 cl::opt<bool> BuildCGRA("build", cl::desc("Build the CGRA from the code rather than mapping to it."));
 
+// op mode flags.
+cl::opt<bool> UseRewriter("rewriter", cl::desc("Use the simple rewriter"));
+cl::opt<bool> UseEGraphs("use-egraphs", cl::desc("Use the egraphs-based rewriter"));
+
+// Debug flags
+cl::opt<bool> PrintMappingFailures("print-mapping-failures", cl::desc("Print the operations where mapping fails"));
+cl::opt<bool> DebugMappingLoop("debug-mapping-loop", cl::desc("Debug the mapping loop."));
+
+
 namespace {
 
   struct mapperPass : public FunctionPass {
@@ -204,20 +213,34 @@ namespace {
 	  // Get the winning DFG.
 	  DFG *winning_dfg;
 
-	  list<DFG*> *generated_dfgs = rewrite_for_CGRA(cgra, dfg);
+	  list<DFG*> *generated_dfgs;
+	  if (UseRewriter) {
+		  generated_dfgs = rewrite_for_CGRA(cgra, dfg);
+	  } else if (UseEGraphs) {
+		  // TODO -- Thomas
+	  } else {
+		  // if we aren't using the rewriter, just create
+		  // a singleton list.
+		  generated_dfgs = new list<DFG *>;
+		  generated_dfgs->push_back(dfg);
+	  }
 
 	  int min_II = -1;
 	  int dfg_no = 0;
 	  for (DFG *dfg : *generated_dfgs) {
-		  cout << "Starting mapper for new DFG (Number " << ++dfg_no << ")" << endl;
-		  cout << "DFG is : " << dfg->asString() << endl;
-		  int this_II = mapper->heuristicMap(cgra, dfg, II, isStaticElasticCGRA);
+		  if (DebugMappingLoop) {
+			  cout << "Starting mapper for new DFG (Number " << ++dfg_no << ")" << endl;
+			  cout << "DFG is : " << dfg->asString() << endl;
+		  }
+		  int this_II = mapper->heuristicMap(cgra, dfg, II, isStaticElasticCGRA, PrintMappingFailures);
 
 		  if ((this_II < min_II || min_II < 0) && this_II > 0) {
 			  min_II = this_II;
 			  winning_dfg = dfg;
 		  }
-		  cout << "DFG Number " << dfg_no << " had II " << this_II << endl;
+		  if (DebugMappingLoop) {
+			  cout << "DFG Number " << dfg_no << " had II " << this_II << endl;
+		  }
 	  }
 	  II = min_II;
 	  /// end jackson's code.

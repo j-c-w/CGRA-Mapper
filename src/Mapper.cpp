@@ -325,7 +325,7 @@ list<DFGNode*>* Mapper::getMappedDFGNodes(DFG* t_dfg, CGRANode* t_cgraNode) {
 // TODO: will grant award for the overuse the same link for the
 //       same data delivery
 map<CGRANode*, int>* Mapper::calculateCost(CGRA* t_cgra, DFG* t_dfg,
-    int t_II, DFGNode* t_dfgNode, CGRANode* t_fu) {
+    int t_II, DFGNode* t_dfgNode, CGRANode* t_fu, bool PrintMappingFailures) {
   //cout<<"...calculateCost() for dfgNode "<<t_dfgNode->getID()<<" on tile "<<t_fu->getID()<<endl;
   map<CGRANode*, int>* path = NULL;
   list<DFGNode*>* predNodes = t_dfgNode->getPredNodes();
@@ -1201,11 +1201,14 @@ bool Mapper::tryToRoute(CGRA* t_cgra, DFG* t_dfg, int t_II,
 }
 
 int Mapper::heuristicMap(CGRA* t_cgra, DFG* t_dfg, int t_II,
-    bool t_isStaticElasticCGRA) {
+    bool t_isStaticElasticCGRA, bool PrintMappingFailures) {
   bool fail = false;
   while (1) {
+	  if (PrintMappingFailures) {
     cout<<"----------------------------------------\n";
     cout<<"DEBUG start heuristic algorithm with II="<<t_II<<"\n";
+	  }
+
     int cycle = 0;
     constructMRRG(t_dfg, t_cgra, t_II);
     fail = false;
@@ -1217,10 +1220,10 @@ int Mapper::heuristicMap(CGRA* t_cgra, DFG* t_dfg, int t_II,
           CGRANode* fu = t_cgra->nodes[i][j];
 //          errs()<<"DEBUG cgrapass: dfg node: "<<*(*dfgNode)->getInst()<<",["<<i<<"]["<<j<<"]\n";
           map<CGRANode*, int>* tempPath =
-              calculateCost(t_cgra, t_dfg, t_II, *dfgNode, fu);
+              calculateCost(t_cgra, t_dfg, t_II, *dfgNode, fu, PrintMappingFailures);
           if(tempPath != NULL and tempPath->size() != 0) {
             paths.push_back(tempPath);
-          } else {
+          } else if (PrintMappingFailures) {
             cout<<"DEBUG no available path for DFG node "<<(*dfgNode)->getID()
                 <<" on CGRA node "<<fu->getID()<<" within II "<<t_II<<"; path size: "<<paths.size()<<".\n";
           }
@@ -1233,25 +1236,35 @@ int Mapper::heuristicMap(CGRA* t_cgra, DFG* t_dfg, int t_II,
         if (optimalPath->size() != 0) {
           if (!schedule(t_cgra, t_dfg, t_II, *dfgNode, optimalPath,
               t_isStaticElasticCGRA)) {
+			  if (PrintMappingFailures) {
             cout<<"DEBUG fail1 in schedule() II: "<<t_II<<"\n";
+			  }
             for (map<CGRANode*,int>::iterator iter = optimalPath->begin();
                 iter!=optimalPath->end(); ++iter) {
+				if (PrintMappingFailures) {
               cout<<"[tan] the failed path -- cycle: "<<(*iter).second<<" CGRANode: "<<(*iter).first->getID()<<"\n";
+				}
             }
 
             fail = true;
             break;
           }
+		  if (PrintMappingFailures) {
           cout<<"DEBUG success in schedule()\n";
+		  }
         } else {
+			if (PrintMappingFailures) {
           cout<<"DEBUG fail2 in schedule() II: "<<t_II<<"\n";
+			}
           fail = true;
           break;
         }
       } else {
         fail = true;
+		if (PrintMappingFailures) {
         cout<<"DEBUG [else] no available path for DFG node "<<(*dfgNode)->getID()
             <<" within II "<<t_II<<".\n";
+		}
         break;
       }
     }
@@ -1275,11 +1288,11 @@ int Mapper::heuristicMap(CGRA* t_cgra, DFG* t_dfg, int t_II,
 }
 
 int Mapper::exhaustiveMap(CGRA* t_cgra, DFG* t_dfg, int t_II,
-    bool t_isStaticElasticCGRA) {
+    bool t_isStaticElasticCGRA, bool PrintMappingFailures) {
   list<map<CGRANode*, int>*>* exhaustivePaths = new list<map<CGRANode*, int>*>();
   list<DFGNode*>* mappedDFGNodes = new list<DFGNode*>();
   bool success = DFSMap(t_cgra, t_dfg, t_II, mappedDFGNodes,
-      exhaustivePaths, t_isStaticElasticCGRA);
+      exhaustivePaths, t_isStaticElasticCGRA, PrintMappingFailures);
   if (success)
     return t_II;
   else
@@ -1289,7 +1302,7 @@ int Mapper::exhaustiveMap(CGRA* t_cgra, DFG* t_dfg, int t_II,
 bool Mapper::DFSMap(CGRA* t_cgra, DFG* t_dfg, int t_II,
     list<DFGNode*>* t_mappedDFGNodes,
     list<map<CGRANode*, int>*>* t_exhaustivePaths,
-    bool t_isStaticElasticCGRA) {
+    bool t_isStaticElasticCGRA, bool PrintMappingFailures) {
 //  , DFGNode* t_badMappedDFGNode) {
 
 //  list<map<CGRANode*, int>*>* exhaustivePaths = t_exhaustivePaths;
@@ -1333,7 +1346,7 @@ bool Mapper::DFSMap(CGRA* t_cgra, DFG* t_dfg, int t_II,
     for (int j=0; j<t_cgra->getColumns(); ++j) {
       CGRANode* fu = t_cgra->nodes[i][j];
       map<CGRANode*, int>* tempPath =
-          calculateCost(t_cgra, t_dfg, t_II, targetDFGNode, fu);
+          calculateCost(t_cgra, t_dfg, t_II, targetDFGNode, fu, PrintMappingFailures);
       if(tempPath != NULL and tempPath->size() != 0) {
         paths.push_back(tempPath);
       }
@@ -1355,7 +1368,7 @@ bool Mapper::DFSMap(CGRA* t_cgra, DFG* t_dfg, int t_II,
       t_mappedDFGNodes->push_back(targetDFGNode);
 //      errs()<<"--- success in mapping target DFG node: "<<targetDFGNode->getID()<<"\n";
       success = DFSMap(t_cgra, t_dfg, t_II, t_mappedDFGNodes,
-          t_exhaustivePaths, t_isStaticElasticCGRA);
+          t_exhaustivePaths, t_isStaticElasticCGRA, PrintMappingFailures);
       if (success)
         return true;
     }
