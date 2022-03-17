@@ -21,31 +21,32 @@
   "additionalFunc"      : {
                             "store": [4]
                           },
-  "operations": {
-	  "0": {
-		  "0": [],
-		  "1": [],
-		  "2": [],
-		  "3": []
-	  },
-	  "1": {
-		  "0": [],
-		  "1": ["getelementptrload", "icmpbr", "getelementptrload", "icmpbr", "getelementptrload", "icmpbr"],
-		  "2": ["add", "add", "add"],
-		  "3": ["getelementptrload", "getelementptrload", "getelementptrload"]
-	  },
-	  "2": {
-		  "0": [],
-		  "1": ["fsub", "fpext", "fsub", "fpext", "fsub", "fpext"],
-		  "2": ["phi", "fmul", "phi", "fmul", "phi", "fmul"],
-		  "3": ["fpext", "fpext"]
-	  },
-	  "3": {
-		  "0": ["store", "store"],
-		  "1": ["fadd", "fmul", "fadd", "fmul", "fadd", "fmul"],
-		  "2": ["fptrunc", "fptrunc"],
-		  "3": ["phi", "phi"]
-	  }
-  }
-}
 
+  "operations":
+{
+"0": {
+"0": [],
+"1": [],
+"2": ["add", "add", "add"],
+"3": []
+},
+"1": {
+"0": [],
+"1": ["icmpbr", "icmpbr", "icmpbr", "icmpbr"],
+"2": ["phi", "phi", "phi", "phi", "phi", "phi", "phi", "phi"],
+"3": ["getelementptrload", "getelementptrload", "getelementptrload", "getelementptrload"]
+},
+"2": {
+"0": ["store", "store", "store"],
+"1": ["mul", "mul", "mul", "mul", "mul"],
+"2": ["add", "add", "add", "add", "add", "add", "add", "add", "add"],
+"3": []
+},
+"3": {
+"0": [],
+"1": ["getelementptrload", "sdiv", "getelementptrload", "sdiv", "getelementptrload", "sdiv", "getelementptrload", "sdiv"],
+"2": [],
+"3": []
+}
+}
+}
