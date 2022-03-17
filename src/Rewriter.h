@@ -8,6 +8,7 @@
 #include <llvm/IR/Instructions.h>
 #include <llvm/IR/IRBuilder.h>
 #include <llvm/Transforms/Utils/BasicBlockUtils.h>
+#include <memory>
 
 list<DFG*> *rewrite_for_CGRA(CGRA *cgra, DFG *dfg);
 // Just need to give things unique ids I thkn -- not sure
@@ -33,7 +34,7 @@ class SubToAddNeg: public RewriteRule {
 	virtual bool applyTo(DFG *graph) {
 		bool applied = false;
 		// Search the DFG graph for x - y and transform to x + (-1) * y
-		list<DFGNode *> *nodesToRemove = new list<DFGNode *>();
+		auto nodesToRemove = list<DFGNode *>();
 		for (DFGNode *dfgNode: graph->nodes) {
 			cout << "Trying to apply rewrite rule to a new node" << endl;
 			if (dfgNode->isIntSub()) {
@@ -107,8 +108,10 @@ class SubToAddNeg: public RewriteRule {
 			}
 		}
 
+		for (DFGNode *n : *nodesToRemove) {
+			std::cout << "Removing node " << n->asString() << std::endl;
+		}
 		graph->removeNodes(nodesToRemove);
-		delete nodesToRemove;
 
 		return applied;
 	}
