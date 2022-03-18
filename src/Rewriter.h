@@ -102,16 +102,16 @@ class SubToAddNeg: public RewriteRule {
 				addNode->setInEdge(newEdge);
 
 				// Remove the old node from the DFG.
-				nodesToRemove->push_back(dfgNode);
+				nodesToRemove.push_back(dfgNode);
 
 				applied = true;
 			}
 		}
 
-		for (DFGNode *n : *nodesToRemove) {
+		for (DFGNode *n : nodesToRemove) {
 			std::cout << "Removing node " << n->asString() << std::endl;
 		}
-		graph->removeNodes(nodesToRemove);
+		graph->removeNodes(&nodesToRemove);
 
 		return applied;
 	}

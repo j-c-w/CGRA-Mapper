@@ -1,0 +1,13 @@
+[package]
+name = "CGRA-Mapper-Rust"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[lib]
+name = "EggLib"
+crate-type = ["dylib"]
+
+[dependencies]
+egg = "0.7.1"

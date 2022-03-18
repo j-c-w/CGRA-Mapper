@@ -1,4 +1,5 @@
 cmake_minimum_required(VERSION 3.1)
+project(cgramapper CXX)
 
 #if(POLICY CMP0025)
 #  cmake_policy(SET CMP0025 NEW)
@@ -13,5 +14,21 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 add_definitions(${LLVM_DEFINITIONS})
 include_directories(${LLVM_INCLUDE_DIRS})
 link_directories(${LLVM_LIBRARY_DIRS})
+
+add_custom_command (
+	OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/CGRA-Mapper-Rust/target/debug/libEggLib.so
+	DEPENDS CGRA-Mapper-Rust/src
+	COMMAND make
+	WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/CGRA-Mapper-Rust/
+)
+
+configure_file (
+	${CMAKE_SOURCE_DIR}/CGRA-Mapper-Rust/target/debug/libEggLib.so ${CMAKE_CURRENT_BINARY_DIR}/CGRA-Mapper-Rust/target/debug/libEggLib.so
+)
+
+add_library(eggLib SHARED ${CMAKE_CURRENT_BINARY_DIR}/CGRA-Mapper-Rust/target/debug/libEggLib.so)
+set_target_properties(eggLib PROPERTIES LINKER_LANGUAGE CXX)
+
+#set_property(TARGET eggLib PROPERTY IMPORTED_LOCATION ${CMAKE_CURRENT_BINARY_DIR}/CGRA-Mapper-Rust/target/debug/libEggLib.so)
 
 add_subdirectory(src)  # Use your pass directory here.

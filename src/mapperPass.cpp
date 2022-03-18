@@ -24,6 +24,9 @@
 #include "Rewriter.h"
 #include "EGraphRewriter.h"
 
+// Include the rust communcation interface.
+#include "../CGRA-Mapper-Rust/src/EggLib.h"
+
 using namespace llvm;
 using namespace std;
 using json = nlohmann::json;
@@ -57,6 +60,7 @@ namespace {
     }
 
     bool runOnFunction(Function &t_F) override {
+		cout << add(10, 20) << endl;
 
       // Initializes input parameters.
       int rows                      = 4;
