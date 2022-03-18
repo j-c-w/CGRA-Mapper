@@ -4,7 +4,8 @@ Building:
 
  - Get nix (https://nixos.org/)
  - nix-shell # fetches dependencies
- - cmake .
+ - mkdir build && cd build
+ - cmake ..
  - make
 
 Running example:
