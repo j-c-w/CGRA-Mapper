@@ -10,6 +10,7 @@ Building:
 Running example:
  - cd test
  - vim kernel.cpp # edit the loop to contain whatever.
+ - `./compile.sh`, generate LLVM bitcode for that loop.
  - ./run.sh --build # builds a cgra for that loop.
  - ./build_param.sh operations.json # build the settings file for this new loop.
  - ./run.sh # bulid for the CGRA that you just defined --- this should work
