@@ -6,5 +6,5 @@ using namespace std;
 
 int main()
 {
-	cout << "Test" << add(10, 20) << endl;
+	/* cout << "Test" << add(10, 20) << endl; */
 }

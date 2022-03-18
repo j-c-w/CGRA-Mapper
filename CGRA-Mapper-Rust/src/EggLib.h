@@ -2,7 +2,7 @@
 #define _EGG_LIB
 
 extern "C" {
-	int add(int first, int second);
+	/* int add(int first, int second); */
 }
 
 #endif
