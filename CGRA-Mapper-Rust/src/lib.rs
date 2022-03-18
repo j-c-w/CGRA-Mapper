@@ -10,11 +10,20 @@ pub struct CppNode {
 	child_ids: *const u32
 }
 
-type CppDFG = *const CppNode;
+#[repr(C)]
+pub struct CppDFG {
+  nodes: *const CppNode,
+  count: u32
+}
 
-fn dfg_to_egraph(input: CppDFG, len: u32) -> (EGraph<SymbolLang, ()>, Id) {
-	assert!(input != std::ptr::null());
-	let nodes = unsafe { std::slice::from_raw_parts(input, len as usize) };
+#[repr(C)]
+pub struct CppDFGs {
+  dfgs: *const CppDFG,
+  count: u32
+}
+
+fn dfg_to_egraph(dfg: CppDFG) -> (EGraph<SymbolLang, ()>, Id) {
+	let nodes = unsafe { std::slice::from_raw_parts(dfg.nodes, dfg.count as usize) };
 	let mut egraph: EGraph<SymbolLang, ()> = Default::default();
 	let mut eclasses = vec![];
 	for node in nodes {
@@ -30,8 +39,8 @@ fn dfg_to_egraph(input: CppDFG, len: u32) -> (EGraph<SymbolLang, ()>, Id) {
 
 fn expr_to_dfg(expr: RecExpr<SymbolLang>) -> CppDFG {
 	let enodes = expr.as_ref();
-	let dfg = unsafe { libc::malloc(enodes.len() * size_of::<CppNode>()) } as *mut CppNode;
-	let nodes = unsafe { std::slice::from_raw_parts_mut(dfg, enodes.len()) };
+	let nodes_ptr = unsafe { libc::malloc(enodes.len() * size_of::<CppNode>()) } as *mut CppNode;
+	let nodes = unsafe { std::slice::from_raw_parts_mut(nodes_ptr, enodes.len()) };
 	for (en, n) in enodes.iter().zip(nodes.iter_mut()) {
 		n.op = std::ffi::CString::new(en.op.as_str()).unwrap().into_raw();
 		let child_ids = unsafe { libc::malloc(en.children.len() * size_of::<u32>()) } as *mut u32;
@@ -41,11 +50,12 @@ fn expr_to_dfg(expr: RecExpr<SymbolLang>) -> CppDFG {
 		n.num_children = en.children.len().try_into().unwrap();
 		n.child_ids = child_ids;
 	}
-	dfg
+
+	CppDFG { nodes: nodes_ptr, count: enodes.len().try_into().unwrap() }
 }
 
 #[no_mangle]
-pub extern "C" fn optimize_with_egraphs(input: CppDFG, len: u32) -> *const CppDFG {
+pub extern "C" fn optimize_with_egraphs(dfg: CppDFG) -> CppDFGs {
 	let rules: &[Rewrite<SymbolLang, ()>] = &[
 		rewrite!("sub-to-add-neg"; "(sub ?x ?y)" => "(add ?x (neg ?y))"),
 
@@ -57,7 +67,7 @@ pub extern "C" fn optimize_with_egraphs(input: CppDFG, len: u32) -> *const CppDF
 		rewrite!("mul-1"; "(mul ?x 1)" => "?x"),
 	];
 
-	let (egraph, root) = dfg_to_egraph(input, len);
+	let (egraph, root) = dfg_to_egraph(dfg);
 	egraph.dot().to_svg("/tmp/initial.svg").unwrap();
 
 	let runner = Runner::default().with_egraph(egraph).run(rules);
@@ -65,13 +75,13 @@ pub extern "C" fn optimize_with_egraphs(input: CppDFG, len: u32) -> *const CppDF
 
 	{
 		let mut g: EGraph<SymbolLang, ()> = Default::default();
-		g.add_expr(best);
+		g.add_expr(&best);
 		g.dot().to_svg("/tmp/final.svg").unwrap();
 	}
 
-	let ptr = unsafe { libc::malloc(size_of::<CppDFG>()) } as *mut CppDFG;
-	assert!(ptr != std::ptr::null_mut());
-	unsafe { *ptr = expr_to_dfg(best) };
+	let dfgs_ptr = unsafe { libc::malloc(size_of::<CppDFG>()) } as *mut CppDFG;
+	assert!(dfgs_ptr != std::ptr::null_mut());
+	unsafe { *dfgs_ptr = expr_to_dfg(best) };
 	
-	ptr
+	CppDFGs { dfgs: dfgs_ptr, count: 1 }
 }
