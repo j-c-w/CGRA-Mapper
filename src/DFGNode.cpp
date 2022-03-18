@@ -12,7 +12,7 @@
 #include "OperationMap.h"
 #include <iostream>
 
-DFGNode::DFGNode(int t_id, bool t_precisionAware, Instruction* t_inst,
+DFGNode::DFGNode(int t_id, bool t_precisionAware, Instruction* t_inst, std::string opcodeName,
                  StringRef t_stringRef) {
   m_id = t_id;
   m_precisionAware = t_precisionAware;
@@ -20,7 +20,7 @@ DFGNode::DFGNode(int t_id, bool t_precisionAware, Instruction* t_inst,
   m_stringRef = t_stringRef;
   m_predNodes = NULL;
   m_succNodes = NULL;
-  m_opcodeName = t_inst->getOpcodeName();
+  m_opcodeName = opcodeName;
   m_isMapped = false;
   m_numConst = 0;
   m_optType = "";
@@ -141,6 +141,10 @@ void DFGNode::clearMapped() {
 }
 
 Instruction* DFGNode::getInst() {
+  if (m_inst == nullptr) {
+	  assert(false); // To make egraphs easier, we don't generate Instruction nodes.
+	  // only do that if you have to.
+  }
   return m_inst;
 }
 

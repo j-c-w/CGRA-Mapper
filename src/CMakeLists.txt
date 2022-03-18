@@ -40,6 +40,8 @@ set_target_properties(mapperPass PROPERTIES
     COMPILE_FLAGS "-fno-rtti"
 )
 
+target_link_libraries(mapperPass ${CMAKE_CURRENT_SOURCE_DIR}/../CGRA-Mapper-Rust/target/debug/libEggLib.so)
+
 # Get proper shared-library behavior (where symbols are not necessarily
 # resolved when the shared library is linked) on OS X.
 if(APPLE)

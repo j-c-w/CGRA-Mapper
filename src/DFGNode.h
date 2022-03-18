@@ -64,7 +64,7 @@ class DFGNode {
     void setPatternRoot(DFGNode*);
 
   public:
-    DFGNode(int, bool, Instruction*, StringRef);
+    DFGNode(int, bool, Instruction*, std::string, StringRef);
     int getID();
     void setID(int);
     void setLevel(int);

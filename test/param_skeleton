@@ -23,30 +23,3 @@
                           },
 
   "operations":
-{
-"0": {
-"0": [],
-"1": [],
-"2": ["add", "add", "add"],
-"3": []
-},
-"1": {
-"0": [],
-"1": ["icmpbr", "icmpbr", "icmpbr", "icmpbr"],
-"2": ["phi", "phi", "phi", "phi", "phi", "phi", "phi", "phi"],
-"3": ["getelementptrload", "getelementptrload", "getelementptrload", "getelementptrload"]
-},
-"2": {
-"0": ["store", "store", "store"],
-"1": ["mul", "mul", "mul", "mul", "mul"],
-"2": ["add", "add", "add", "add", "add", "add", "add", "add", "add"],
-"3": []
-},
-"3": {
-"0": [],
-"1": ["getelementptrload", "sdiv", "getelementptrload", "sdiv", "getelementptrload", "sdiv", "getelementptrload", "sdiv"],
-"2": [],
-"3": []
-}
-}
-}

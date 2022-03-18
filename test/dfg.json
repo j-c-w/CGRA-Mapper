@@ -1,21 +1,21 @@
 [
   {
     "fu"         : "Alu",
-    "id"         : 14,
+    "id"         : 9,
     "org_opt"    : "add",
     "JSON_opt"   : "OPT_ADD_CONST",
     "in_const"   : [0],
     "pre"         : [1],
-    "succ"       : [[1,15]]
+    "succ"       : [[1,10]]
   },
   {
     "fu"         : "Comp",
-    "id"         : 15,
+    "id"         : 10,
     "org_opt"    : "icmpbr",
     "JSON_opt"   : "OPT_EQ",
     "in_const"   : [0],
-    "pre"         : [14],
-    "succ"       : [[16]]
+    "pre"         : [9],
+    "succ"       : [[11]]
   },
   {
     "fu"         : "Phi",
@@ -23,8 +23,8 @@
     "org_opt"    : "phi",
     "JSON_opt"   : "OPT_PHI_CONST",
     "in_const"   : [0],
-    "pre"         : [14,16],
-    "succ"       : [[2,4,14]]
+    "pre"         : [9,11],
+    "succ"       : [[2,4,9]]
   },
   {
     "fu"         : "Alu",
@@ -45,58 +45,22 @@
     "succ"       : [[5]]
   },
   {
-    "fu"         : "Mul",
+    "fu"         : "Alu",
     "id"         : 6,
-    "org_opt"    : "fmul",
-    "JSON_opt"   : "OPT_MUL",
+    "org_opt"    : "sub",
+    "JSON_opt"   : "OPT_SUB",
     "in_const"   : [],
     "pre"         : [3,5],
     "succ"       : [[7]]
   },
   {
-    "fu"         : "Unknown",
+    "fu"         : "Alu",
     "id"         : 7,
-    "org_opt"    : "fpext",
-    "JSON_opt"   : "Unfamiliar: fpext",
-    "in_const"   : [],
-    "pre"         : [6],
-    "succ"       : [[8]]
-  },
-  {
-    "fu"         : "Unknown",
-    "id"         : 8,
-    "org_opt"    : "fdiv",
-    "JSON_opt"   : "Unfamiliar: fdiv",
-    "in_const"   : [0],
-    "pre"         : [7],
-    "succ"       : [[9]]
-  },
-  {
-    "fu"         : "Alu",
-    "id"         : 9,
-    "org_opt"    : "fsub",
-    "JSON_opt"   : "OPT_SUB_CONST",
-    "in_const"   : [0],
-    "pre"         : [8],
-    "succ"       : [[11]]
-  },
-  {
-    "fu"         : "Alu",
-    "id"         : 11,
-    "org_opt"    : "fadd",
+    "org_opt"    : "add",
     "JSON_opt"   : "OPT_ADD",
     "in_const"   : [],
-    "pre"         : [9,10],
-    "succ"       : [[12]]
-  },
-  {
-    "fu"         : "Unknown",
-    "id"         : 12,
-    "org_opt"    : "fptrunc",
-    "JSON_opt"   : "Unfamiliar: fptrunc",
-    "in_const"   : [],
-    "pre"         : [11],
-    "succ"       : [[0,13]]
+    "pre"         : [6,0],
+    "succ"       : [[0,8]]
   },
   {
     "fu"         : "Phi",
@@ -104,25 +68,16 @@
     "org_opt"    : "phi",
     "JSON_opt"   : "OPT_PHI_CONST",
     "in_const"   : [0],
-    "pre"         : [12,16],
-    "succ"       : [[10]]
+    "pre"         : [7,11],
+    "succ"       : [[7]]
   },
   {
     "fu"         : "MemUnit",
-    "id"         : 13,
+    "id"         : 8,
     "org_opt"    : "store",
     "JSON_opt"   : "OPT_STR",
     "in_const"   : [],
-    "pre"         : [12],
+    "pre"         : [7],
     "succ"       : [[]]
-  },
-  {
-    "fu"         : "Unknown",
-    "id"         : 10,
-    "org_opt"    : "fpext",
-    "JSON_opt"   : "Unfamiliar: fpext",
-    "in_const"   : [],
-    "pre"         : [0],
-    "succ"       : [[11]]
   }
 ]
