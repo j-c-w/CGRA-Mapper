@@ -8,6 +8,7 @@
 #include <llvm/IR/Instructions.h>
 #include <llvm/IR/IRBuilder.h>
 #include <llvm/Transforms/Utils/BasicBlockUtils.h>
+#include <memory>
 
 list<DFG*> *rewrite_for_CGRA(CGRA *cgra, DFG *dfg);
 // Just need to give things unique ids I thkn -- not sure
@@ -33,40 +34,40 @@ class SubToAddNeg: public RewriteRule {
 	virtual bool applyTo(DFG *graph) {
 		bool applied = false;
 		// Search the DFG graph for x - y and transform to x + (-1) * y
-		list<DFGNode *> *nodesToRemove = new list<DFGNode *>();
+		auto nodesToRemove = list<DFGNode *>();
 		for (DFGNode *dfgNode: graph->nodes) {
 			cout << "Trying to apply rewrite rule to a new node" << endl;
 			if (dfgNode->isIntSub()) {
 				cout << "Found sub:" << endl;
 				cout << dfgNode->asString() << endl;
 
-				// See https://stackoverflow.com/questions/40649380/replacing-instructions-in-llvm-ir
-				// Get the args for this instruction:
-				// Option 1: do this, then use the internal CGRA-mapper functions to 
-				// put this back into a DFG.
-				llvm::Instruction *existingInstruction = dyn_cast<BinaryOperator>(dfgNode->getInst());
-				BasicBlock *existingBB = existingInstruction->getParent();
+				/* // See https://stackoverflow.com/questions/40649380/replacing-instructions-in-llvm-ir */
+				/* // Get the args for this instruction: */
+				/* // Option 1: do this, then use the internal CGRA-mapper functions to */ 
+				/* // put this back into a DFG. */
+				/* llvm::Instruction *existingInstruction = dyn_cast<BinaryOperator>(dfgNode->getInst()); */
+				/* BasicBlock *existingBB = existingInstruction->getParent(); */
 
-				IRBuilder<> builder(existingInstruction);
-				Value *lhs = existingInstruction->getOperand(0);
-				Value *rhs = existingInstruction->getOperand(1);
-				Value* minus_one = llvm::ConstantInt::get(existingInstruction->getContext(), llvm::APInt(32, -1, true));
+				/* IRBuilder<> builder(existingInstruction); */
+				/* Value *lhs = existingInstruction->getOperand(0); */
+				/* Value *rhs = existingInstruction->getOperand(1); */
+				/* Value* minus_one = llvm::ConstantInt::get(existingInstruction->getContext(), llvm::APInt(32, -1, true)); */
 
-				// Create the new add node:
-				builder.SetInsertPoint(dfgNode->getInst());
-				Instruction *mul = dyn_cast<Instruction>(builder.CreateMul(rhs, minus_one));
-				Instruction *add = dyn_cast<Instruction>(builder.CreateAdd(lhs, rhs));
+				/* // Create the new add node: */
+				/* builder.SetInsertPoint(dfgNode->getInst()); */
+				/* Instruction *mul = dyn_cast<Instruction>(builder.CreateMul(rhs, minus_one)); */
+				/* Instruction *add = dyn_cast<Instruction>(builder.CreateAdd(lhs, rhs)); */
 
-				// Put the node into the basci block.
-				BasicBlock::iterator bb_iterator = existingBB->begin();
-				ReplaceInstWithValue(existingBB->getInstList(), bb_iterator, add);
+				/* // Put the node into the basci block. */
+				/* BasicBlock::iterator bb_iterator = existingBB->begin(); */
+				/* ReplaceInstWithValue(existingBB->getInstList(), bb_iterator, add); */
 
 				// Option2: do the above,
 				// then modify the function as appropriate.
 
 				// llvm::Instruction add_instruction = 
-				DFGNode *addNode = new DFGNode(inserted_ids ++, false, add, "InsertedAdd");
-				DFGNode *mulNode = new DFGNode(inserted_ids ++, false, mul, "InsertedMul");
+				DFGNode *addNode = new DFGNode(inserted_ids ++, false, nullptr, "add", "add");
+				DFGNode *mulNode = new DFGNode(inserted_ids ++, false, nullptr, "mul", "mul");
 
 				// Modify the in-edges:
 				bool first = true;
@@ -107,8 +108,10 @@ class SubToAddNeg: public RewriteRule {
 			}
 		}
 
+		for (DFGNode *n : *nodesToRemove) {
+			std::cout << "Removing node " << n->asString() << std::endl;
+		}
 		graph->removeNodes(nodesToRemove);
-		delete nodesToRemove;
 
 		return applied;
 	}

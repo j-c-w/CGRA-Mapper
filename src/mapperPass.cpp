@@ -22,6 +22,7 @@
 #include "Mapper.h"
 #include "OperationMap.h"
 #include "Rewriter.h"
+#include "EGraphRewriter.h"
 
 using namespace llvm;
 using namespace std;
@@ -218,6 +219,7 @@ namespace {
 		  generated_dfgs = rewrite_for_CGRA(cgra, dfg);
 	  } else if (UseEGraphs) {
 		  // TODO -- Thomas
+		  generated_dfgs = rewrite_with_egraphs(cgra, dfg);
 	  } else {
 		  // if we aren't using the rewriter, just create
 		  // a singleton list.

@@ -383,7 +383,7 @@ void DFG::construct(Function& t_F) {
       if (hasNode(curII)) {
         dfgNode = getNode(curII);
       } else {
-        dfgNode = new DFGNode(nodeID++, m_precisionAware, curII, getValueName(curII));
+        dfgNode = new DFGNode(nodeID++, m_precisionAware, curII, curII->getOpcodeName(), getValueName(curII));
         nodes.push_back(dfgNode);
       }
       errs()<<" (ID: "<<dfgNode->getID()<<")\n";
@@ -410,7 +410,7 @@ void DFG::construct(Function& t_F) {
           if (hasNode(inst)) {
             dfgNode = getNode(inst);
           } else {
-            dfgNode = new DFGNode(nodeID++, m_precisionAware, inst, getValueName(inst));
+            dfgNode = new DFGNode(nodeID++, m_precisionAware, inst, inst->getOpcodeName(), getValueName(inst));
             nodes.push_back(dfgNode);
           }
     //      Instruction* first = &*(sucBB->begin());
@@ -632,43 +632,6 @@ void DFG::construct(Function& t_F) {
   
 }
 
-// Reorder the DFG nodes in ASAP based on original sequential execution order.
-void DFG::reorderInASAP() {
-
-  list<DFGNode*> tempNodes;
-  // The first node in the nodes is treated as the starting point (no 
-  // matter it has predecessors or not).
-  int maxLevel = 0;
-  for (DFGNode* node: nodes) {
-    int level = 0;
-    for (DFGNode* predNode: *(node->getPredNodes())) {
-      if (predNode->getID() < node->getID()) {
-        if (level < predNode->getLevel() + 1) {
-          level = predNode->getLevel() + 1;
-        }
-      }
-    }
-    node->setLevel(level);
-    if (maxLevel < level) {
-      maxLevel = level;
-    }
-  } 
-
-  for (int l=0; l<maxLevel+1; ++l) {
-    for (DFGNode* node: nodes) {
-      if (node->getLevel() == l) {
-        tempNodes.push_back(node);
-      }
-    }
-  }
-
-  nodes.clear();
-  errs()<<"[reorder DFG in ASAP]\n";
-  for (DFGNode* node: tempNodes) {
-    nodes.push_back(node);
-    errs()<<"("<<node->getID()<<") "<<*(node->getInst())<<", level: "<<node->getLevel()<<"\n";
-  }
-}
 
 bool DFG::isMinimumAndHasNotBeenVisited(set<DFGNode*>* t_visited, map<DFGNode*, int>* t_map, DFGNode* t_node) {
   if (t_visited->find(t_node) != t_visited->end()) {
@@ -710,7 +673,6 @@ void DFG::reorderInLongest() {
 
   while (visited->size() < nodes.size()) {
     for (DFGNode* node: nodes) {
-      // if (visited->find(node) == visited->end() and indegree[node] <= 0) {
       if (isMinimumAndHasNotBeenVisited(visited, &indegree, node)) {
         level = 0;
         for (DFGNode* preNode: *(node->getPredNodes())) {
@@ -740,7 +702,7 @@ void DFG::reorderInLongest() {
   errs()<<"[reorder DFG along with the longest path]\n";
   for (DFGNode* node: tempNodes) {
     nodes.push_back(node);
-    errs()<<"("<<node->getID()<<") "<<*(node->getInst())<<", level: "<<node->getLevel()<<"\n";
+    errs()<<"("<<node->getID()<<") "<<(node->asString())<<", level: "<<node->getLevel()<<"\n";
   }
 
 }
@@ -767,50 +729,6 @@ void DFG::reorderDFS(set<DFGNode*>* t_visited, list<DFGNode*>* t_targetPath,
     }
   }
 
-}
-
-
-// Reorder the DFG nodes in ALAP based on original sequential execution order.
-void DFG::reorderInALAP() {
-
-  list<DFGNode*> tempNodes;
-  // The last node in the nodes is treated as the end point (no 
-  // matter it has successors or not).
-  int maxLevel = 0;
-  nodes.reverse();
-  for (DFGNode* node: nodes) {
-    int level = 0;
-    for (DFGNode* succNode: *(node->getSuccNodes())) {
-      if (succNode->getID() > node->getID()) {
-        if (level < succNode->getLevel() + 1) {
-          level = succNode->getLevel() + 1;
-        }
-      }
-    }
-    node->setLevel(level);
-    if (maxLevel < level) {
-      maxLevel = level;
-    }
-  } 
-
-  for (DFGNode* node: nodes) {
-    node->setLevel(maxLevel - node->getLevel());
-  }
-
-  for (int l=0; l<maxLevel+1; ++l) {
-    for (DFGNode* node: nodes) {
-      if (node->getLevel() == l) {
-        tempNodes.push_back(node);
-      }
-    }
-  }
-
-  nodes.clear();
-  errs()<<"[reorder DFG in ALAP]\n";
-  for (DFGNode* node: tempNodes) {
-    nodes.push_back(node);
-    errs()<<"("<<node->getID()<<") "<<*(node->getInst())<<", level: "<<node->getLevel()<<"\n";
-  }
 }
 
 void DFG::initExecLatency(map<string, int>* t_execLatency) {
@@ -1350,7 +1268,7 @@ void DFG::tuneForBranch() {
         processedDFGBrNodes.end()) {
       processedDFGBrNodes.push_back(left);
     } else {
-      DFGNode* newDFGBrNode = new DFGNode(nodes.size(), m_precisionAware, left->getInst(),
+      DFGNode* newDFGBrNode = new DFGNode(nodes.size(), m_precisionAware, left->getInst(), left->getOpcodeName(),
           getValueName(left->getInst()));
       for (DFGNode* predDFGNode: *(left->getPredNodes())) {
         DFGEdge* newDFGBrEdge = new DFGEdge(newDFGEdgeID++,

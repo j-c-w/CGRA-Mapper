@@ -1,0 +1,4 @@
+# This is a set of rules we should implement.  Format is (original) -> (new)
+# Variables can have types, e.g. x:int or x:float.  Type are int/float.
+
+

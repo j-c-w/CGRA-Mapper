@@ -81,8 +81,8 @@ class DFG {
     // Reorder the DFG nodes (initial CPU execution ordering) in
     // ASAP (as soon as possible) or ALAP (as last as possible)
     // for mapping.
-    void reorderInASAP();
-    void reorderInALAP();
+    // void reorderInASAP();
+    // void reorderInALAP();
     void reorderInLongest();
     void reorderDFS(set<DFGNode*>*, list<DFGNode*>*,
                     list<DFGNode*>*, DFGNode*);

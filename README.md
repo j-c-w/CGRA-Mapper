@@ -4,17 +4,19 @@ Building:
 
  - Get nix (https://nixos.org/)
  - nix-shell # fetches dependencies
- - mkdir build; cd build
- - cmake ..
+ - cmake .
  - make
 
 Running example:
  - cd test
  - vim kernel.cpp # edit the loop to contain whatever.
- - ./run.sh --build # builds a cgra for that loop.  Copy the JSON part of the output into the param.json file under the "operation": ... field
+ - ./run.sh --build # builds a cgra for that loop.
+ - ./build_param.sh operations.json # build the settings file for this new loop.
+ - ./run.sh # bulid for the CGRA that you just defined --- this should work
  - vim kernel.cpp # edit this again to change it
  - ./run.sh # without build, tries to compile the loop to that particular cgra configuration.
- - If run.sh 'fails', it won't terminate.
+ - ./run.sh --use-egraphs # use the egraphs rewriter
+ - ./run.sh --rewriter # use the traditioanl rewriter.
  - Apply some rewrite rules by hand and try and make it work :)
 
 <pre> ========================================================
