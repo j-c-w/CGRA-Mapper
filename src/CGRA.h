@@ -1,3 +1,5 @@
+#ifndef CGRA_H
+#define CGRA_H
 /*
  * ======================================================================
  * CGRA.h
@@ -38,3 +40,5 @@ class CGRA {
     void setCtrlMemConstraint(int);
     void setRegConstraint(int);
 };
+
+#endif

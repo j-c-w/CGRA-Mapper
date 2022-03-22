@@ -50,7 +50,22 @@ DFG::DFG(DFG &old): m_function(old.m_function) {
   initPipelinedOpt(m_initPipelinedOpt);
 }
 
-DFG::DFG(Function& t_F, list<Loop*>* t_loops, bool t_targetFunction,
+// Lots of stuff left empty in this definition, trying to only capture what really needs to be captured.
+DFG::DFG(list<DFGNode *> *nodes, list<DFGEdge*> *edges): m_function(nullptr) {
+  m_num = 0;
+  // can these be null?
+  m_targetFunction = true;
+  m_targetLoops = nullptr;
+  m_orderedNodes = NULL;
+  m_CDFGFused = false;
+  m_cycleNodeLists = new list<list<DFGNode*>*>();
+  // TODO -- get these from the config file.
+  m_precisionAware = false;
+  m_initPipelinedOpt = new list<string>();
+  m_initExecLatency = new map<string, int>();
+}
+
+DFG::DFG(Function *t_F, list<Loop*>* t_loops, bool t_targetFunction,
          bool t_precisionAware, bool t_heterogeneity,
          map<string, int>* t_execLatency, list<string>* t_pipelinedOpt): m_function(t_F) {
   m_num = 0;
@@ -346,7 +361,7 @@ list<DFGNode*>* DFG::getBFSOrderedNodes() {
 }
 
 // extract DFG from specific function
-void DFG::construct(Function& t_F) {
+void DFG::construct(Function *t_F) {
 
   m_DFGEdges.clear();
   nodes.clear();
@@ -356,10 +371,10 @@ void DFG::construct(Function& t_F) {
   int ctrlEdgeID = 0;
   int dfgEdgeID = 0;
 
-  errs()<<"*** current function: "<<t_F.getName()<<"\n";
+  errs()<<"*** current function: "<<t_F->getName()<<"\n";
 
   // FIXME: eleminate duplicated edges.
-  for (Function::iterator BB=t_F.begin(), BEnd=t_F.end();
+  for (Function::iterator BB=t_F->begin(), BEnd=t_F->end();
       BB!=BEnd; ++BB) {
     BasicBlock *curBB = &*BB;
     errs()<<"*** current basic block: "<<*curBB->begin()<<"\n";
@@ -908,16 +923,16 @@ void DFG::generateJSON() {
   jsonFile<<"]\n";
 }
 
-void DFG::generateDot(Function &t_F, bool t_isTrimmedDemo) {
+void DFG::generateDot(Function *t_F, bool t_isTrimmedDemo) {
 
   error_code error;
 //  sys::fs::OpenFlags F_Excl;
-  string func_name = t_F.getName().str();
+  string func_name = t_F->getName().str();
   string file_name = func_name + ".dot";
   StringRef fileName(file_name);
   raw_fd_ostream file(fileName, error, sys::fs::F_None);
 
-  file << "digraph \"DFG for'" + t_F.getName() + "\' function\" {\n";
+  file << "digraph \"DFG for'" + t_F->getName() + "\' function\" {\n";
 
   //Dump DFG nodes.
   for (DFGNode* node: nodes) {
@@ -1362,5 +1377,5 @@ OperationNumber DFG::getOperation() {
   /// return IntAdd;
   // return std::string("fadd");
   // cout<<"*** current function: "<<m_function.getName().data()<<"\n";
-  return m_function.getName().data();
+  return m_function->getName().data();
 }

@@ -22,7 +22,7 @@
 #include "Mapper.h"
 #include "OperationMap.h"
 #include "Rewriter.h"
-#include "EGraphRewriter.h"
+#include "RustConversion.h"
 
 
 using namespace llvm;
@@ -171,7 +171,7 @@ namespace {
       list<Loop*>* targetLoops = getTargetLoops(t_F, functionWithLoop, targetNested);
       // TODO: will make a list of patterns/tiles to illustrate how the
       //       heterogeneity is
-      DFG* dfg = new DFG(t_F, targetLoops, targetEntireFunction, precisionAware,
+      DFG* dfg = new DFG(&t_F, targetLoops, targetEntireFunction, precisionAware,
                          heterogeneity, execLatency, pipelinedOpt);
       CGRA* cgra = new CGRA(rows, columns, heterogeneity, additionalFunc, opmap, BuildCGRA);
       cgra->setRegConstraint(regConstraint);
@@ -187,7 +187,7 @@ namespace {
       // Generate the DFG dot file.
       errs() << "==================================\n";
       errs() << "[generate dot for DFG]\n";
-      dfg->generateDot(t_F, isTrimmedDemo);
+      dfg->generateDot(&t_F, isTrimmedDemo);
 
       // Generate the DFG dot file.
       errs() << "==================================\n";
@@ -219,7 +219,6 @@ namespace {
 	  if (UseRewriter) {
 		  generated_dfgs = rewrite_for_CGRA(cgra, dfg);
 	  } else if (UseEGraphs) {
-		  // TODO -- Thomas
 		  generated_dfgs = rewrite_with_egraphs(cgra, dfg);
 	  } else {
 		  // if we aren't using the rewriter, just create

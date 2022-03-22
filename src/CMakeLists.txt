@@ -26,7 +26,9 @@ add_library(mapperPass MODULE
     Mapper.h
     Mapper.cpp
 	Rewriter.cpp
-	EGraphRewriter.cpp
+	RustTypes.h
+	RustConversion.cpp
+	RustConversion.h
 )
 
 # Use C++11 to compile our pass (i.e., supply -std=c++11).

@@ -8,6 +8,9 @@
  *   Date : July 16, 2019
  */
 
+#ifndef DFG_H
+#define DFG_H
+
 #include <llvm/IR/Function.h>
 #include <llvm/IR/BasicBlock.h>
 #include <llvm/IR/Value.h>
@@ -38,7 +41,7 @@ class DFG {
     bool m_precisionAware;
     list<DFGNode*>* m_orderedNodes;
     list<Loop*>* m_targetLoops;
-	Function &m_function;
+	Function *m_function;
 
     //edges of data flow
     list<DFGEdge*> m_DFGEdges;
@@ -92,7 +95,8 @@ class DFG {
 
   public:
 	DFG(DFG &old);
-    DFG(Function&, list<Loop*>*, bool, bool, bool, map<string, int>*, list<string>*);
+	DFG(list<DFGNode *> *nodes, list<DFGEdge *> *edges);
+    DFG(Function*, list<Loop*>*, bool, bool, bool, map<string, int>*, list<string>*);
     list<list<DFGNode*>*>* m_cycleNodeLists;
     //initial ordering of insts
     list<DFGNode*> nodes;
@@ -100,7 +104,7 @@ class DFG {
     list<DFGNode*>* getBFSOrderedNodes();
     list<DFGNode*>* getDFSOrderedNodes();
     int getNodeCount();
-    void construct(Function&);
+    void construct(Function*);
     void setupCycles();
     list<list<DFGEdge*>*>* calculateCycles();
     list<list<DFGNode*>*>* getCycleLists();
@@ -111,7 +115,9 @@ class DFG {
 	std::string asString();
 	void removeNode(DFGNode *node);
 	void removeNodes(list<DFGNode *>*);
-    void generateDot(Function&, bool);
+    void generateDot(Function*, bool);
     void generateJSON();
 	OperationNumber getOperation();
 };
+
+#endif

@@ -22,9 +22,9 @@ add_custom_command (
 	WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/CGRA-Mapper-Rust/
 )
 
-configure_file (
-	${CMAKE_SOURCE_DIR}/CGRA-Mapper-Rust/target/debug/libEggLib.so ${CMAKE_CURRENT_BINARY_DIR}/CGRA-Mapper-Rust/target/debug/libEggLib.so
-)
+# configure_file (
+# 	${CMAKE_SOURCE_DIR}/CGRA-Mapper-Rust/target/debug/libEggLib.so ${CMAKE_CURRENT_BINARY_DIR}/CGRA-Mapper-Rust/target/debug/libEggLib.so
+# )
 
 add_library(eggLib SHARED ${CMAKE_CURRENT_BINARY_DIR}/CGRA-Mapper-Rust/target/debug/libEggLib.so)
 set_target_properties(eggLib PROPERTIES LINKER_LANGUAGE CXX)
