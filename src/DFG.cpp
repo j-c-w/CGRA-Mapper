@@ -320,6 +320,11 @@ list<DFGNode*>* DFG::getDFSOrderedNodes() {
     errs()<<dfgNode->getID()<<"  ";
   }
   errs()<<"\n";
+  errs()<<"\n noes:\n";
+  for (DFGNode *node : nodes) {
+	  errs()<<node->getID()<<" ";
+  }
+  errs()<<"\n";
   assert(m_orderedNodes->size() == nodes.size());
   return m_orderedNodes;
 }
@@ -446,6 +451,7 @@ void DFG::construct(Function *t_F) {
             ctrlEdge = new DFGEdge(ctrlEdgeID++, getNode(terminator), dfgNode, true);
             m_ctrlEdges.push_back(ctrlEdge);
           }
+		  errs() << "Created edge " << ctrlEdge->asString() << "\n";
 
         }
       }

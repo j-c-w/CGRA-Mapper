@@ -41,7 +41,7 @@ RustDFG toRustDFG(DFG *dfg) {
 	int node_index = 0;
 
 	// TODO --- order the nodes appropriately.
-	for (DFGNode *n : *dfg->getDFSOrderedNodes()) {
+	for (DFGNode *n : dfg->nodes) {
 		id_lookup.insert({n->getID(), node_index});
 		nodes[node_index] = toRustNode(n, id_lookup);
 
