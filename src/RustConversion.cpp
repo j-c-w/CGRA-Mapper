@@ -26,7 +26,9 @@ RustNode toRustNode(DFGNode *n, map<int, int> id_map) {
 		i ++;
 	}
 
-	struct RustNode rnode;
+	RustNode rnode;
+	// DEBUG
+	std::cout << n->getOpcodeName().c_str() << std::endl;
 	rnode.op = n->getOpcodeName().c_str();
 	rnode.num_children = num_children;
 	rnode.child_ids = child_ids;
@@ -51,6 +53,17 @@ RustDFG toRustDFG(DFG *dfg) {
 	RustDFG rustDfg;
 	rustDfg.nodes = nodes;
 	rustDfg.num_nodes = node_index;
+
+	// DEBUG >>>
+	for (int i = 0; i < rustDfg.num_nodes; i++) {
+		auto node = rustDfg.nodes[i];
+		std::cout << i << ": " << node.op << " with children: [ ";
+		for (int j = 0; j < node.num_children; j++) {
+			std::cout << node.child_ids[j] << " ";
+		}
+		std::cout << "]" << std::endl;
+	}
+	// <<<
 
 	return rustDfg;
 }
