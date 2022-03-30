@@ -26,10 +26,27 @@ fn dfg_to_egraph(dfg: CppDFG) -> (EGraph<SymbolLang, ()>, Id) {
 	let nodes = unsafe { std::slice::from_raw_parts(dfg.nodes, dfg.count as usize) };
 	let mut egraph: EGraph<SymbolLang, ()> = Default::default();
 	let mut eclasses = vec![];
+	// DEBUG >>>
+	let test = 
+	unsafe { std::slice::from_raw_parts(std::ptr::null_mut(), 0) }.iter()
+		.map(|&c: &u32| eclasses[c as usize]).collect::<Vec<_>>();
+	println!("{:?}", test);
+	for (i, node) in nodes.iter().enumerate() {
+		let op = Symbol::from(unsafe { std::ffi::CStr::from_ptr(node.op) }.to_str().unwrap());
+		println!("{}: {} with children: {:?}", i, op,
+			unsafe { std::slice::from_raw_parts(node.child_ids, node.num_children as usize) });
+	}
+	// <<<
 	for node in nodes {
 		let op = Symbol::from(unsafe { std::ffi::CStr::from_ptr(node.op) }.to_str().unwrap());
+		// DEBUG
+		println!("{}: {} with {} children", eclasses.len(), op, node.num_children);
 		let children = unsafe { std::slice::from_raw_parts(node.child_ids, node.num_children as usize) }.iter()
-			.map(|&c| eclasses[c as usize]).collect::<Vec<_>>();
+			.map(|&c| {
+				// DEBUG
+				println!("access: {} / {}", c, eclasses.len());
+				eclasses[c as usize]
+			}).collect::<Vec<_>>();
 		eclasses.push(egraph.add(SymbolLang::new(op, children)));
 	}
 
@@ -56,6 +73,8 @@ fn expr_to_dfg(expr: RecExpr<SymbolLang>) -> CppDFG {
 
 #[no_mangle]
 pub extern "C" fn optimize_with_egraphs(dfg: CppDFG) -> CppDFGs {
+	println!("entering Rust");
+
 	let rules: &[Rewrite<SymbolLang, ()>] = &[
 		rewrite!("sub-to-add-neg"; "(sub ?x ?y)" => "(add ?x (neg ?y))"),
 

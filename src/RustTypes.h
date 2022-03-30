@@ -4,6 +4,10 @@
 #ifndef RustTypes_H
 #define RustTypes_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 // Leaves should be first.
 typedef struct RustNode {
 	const char* op;
@@ -22,13 +26,10 @@ typedef struct RustDFGList {
 	uint32_t num_dfgs;
 } RustDFGList;
 
-#endif
+RustDFGList optimize_with_egraphs(RustDFG input);
 
 #ifdef __cplusplus
-extern "C" {
-#endif
-	// NOTE: need to get the number of graphs out of this.
-	RustDFGList optimize_with_egraphs(RustDFG input);
-#ifdef __cplusplus
 }
+#endif
+
 #endif
