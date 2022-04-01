@@ -41,9 +41,10 @@ RustDFG toRustDFG(DFG *dfg) {
 
 	RustNode *nodes = (RustNode* )malloc(sizeof(RustNode) * dfg->nodes.size());
 	int node_index = 0;
+	list<DFGNode *> ordered_nodes = topo_sort(dfg->nodes);
 
 	// TODO --- order the nodes appropriately.
-	for (DFGNode *n : dfg->nodes) {
+	for (DFGNode *n : ordered_nodes) {
 		id_lookup.insert({n->getID(), node_index});
 		nodes[node_index] = toRustNode(n, id_lookup);
 
@@ -158,4 +159,33 @@ list<DFG*> *rewrite_with_egraphs(CGRA *cgra, DFG *dfg) {
 		dfg_results->push_back(toDFG(rust_results.dfgs[i]));
 	}
 	return dfg_results;
+}
+
+list <DFGNode *> topo_sort(list <DFGNode *> in_nodes) {
+	list<DFGNode*> out_nodes;
+	set<DFGNode*> added_nodes;
+
+	while (added_nodes.size() < in_nodes.size()) {
+		for (DFGNode *n : in_nodes) {
+			if (added_nodes.find(n) == added_nodes.end()) {
+				// Already added this node.
+				continue;
+			}
+
+			// Check if the node can be added.
+			bool can_add = true;
+			for (DFGNode *pNode : n->getPredNodes()) {
+				if (added_nodes.find(pNode) == added_nodes.end()) {
+					// we haven't yet added the dependency.
+					can_add = false;
+				}
+			}
+
+			if (can_add) {
+				out_nodes.push_back(n);
+			}
+		}
+	}
+
+	return out_nodes;
 }

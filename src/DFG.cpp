@@ -445,10 +445,12 @@ void DFG::construct(Function *t_F) {
           // Construct contrl flow edges.
           DFGEdge* ctrlEdge;
           if (hasCtrlEdge(getNode(terminator), dfgNode)) {
+			  errs() << "Built edge for node " << dfgNode->asString() << "\n";
             ctrlEdge = getCtrlEdge(getNode(terminator), dfgNode);
           }
           else {
             ctrlEdge = new DFGEdge(ctrlEdgeID++, getNode(terminator), dfgNode, true);
+			  errs() << "Built and added edge for node " << dfgNode->asString() << "\n";
             m_ctrlEdges.push_back(ctrlEdge);
           }
 		  errs() << "Created edge " << ctrlEdge->asString() << "\n";
