@@ -1,8 +1,10 @@
 #include "CGRA.h"
 #include "DFG.h"
 #include "RustTypes.h"
+#include "RustConversion.h"
 #include <stdlib.h>
 #include <stdint.h>
+#include <stdexcept>
 
 #include <list>
 #include <map>
@@ -161,11 +163,22 @@ list<DFG*> *rewrite_with_egraphs(CGRA *cgra, DFG *dfg) {
 	return dfg_results;
 }
 
+// Only works for loop-free graphs.
 list <DFGNode *> topo_sort(list <DFGNode *> in_nodes) {
 	list<DFGNode*> out_nodes;
 	set<DFGNode*> added_nodes;
+	int iteration_count = 0;
 
 	while (added_nodes.size() < in_nodes.size()) {
+		if (iteration_count > added_nodes.size()) {
+			errs() << "Yet to add instructions: " ;
+			for (DFGNode * still_too_add : in_nodes) {
+				errs() << still_too_add->asString() << "\n ";
+			}
+			errs() << "\n";
+			throw std::domain_error("Unsupported Circular DFG --- Only inner loops are supported for scheduling.");
+		}
+		iteration_count ++;
 		for (DFGNode *n : in_nodes) {
 			if (added_nodes.find(n) == added_nodes.end()) {
 				// Already added this node.
@@ -174,7 +187,7 @@ list <DFGNode *> topo_sort(list <DFGNode *> in_nodes) {
 
 			// Check if the node can be added.
 			bool can_add = true;
-			for (DFGNode *pNode : n->getPredNodes()) {
+			for (DFGNode *pNode : *n->getPredNodes()) {
 				if (added_nodes.find(pNode) == added_nodes.end()) {
 					// we haven't yet added the dependency.
 					can_add = false;

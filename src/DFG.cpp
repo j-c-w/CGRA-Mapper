@@ -258,7 +258,12 @@ bool DFG::shouldIgnore(Instruction* t_inst) {
   if (m_targetLoops->size() == 0)
     return false;
   for (Loop* current_loop: *m_targetLoops) {
-    if (current_loop->contains(t_inst)) {
+	  bool contains = current_loop->contains(t_inst);
+	  std::string str;
+	llvm::raw_string_ostream rso(str);
+	t_inst->print(rso);
+	  cout << "Looking at membership for instruction " << str << "\n;" << "result is " << contains << "\n";
+    if (contains) {
       return false;
     }
   }
@@ -320,9 +325,13 @@ list<DFGNode*>* DFG::getDFSOrderedNodes() {
     errs()<<dfgNode->getID()<<"  ";
   }
   errs()<<"\n";
+  errs()<<"\nedges:\n";
   errs()<<"\n noes:\n";
   for (DFGNode *node : nodes) {
 	  errs()<<node->getID()<<" ";
+	  for (DFGEdge *edge : node->getInEdges()) {
+		  errs() << "Edge: " << edge->asString();
+	  }
   }
   errs()<<"\n";
   assert(m_orderedNodes->size() == nodes.size());
