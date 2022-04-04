@@ -11,6 +11,7 @@
 #include "DFGNode.h"
 #include "OperationMap.h"
 #include <iostream>
+#include <string>
 
 DFGNode::DFGNode(int t_id, bool t_precisionAware, Instruction* t_inst, std::string opcodeName,
                  StringRef t_stringRef) {
@@ -51,7 +52,7 @@ int DFGNode::getID() {
 
 std::string DFGNode::asString() {
 	std::string node_string =
-		"Node " + m_opcodeName + " with edges (in: ";
+		"Node " + m_opcodeName + "(" + std::to_string(getID()) + ") with edges (in: ";
 	for (DFGEdge *e : m_inEdges) {
 		node_string.append(e->asString());
 	}
@@ -209,6 +210,14 @@ bool DFGNode::isAdd() {
       m_opcodeName.compare("fsub") == 0)
     return true;
   return false;
+}
+
+bool DFGNode::isBr() {
+	if (m_opcodeName.compare("br") == 0) {
+		return true;
+	}
+
+	return false;
 }
 
 bool DFGNode::isIntSub() {

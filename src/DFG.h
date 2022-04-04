@@ -106,6 +106,7 @@ class DFG {
     int getNodeCount();
     void construct(Function*);
     void setupCycles();
+	void breakCycles();
     list<list<DFGEdge*>*>* calculateCycles();
     list<list<DFGNode*>*>* getCycleLists();
     int getID(DFGNode*);

@@ -41,6 +41,9 @@ RustNode toRustNode(DFGNode *n, map<int, int> id_map) {
 RustDFG toRustDFG(DFG *dfg) {
 	map<int, int> id_lookup; // Translate between the IDs used in the DFG and the implicit IDs used in the Rust DFG.
 
+	// Need to break cycles before we convert into a rust DFG.
+	dfg->breakCycles();
+
 	RustNode *nodes = (RustNode* )malloc(sizeof(RustNode) * dfg->nodes.size());
 	int node_index = 0;
 	list<DFGNode *> ordered_nodes = topo_sort(dfg->nodes);

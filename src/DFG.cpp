@@ -1243,6 +1243,85 @@ void DFG::tuneForBitcast() {
   connectDFGNodes();
 }
 
+void DFG::breakCycles() {
+	// Break cycles to pass to the egraphs rewriter.
+	// TODO --- need a way to rejoin the cycles later.
+	for (DFGNode * dfgNode : nodes) {
+		// The cycles here seem to be centered around a 'br' node.
+		// So, we just go through and find any edges that go into a 'br' node,
+		// and any edges that come out of a 'br' node and break those.
+		// We also check that there is only one br node --- not 100% sure how
+		// to pick the right one if there is more than one right now.  Can cross
+		// that bridge if required.
+
+		list<DFGEdge *> inEdgesToRemove;
+		DFGNode *brnode = nullptr;
+		for (DFGEdge *edge : dfgNode->getInEdges()) {
+			DFGNode *srcnode = edge->getSrc();
+			DFGNode *dstnode = edge->getDst();
+			if (dstnode->isPhi()) {
+				inEdgesToRemove.push_back(edge);
+			} else if (srcnode->isBr()) {
+				inEdgesToRemove.push_back(edge);
+
+				if (brnode) {
+					// TODO -- more intelligent logic to figure out which of these is the loop br.
+					if (brnode != srcnode) {
+						// We choose the last one?
+						cout << "Expected a different brnode!\n";
+						cout << "Brnode is " << brnode->asString() << "\n";
+						cout << "Dstnode is "<< srcnode->asString() << "\n";
+						brnode = srcnode;
+						inEdgesToRemove.clear();
+						inEdgesToRemove.push_back(edge);
+						// assert(0);
+					}
+				} else {
+					brnode = srcnode;
+				}
+			}
+		}
+
+		list<DFGEdge *> outEdgesToRemove;
+		for (DFGEdge *edge : dfgNode->getOutEdges()) {
+			DFGNode *dstnode = edge->getDst();
+			DFGNode *srcnode = edge->getSrc();
+			// Also remove all incoming edges to each phi node --- these need to be added back in before scheduling.
+			if (srcnode->isPhi()) {
+				outEdgesToRemove.push_back(edge);
+			} else if (dstnode->isBr()) {
+				outEdgesToRemove.push_back(edge);
+
+				if (brnode) {
+					if (brnode != dstnode) {
+						cout << "Expected a different brnode!\n";
+						cout << "Brnode is " << brnode->asString() << "\n";
+						cout << "Dstnode is "<< dstnode->asString() << "\n";
+						// We use the last one --- assume it's a looping BR
+					}
+				} else {
+					brnode = dstnode;
+				}
+			}
+		}
+
+		cout << "Before removing, have " << dfgNode->getInEdges().size() << "edges in\n";
+		cout << "Before removing, have " << dfgNode->getOutEdges().size() << "edges out\n";
+		// Clear the edges:
+		for (DFGEdge * r: inEdgesToRemove) {
+			cout << "Removing edge " << r->asString() << "\n";
+			dfgNode->getInEdges().remove(r);
+		}
+		for (DFGEdge * r: outEdgesToRemove) {
+			cout << "Removing edge  " << r->asString() << "\n";
+			dfgNode->getOutEdges().remove(r);
+		}
+
+		cout << "After removing, have " << dfgNode->getInEdges().size() << "edges in\n";
+		cout << "After removing, have " << dfgNode->getOutEdges().size() << "edges out\n";
+	}
+}
+
 void DFG::tuneForLoad() {
   list<DFGNode*> unnecessaryDFGNodes;
   list<DFGEdge*> removeDFGEdges;

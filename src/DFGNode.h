@@ -80,6 +80,7 @@ class DFGNode {
     bool isBranch();
     bool isPhi();
     bool isAdd();
+	bool isBr();
     bool isIntSub();
     bool isMul();
     bool isCmp();

@@ -9,6 +9,7 @@
  */
 
 #include "DFGEdge.h"
+#include <string>
 
 DFGEdge::DFGEdge(int t_id, DFGNode* t_src, DFGNode* t_dst) {
   m_id = t_id;
@@ -36,9 +37,13 @@ void DFGEdge::setSrc(DFGNode *t_src) {
 std::string DFGEdge::asString() {
 	std::string result = std::string("(");
 	result.append(getSrc()->getOpcodeName());
-	result.append(", ");
+	result.append(" (");
+	result.append(std::to_string(getSrc()->getID()));
+	result.append("), ");
 	result.append(getDst()->getOpcodeName());
-	result.append(")");
+	result.append(" (");
+	result.append(std::to_string(getDst()->getID()));
+	result.append("))");
 
 	return result;
 }
