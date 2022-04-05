@@ -25,6 +25,7 @@ RustNode toRustNode(DFGNode *n, map<int, int> id_map) {
 	int i = 0;
 	for (DFGNode *succ: *n->getSuccNodes()) {
 		child_ids[i] = id_map[succ->getID()];
+		errs() << "ADDing ID " << id_map.at(succ->getID()) << " from " << succ->getID() << "\n";
 		i ++;
 	}
 
@@ -44,20 +45,26 @@ RustDFG toRustDFG(DFG *dfg) {
 	// Need to break cycles before we convert into a rust DFG.
 	dfg->breakCycles();
 
-	RustNode *nodes = (RustNode* )malloc(sizeof(RustNode) * dfg->nodes.size());
+	// RustNode *nodes = (RustNode* )malloc(sizeof(RustNode) * dfg->nodes.size());
+	auto nodes = std::make_unique<RustNode[]>(dfg->nodes.size());
 	int node_index = 0;
 	list<DFGNode *> ordered_nodes = topo_sort(dfg->nodes);
 
-	// TODO --- order the nodes appropriately.
+	// Build a lookup table for names.
 	for (DFGNode *n : ordered_nodes) {
 		id_lookup.insert({n->getID(), node_index});
-		nodes[node_index] = toRustNode(n, id_lookup);
+		node_index ++;
+	}
 
+	node_index = 0;
+	for (DFGNode *n : ordered_nodes) {
+		errs() << "Adding " << n->getID() << ", " << node_index << "to pattern\n";
+		nodes[node_index] = toRustNode(n, id_lookup);
 		node_index ++;
 	}
 
 	RustDFG rustDfg;
-	rustDfg.nodes = nodes;
+	rustDfg.nodes = nodes.release();
 	rustDfg.num_nodes = node_index;
 
 	// DEBUG >>>
@@ -87,14 +94,12 @@ DFGEdge *toDFGEdge(int32_t fromid, int32_t toid, map<int32_t, DFGNode*> *lookup)
 }
 
 DFG* toDFG(RustDFG rustDfg) {
+	errs() << "Starting to convert to DFG\n";
 	// stacks for DFS of the nodes.
 	list<RustNode> rnodes;
 	list<int> indexes;
-	// avoid getting caught out by loops.
-	set<int> visited_nodes;
 	rnodes.push_back(rustDfg.nodes[0]);
 	indexes.push_back(0);
-	visited_nodes.insert(0);
 
 	list<DFGNode*> *dnodes = new list<DFGNode*>();
 	// for creating th real edges
@@ -107,6 +112,7 @@ DFG* toDFG(RustDFG rustDfg) {
 	list<DFGEdge*> *dedges = new list<DFGEdge*>();
 
 	while (rnodes.size() > 0) {
+		errs() << "RNodes: Remaining size " << rnodes.size() << "\n";
 		// get the children from this node.
 		int index = indexes.front();
 		indexes.pop_front();
@@ -128,14 +134,9 @@ DFG* toDFG(RustDFG rustDfg) {
 		for (int i = 0; i < rnode.num_children; i ++) {
 			int32_t child = rnode.child_ids[i];
 
-			if (visited_nodes.count(child)) {
-				// we have already visited.
-				continue;
-			} else {
-				visited_nodes.insert(child);
-				rnodes.push_back(rustDfg.nodes[child]);
-				indexes.push_back(child);
-			}
+			errs() << "Adding child " << child;
+			rnodes.push_back(rustDfg.nodes[child]);
+			indexes.push_back(child);
 		}
 	}
 
@@ -173,8 +174,8 @@ list <DFGNode *> topo_sort(list <DFGNode *> in_nodes) {
 	int iteration_count = 0;
 
 	while (out_nodes.size() < in_nodes.size()) {
-		errs() << "Starting iteration " << iteration_count << "\n";
-		errs() << "Added nodes size is " << added_nodes.size() << ", " << in_nodes.size() << "\n";
+		// errs() << "Starting iteration " << iteration_count << "\n";
+		// errs() << "Added nodes size is " << added_nodes.size() << ", " << in_nodes.size() << "\n";
 		if (iteration_count > in_nodes.size()) {
 			errs() << "Yet to add instructions: " ;
 			for (DFGNode * still_to_add : in_nodes) {
@@ -189,32 +190,34 @@ list <DFGNode *> topo_sort(list <DFGNode *> in_nodes) {
 		}
 		iteration_count ++;
 		for (DFGNode *n : in_nodes) {
-			errs() << "Looking at node " << n->asString() << "\n";
+			// errs() << "Looking at node " << n->asString() << "\n";
 			if (added_nodes.find(n) != added_nodes.end()) {
-				errs() << "(Already added)\n";
+				// errs() << "(Already added)\n";
 				// Already added this node.
 				continue;
 			} else {
-				errs() << "(Looking to add...)\n";
+				// errs() << "(Looking to add...)\n";
 			}
 
 			// Check if the node can be added.
 			bool can_add = true;
-			for (DFGNode *pNode : *n->getPredNodes()) {
+			for (DFGNode *pNode : *n->getSuccNodes()) {
 				if (added_nodes.find(pNode) == added_nodes.end()) {
 					// we haven't yet added the dependency.
-					errs() << "Failed to add due to node " << pNode ->asString() << "\n";
+					// errs() << "Failed to add due to node " << pNode ->asString() << "\n";
 					can_add = false;
 				}
 			}
 
 			if (can_add) {
-				errs() << "(Adding) node\n";
+				// errs() << "(Adding) node\n";
 				out_nodes.push_back(n);
 				added_nodes.insert(n);
 			}
 		}
 	}
 
+	// Need to return the 'root' node first.
+	// out_nodes.reverse();
 	return out_nodes;
 }
