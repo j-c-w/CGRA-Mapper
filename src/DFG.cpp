@@ -1254,6 +1254,8 @@ void DFG::breakCycles() {
 		// to pick the right one if there is more than one right now.  Can cross
 		// that bridge if required.
 
+		/// TODO ---- Add dummy nodes to track the changes.
+		/// then write rejoinCycles to rejoin those into single nodes :)
 		list<DFGEdge *> inEdgesToRemove;
 		DFGNode *brnode = nullptr;
 		for (DFGEdge *edge : *dfgNode->getInEdges()) {
