@@ -449,12 +449,12 @@ void DFGNode::initType() {
   }
 }
 
-list<DFGEdge*> DFGNode::getInEdges() {
-	return m_inEdges;
+list<DFGEdge*> *DFGNode::getInEdges() {
+	return &m_inEdges;
 }
 
-list<DFGEdge*> DFGNode::getOutEdges() {
-	return m_outEdges;
+list<DFGEdge*> *DFGNode::getOutEdges() {
+	return &m_outEdges;
 }
 
 list<DFGNode*>* DFGNode::getPredNodes() {
@@ -562,4 +562,9 @@ int DFGNode::getNumConst() {
 OperationNumber DFGNode::getOperation() {
 	return m_opcodeName;
 	// return std::string("fadd");
+}
+
+void DFGNode::clearCachedNodes() {
+	m_predNodes = NULL;
+	m_succNodes = NULL;
 }

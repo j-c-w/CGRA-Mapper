@@ -71,7 +71,7 @@ class SubToAddNeg: public RewriteRule {
 
 				// Modify the in-edges:
 				bool first = true;
-				for (DFGEdge *in_edge: dfgNode->getInEdges()) {
+				for (DFGEdge *in_edge: *dfgNode->getInEdges()) {
 					// Swap the operation for the add node:
 					// First one goes into the add node
 					if (first) {
@@ -88,7 +88,7 @@ class SubToAddNeg: public RewriteRule {
 				}
 
 				// Do the same for the out edges:
-				for (DFGEdge *out_edge: dfgNode->getOutEdges()) {
+				for (DFGEdge *out_edge: *dfgNode->getOutEdges()) {
 					out_edge->setSrc(addNode);
 					// and add this edge to the node where it's stored.
 					addNode->setOutEdge(out_edge);

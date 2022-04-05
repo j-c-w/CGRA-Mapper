@@ -31,13 +31,13 @@ DFG::DFG(DFG &old): m_function(old.m_function) {
 	// always use heterogeneity :)
     calculateCycles();
 //    combine("phi", "add");
-    combine("and", "xor");
+    // combine("and", "xor");
 //    combine("br", "phi");
 //    combine("add", "icmp");
 //    combine("xor", "add");
-    combineCmpBranch();
-    combine("icmp", "br");
-    combine("getelementptr", "load");
+    // combineCmpBranch();
+    // combine("icmp", "br");
+    // combine("getelementptr", "load");
     tuneForPattern();
 
 //    calculateCycles();
@@ -85,13 +85,13 @@ DFG::DFG(Function *t_F, list<Loop*>* t_loops, bool t_targetFunction,
   if (t_heterogeneity) {
     calculateCycles();
 //    combine("phi", "add");
-    combine("and", "xor");
+    // combine("and", "xor");
 //    combine("br", "phi");
 //    combine("add", "icmp");
 //    combine("xor", "add");
-    combineCmpBranch();
-    combine("icmp", "br");
-    combine("getelementptr", "load");
+    // combineCmpBranch();
+    // combine("icmp", "br");
+    // combine("getelementptr", "load");
     tuneForPattern();
 
 //    calculateCycles();
@@ -329,7 +329,7 @@ list<DFGNode*>* DFG::getDFSOrderedNodes() {
   errs()<<"\n noes:\n";
   for (DFGNode *node : nodes) {
 	  errs()<<node->getID()<<" ";
-	  for (DFGEdge *edge : node->getInEdges()) {
+	  for (DFGEdge *edge : *node->getInEdges()) {
 		  errs() << "Edge: " << edge->asString();
 	  }
   }
@@ -1256,7 +1256,7 @@ void DFG::breakCycles() {
 
 		list<DFGEdge *> inEdgesToRemove;
 		DFGNode *brnode = nullptr;
-		for (DFGEdge *edge : dfgNode->getInEdges()) {
+		for (DFGEdge *edge : *dfgNode->getInEdges()) {
 			DFGNode *srcnode = edge->getSrc();
 			DFGNode *dstnode = edge->getDst();
 			if (dstnode->isPhi()) {
@@ -1283,7 +1283,7 @@ void DFG::breakCycles() {
 		}
 
 		list<DFGEdge *> outEdgesToRemove;
-		for (DFGEdge *edge : dfgNode->getOutEdges()) {
+		for (DFGEdge *edge : *dfgNode->getOutEdges()) {
 			DFGNode *dstnode = edge->getDst();
 			DFGNode *srcnode = edge->getSrc();
 			// Also remove all incoming edges to each phi node --- these need to be added back in before scheduling.
@@ -1305,21 +1305,24 @@ void DFG::breakCycles() {
 			}
 		}
 
-		cout << "Before removing, have " << dfgNode->getInEdges().size() << "edges in\n";
-		cout << "Before removing, have " << dfgNode->getOutEdges().size() << "edges out\n";
+		cout << "Before removing, have " << dfgNode->getInEdges()->size() << "edges in\n";
+		cout << "Before removing, have " << dfgNode->getOutEdges()->size() << "edges out\n";
 		// Clear the edges:
 		for (DFGEdge * r: inEdgesToRemove) {
 			cout << "Removing edge " << r->asString() << "\n";
-			dfgNode->getInEdges().remove(r);
+			dfgNode->getInEdges()->remove(r);
 		}
 		for (DFGEdge * r: outEdgesToRemove) {
 			cout << "Removing edge  " << r->asString() << "\n";
-			dfgNode->getOutEdges().remove(r);
+			dfgNode->getOutEdges()->remove(r);
 		}
 
-		cout << "After removing, have " << dfgNode->getInEdges().size() << "edges in\n";
-		cout << "After removing, have " << dfgNode->getOutEdges().size() << "edges out\n";
+		cout << "After removing, have " << dfgNode->getInEdges()->size() << "edges in\n";
+		cout << "After removing, have " << dfgNode->getOutEdges()->size() << "edges out\n";
+		// Clear the cahced info for this node.
+		dfgNode->clearCachedNodes();
 	}
+
 }
 
 void DFG::tuneForLoad() {

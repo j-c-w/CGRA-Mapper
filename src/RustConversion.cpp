@@ -172,20 +172,30 @@ list <DFGNode *> topo_sort(list <DFGNode *> in_nodes) {
 	set<DFGNode*> added_nodes;
 	int iteration_count = 0;
 
-	while (added_nodes.size() < in_nodes.size()) {
-		if (iteration_count > added_nodes.size()) {
+	while (out_nodes.size() < in_nodes.size()) {
+		errs() << "Starting iteration " << iteration_count << "\n";
+		errs() << "Added nodes size is " << added_nodes.size() << ", " << in_nodes.size() << "\n";
+		if (iteration_count > in_nodes.size()) {
 			errs() << "Yet to add instructions: " ;
-			for (DFGNode * still_too_add : in_nodes) {
-				errs() << still_too_add->asString() << "\n ";
+			for (DFGNode * still_to_add : in_nodes) {
+				if (added_nodes.find(still_to_add) == added_nodes.end()) {
+					errs() << still_to_add->asString() << "\n ";
+				} else {
+					// node was added
+				}
 			}
 			errs() << "\n";
 			throw std::domain_error("Unsupported Circular DFG --- Only inner loops are supported for scheduling.");
 		}
 		iteration_count ++;
 		for (DFGNode *n : in_nodes) {
-			if (added_nodes.find(n) == added_nodes.end()) {
+			errs() << "Looking at node " << n->asString() << "\n";
+			if (added_nodes.find(n) != added_nodes.end()) {
+				errs() << "(Already added)\n";
 				// Already added this node.
 				continue;
+			} else {
+				errs() << "(Looking to add...)\n";
 			}
 
 			// Check if the node can be added.
@@ -193,12 +203,15 @@ list <DFGNode *> topo_sort(list <DFGNode *> in_nodes) {
 			for (DFGNode *pNode : *n->getPredNodes()) {
 				if (added_nodes.find(pNode) == added_nodes.end()) {
 					// we haven't yet added the dependency.
+					errs() << "Failed to add due to node " << pNode ->asString() << "\n";
 					can_add = false;
 				}
 			}
 
 			if (can_add) {
+				errs() << "(Adding) node\n";
 				out_nodes.push_back(n);
+				added_nodes.insert(n);
 			}
 		}
 	}

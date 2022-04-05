@@ -73,6 +73,7 @@ class DFGNode {
     bool isMapped();
     void setMapped();
     void clearMapped();
+	void clearCachedNodes();
     bool isLoad();
     bool isStore();
     bool isReturn();
@@ -98,8 +99,8 @@ class DFGNode {
     list<DFGNode*>* getSuccNodes();
 	DFGEdge *getPredEdge(int);
 	DFGEdge *setPredEdge(int, DFGEdge);
-	list<DFGEdge *> getInEdges();
-	list<DFGEdge *> getOutEdges();
+	list<DFGEdge *> *getInEdges();
+	list<DFGEdge *> *getOutEdges();
     bool isSuccessorOf(DFGNode*);
     bool isPredecessorOf(DFGNode*);
     bool isOneOfThem(list<DFGNode*>*);
