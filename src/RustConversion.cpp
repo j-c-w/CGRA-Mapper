@@ -32,7 +32,10 @@ RustNode toRustNode(DFGNode *n, map<int, int> id_map) {
 	RustNode rnode;
 	// DEBUG
 	std::cout << n->getOpcodeName().c_str() << std::endl;
-	rnode.op = n->getOpcodeName().c_str();
+  // TODO: free memory somewhere
+  char* opbuf = (char*) malloc((strlen(n->getOpcodeName().c_str()) + 1) * sizeof(char));
+  strcpy(opbuf, n->getOpcodeName().c_str());
+  rnode.op = opbuf;
 	rnode.num_children = num_children;
 	rnode.child_ids = child_ids;
 
