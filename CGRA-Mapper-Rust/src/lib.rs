@@ -22,10 +22,11 @@ pub struct CppDFGs {
   count: u32
 }
 
-fn dfg_to_egraph(dfg: CppDFG) -> (EGraph<SymbolLang, ()>, Id) {
+fn dfg_to_egraph(dfg: CppDFG) -> (EGraph<SymbolLang, ()>, Vec<Id>) {
 	let nodes = unsafe { std::slice::from_raw_parts(dfg.nodes, dfg.count as usize) };
 	let mut egraph: EGraph<SymbolLang, ()> = Default::default();
 	let mut eclasses = vec![];
+    let mut is_root = (0..nodes.len()).map(|_| true).collect::<Vec<_>>(); // could use bit vector
 	// DEBUG >>>
 	let test = 
 	unsafe { std::slice::from_raw_parts(std::ptr::null_mut(), 0) }.iter()
@@ -45,13 +46,32 @@ fn dfg_to_egraph(dfg: CppDFG) -> (EGraph<SymbolLang, ()>, Id) {
 			.map(|&c| {
 				// DEBUG
 				println!("access: {} / {}", c, eclasses.len());
+                is_root[c as usize] = false;
 				eclasses[c as usize]
 			}).collect::<Vec<_>>();
 		eclasses.push(egraph.add(SymbolLang::new(op, children)));
 	}
 
-	let root = *eclasses.last().unwrap(); // root is last node in array?
-	(egraph, root)
+    let mut roots = eclasses.iter().cloned().zip(is_root.iter().cloned())
+        .filter_map(|(e, is_r)| if is_r { println!("{:?}", egraph[e]); Some(e) } else { None }).collect::<Vec<_>>();
+    // we remove duplicates, why is this necessary?
+    roots.sort();
+    roots.dedup();
+	(egraph, roots)
+}
+
+fn add_dfg<L: Language, N: Analysis<L>>(dfg: &RecExpr<L>, egraph: &mut EGraph<L, N>) -> Vec<Id> {
+    let nodes = dfg.as_ref();
+    let mut eclasses = Vec::with_capacity(nodes.len());
+    let mut is_root = (0..nodes.len()).map(|_| true).collect::<Vec<_>>(); // could use bit vector
+    for node in nodes {
+        eclasses.push(egraph.add(node.clone().map_children(|i| {
+            is_root[usize::from(i)] = false;
+            eclasses[usize::from(i)]
+        })));
+    }
+    eclasses.iter().cloned().zip(is_root.iter().cloned())
+        .filter_map(|(e, is_r)| if is_r { Some(e) } else { None }).collect::<Vec<_>>()
 }
 
 fn expr_to_dfg(expr: RecExpr<SymbolLang>) -> CppDFG {
@@ -86,11 +106,16 @@ pub extern "C" fn optimize_with_egraphs(dfg: CppDFG) -> CppDFGs {
 		rewrite!("mul-1"; "(mul ?x 1)" => "?x"),
 	];
 
-	let (egraph, root) = dfg_to_egraph(dfg);
+	let (egraph, mut roots) = dfg_to_egraph(dfg);
+    println!("identified {} roots", roots.len());
 	egraph.dot().to_svg("/tmp/initial.svg").unwrap();
 
 	let runner = Runner::default().with_egraph(egraph).run(rules);
-	let best = LpExtractor::new(&runner.egraph, AstSize).solve(root);
+    runner.egraph.dot().to_svg("/tmp/egraph.svg");
+    for r in &mut roots[..] {
+        *r = runner.egraph.find(*r);
+    }
+	let (best, bestRoots) = LpExtractor::new(&runner.egraph, AstSize).solve_multiple(&roots[..]);
 
 	{
 		let mut g: EGraph<SymbolLang, ()> = Default::default();
