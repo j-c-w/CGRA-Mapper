@@ -30,6 +30,12 @@ RustDFGList optimize_with_egraphs(RustDFG input);
 
 #ifdef __cplusplus
 }
+
 #endif
+
+// Various helper functions (not part of interface with rust)
+#include <string>
+
+std::string rnode_as_string(RustNode node);
 
 #endif

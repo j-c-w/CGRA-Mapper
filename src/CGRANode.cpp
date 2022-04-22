@@ -194,7 +194,9 @@ bool CGRANode::canSupport(DFGNode* t_opt) {
 	  return true;
   } else {
 	  bool supported = std::find(operations->begin(), operations->end(), t_opt->getOperation()) != operations->end();
-	  cout << "Operation " << t_opt->getOperation() << "is supported: " << supported << endl;
+	  /* if (DebugOperationMap) { */
+		  /* cout << "Operation " << t_opt->getOperation() << "is supported: " << supported << endl; */
+	  /* } */
 
 	  return supported;
   }

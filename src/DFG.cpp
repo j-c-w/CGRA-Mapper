@@ -51,7 +51,7 @@ DFG::DFG(DFG &old): m_function(old.m_function) {
 }
 
 // Lots of stuff left empty in this definition, trying to only capture what really needs to be captured.
-DFG::DFG(list<DFGNode *> *nodes, list<DFGEdge*> *edges): m_function(nullptr) {
+DFG::DFG(list<DFGNode *> nodes, list<DFGEdge*> edges): m_function(nullptr), nodes(nodes), m_DFGEdges(edges) {
   m_num = 0;
   // can these be null?
   m_targetFunction = true;
@@ -106,10 +106,12 @@ DFG::DFG(Function *t_F, list<Loop*>* t_loops, bool t_targetFunction,
 }
 
 std::string DFG::asString() {
-	std::string graph = "Graph: ";
+	std::string graph = "Graph (" + std::to_string(nodes.size()) + " nodes): ";
 	for (DFGNode *n : nodes) {
 		if (n != nullptr)
 			graph = graph + n->asString() + ", ";
+		else
+			graph = graph + " null, ";
 	}
 
 	return graph;

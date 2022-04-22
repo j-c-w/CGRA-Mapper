@@ -40,6 +40,7 @@ cl::opt<bool> UseEGraphs("use-egraphs", cl::desc("Use the egraphs-based rewriter
 // Debug flags
 cl::opt<bool> PrintMappingFailures("print-mapping-failures", cl::desc("Print the operations where mapping fails"));
 cl::opt<bool> DebugMappingLoop("debug-mapping-loop", cl::desc("Debug the mapping loop."));
+cl::opt<bool> DebugRustConversion("debug-rust-conversion", cl::desc("Debug the egraphs interface on the C++ side"));
 
 
 namespace {
@@ -58,7 +59,6 @@ namespace {
     }
 
     bool runOnFunction(Function &t_F) override {
-
       // Initializes input parameters.
       int rows                      = 4;
       int columns                   = 4;
@@ -219,7 +219,7 @@ namespace {
 	  if (UseRewriter) {
 		  generated_dfgs = rewrite_for_CGRA(cgra, dfg);
 	  } else if (UseEGraphs) {
-		  generated_dfgs = rewrite_with_egraphs(cgra, dfg);
+		  generated_dfgs = rewrite_with_egraphs(cgra, dfg, DebugRustConversion);
 	  } else {
 		  // if we aren't using the rewriter, just create
 		  // a singleton list.

@@ -95,7 +95,7 @@ class DFG {
 
   public:
 	DFG(DFG &old);
-	DFG(list<DFGNode *> *nodes, list<DFGEdge *> *edges);
+	DFG(list<DFGNode *> nodes, list<DFGEdge *> edges);
     DFG(Function*, list<Loop*>*, bool, bool, bool, map<string, int>*, list<string>*);
     list<list<DFGNode*>*>* m_cycleNodeLists;
     //initial ordering of insts

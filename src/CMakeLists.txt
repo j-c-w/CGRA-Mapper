@@ -27,8 +27,11 @@ add_library(mapperPass MODULE
     Mapper.cpp
 	Rewriter.cpp
 	RustTypes.h
+	RustTypes.cpp
 	RustConversion.cpp
 	RustConversion.h
+	Options.h
+	Options.cpp
 )
 
 # Use C++11 to compile our pass (i.e., supply -std=c++11).
