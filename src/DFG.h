@@ -118,6 +118,9 @@ class DFG {
 	void removeNodes(list<DFGNode *>*);
     void generateDot(Function*, bool);
     void generateJSON();
+	void addNode(DFGNode *node);
+	void addEdge(DFGEdge *edge);
+	int getMaxNodeNumber();
 	OperationNumber getOperation();
 };
 

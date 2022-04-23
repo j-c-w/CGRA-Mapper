@@ -864,6 +864,14 @@ int DFG::getInstID(BasicBlock* t_bb, Instruction* t_inst) {
   return -1;
 }
 
+void DFG::addEdge(DFGEdge *edge) {
+	m_DFGEdges.push_back(edge);
+}
+
+void DFG::addNode(DFGNode *node) {
+	nodes.push_back(node);
+}
+
 void DFG::connectDFGNodes() {
   for (DFGNode* node: nodes)
     node->cutEdges();
@@ -1245,10 +1253,79 @@ void DFG::tuneForBitcast() {
   connectDFGNodes();
 }
 
+void splitEdge(DFGEdge *r, int *nodeCounter, list<DFGNode*> *nodesToAdd, list<DFGEdge *> *edgesToAdd) {
+	errs() << "Splitting over edge " << r->asString() << "\n";
+	// Add in the replacement edge --- need a pair of un-connected dummy nodes.
+	int joinName = *nodeCounter;
+	DFGNode *tempSource = new DFGNode(*nodeCounter, false, nullptr, "DummySource" + std::to_string(joinName), "");
+	(*nodeCounter) ++;
+	DFGNode *tempTarget = new DFGNode(*nodeCounter, false, nullptr, "DummyTarget" + std::to_string(joinName), "");
+	(*nodeCounter) ++;
+
+	errs() << "Created nodes " << *nodeCounter << "\n";
+
+	// Now, create the edges
+	// I don't think these have to have unique IDs --- we need
+	// to make sure we dont' skip over nodes --- the rust
+	// converter assumes those are not skipping around.
+	DFGEdge *first_edge = new DFGEdge(1, tempSource, r->getDst());
+	DFGEdge *other_edge = new DFGEdge(1, r->getSrc(), tempTarget);
+
+	errs() << "Created edges \n";
+	errs() << "Edges are " << first_edge->asString();
+	errs() << " And " << other_edge->asString();
+	errs() << "\n";
+
+	// I think these are the right way around --- need to keep
+	// the edges in the right order.
+	r->getDst()->getInEdges()->push_back(first_edge);
+	tempSource->getOutEdges()->push_back(first_edge);
+
+	errs() << "Set edges source\n";
+	errs() << "Before, have " << r->getSrc()->getOutEdges()->size() << " edges\n";
+
+	r->getSrc()->getOutEdges()->push_back(other_edge);
+	tempTarget->getInEdges()->push_back(other_edge);
+
+	errs() << "After, have " << r->getSrc()->getOutEdges()->size() << " edges\n";
+	errs() << "Set edges target\n";
+
+	edgesToAdd->push_back(first_edge);
+	edgesToAdd->push_back(other_edge);
+
+	nodesToAdd->push_back(tempSource);
+	nodesToAdd->push_back(tempTarget);
+
+	errs() << "setup the to add stacks";
+}
+
+int DFG::getMaxNodeNumber() {
+	int max_node = -1;
+	for (DFGNode *node : nodes) {
+		int id = node->getID();
+		if (max_node < id) {
+			max_node = id;
+		}
+	}
+
+	return max_node;
+}
+
 void DFG::breakCycles() {
+	// This introduces dummy nodes -- to keep track of them
+	// We need to add them to the DFG when we are done.
+	list<DFGEdge *> edgesToAdd;
+	list<DFGNode *> nodesToAdd;
+
+	// This has to be done out here because the node numbers
+	// are not updated until the end of this loop.
+	int dummyNodeCounter = getMaxNodeNumber();
 	// Break cycles to pass to the egraphs rewriter.
-	// TODO --- need a way to rejoin the cycles later.
+	// To break the cycles, we introduce dummy nodes --- the dummy nodes
+	// can be rejoined with the joinCycles operation.
 	for (DFGNode * dfgNode : nodes) {
+		// TODO --- I think it may be possible to do this by
+		// only breaking the control flow edges?
 		// The cycles here seem to be centered around a 'br' node.
 		// So, we just go through and find any edges that go into a 'br' node,
 		// and any edges that come out of a 'br' node and break those.
@@ -1256,9 +1333,10 @@ void DFG::breakCycles() {
 		// to pick the right one if there is more than one right now.  Can cross
 		// that bridge if required.
 
-		/// TODO ---- Add dummy nodes to track the changes.
-		/// then write rejoinCycles to rejoin those into single nodes :)
 		list<DFGEdge *> inEdgesToRemove;
+		list<DFGEdge *> tempEdges;
+		list<DFGNode *> tempNodes;
+
 		DFGNode *brnode = nullptr;
 		for (DFGEdge *edge : *dfgNode->getInEdges()) {
 			DFGNode *srcnode = edge->getSrc();
@@ -1315,10 +1393,15 @@ void DFG::breakCycles() {
 		for (DFGEdge * r: inEdgesToRemove) {
 			cout << "Removing edge " << r->asString() << "\n";
 			dfgNode->getInEdges()->remove(r);
+
+			splitEdge(r, &dummyNodeCounter, &nodesToAdd, &edgesToAdd);
 		}
+
 		for (DFGEdge * r: outEdgesToRemove) {
 			cout << "Removing edge  " << r->asString() << "\n";
 			dfgNode->getOutEdges()->remove(r);
+
+			splitEdge(r, &dummyNodeCounter, &nodesToAdd, &edgesToAdd);
 		}
 
 		cout << "After removing, have " << dfgNode->getInEdges()->size() << "edges in\n";
@@ -1327,6 +1410,15 @@ void DFG::breakCycles() {
 		dfgNode->clearCachedNodes();
 	}
 
+	// Now, we need to add the dummy nodes and edges to the DFG.
+	// Needs to be done outside the node iteration.
+	for (DFGNode *node : nodesToAdd) {
+		addNode(node);
+	}
+
+	for (DFGEdge *edge : edgesToAdd) {
+		addEdge(edge);
+	}
 }
 
 void DFG::tuneForLoad() {

@@ -20,7 +20,7 @@ typedef struct TempEdge {
 bool debugRustConversion = false;
 
 RustNode toRustNode(DFGNode *n, map<int, int> id_map) {
-	uint32_t num_children = n->getSuccNodes()->size();
+	uint32_t num_children = n->getPredNodes()->size();
 
 	uint32_t *child_ids = (uint32_t*) malloc(num_children * sizeof(uint32_t));
 
@@ -28,7 +28,8 @@ RustNode toRustNode(DFGNode *n, map<int, int> id_map) {
 	for (DFGNode *pred: *n->getPredNodes()) {
 		child_ids[i] = id_map[pred->getID()];
 		if (debugRustConversion) {
-			errs() << "ADDing ID " << id_map.at(pred->getID()) << " from " << pred->getID() << "\n";
+			errs() << "ADDing ID " << child_ids[i] << " --same as-- " << id_map.at(pred->getID()) << " from " << pred->getID() << "\n";
+			errs() << "ID was for node " << pred->asString() << "\n";
 		}
 		i ++;
 	}
@@ -42,6 +43,14 @@ RustNode toRustNode(DFGNode *n, map<int, int> id_map) {
   rnode.op = opbuf;
 	rnode.num_children = num_children;
 	rnode.child_ids = child_ids;
+
+	if (debugRustConversion) {
+		errs() << "Child IDs are: ";
+		for (int i = 0; i < rnode.num_children; i ++) {
+			errs() << rnode.child_ids[i] << ", ";
+		}
+		errs() << "\n";
+	}
 
 	return rnode;
 }
