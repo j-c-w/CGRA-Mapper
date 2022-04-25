@@ -4,7 +4,20 @@
 // gobal thing.
 #include <llvm/Support/CommandLine.h>
 
-void setupOptions();
+class Options {
+	public:
+		Options();
+		bool BuildCGRA;
+		bool UseRewriter;
+		bool UseEGraphs;
+
+		bool DebugOperationMap;
+		bool DebugRustConversion;
+		bool DebugMappingLoop;
+		bool PrintMappingFailures;
+};
+
+Options *setupOptions();
 
 #define OPTIONS_H
 #endif

@@ -23,6 +23,7 @@
 #include "OperationMap.h"
 #include "Rewriter.h"
 #include "RustConversion.h"
+#include "Options.h"
 
 
 using namespace llvm;
@@ -30,18 +31,6 @@ using namespace std;
 using json = nlohmann::json;
 
 void addDefaultKernels(map<string, list<int>*>*);
-
-cl::opt<bool> BuildCGRA("build", cl::desc("Build the CGRA from the code rather than mapping to it."));
-
-// op mode flags.
-cl::opt<bool> UseRewriter("rewriter", cl::desc("Use the simple rewriter"));
-cl::opt<bool> UseEGraphs("use-egraphs", cl::desc("Use the egraphs-based rewriter"));
-
-// Debug flags
-cl::opt<bool> PrintMappingFailures("print-mapping-failures", cl::desc("Print the operations where mapping fails"));
-cl::opt<bool> DebugMappingLoop("debug-mapping-loop", cl::desc("Debug the mapping loop."));
-cl::opt<bool> DebugRustConversion("debug-rust-conversion", cl::desc("Debug the egraphs interface on the C++ side"));
-
 
 namespace {
 
@@ -82,6 +71,8 @@ namespace {
       map<string, list<int>*>* functionWithLoop = new map<string, list<int>*>();
       addDefaultKernels(functionWithLoop);
 
+	  Options *options = setupOptions();
+
       // Read the parameter JSON file.
       ifstream i("./param.json");
       if (!i.good()) {
@@ -119,6 +110,7 @@ namespace {
 
 		  (*opmap)[row] = submap;
 	  }
+
 
 
         // Configuration for customizable CGRA.
@@ -173,7 +165,7 @@ namespace {
       //       heterogeneity is
       DFG* dfg = new DFG(&t_F, targetLoops, targetEntireFunction, precisionAware,
                          heterogeneity, execLatency, pipelinedOpt);
-      CGRA* cgra = new CGRA(rows, columns, heterogeneity, additionalFunc, opmap, BuildCGRA);
+      CGRA* cgra = new CGRA(rows, columns, heterogeneity, additionalFunc, opmap, options->BuildCGRA);
       cgra->setRegConstraint(regConstraint);
       cgra->setCtrlMemConstraint(ctrlMemConstraint);
       cgra->setBypassConstraint(bypassConstraint);
@@ -216,10 +208,10 @@ namespace {
 	  DFG *winning_dfg;
 
 	  list<DFG*> *generated_dfgs;
-	  if (UseRewriter) {
+	  if (options->UseRewriter) {
 		  generated_dfgs = rewrite_for_CGRA(cgra, dfg);
-	  } else if (UseEGraphs) {
-		  generated_dfgs = rewrite_with_egraphs(cgra, dfg, DebugRustConversion);
+	  } else if (options->UseEGraphs) {
+		  generated_dfgs = rewrite_with_egraphs(cgra, dfg, options->DebugRustConversion);
 	  } else {
 		  // if we aren't using the rewriter, just create
 		  // a singleton list.
@@ -230,17 +222,23 @@ namespace {
 	  int min_II = -1;
 	  int dfg_no = 0;
 	  for (DFG *dfg : *generated_dfgs) {
-		  if (DebugMappingLoop) {
+		  if (options->DebugMappingLoop) {
 			  cout << "Starting mapper for new DFG (Number " << ++dfg_no << ")" << endl;
 			  cout << "DFG is : " << dfg->asString() << endl;
 		  }
-		  int this_II = mapper->heuristicMap(cgra, dfg, II, isStaticElasticCGRA, PrintMappingFailures);
+		  // Rejoin the edges if they were split --- note
+		  // that this is currently just wasted computation
+		  // time if we didn't use egraphs.
+		  // anyway, suspect it's negligable.
+		  dfg->rejoinCycles();
+
+		  int this_II = mapper->heuristicMap(cgra, dfg, II, isStaticElasticCGRA, options->PrintMappingFailures);
 
 		  if ((this_II < min_II || min_II < 0) && this_II > 0) {
 			  min_II = this_II;
 			  winning_dfg = dfg;
 		  }
-		  if (DebugMappingLoop) {
+		  if (options->DebugMappingLoop) {
 			  cout << "DFG Number " << dfg_no << " had II " << this_II << endl;
 		  }
 	  }
