@@ -195,6 +195,9 @@ list<DFG*> *rewrite_with_egraphs(CGRA *cgra, DFG *dfg, bool DebugRustConversion)
 	RustDFGList rust_results = optimize_with_egraphs(rdfg);
 	// Go through and look at the outputs
 
+	if (DebugRustConversion) {
+		errs() << "Sent over graph: " << dfg->asString() << "\n";
+	}
 	list<DFG*> *dfg_results = new list<DFG*>();
 	for (int i = 0; i < rust_results.num_dfgs; i ++) {
 		// convert each result to a dfg.
@@ -202,6 +205,7 @@ list<DFG*> *rewrite_with_egraphs(CGRA *cgra, DFG *dfg, bool DebugRustConversion)
 	}
 	if (DebugRustConversion) {
 		errs() << "Returning " << rust_results.num_dfgs << " graphs from the Rust wrapper\n";
+		errs() << "First result is " << dfg_results->front()->asString();
 	}
 	return dfg_results;
 }
