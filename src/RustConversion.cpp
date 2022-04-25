@@ -146,17 +146,19 @@ DFG* toDFG(RustDFG rustDfg) {
 			errs() << "Starting on RNode " << i << "\n";
 		// get the children from this node.
 		RustNode rnode = rustDfg.nodes[i];
-		if (debugRustConversion)
+		if (debugRustConversion) {
 			errs() << "Inspecting RNode: " << rnode_as_string(rnode) << "\n";
+			errs() << "Node has " << rnode.num_children << " children\n";
+		}
 		DFGNode *dfgnode = toDFGNode(rnode, i);
 		dnode_map->insert({i, dfgnode});
 		if (debugRustConversion)
 			errs() << "Created DFGNode " << dfgnode->asString() << " (Edges not yet attached)\n";
 		// keep track of the edges we'll need to construct later.
-		for (int i = 0; i < rnode.num_children; i ++) {
+		for (int j = 0; j < rnode.num_children; j ++) {
 			TempEdge temp_edge;
 			temp_edge.to = i;
-			temp_edge.from = rnode.child_ids[i];
+			temp_edge.from = rnode.child_ids[j];
 			temp_edges->push_back(temp_edge);
 		}
 
@@ -170,8 +172,8 @@ DFG* toDFG(RustDFG rustDfg) {
 
 		// Update the appropriate nodes with this edge:
 		// Order is swapped --- between an ast operation-like order and a DFG-like order
-		DFGNode *fromNode = getNodeFromIndex(dnodes, e.to);
-		DFGNode *toNode   = getNodeFromIndex(dnodes, e.from);
+		DFGNode *fromNode = dnode_map->at(e.to);
+		DFGNode *toNode   = dnode_map->at(e.from);
 
 		fromNode->setOutEdge(new_edge);
 		toNode->setInEdge(new_edge);
