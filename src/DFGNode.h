@@ -110,6 +110,10 @@ class DFGNode {
     string getJSONOpt();
     string getFuType();
     void addConst();
+	void removeInEdge(DFGEdge *);
+	void removeOutEdge(DFGEdge *);
+	void addInEdge(DFGEdge *);
+	void addOutEdge(DFGEdge *);
     void removeConst();
     int getNumConst();
     void initType();

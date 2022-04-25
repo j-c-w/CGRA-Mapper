@@ -1253,6 +1253,7 @@ void DFG::tuneForBitcast() {
   connectDFGNodes();
 }
 
+// Note that this is not a member function of the class, but just a helper (static) function.
 void splitEdge(DFGEdge *r, int *nodeCounter, list<DFGNode*> *nodesToAdd, list<DFGEdge *> *edgesToAdd) {
 	errs() << "Splitting over edge " << r->asString() << "\n";
 	// Add in the replacement edge --- need a pair of un-connected dummy nodes.
@@ -1309,6 +1310,102 @@ int DFG::getMaxNodeNumber() {
 	}
 
 	return max_node;
+}
+
+// Take the cycles that were broken in breakCycles
+// and rejoin them --- to do this, we do a search for
+// the nodes that have names DummyTargetX and DummySourceX
+// and then create edges across those gaps.
+void DFG::rejoinCycles() {
+	// Keep the source nodes ina  list so we can iterate
+	vector<DFGNode*> sourceNodes;
+	vector<int> sourceNodeNumbers;
+	// Keep the target nodes in a map so we can get them
+	// easily.
+	map<int, DFGNode*> targetNodes;
+
+	errs() << "Starting to join cycles in the graph.\n";
+	for (DFGNode *node : nodes) {
+		//
+		errs() << "Node: " << node->asString() << "\n";
+		// Check the node operation name:
+		std::string opname = node->getOpcodeName();
+
+		if (opname.find("Dummy") != std::string::npos) {
+			// Figure out if this is a source or a target:
+			if (opname.find("Source") != std::string::npos) {
+				// This is a source, get the numebr in the name
+				int number = std::stoi(opname.substr(11));
+
+				sourceNodeNumbers.push_back(number);
+				sourceNodes.push_back(node);
+			} else {
+				// This is a "Target" node.
+				int number = std::stoi(opname.substr(11));
+
+				targetNodes[number] = node;
+			}
+		}
+	}
+
+	// Now, go through these nodes.
+	// We need to (a) create a new edge between the pred nodes
+	// of the dummy source and the succ nodes of the dummy target
+	// and (b) delete the dummy nodes and edges from the graph.
+
+	// Part (a)
+	// Keep track of edges and nodes to delete.
+	list<DFGNode *> nodesToDelete;
+	list<DFGEdge *> edgesToDelete;
+
+	for (int i = 0; i < sourceNodes.size(); i ++) {
+		DFGNode *sourceNode = sourceNodes[i];
+		int nodeNumber = sourceNodeNumbers[i];
+		DFGNode *targetNode = targetNodes.at(nodeNumber);
+
+		// TODO --- do we need to preserve order? (Answer is yes if we want to really run the code,
+		// but we can get correct compilation stats w/out preserving
+		// the order)
+
+		// Get the inserted edges -- note by construction each
+		// of these is going to have a single edge.
+		DFGEdge *sourceEdge = (*sourceNode->getInEdges()).front();
+		DFGEdge *destEdge = (*targetNode->getOutEdges()).front();
+		errs() << "Source node is " << sourceNode->asString();
+		errs() << "Number of in edges to the source node is " << sourceNode->getInEdges()->size() << "\n";
+		errs() << "Target node is " << targetNode->asString();
+		errs() << "Number of out edges to the target node is " << targetNode->getOutEdges()->size() << "\n";
+
+
+		// New edge: (IIRC the edge IDs don't matter?)
+		DFGEdge *newEdge = new DFGEdge(0, sourceEdge->getSrc(), destEdge->getDst());
+
+		// Put this edge into the nodes:
+		sourceNode->addOutEdge(newEdge);
+		targetNode->addInEdge(newEdge);
+
+		// Now, delete the nodes:
+		nodesToDelete.push_back(sourceNode);
+		nodesToDelete.push_back(targetNode);
+		// And the edges they are attached to
+		edgesToDelete.push_back(sourceEdge);
+		edgesToDelete.push_back(destEdge);
+	}
+
+	// Part (b)
+	// Now, remove all the nodes from the nodes list:
+	removeNodes(&nodesToDelete);
+	// remove all nodes from the edges list:
+	for (DFGEdge *edge : edgesToDelete) {
+		m_DFGEdges.remove(edge);
+
+		// Need to clear the edge from the nodes it was
+		// attached to also:
+		DFGNode *src = edge->getSrc();
+		src->removeOutEdge(edge);
+		DFGNode *dst = edge->getDst();
+		dst->removeInEdge(edge);
+	}
 }
 
 void DFG::breakCycles() {

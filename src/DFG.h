@@ -107,6 +107,7 @@ class DFG {
     void construct(Function*);
     void setupCycles();
 	void breakCycles();
+	void rejoinCycles();
     list<list<DFGEdge*>*>* calculateCycles();
     list<list<DFGNode*>*>* getCycleLists();
     int getID(DFGNode*);

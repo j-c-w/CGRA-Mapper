@@ -551,6 +551,31 @@ void DFGNode::addConst() {
   ++m_numConst;
 }
 
+void DFGNode::removeInEdge(DFGEdge *e) {
+	m_inEdges.remove(e);
+
+	clearCachedNodes();
+}
+
+void DFGNode::removeOutEdge(DFGEdge *e) {
+	m_outEdges.remove(e);
+
+	clearCachedNodes();
+}
+
+void DFGNode::addInEdge(DFGEdge *e) {
+	m_inEdges.push_back(e);
+
+	clearCachedNodes();
+}
+
+void DFGNode::addOutEdge(DFGEdge *e) {
+	m_outEdges.push_back(e);
+
+	clearCachedNodes();
+}
+
+
 void DFGNode::removeConst() {
   --m_numConst;
 }
