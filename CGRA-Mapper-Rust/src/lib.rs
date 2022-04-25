@@ -109,7 +109,7 @@ pub extern "C" fn optimize_with_egraphs(dfg: CppDFG) -> CppDFGs {
 		// TODO -- how to get the precision (it's a constant --- note that this is sufficient for
 		// proof of concept, but not for actually running the code)?
 		// (31 is actually meant to be precision - 1).
-		rewrite!("abs-expand"; "(abs ?x)" => "(xor (add (rsl (?x 31)) ?x) (rsl ?x (31)))"),
+		rewrite!("abs-expand"; "(abs ?x)" => "(xor (add (rsl ?x 31) ?x) (rsl ?x (31)))"),
 		// Line: 280
 		rewrite!("neg-to-mul"; "(neg ?x)" => "(mul ?x -1)"),
 		rewrite!("mul-to-neg"; "(mul ?x -1)" => "(neg ?x)"), // TODO -- Thomas: This is cyclical,
