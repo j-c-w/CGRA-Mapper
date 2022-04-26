@@ -1,6 +1,7 @@
 use egg::*;
 use std::os::raw::c_char;
 use std::mem::size_of;
+use std::collections::HashSet;
 
 #[repr(C)]
 pub struct CppNode {
@@ -91,6 +92,29 @@ fn expr_to_dfg(expr: RecExpr<SymbolLang>) -> CppDFG {
 	CppDFG { nodes: nodes_ptr, count: enodes.len().try_into().unwrap() }
 }
 
+struct BanCost {
+    // could also have cost: HashMap<Symbol, f64>
+    banned: HashSet<Symbol>
+}
+
+impl BanCost {
+    fn new(banned: &[&str]) -> Self {
+        BanCost {
+            banned: banned.iter().map(|s| Symbol::from(s)).collect::<HashSet<_>>(),
+        }
+    }
+}
+
+impl LpCostFunction<SymbolLang, ()> for BanCost {
+    fn node_cost(&mut self, _egraph: &EGraph<SymbolLang, ()>, _eclass: Id, enode: &SymbolLang) -> f64 {
+        if self.banned.contains(&enode.op) {
+            1_000_000.0 // does not seem to like f64::INFINITY
+        } else {
+            1.0
+        }
+    }
+}
+
 #[no_mangle]
 pub extern "C" fn optimize_with_egraphs(dfg: CppDFG) -> CppDFGs {
 	println!("entering Rust");
@@ -165,11 +189,13 @@ pub extern "C" fn optimize_with_egraphs(dfg: CppDFG) -> CppDFGs {
 	egraph.dot().to_svg("/tmp/initial.svg").unwrap();
 
 	let runner = Runner::default().with_egraph(egraph).run(rules);
-    runner.egraph.dot().to_svg("/tmp/egraph.svg");
+    runner.egraph.dot().to_svg("/tmp/egraph.svg").unwrap();
+
     for r in &mut roots[..] {
         *r = runner.egraph.find(*r);
     }
-	let (best, bestRoots) = LpExtractor::new(&runner.egraph, AstSize).solve_multiple(&roots[..]);
+    let cost = BanCost::new(&["sub"]);
+	let (best, _best_roots) = LpExtractor::new(&runner.egraph, cost).solve_multiple(&roots[..]);
 
 	{
 		let mut g: EGraph<SymbolLang, ()> = Default::default();
