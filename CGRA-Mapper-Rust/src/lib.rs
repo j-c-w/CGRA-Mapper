@@ -3,6 +3,12 @@ use std::os::raw::c_char;
 use std::mem::size_of;
 use std::collections::HashSet;
 
+// JSON File loading imports
+use std::fs::File;
+use tinyjson::JsonValue::*;
+use std::string::String;
+use std::io::Read;
+
 #[repr(C)]
 pub struct CppNode {
 	op: *const c_char,
@@ -75,6 +81,73 @@ fn add_dfg<L: Language, N: Analysis<L>>(dfg: &RecExpr<L>, egraph: &mut EGraph<L,
         .filter_map(|(e, is_r)| if is_r { Some(e) } else { None }).collect::<Vec<_>>()
 }
 
+// This thing loads the operations in from a JSON file, and
+// also takes a look at all the operations that are ever
+// availabel --- it computes the set {X | X /in all_operations and X \not\in operations_file }
+// i.e. the things that the Egraphs should not target.
+fn get_banned_operations(operations_file: String) -> Vec<String> {
+	let all_operations:[&'static str; 6] = [
+		"add",
+		"getelementptr",
+		"load",
+		"phi",
+		"store",
+		"sub"
+	];
+
+	let mut file = File::open(operations_file).unwrap();
+	let mut data = String::new();
+	file.read_to_string(&mut data).unwrap();
+	let json: tinyjson::JsonValue = data.parse().unwrap();
+	let mut operations_list: HashSet<String> = HashSet::new();
+	// println!("Parsed: {:?}", json);
+
+	// The json is a 2d map of col number, row number
+	// and then a list of the operations it supports.
+	match json {
+		Object(map) =>
+			match map.get("operations").unwrap() {
+				Object(opmap) =>
+					// GO through rows
+					for (_row, values) in opmap {
+						match values {
+							Object(cmap) =>
+								// Go through cols:
+								for (_col, cvalues) in cmap {
+									match cvalues{
+										Array(operations) =>
+											// Go through ebvery element in the cols.
+											for v in operations {
+												match v {
+													String(s) =>
+														operations_list.insert(s.to_string()),
+													_ => panic!("unexpected non-string")
+												};
+											},
+										_ => panic!("unexpected non-array")
+									};
+								},
+							_ => panic!("unexpected col")
+						};
+					},
+				_ => panic!("unexpected row")
+			},
+		Null => panic!("Null"),
+		_ => panic!("Unexpected!")
+	};
+
+	// Trying to build a list of banned operations, not
+	// one of supported operations --- so we are looking for things
+	// not in this list.
+	let mut result_vec: Vec<String> = Vec::new();
+	for operation in all_operations {
+		if !(operations_list.contains(operation)) {
+			result_vec.push(operation.to_string());
+		}
+	}
+	result_vec
+}
+
 fn expr_to_dfg(expr: RecExpr<SymbolLang>) -> CppDFG {
 	let enodes = expr.as_ref();
 	let nodes_ptr = unsafe { libc::malloc(enodes.len() * size_of::<CppNode>()) } as *mut CppNode;
@@ -98,7 +171,7 @@ struct BanCost {
 }
 
 impl BanCost {
-    fn new(banned: &[&str]) -> Self {
+    fn new(banned: &Vec<String>) -> Self {
         BanCost {
             banned: banned.iter().map(|s| Symbol::from(s)).collect::<HashSet<_>>(),
         }
@@ -194,7 +267,10 @@ pub extern "C" fn optimize_with_egraphs(dfg: CppDFG) -> CppDFGs {
     for r in &mut roots[..] {
         *r = runner.egraph.find(*r);
     }
-    let cost = BanCost::new(&["sub"]);
+	// TODO --- config.json as an argument rather than a constant? 
+	let unsupported_operations = get_banned_operations("param.json".to_string());
+	println!("Unsupported operations are {}", unsupported_operations.connect(", "));
+    let cost = BanCost::new(&unsupported_operations);
 	let (best, _best_roots) = LpExtractor::new(&runner.egraph, cost).solve_multiple(&roots[..]);
 
 	{

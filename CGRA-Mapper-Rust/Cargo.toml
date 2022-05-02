@@ -13,3 +13,4 @@ crate-type = ["dylib"]
 #egg = "0.7.1"
 egg = { git = "https://github.com/egraphs-good/egg", rev = "269c78636f91674da8c38838410d6fbdea08e099", features = ["lp"] }
 libc = "0.2"
+tinyjson = "2"
