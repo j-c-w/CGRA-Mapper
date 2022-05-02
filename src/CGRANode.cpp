@@ -189,6 +189,12 @@ bool CGRANode::canSupport(DFGNode* t_opt) {
     return false;
   }
 
+  if (t_opt->isConst()) {
+	  return true; // All nodes can support generating
+	  // constants --- I think this isn't too ridiculous of
+	  // an assumption, although there are plenty of other ways
+	  // to do this.
+  }
 
   if (m_build_cgra) {
 	  return true;

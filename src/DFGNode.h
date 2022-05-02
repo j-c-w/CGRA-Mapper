@@ -75,6 +75,7 @@ class DFGNode {
     void clearMapped();
 	void clearCachedNodes();
     bool isLoad();
+	bool isConst();
     bool isStore();
     bool isReturn();
     bool isCall();

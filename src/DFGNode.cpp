@@ -165,6 +165,12 @@ bool DFGNode::isLoad() {
   return false;
 }
 
+bool DFGNode::isConst() {
+	if (m_opcodeName.rfind("const_") == 0)
+		return true;
+	return false;
+}
+
 bool DFGNode::isReturn() {
   if (m_opcodeName.compare("ret") == 0)
     return true;

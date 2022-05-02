@@ -86,13 +86,24 @@ fn add_dfg<L: Language, N: Analysis<L>>(dfg: &RecExpr<L>, egraph: &mut EGraph<L,
 // availabel --- it computes the set {X | X /in all_operations and X \not\in operations_file }
 // i.e. the things that the Egraphs should not target.
 fn get_banned_operations(operations_file: String) -> Vec<String> {
-	let all_operations:[&'static str; 6] = [
+	let all_operations:[&'static str; 17] = [
+		"abs",
 		"add",
+		"div",
+		"fdiv",
+		"fmul",
+		"fneg",
 		"getelementptr",
 		"load",
+		"lsl",
+		"mod",
+		"mul",
+		"neg",
 		"phi",
+		"rsl",
 		"store",
-		"sub"
+		"sub",
+		"xor"
 	];
 
 	let mut file = File::open(operations_file).unwrap();
@@ -194,7 +205,7 @@ pub extern "C" fn optimize_with_egraphs(dfg: CppDFG) -> CppDFGs {
 
 	let rules: &[Rewrite<SymbolLang, ()>] = &[
 		// Rules we came up with:
-		rewrite!("sub-to-add-neg"; "(sub ?x ?y)" => "(add ?x (neg ?y))"),
+		rewrite!("sub-to-add-neg"; "(sub ?x ?y)" => "(add ?x (mul (const_-1) ?y))"),
 
 		// Rules from GCC (these are from :
 		// https://github.com/gcc-mirror/gcc/blob/master/gcc/match.pd commit https://github.com/gcc-mirror/gcc/blob/7690bee9f36ee02b7ad0b8a7e7a3e08357890dc0/gcc/match.pd
@@ -208,16 +219,16 @@ pub extern "C" fn optimize_with_egraphs(dfg: CppDFG) -> CppDFGs {
 		// (31 is actually meant to be precision - 1).
 		rewrite!("abs-expand"; "(abs ?x)" => "(xor (add (rsl ?x 31) ?x) (rsl ?x (31)))"),
 		// Line: 280
-		rewrite!("neg-to-mul"; "(neg ?x)" => "(mul ?x -1)"),
-		rewrite!("mul-to-neg"; "(mul ?x -1)" => "(neg ?x)"), // TODO -- Thomas: This is cyclical,
+		rewrite!("neg-to-mul"; "(neg ?x)" => "(mul ?x (const_-1))"),
+		rewrite!("mul-to-neg"; "(mul ?x (const_-1))" => "(neg ?x)"), // TODO -- Thomas: This is cyclical,
 		// should we consider it?
 		// Line 320: TODO (IMO probably a somewhat useful one) (jcw)
 		// Line 368: TODO -- only works for unsigned a.  Is there a way to check for this? (We can
 		// probably skp this rule?)
 		rewrite!("rsl-to-lsl-div"; "(rsl ?a ?b)" => "(div ?a (lsl 1 ?b))"),
 		// Line 401:
-		rewrite!("neg-to-div"; "(neg ?x)" => "(div ?x -1)"),
-		rewrite!("div-to-neg"; "(div ?x -1)" => "(neg ?x)"), // TODO -- Thomas: this is cyclical,
+		rewrite!("neg-to-div"; "(neg ?x)" => "(div ?x (const_-1))"),
+		rewrite!("div-to-neg"; "(div ?x (const_-1))" => "(neg ?x)"), // TODO -- Thomas: this is cyclical,
 		// see notes on the mul-to-neg case.
 
 		// Line 422: Maybe useful? x / abs(x) => x < 0 ? -1 : 1?  Maybe too complex to match much?
@@ -234,8 +245,8 @@ pub extern "C" fn optimize_with_egraphs(dfg: CppDFG) -> CppDFGs {
 		// Note that for FP rules, we generally assume -ffast-math or
 		// equivlanet.  Otherwise, very limited rules apply, so not worthwhile.
 		// Line 539:
-		rewrite!("fneg-to-fdiv"; "(fneg ?x)" => "(fdiv ?x -1.0)"),
-		rewrite!("fdiv-to-fneg"; "(fdiv ?x -1.0)" => "(fneg ?x)"),
+		rewrite!("fneg-to-fdiv"; "(fneg ?x)" => "(fdiv ?x (const_-1.0))"),
+		rewrite!("fdiv-to-fneg"; "(fdiv ?x (const_-1.0))" => "(fneg ?x)"),
 		// Line 544:
 		rewrite!("fmul-to-fdiv"; "(fdiv ?a (fmul ?b ?c))" => "(fdiv (fdiv ?a ?b) ?c)"), // Other
 		// driection of that may be useful?
