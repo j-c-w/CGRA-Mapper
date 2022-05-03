@@ -76,6 +76,7 @@ class DFGNode {
 	void clearCachedNodes();
     bool isLoad();
 	bool isConst();
+	bool isTransparentOp();
     bool isStore();
     bool isReturn();
     bool isCall();

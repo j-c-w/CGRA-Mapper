@@ -86,23 +86,30 @@ fn add_dfg<L: Language, N: Analysis<L>>(dfg: &RecExpr<L>, egraph: &mut EGraph<L,
 // availabel --- it computes the set {X | X /in all_operations and X \not\in operations_file }
 // i.e. the things that the Egraphs should not target.
 fn get_banned_operations(operations_file: String) -> Vec<String> {
-	let all_operations:[&'static str; 17] = [
+	let all_operations:[&'static str; 24] = [
 		"abs",
 		"add",
+		"br",
 		"div",
 		"fdiv",
 		"fmul",
 		"fneg",
 		"getelementptr",
+		"icmp",
 		"load",
 		"lsl",
 		"mod",
 		"mul",
 		"neg",
 		"phi",
+		"phi",
 		"rsl",
+		"sext",
 		"store",
 		"sub",
+		"fpext",
+		"ret",
+		"sitofp", // single integer to floating point
 		"xor"
 	];
 
@@ -131,6 +138,7 @@ fn get_banned_operations(operations_file: String) -> Vec<String> {
 											for v in operations {
 												match v {
 													String(s) =>
+														// println!("Operation {}", s);
 														operations_list.insert(s.to_string()),
 													_ => panic!("unexpected non-string")
 												};
@@ -154,6 +162,13 @@ fn get_banned_operations(operations_file: String) -> Vec<String> {
 	for operation in all_operations {
 		if !(operations_list.contains(operation)) {
 			result_vec.push(operation.to_string());
+		}
+	}
+	// Just a sanity-check to help debugging this shitty operations-ist
+	// way o fapproaching things
+	for op in operations_list {
+		if !(all_operations.contains(&&op[..])) {
+			println!("Operation {} not found in all operations list!", op);
 		}
 	}
 	result_vec

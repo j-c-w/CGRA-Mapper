@@ -196,6 +196,12 @@ bool CGRANode::canSupport(DFGNode* t_opt) {
 	  // to do this.
   }
 
+  if (t_opt->isTransparentOp()) {
+	  // Some ops, e.g. SItoFP are transparent, so
+	  // don't really require operations to be available.
+	  return true;
+  }
+
   if (m_build_cgra) {
 	  return true;
   } else {

@@ -250,11 +250,11 @@ namespace {
 
       // Show the mapping and routing results with JSON output.
       if (II == -1)
-        errs() << "[fail]\n";
+        errs() << "[Mapping:fail]\n";
       else {
         mapper->showSchedule(cgra, winning_dfg, II, isStaticElasticCGRA);
         errs() << "==================================\n";
-        errs() << "[success]\n";
+        errs() << "[Mapping:success]\n";
         errs() << "==================================\n";
         mapper->generateJSON(cgra, winning_dfg, II, isStaticElasticCGRA);
         errs() << "[Output Json]\n";

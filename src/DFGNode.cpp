@@ -171,6 +171,15 @@ bool DFGNode::isConst() {
 	return false;
 }
 
+// Not all nodes actually require any compute resources.
+bool DFGNode::isTransparentOp() {
+	if (m_opcodeName.compare("sitofp") == 0
+			|| m_opcodeName.compare("ret") == 0
+			|| m_opcodeName.compare("phi") == 0)
+		return true;
+	return false;
+}
+
 bool DFGNode::isReturn() {
   if (m_opcodeName.compare("ret") == 0)
     return true;
