@@ -1,13 +1,11 @@
 use egg::*;
 use std::os::raw::c_char;
 use std::mem::size_of;
-use std::collections::HashSet;
+use cost::*;
+use rules::*;
 
-// JSON File loading imports
-use std::fs::File;
-use tinyjson::JsonValue::*;
-use std::string::String;
-use std::io::Read;
+mod cost;
+mod rules;
 
 #[repr(C)]
 pub struct CppNode {
@@ -81,99 +79,6 @@ fn add_dfg<L: Language, N: Analysis<L>>(dfg: &RecExpr<L>, egraph: &mut EGraph<L,
         .filter_map(|(e, is_r)| if is_r { Some(e) } else { None }).collect::<Vec<_>>()
 }
 
-// This thing loads the operations in from a JSON file, and
-// also takes a look at all the operations that are ever
-// availabel --- it computes the set {X | X /in all_operations and X \not\in operations_file }
-// i.e. the things that the Egraphs should not target.
-fn get_banned_operations(operations_file: String) -> Vec<String> {
-	let all_operations:[&'static str; 24] = [
-		"abs",
-		"add",
-		"br",
-		"div",
-		"fdiv",
-		"fmul",
-		"fneg",
-		"getelementptr",
-		"icmp",
-		"load",
-		"lsl",
-		"mod",
-		"mul",
-		"neg",
-		"phi",
-		"phi",
-		"rsl",
-		"sext",
-		"store",
-		"sub",
-		"fpext",
-		"ret",
-		"sitofp", // single integer to floating point
-		"xor"
-	];
-
-	let mut file = File::open(operations_file).unwrap();
-	let mut data = String::new();
-	file.read_to_string(&mut data).unwrap();
-	let json: tinyjson::JsonValue = data.parse().unwrap();
-	let mut operations_list: HashSet<String> = HashSet::new();
-	// println!("Parsed: {:?}", json);
-
-	// The json is a 2d map of col number, row number
-	// and then a list of the operations it supports.
-	match json {
-		Object(map) =>
-			match map.get("operations").unwrap() {
-				Object(opmap) =>
-					// GO through rows
-					for (_row, values) in opmap {
-						match values {
-							Object(cmap) =>
-								// Go through cols:
-								for (_col, cvalues) in cmap {
-									match cvalues{
-										Array(operations) =>
-											// Go through ebvery element in the cols.
-											for v in operations {
-												match v {
-													String(s) =>
-														// println!("Operation {}", s);
-														operations_list.insert(s.to_string()),
-													_ => panic!("unexpected non-string")
-												};
-											},
-										_ => panic!("unexpected non-array")
-									};
-								},
-							_ => panic!("unexpected col")
-						};
-					},
-				_ => panic!("unexpected row")
-			},
-		Null => panic!("Null"),
-		_ => panic!("Unexpected!")
-	};
-
-	// Trying to build a list of banned operations, not
-	// one of supported operations --- so we are looking for things
-	// not in this list.
-	let mut result_vec: Vec<String> = Vec::new();
-	for operation in all_operations {
-		if !(operations_list.contains(operation)) {
-			result_vec.push(operation.to_string());
-		}
-	}
-	// Just a sanity-check to help debugging this shitty operations-ist
-	// way o fapproaching things
-	for op in operations_list {
-		if !(all_operations.contains(&&op[..])) {
-			println!("Operation {} not found in all operations list!", op);
-		}
-	}
-	result_vec
-}
-
 fn expr_to_dfg(expr: RecExpr<SymbolLang>) -> CppDFG {
 	let enodes = expr.as_ref();
 	let nodes_ptr = unsafe { libc::malloc(enodes.len() * size_of::<CppNode>()) } as *mut CppNode;
@@ -191,112 +96,24 @@ fn expr_to_dfg(expr: RecExpr<SymbolLang>) -> CppDFG {
 	CppDFG { nodes: nodes_ptr, count: enodes.len().try_into().unwrap() }
 }
 
-struct BanCost {
-    // could also have cost: HashMap<Symbol, f64>
-    banned: HashSet<Symbol>
-}
-
-impl BanCost {
-    fn new(banned: &Vec<String>) -> Self {
-        BanCost {
-            banned: banned.iter().map(|s| Symbol::from(s)).collect::<HashSet<_>>(),
-        }
-    }
-}
-
-impl LpCostFunction<SymbolLang, ()> for BanCost {
-    fn node_cost(&mut self, _egraph: &EGraph<SymbolLang, ()>, _eclass: Id, enode: &SymbolLang) -> f64 {
-        if self.banned.contains(&enode.op) {
-            1_000_000.0 // does not seem to like f64::INFINITY
-        } else {
-            1.0
-        }
-    }
-}
-
 #[no_mangle]
 pub extern "C" fn optimize_with_egraphs(dfg: CppDFG) -> CppDFGs {
 	println!("entering Rust");
 
-	let rules: &[Rewrite<SymbolLang, ()>] = &[
-		// Rules we came up with:
-		rewrite!("sub-to-add-neg"; "(sub ?x ?y)" => "(add ?x (mul (const_-1) ?y))"),
-
-		// Rules from GCC (these are from :
-		// https://github.com/gcc-mirror/gcc/blob/master/gcc/match.pd commit https://github.com/gcc-mirror/gcc/blob/7690bee9f36ee02b7ad0b8a7e7a3e08357890dc0/gcc/match.pd
-
-
-		// =======
-		// Integer Rules:
-		// Line 168:
-		// TODO -- how to get the precision (it's a constant --- note that this is sufficient for
-		// proof of concept, but not for actually running the code)?
-		// (31 is actually meant to be precision - 1).
-		rewrite!("abs-expand"; "(abs ?x)" => "(xor (add (rsl ?x 31) ?x) (rsl ?x (31)))"),
-		// Line: 280
-		rewrite!("neg-to-mul"; "(neg ?x)" => "(mul ?x (const_-1))"),
-		rewrite!("mul-to-neg"; "(mul ?x (const_-1))" => "(neg ?x)"), // TODO -- Thomas: This is cyclical,
-		// should we consider it?
-		// Line 320: TODO (IMO probably a somewhat useful one) (jcw)
-		// Line 368: TODO -- only works for unsigned a.  Is there a way to check for this? (We can
-		// probably skp this rule?)
-		rewrite!("rsl-to-lsl-div"; "(rsl ?a ?b)" => "(div ?a (lsl 1 ?b))"),
-		// Line 401:
-		rewrite!("neg-to-div"; "(neg ?x)" => "(div ?x (const_-1))"),
-		rewrite!("div-to-neg"; "(div ?x (const_-1))" => "(neg ?x)"), // TODO -- Thomas: this is cyclical,
-		// see notes on the mul-to-neg case.
-
-		// Line 422: Maybe useful? x / abs(x) => x < 0 ? -1 : 1?  Maybe too complex to match much?
-		
-		// Line 585: TODO -- is there a way to make it match constants only?
-		// that would make this much simpler, as it could avoid introducing the lsl operation.
-		rewrite!("rsl-to-logical-and"; "(rsl ?x ?a)" => "(div (and ?x (neg (2 lsl ?a))) (2 lsl ?a))"),
-		// Line 685
-		rewrite!("mod-to-neg-div-times"; "(mod ?x ?y)" => "(sub ?x (mul (div ?x ?y) ?y))"), // TODO
-		// -- maybe that backwards? (jcw)
-
-		// =========
-		// Floating Point Rules.
-		// Note that for FP rules, we generally assume -ffast-math or
-		// equivlanet.  Otherwise, very limited rules apply, so not worthwhile.
-		// Line 539:
-		rewrite!("fneg-to-fdiv"; "(fneg ?x)" => "(fdiv ?x (const_-1.0))"),
-		rewrite!("fdiv-to-fneg"; "(fdiv ?x (const_-1.0))" => "(fneg ?x)"),
-		// Line 544:
-		rewrite!("fmul-to-fdiv"; "(fdiv ?a (fmul ?b ?c))" => "(fdiv (fdiv ?a ?b) ?c)"), // Other
-		// driection of that may be useful?
-		// Line 558:
-		rewrite!("fmul-to-fdiv-2"; "(fmul (fdiv ?a ?b) ?c)" => "(fdiv ?a (fdiv ?b ?c))"),
-
-		// TODO --- note that there are a lot of rules around line 700 that may or may not be
-		// useful if we encounter library calls to math.h.
-
-		// TODO--- Useful rules copied up to line 1000, copy the remaining rules (jcw)
-
-		// Other standard rules:
-
-		rewrite!("commute-add"; "(add ?x ?y)" => "(add ?y ?x)"),
-		rewrite!("commute-mul"; "(mul ?x ?y)" => "(mul ?y ?x)"),
-
-		rewrite!("add-0"; "(add ?x 0)" => "?x"),
-		rewrite!("mul-0"; "(mul ?x 0)" => "0"),
-		rewrite!("mul-1"; "(mul ?x 1)" => "?x"),
-	];
+	let rules = rules();
 
 	let (egraph, mut roots) = dfg_to_egraph(dfg);
     println!("identified {} roots", roots.len());
 	egraph.dot().to_svg("/tmp/initial.svg").unwrap();
 
-	let runner = Runner::default().with_egraph(egraph).run(rules);
+	let runner = Runner::default().with_egraph(egraph).run(&rules);
     runner.egraph.dot().to_svg("/tmp/egraph.svg").unwrap();
 
     for r in &mut roots[..] {
         *r = runner.egraph.find(*r);
     }
-	// TODO --- config.json as an argument rather than a constant? 
-	let unsupported_operations = get_banned_operations("param.json".to_string());
-	println!("Unsupported operations are {}", unsupported_operations.connect(", "));
-    let cost = BanCost::new(&unsupported_operations);
+	// TODO --- json as an argument rather than a constant?
+    let cost = BanCost::from_operations_file("param.json");
 	let (best, _best_roots) = LpExtractor::new(&runner.egraph, cost).solve_multiple(&roots[..]);
 
 	{
