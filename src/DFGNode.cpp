@@ -182,7 +182,7 @@ bool DFGNode::isTransparentOp() {
 			// we should just include these with them.
 			|| m_opcodeName.compare("getelementptr") == 0
 			|| m_opcodeName.compare("extractelement") == 0
-			|| m_opcodeName.compare("insertelement"))
+			|| m_opcodeName.compare("insertelement") == 0)
 		return true;
 	return false;
 }
