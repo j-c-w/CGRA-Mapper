@@ -175,7 +175,14 @@ bool DFGNode::isConst() {
 bool DFGNode::isTransparentOp() {
 	if (m_opcodeName.compare("sitofp") == 0
 			|| m_opcodeName.compare("ret") == 0
-			|| m_opcodeName.compare("phi") == 0)
+			|| m_opcodeName.compare("phi") == 0
+			// These ones are not so much 'transparent'
+			// as "I'm not 100% sure that they
+			// are really different from load/store.  Perhaps
+			// we should just include these with them.
+			|| m_opcodeName.compare("getelementptr") == 0
+			|| m_opcodeName.compare("extractelement") == 0
+			|| m_opcodeName.compare("insertelement"))
 		return true;
 	return false;
 }

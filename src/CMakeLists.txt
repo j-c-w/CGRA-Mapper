@@ -25,6 +25,8 @@ add_library(mapperPass MODULE
     CGRA.cpp
     Mapper.h
     Mapper.cpp
+	MapResult.h
+	MapResult.cpp
 	Rewriter.cpp
 	RustTypes.h
 	RustTypes.cpp

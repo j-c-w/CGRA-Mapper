@@ -10,6 +10,7 @@
 
 #include "DFG.h"
 #include "CGRA.h"
+#include "MapResult.h"
 
 class Mapper {
   private:
@@ -32,12 +33,12 @@ class Mapper {
     int getResMII(DFG*, CGRA*);
     int getRecMII(DFG*);
     void constructMRRG(DFG*, CGRA*, int);
-    int heuristicMap(CGRA*, DFG*, int, bool, bool);
+    MapResult *heuristicMap(CGRA*, DFG*, int, bool, bool);
     int exhaustiveMap(CGRA*, DFG*, int, bool, bool);
     map<CGRANode*, int>* calculateCost(CGRA*, DFG*, int, DFGNode*, CGRANode*, bool PrintMappingFailures);
     map<CGRANode*, int>* getPathWithMinCostAndConstraints(CGRA*, DFG*, int,
         DFGNode*, list<map<CGRANode*, int>*>*);
-    bool schedule(CGRA*, DFG*, int, DFGNode*, map<CGRANode*, int>*, bool);
-    void showSchedule(CGRA*, DFG*, int, bool);
-    void generateJSON(CGRA*, DFG*, int, bool);
+    int schedule(CGRA*, DFG*, int, DFGNode*, map<CGRANode*, int>*, bool);
+    void showSchedule(CGRA*, DFG*, MapResult*, bool);
+    void generateJSON(CGRA*, DFG*, MapResult*, bool);
 };

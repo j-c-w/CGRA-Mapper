@@ -24,6 +24,7 @@
 #include "Rewriter.h"
 #include "RustConversion.h"
 #include "Options.h"
+#include "MapResult.h"
 
 
 using namespace llvm;
@@ -219,7 +220,8 @@ namespace {
 		  generated_dfgs->push_back(dfg);
 	  }
 
-	  int min_II = -1;
+	  // Create a failed mapping result as default.
+	  MapResult *winning_res = new MapResult(true, -1, -1);
 	  int dfg_no = 0;
 	  for (DFG *dfg : *generated_dfgs) {
 		  if (options->DebugMappingLoop) {
@@ -232,31 +234,32 @@ namespace {
 		  // anyway, suspect it's negligable.
 		  dfg->rejoinCycles();
 
-		  int this_II = mapper->heuristicMap(cgra, dfg, II, isStaticElasticCGRA, options->PrintMappingFailures);
+		  MapResult *res = mapper->heuristicMap(cgra, dfg, II, isStaticElasticCGRA, options->PrintMappingFailures);
 
-		  if ((this_II < min_II || min_II < 0) && this_II > 0) {
-			  min_II = this_II;
+		  if ((winning_res->failed() || res->II() < winning_res->II()) && !res->failed()) {
+			  delete winning_res;
+			  winning_res = res;
 			  winning_dfg = dfg;
 		  }
 		  if (options->DebugMappingLoop) {
-			  cout << "DFG Number " << dfg_no << " had II " << this_II << endl;
+			  cout << "DFG Number " << dfg_no << " had II " << winning_res->II() << endl;
 		  }
 	  }
-	  II = min_II;
+	  II = winning_res->II();
 	  /// end jackson's code.
 
       // Partially exhaustive search to try to map the DFG onto
       // the static elastic CGRA.
 
       // Show the mapping and routing results with JSON output.
-      if (II == -1)
+      if (winning_res->failed())
         errs() << "[Mapping:fail]\n";
       else {
-        mapper->showSchedule(cgra, winning_dfg, II, isStaticElasticCGRA);
+        mapper->showSchedule(cgra, winning_dfg, winning_res, isStaticElasticCGRA);
         errs() << "==================================\n";
         errs() << "[Mapping:success]\n";
         errs() << "==================================\n";
-        mapper->generateJSON(cgra, winning_dfg, II, isStaticElasticCGRA);
+        mapper->generateJSON(cgra, winning_dfg, winning_res, isStaticElasticCGRA);
         errs() << "[Output Json]\n";
       }
       errs() << "==================================\n";

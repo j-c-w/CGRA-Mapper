@@ -10,6 +10,7 @@
 
 #include <fstream>
 #include "DFG.h"
+#include "MapResult.h"
 
 DFG::DFG(DFG &old): m_function(old.m_function) {
 	m_num = old.m_num;
