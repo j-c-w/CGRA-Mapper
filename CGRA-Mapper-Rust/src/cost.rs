@@ -15,6 +15,28 @@ fn get_available_operations(path: &str) -> HashSet<String> {
 	let json: JsonValue = data.parse().unwrap();
 	let mut operations: HashSet<String> = HashSet::new();
 	// println!("Parsed: {:?}", json);
+
+    // Several operations are 'always avaiable' because
+    // they are just implicit LLVM information
+    // (or just proxies for load/store --- ideally the procies
+    // for load/store will be fixed elsewhere).
+    operations.insert("getelementptr".to_string());
+    operations.insert("insertelement".into());
+    operations.insert("extractelement".into());
+    operations.insert("ret".into());
+    operations.insert("phi".into());
+    operations.insert("bitcast".into());
+    operations.insert("trunc".into());
+
+    // CGRA mapper sometimes produces loops w/out these.
+    // I don't understand why that could be, because ISTM
+    // like literally every loop ever needs to have both
+    // of these to be useful, so give these a free pass
+    // in the rewriter.
+    operations.insert("load".into());
+    operations.insert("store".into());
+
+
 /*
     fn unwrap_object(v: &JsonValue, loc: &str) -> &HashMap<String, JsonValue> {
         match v {

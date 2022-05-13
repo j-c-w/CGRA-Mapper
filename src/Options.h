@@ -15,6 +15,7 @@ class Options {
 		bool DebugRustConversion;
 		bool DebugMappingLoop;
 		bool PrintMappingFailures;
+		bool PrintOperationCount;
 };
 
 Options *setupOptions();

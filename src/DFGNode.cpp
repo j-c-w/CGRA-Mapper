@@ -176,13 +176,23 @@ bool DFGNode::isTransparentOp() {
 	if (m_opcodeName.compare("sitofp") == 0
 			|| m_opcodeName.compare("ret") == 0
 			|| m_opcodeName.compare("phi") == 0
+			|| m_opcodeName.compare("bitcast") == 0
+			|| m_opcodeName.compare("trunc") == 0
 			// These ones are not so much 'transparent'
 			// as "I'm not 100% sure that they
 			// are really different from load/store.  Perhaps
 			// we should just include these with them.
 			|| m_opcodeName.compare("getelementptr") == 0
 			|| m_opcodeName.compare("extractelement") == 0
-			|| m_opcodeName.compare("insertelement") == 0)
+			|| m_opcodeName.compare("insertelement") == 0
+			// I don't understand why CGRA-mapper would ever
+			// produce a loop mapping w/out these, but it
+			// does sometimes, so give them a free pass,
+			// as it's compeltely reasonable to require that
+			// ld/st operations exist!
+			|| m_opcodeName.compare("load") == 0
+			|| m_opcodeName.compare("store") == 0
+			)
 		return true;
 	return false;
 }
