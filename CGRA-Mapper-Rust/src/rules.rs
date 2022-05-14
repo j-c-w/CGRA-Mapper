@@ -5,31 +5,48 @@ pub(crate) fn rules() -> Vec<Rewrite<SymbolLang, ()>> {
 		// Rules we came up with:
 		rewrite!("sub-to-add-neg"; "(sub ?x ?y)" => "(add ?x (mul const_-1 ?y))"),
         rewrite!("add-to-sub-neg"; "(add ?x ?y)" => "(sub ?x (mul const_-1 ?y))"),
+        rewrite!("mul-to-neg"; "(mul const_-1 ?y)" => "(neg ?y)"),
         rewrite!("lsh-to-lshr-mul"; "(lsh ?x ?y)" => "(mul ?x (lshr const_IntMax (sub const_32 ?y)))"),
         rewrite!("lsh-to-ashr-mul"; "(lsh ?x ?y)" => "(mul ?x (ashr const_IntMax (sub const_32 ?y)))"),
 
         // Add into the highest bit leaves you with the equivalent
         // of a negation :)
-        rewrite!("neg-to-add"; "(neg ?x)" => "(add const_2^32 ?x)"),
+        rewrite!("neg-to-add"; "(neg ?x)" => "(add const_2pow32 ?x)"),
 
 		// TODO -- make sure these only apply to things treated
 		// as booleans.
 		rewrite!("and-to-mul"; "(and ?x ?y)" => "(mul ?x ?y)"),
 		rewrite!("or-to-add"; "(or ?x ?y)" => "(add ?x ?y)"),
         rewrite!("xor-to-or-and"; "(xor ?x ?y)" => "(sub (or ?x ?y) (and ?x ?y))"),// actually I think this one is generic.
+        
+
+        // Rewrite logic ops into icmp --- also should be only
+        // boolean logic ops here.
+        // I checked this one, it's the only non-trivial one in
+        // this group of rules :)
+        // The reason it's so complicated is because it tries
+        // to support non-1 ?x/?y that are true
+        rewrite!("xor-to-icmp"; "(xor ?x ?y)" => "(icmp (icmp ?x 0) (icmp (not $y) 1))"),
+        rewrite!("not-to-icmp"; "(not ?x)" => "(icmp ?x 0)"),
+        rewrite!("and-to-or"; "(and ?x ?y)" => "(not (or (not ?x) (not ?y)))"),
+        rewrite!("or-to-and"; "(or ?x ?y)" => "(not (and (not ?x) (not ?y)))"),
 
         // FP rule  we came up with:
-        rewrite!("fp-sub-to-add-neg"; "(fsub ?x ?y)" => "(fadd ?x (fmul const_-1.0 ?y))"),
-        rewrite!("fp-add-to-sub"; "(fadd ?x ?y)" => "(fsub ?x (fmul const_-1.0 ?y))"),
+        // Not intended to be correct: require -funsafe-math-operations or similar.
+        // Apply a similar threshold to GCC for 'correctness' here.
+        rewrite!("fp-sub-to-add-neg"; "(fsub ?x ?y)" => "(fadd ?x (fmul const_-1 ?y))"),
+        rewrite!("fp-add-to-sub"; "(fadd ?x ?y)" => "(fsub ?x (fmul const_-1 ?y))"),
         rewrite!("fp-add-to-neg"; "(fadd ?x ?y)" => "(fsub ?x (fneg ?y))"),
-        rewrite!("fp-mul-to-neg"; "(fmul const_-1.0 ?y)" => "(fneg ?y)"),
+        rewrite!("fp-mul-to-neg"; "(fmul const_-1 ?y)" => "(fneg ?y)"),
+        // I think this might even infringe GCC's limits for ffast-math...
+        rewrite!("fp-mul-to-div"; "(fmul ?x ?y)" => "(fdiv ?x (fdiv 1 ?y))"),
 
         // Integer add into the correct spot in FP gives you
         // equivalent of negation
         // Note that this only applies for IEEE format (or other
         // formats where the sign bit is the top one
         // and can overflow)
-        rewrite!("fp-fneg-to-add"; "(fneg ?x)" => "(add const_2^32 ?x)"),
+        rewrite!("fp-fneg-to-add"; "(fneg ?x)" => "(add const_2pow32 ?x)"),
 
 
 
@@ -78,8 +95,8 @@ pub(crate) fn rules() -> Vec<Rewrite<SymbolLang, ()>> {
 		// Note that for FP rules, we generally assume -ffast-math or
 		// equivlanet.  Otherwise, very limited rules apply, so not worthwhile.
 		// Line 539:
-		rewrite!("fneg-to-fdiv"; "(fneg ?x)" => "(fdiv ?x (const_-1.0))"),
-		rewrite!("fdiv-to-fneg"; "(fdiv ?x (const_-1.0))" => "(fneg ?x)"),
+		rewrite!("fneg-to-fdiv"; "(fneg ?x)" => "(fdiv ?x (const_-1))"),
+		rewrite!("fdiv-to-fneg"; "(fdiv ?x (const_-1))" => "(fneg ?x)"),
 		// Line 544:
 		rewrite!("fmul-to-fdiv"; "(fdiv ?a (fmul ?b ?c))" => "(fdiv (fdiv ?a ?b) ?c)"), // Other
 		// driection of that may be useful?
@@ -100,4 +117,24 @@ pub(crate) fn rules() -> Vec<Rewrite<SymbolLang, ()>> {
 		rewrite!("mul-0"; "(mul ?x 0)" => "0"),
 		rewrite!("mul-1"; "(mul ?x 1)" => "?x"),
 	]
+}
+
+mod tests {
+    use crate::{SymbolLang as S, *};
+    use std::str::FromStr;
+
+    type EGraph = crate::EGraph<S, ()>;
+
+    #[test]
+    fn fadd_rewrite() {
+        create::init_logger()
+
+            let mut egraph = EGraph::default()
+
+            let x = egraph.add(S::leaf("x"));
+            let y = egraph.add(S::leaf("y"));
+            let mul = egraph.add(S::new("*", vec![x, y]));
+
+            let 
+    }
 }
