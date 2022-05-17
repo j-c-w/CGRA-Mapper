@@ -21,6 +21,15 @@ Running example:
  - ./run.sh --rewriter # use the traditioanl rewriter.
  - Apply some rewrite rules by hand and try and make it work :)
 
+#Running tests against a single cgra
+ - git clone git@github.com:j-c-w/LoopBenchmarks
+ - /run_tests_against.sh <file name>  <benchmarks location> --use-egraphs
+ - /run_tests_against.sh <file name>  <benchmarks location>
+
+ - <file name> should be a C file within Loop Benchmarks (e.g. ../../LoopBenchmarks/ll_loops/loops/loop10.c )
+ - <benchmarks location> should be the parent directory of the LoopBenchmarks repo
+ - Outputs are left in run_output.old
+
 <pre> ========================================================
 
   _____________  ___     __  ___                      
