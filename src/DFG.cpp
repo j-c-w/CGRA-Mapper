@@ -1439,7 +1439,9 @@ void DFG::breakCycles() {
 		for (DFGEdge *edge : *dfgNode->getInEdges()) {
 			DFGNode *srcnode = edge->getSrc();
 			DFGNode *dstnode = edge->getDst();
-			if (dstnode->isPhi()) {
+			if (edge->isCtrlEdge()) {
+				inEdgesToRemove.push_back(edge);
+			} else if (dstnode->isPhi()) {
 				inEdgesToRemove.push_back(edge);
 			} else if (srcnode->isBr()) {
 				inEdgesToRemove.push_back(edge);
@@ -1467,7 +1469,9 @@ void DFG::breakCycles() {
 			DFGNode *dstnode = edge->getDst();
 			DFGNode *srcnode = edge->getSrc();
 			// Also remove all incoming edges to each phi node --- these need to be added back in before scheduling.
-			if (srcnode->isPhi()) {
+			if (edge->isCtrlEdge()) {
+				outEdgesToRemove.push_back(edge);
+			} else if (srcnode->isPhi()) {
 				outEdgesToRemove.push_back(edge);
 			} else if (dstnode->isBr()) {
 				outEdgesToRemove.push_back(edge);

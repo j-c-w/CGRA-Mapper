@@ -16,6 +16,8 @@ cl::opt<bool> DebugRustConversion("debug-rust-conversion", cl::desc("Debug the e
 cl::opt<bool> LLVMDebugOperationMap ("debug-operation-map", cl::desc("Debug the node-by-node operation mapping"));
 cl::opt<bool> PrintOperationCount("print-operation-count", cl::desc("Print the operation counts in the DFG for debugging rewrite rules"));
 
+cl::opt<std::string> Params("params-file", cl::desc("Json file with the CGRA parameters"));
+
 Options::Options () {}
 
 // To be called after application has started.  Copies the command
@@ -33,6 +35,8 @@ Options *setupOptions() {
 	opt->DebugMappingLoop = DebugMappingLoop;
 	opt->PrintMappingFailures = PrintMappingFailures;
 	opt->PrintOperationCount = PrintOperationCount;
+
+	opt->Params = Params;
 
 	return opt;
 }

@@ -174,6 +174,7 @@ bool DFGNode::isConst() {
 // Not all nodes actually require any compute resources.
 bool DFGNode::isTransparentOp() {
 	if (m_opcodeName.compare("sitofp") == 0
+			|| m_opcodeName.compare("fptosi") == 0
 			|| m_opcodeName.compare("ret") == 0
 			|| m_opcodeName.compare("phi") == 0
 			|| m_opcodeName.compare("bitcast") == 0

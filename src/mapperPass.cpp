@@ -75,7 +75,11 @@ namespace {
 	  Options *options = setupOptions();
 
       // Read the parameter JSON file.
-      ifstream i("./param.json");
+	  if (options->Params == "") {
+		  errs() << "No params file passed, uding default.";
+		  options->Params = "param.json";
+	  }
+	  ifstream i(options->Params);
       if (!i.good()) {
 
         cout<< "=============================================================\n";

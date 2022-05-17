@@ -4,6 +4,8 @@
 // gobal thing.
 #include <llvm/Support/CommandLine.h>
 
+#include<string>
+
 class Options {
 	public:
 		Options();
@@ -16,6 +18,8 @@ class Options {
 		bool DebugMappingLoop;
 		bool PrintMappingFailures;
 		bool PrintOperationCount;
+		
+		std::string Params;
 };
 
 Options *setupOptions();
