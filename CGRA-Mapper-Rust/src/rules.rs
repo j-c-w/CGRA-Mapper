@@ -3,8 +3,10 @@ use egg::*;
 pub(crate) fn rules() -> Vec<Rewrite<SymbolLang, ()>> {
     vec![
 		// Rules we came up with:
+		// Note: also in the GCC reles (1235)
 		rewrite!("sub-to-add-neg"; "(sub ?x ?y)" => "(add ?x (mul const_-1 ?y))"),
         rewrite!("add-to-sub-neg"; "(add ?x ?y)" => "(sub ?x (mul const_-1 ?y))"),
+		// This is in GCC also (3889)
         rewrite!("mul-to-neg"; "(mul const_-1 ?y)" => "(neg ?y)"),
         rewrite!("lsh-to-lshr-mul"; "(lsh ?x ?y)" => "(mul ?x (lshr const_IntMax (sub const_32 ?y)))"),
         rewrite!("lsh-to-ashr-mul"; "(lsh ?x ?y)" => "(mul ?x (ashr const_IntMax (sub const_32 ?y)))"),
@@ -12,6 +14,20 @@ pub(crate) fn rules() -> Vec<Rewrite<SymbolLang, ()>> {
         // Add into the highest bit leaves you with the equivalent
         // of a negation :)
         rewrite!("neg-to-add"; "(neg ?x)" => "(add const_2pow32 ?x)"),
+		// The const here is sum_{lowest extended bit}^{highest extended bit} 2^n
+		rewrite!("zext-to-sext"; "(zext ?x)" => "(and (sext ?x) const_something)"),
+		rewrite!("zext-to-bitcast"; "(zext ?x)" => "(bitcast ?x)"), // Think these are the same?
+		// Sext is sign extend.  So, first extend using bitcast
+		// (which we get for free on all nodes, since it's just
+		// widening), then turn ?x into -1 if x is -ve and 1 if
+		// it's +ve and multiply.
+        // first icmp is icmp slt, second is sgt
+		rewrite!("sext-to-logic"; "(sext ?x)" => "(mul (bitcast ?x) (add (neg (icmp ?x const_0)
+            (icmp ?x const_0))))"),
+		// Also do a version w/out the mul, since
+		// we know that the result of the icmp must be -1, 0 or 1
+		rewrite!("sext-to-logic-2"; "(sext ?x)" => "(or (bitcast ?x) (lsh (neg (icmp ?x const_0))
+            const_31))"),
 
 		// TODO -- make sure these only apply to things treated
 		// as booleans.
@@ -26,8 +42,12 @@ pub(crate) fn rules() -> Vec<Rewrite<SymbolLang, ()>> {
         // this group of rules :)
         // The reason it's so complicated is because it tries
         // to support non-1 ?x/?y that are true
-        rewrite!("xor-to-icmp"; "(xor ?x ?y)" => "(icmp (icmp ?x 0) (icmp (not $y) 1))"),
-        rewrite!("not-to-icmp"; "(not ?x)" => "(icmp ?x 0)"),
+        /// uses icmp eq
+        rewrite!("xor-to-icmp"; "(xor ?x ?y)" => "(not (icmp ?x ?y))"),
+        // uses icmp eq.
+        rewrite!("not-to-icmp"; "(not ?x)" => "(icmp ?x const_0)"),
+		// note that there are in the GCC rules in more
+		// complex ways.
         rewrite!("and-to-or"; "(and ?x ?y)" => "(not (or (not ?x) (not ?y)))"),
         rewrite!("or-to-and"; "(or ?x ?y)" => "(not (and (not ?x) (not ?y)))"),
 
@@ -36,10 +56,21 @@ pub(crate) fn rules() -> Vec<Rewrite<SymbolLang, ()>> {
         // Apply a similar threshold to GCC for 'correctness' here.
         rewrite!("fp-sub-to-add-neg"; "(fsub ?x ?y)" => "(fadd ?x (fmul const_-1 ?y))"),
         rewrite!("fp-add-to-sub"; "(fadd ?x ?y)" => "(fsub ?x (fmul const_-1 ?y))"),
+        // Copy with Control-flow-edge options
+        rewrite!("fp-add-to-sub"; "(fadd ?x ?y ?z)" => "(fsub ?x (fmul const_-1 ?y) ?z)"),
         rewrite!("fp-add-to-neg"; "(fadd ?x ?y)" => "(fsub ?x (fneg ?y))"),
         rewrite!("fp-mul-to-neg"; "(fmul const_-1 ?y)" => "(fneg ?y)"),
         // I think this might even infringe GCC's limits for ffast-math...
-        rewrite!("fp-mul-to-div"; "(fmul ?x ?y)" => "(fdiv ?x (fdiv 1 ?y))"),
+        rewrite!("fp-mul-to-div"; "(fmul ?x ?y)" => "(fdiv ?x (fdiv const_1 ?y))"),
+
+		// Not sure what the 'not' in LLVM is called.
+		// This one is a logical not.
+		rewrite!("not-to-xor"; "(not ?x)" => "(xor ?x const_0)"),
+		// Similar rules from GCC's rewrite rules. (line 1790)
+		rewrite!("neg-to-sub"; "(neg ?a)" => "(not (sub ?a const_-1))"),
+		rewrite!("not-to-sub"; "(not ?a)" => "(neg (add ?a const_1))"),
+		// Line 1810:
+		rewrite!("neg-to-add"; "(neg ?a)" => "(not (add ?a const_-1))"),
 
         // Integer add into the correct spot in FP gives you
         // equivalent of negation
@@ -90,6 +121,17 @@ pub(crate) fn rules() -> Vec<Rewrite<SymbolLang, ()>> {
 		rewrite!("mod-to-neg-div-times"; "(mod ?x ?y)" => "(sub ?x (mul (div ?x ?y) ?y))"), // TODO
 		// -- maybe that backwards? (jcw)
 
+		// Line 1019
+		rewrite!("xor-to-not-or"; "(xor ?x ?y)" => "(or (and ?x (not ?y)) (and (not ?x) ?y))"),
+		rewrite!("xot-to-add-and"; "(xor ?x ?y)" => "(add (and ?x (not ?y)) (and (not ?x) ?y))"),
+		// Line 1044:
+		rewrite!("or-to-and-xor"; "(or ?x ?y)" => "(xor (and (not ?x) ?b) ?x)"),
+		// Line 1291:
+		rewrite!("neg-to-xor"; "(neg ?x)" => "(xor ?x const_-1)"),
+		// Abs rule on 1541
+
+		// Line 1790: -- possibly useful?
+
 		// =========
 		// Floating Point Rules.
 		// Note that for FP rules, we generally assume -ffast-math or
@@ -102,6 +144,8 @@ pub(crate) fn rules() -> Vec<Rewrite<SymbolLang, ()>> {
 		// driection of that may be useful?
 		// Line 558:
 		rewrite!("fmul-to-fdiv-2"; "(fmul (fdiv ?a ?b) ?c)" => "(fdiv ?a (fdiv ?b ?c))"),
+		// Various FP math.h function rules from line 5965
+
 
 		// TODO --- note that there are a lot of rules around line 700 that may or may not be
 		// useful if we encounter library calls to math.h.
@@ -117,24 +161,4 @@ pub(crate) fn rules() -> Vec<Rewrite<SymbolLang, ()>> {
 		rewrite!("mul-0"; "(mul ?x 0)" => "0"),
 		rewrite!("mul-1"; "(mul ?x 1)" => "?x"),
 	]
-}
-
-mod tests {
-    use crate::{SymbolLang as S, *};
-    use std::str::FromStr;
-
-    type EGraph = crate::EGraph<S, ()>;
-
-    #[test]
-    fn fadd_rewrite() {
-        create::init_logger()
-
-            let mut egraph = EGraph::default()
-
-            let x = egraph.add(S::leaf("x"));
-            let y = egraph.add(S::leaf("y"));
-            let mul = egraph.add(S::new("*", vec![x, y]));
-
-            let 
-    }
 }

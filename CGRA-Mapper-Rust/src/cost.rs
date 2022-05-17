@@ -27,6 +27,8 @@ fn get_available_operations(path: &str) -> HashSet<String> {
     operations.insert("phi".into());
     operations.insert("bitcast".into());
     operations.insert("trunc".into());
+	operations.insert("fptosi".into());
+	operatoins.insert("sitofp".into());
 
     // CGRA mapper sometimes produces loops w/out these.
     // I don't understand why that could be, because ISTM
