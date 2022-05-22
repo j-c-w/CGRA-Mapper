@@ -35,7 +35,7 @@ class DFGNode {
     // CPU/IR execution sequential ordering).
     int m_id;
     bool m_precisionAware;
-    Instruction* m_inst;
+    Value* m_inst;
     Value* m_value;
     StringRef m_stringRef;
     string m_opcodeName;
@@ -64,7 +64,7 @@ class DFGNode {
     void setPatternRoot(DFGNode*);
 
   public:
-    DFGNode(int, bool, Instruction*, std::string, StringRef);
+    DFGNode(int, bool, Value*, std::string, StringRef);
     int getID();
     void setID(int);
     void setLevel(int);
@@ -92,9 +92,10 @@ class DFGNode {
     bool isOpt(string);
     bool hasCombined();
     void setCombine();
+	bool isInst();
     void addPatternPartner(DFGNode*);
-	void setInstruction(Instruction *, StringRef);
-    Instruction* getInst();
+    Instruction* getInst(); // only works if this is actually an instruction (see isInst())
+	Value *getValue();
     StringRef getStringRef();
     string getOpcodeName();
     list<DFGNode*>* getPredNodes();

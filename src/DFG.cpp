@@ -254,10 +254,15 @@ void DFG::combine(string t_opt0, string t_opt1) {
   }
 }
 
-bool DFG::shouldIgnore(Instruction* t_inst) {
+bool DFG::shouldIgnore(Value* t_value) {
   if (m_targetFunction) {
     return false;
   }
+  if (!isa<Instruction> (t_value)) {
+	  // We don't ingnore constants?  IDK what to do here.
+	  return false;
+  }
+  Instruction *t_inst = cast<Instruction>(t_value);
   if (m_targetLoops->size() == 0)
     return false;
   for (Loop* current_loop: *m_targetLoops) {
@@ -410,17 +415,40 @@ void DFG::construct(Function *t_F) {
             "of the scope (target loop)\n";
         continue;
       }
-      errs()<<*curII;
+	  errs() << "Loading node " << curII << "\n";
+      errs()<<*curII << "\n";
       DFGNode* dfgNode;
       if (hasNode(curII)) {
         dfgNode = getNode(curII);
       } else {
         dfgNode = new DFGNode(nodeID++, m_precisionAware, curII, curII->getOpcodeName(), getValueName(curII));
         nodes.push_back(dfgNode);
+
+		// If there are any constant arguments to this DFG Node,
+		// we need to add those to the graph --- I think this
+		// model of CGRA assumes that we can just load these
+		// into ALUs, which seems reasonable, but the egraphs
+		// rewriter needs them.
+		int numOperands = curII->getNumOperands();
+		for (int i = 0; i < numOperands; i ++) {
+			Value *op = curII->getOperand(i);
+			if (isa<Constant>(op)) {
+				errs() << "Loaded a constant argument\n";
+				// It would be good to actually load this constant
+				// in... as some rules no doubt will require
+				// the actual value to apply.
+				DFGNode *cnode = new DFGNode(nodeID ++, m_precisionAware, op, "Constant", "Constant");
+				nodes.push_back(cnode);
+			}
+		}
+
       }
+	  errs() << "Got DFGNode " << dfgNode->asString() << "\n";
       errs()<<" (ID: "<<dfgNode->getID()<<")\n";
     }
+	errs() << "Getting terminator\n";
     Instruction* terminator = curBB->getTerminator();
+	errs() << "Terminator is " << terminator << "\n";
 
     if (shouldIgnore(terminator))
       continue;
@@ -560,99 +588,106 @@ void DFG::construct(Function *t_F) {
   // Construct data flow edges.
   for (DFGNode* node: nodes) {
 //    nodes.push_back(Node(curII, getValueName(curII)));
-    Instruction* curII = node->getInst();
-    assert(node == getNode(curII));
-    switch (curII->getOpcode()) {
-      // The load/store instruction is special
-      case llvm::Instruction::Load: {
-        LoadInst* linst = dyn_cast<LoadInst>(curII);
-        Value* loadValPtr = linst->getPointerOperand();
+	  if (node->isInst()) {
+		Instruction* curII = node->getInst();
+		assert(node == getNode(curII));
+		switch (curII->getOpcode()) {
+		  // The load/store instruction is special
+		  case llvm::Instruction::Load: {
+			LoadInst* linst = dyn_cast<LoadInst>(curII);
+			Value* loadValPtr = linst->getPointerOperand();
 
-        // Parameter of the loop or the basic block, invisible in DFG.
-        if (!hasNode(loadValPtr))
-          break;
-        DFGEdge* dfgEdge;
-        if (hasDFGEdge(getNode(loadValPtr), node))
-          dfgEdge = getDFGEdge(getNode(loadValPtr), node);
-        else {
-          dfgEdge = new DFGEdge(dfgEdgeID++, getNode(loadValPtr), node);
-          m_DFGEdges.push_back(dfgEdge);
-        }
-//        getNode(loadValPtr)->setOutEdge(dfgEdge);
-//        (*nodeItr)->setInEdge(dfgEdge);
-        break;
-      }
-      case llvm::Instruction::Store: {
-        StoreInst* sinst = dyn_cast<StoreInst>(curII);
-        Value* storeValPtr = sinst->getPointerOperand();
-        Value* storeVal = sinst->getValueOperand();
-        DFGEdge* dfgEdge1;
-        DFGEdge* dfgEdge2;
+			// Parameter of the loop or the basic block, invisible in DFG.
+			if (!hasNode(loadValPtr))
+			  break;
+			DFGEdge* dfgEdge;
+			if (hasDFGEdge(getNode(loadValPtr), node))
+			  dfgEdge = getDFGEdge(getNode(loadValPtr), node);
+			else {
+			  dfgEdge = new DFGEdge(dfgEdgeID++, getNode(loadValPtr), node);
+			  m_DFGEdges.push_back(dfgEdge);
+			}
+	//        getNode(loadValPtr)->setOutEdge(dfgEdge);
+	//        (*nodeItr)->setInEdge(dfgEdge);
+			break;
+		  }
+		  case llvm::Instruction::Store: {
+			StoreInst* sinst = dyn_cast<StoreInst>(curII);
+			Value* storeValPtr = sinst->getPointerOperand();
+			Value* storeVal = sinst->getValueOperand();
+			DFGEdge* dfgEdge1;
+			DFGEdge* dfgEdge2;
 
-        // TODO: need to figure out storeVal and storeValPtr
-        if (hasNode(storeVal)) {
-          if (hasDFGEdge(getNode(storeVal), node))
-            dfgEdge1 = getDFGEdge(getNode(storeVal), node);
-          else {
-            dfgEdge1 = new DFGEdge(dfgEdgeID++, getNode(storeVal), node);
-            m_DFGEdges.push_back(dfgEdge1);
-          }
-//          getNode(storeVal)->setOutEdge(dfgEdge1);
-//          (*nodeItr)->setInEdge(dfgEdge1);
-        }
-        if (hasNode(storeValPtr)) {
-//          if (hasDFGEdge(*nodeItr, getNode(storeValPtr)))
-          if (hasDFGEdge(getNode(storeValPtr), node))
-//            dfgEdge2 = getDFGEdge(*nodeItr, getNode(storeValPtr));
-            dfgEdge2 = getDFGEdge(getNode(storeValPtr), node);
-          else {
-//            dfgEdge2 = new DFGEdge(dfgEdgeID++, *nodeItr, getNode(storeValPtr));
-            dfgEdge2 = new DFGEdge(dfgEdgeID++, getNode(storeValPtr), node);
-            m_DFGEdges.push_back(dfgEdge2);
-          }
-//          getNode(storeValPtr)->setOutEdge(dfgEdge2);
-//          (*nodeItr)->setInEdge(dfgEdge2);
-//          (*nodeItr)->setOutEdge(dfgEdge2);
-//          getNode(storeValPtr)->setInEdge(dfgEdge2);
-        }
-        break;
-      }
-      default: {
-        for (Instruction::op_iterator op = curII->op_begin(), opEnd = curII->op_end(); op != opEnd; ++op) {
-          Instruction* tempInst = dyn_cast<Instruction>(*op);
-          if (tempInst and !shouldIgnore(tempInst)) {
-//            if(node->isBranch()) {
-//              errs()<<"  the real branch's pred: "<<*tempInst<<"\n";
-//              int numSuccs = tempInst->getNumSuccessors();
-//            }
-            DFGEdge* dfgEdge;
-            if (hasNode(tempInst)) {
-              if (hasDFGEdge(getNode(tempInst), node))
-                dfgEdge = getDFGEdge(getNode(tempInst), node);
-              else {
-                dfgEdge = new DFGEdge(dfgEdgeID++, getNode(tempInst), node);
-                m_DFGEdges.push_back(dfgEdge);
-              }
-//              getNode(tempInst)->setOutEdge(dfgEdge);
-//              (*nodeItr)->setInEdge(dfgEdge);
-            }
-          } else {
-            // Original Branch node will take three
-            // predecessors (i.e., condi, true, false).
-            if(!node->isBranch())
-              node->addConst();
-          } 
-        }
-//        if(node->isBranch()) {
-//          int numSuccs = curII->getNumSuccessors();
-//          errs()<<"the succ of the branch: "<<*curII<<"; ("<<numSuccs<<")\n";
-//          for(int i=0; i<numSuccs; ++i) {
-//            BasicBlock* bb
-//          }
-//        }
-        break;
-      }
-    }
+			// TODO: need to figure out storeVal and storeValPtr
+			if (hasNode(storeVal)) {
+			  if (hasDFGEdge(getNode(storeVal), node))
+				dfgEdge1 = getDFGEdge(getNode(storeVal), node);
+			  else {
+				dfgEdge1 = new DFGEdge(dfgEdgeID++, getNode(storeVal), node);
+				m_DFGEdges.push_back(dfgEdge1);
+			  }
+	//          getNode(storeVal)->setOutEdge(dfgEdge1);
+	//          (*nodeItr)->setInEdge(dfgEdge1);
+			}
+			if (hasNode(storeValPtr)) {
+	//          if (hasDFGEdge(*nodeItr, getNode(storeValPtr)))
+			  if (hasDFGEdge(getNode(storeValPtr), node))
+	//            dfgEdge2 = getDFGEdge(*nodeItr, getNode(storeValPtr));
+				dfgEdge2 = getDFGEdge(getNode(storeValPtr), node);
+			  else {
+	//            dfgEdge2 = new DFGEdge(dfgEdgeID++, *nodeItr, getNode(storeValPtr));
+				dfgEdge2 = new DFGEdge(dfgEdgeID++, getNode(storeValPtr), node);
+				m_DFGEdges.push_back(dfgEdge2);
+			  }
+	//          getNode(storeValPtr)->setOutEdge(dfgEdge2);
+	//          (*nodeItr)->setInEdge(dfgEdge2);
+	//          (*nodeItr)->setOutEdge(dfgEdge2);
+	//          getNode(storeValPtr)->setInEdge(dfgEdge2);
+			}
+			break;
+		  }
+		  default: {
+			for (Instruction::op_iterator op = curII->op_begin(), opEnd = curII->op_end(); op != opEnd; ++op) {
+			  Value* tempInst = cast<Value>(*op);
+			  errs() << "Looking at inst " << *tempInst << "\n";
+			  if (tempInst and !shouldIgnore(tempInst)) {
+	//            if(node->isBranch()) {
+	//              errs()<<"  the real branch's pred: "<<*tempInst<<"\n";
+	//              int numSuccs = tempInst->getNumSuccessors();
+	//            }
+				DFGEdge* dfgEdge;
+				if (hasNode(tempInst)) {
+				  if (hasDFGEdge(getNode(tempInst), node))
+					dfgEdge = getDFGEdge(getNode(tempInst), node);
+				  else {
+					dfgEdge = new DFGEdge(dfgEdgeID++, getNode(tempInst), node);
+					m_DFGEdges.push_back(dfgEdge);
+				  }
+	//              getNode(tempInst)->setOutEdge(dfgEdge);
+	//              (*nodeItr)->setInEdge(dfgEdge);
+				}
+			  } else {
+				// Original Branch node will take three
+				// predecessors (i.e., condi, true, false).
+				if(!node->isBranch())
+				  node->addConst();
+			  } 
+			}
+	//        if(node->isBranch()) {
+	//          int numSuccs = curII->getNumSuccessors();
+	//          errs()<<"the succ of the branch: "<<*curII<<"; ("<<numSuccs<<")\n";
+	//          for(int i=0; i<numSuccs; ++i) {
+	//            BasicBlock* bb
+	//          }
+	//        }
+			break;
+		  }
+		}
+	  } else {
+		  // Node is a constant node
+		  // what to do?
+		  errs() << "Constant node";
+	  }
   }
   connectDFGNodes();
 
@@ -837,7 +872,7 @@ bool DFG::isLiveInInst(BasicBlock* t_bb, Instruction* t_inst) {
   return true;
 }
 
-bool DFG::containsInst(BasicBlock* t_bb, Instruction* t_inst) {
+bool DFG::containsInst(BasicBlock* t_bb, Value* t_inst) {
 
   for (BasicBlock::iterator II=t_bb->begin(),
        IEnd=t_bb->end(); II!=IEnd; ++II) {
@@ -849,7 +884,7 @@ bool DFG::containsInst(BasicBlock* t_bb, Instruction* t_inst) {
   return false;
 }
 
-int DFG::getInstID(BasicBlock* t_bb, Instruction* t_inst) {
+int DFG::getInstID(BasicBlock* t_bb, Value* t_inst) {
 
   int id = 0;
   for (BasicBlock::iterator II=t_bb->begin(),
@@ -1110,7 +1145,7 @@ int DFG::getID(DFGNode* t_node) {
 
 DFGNode* DFG::getNode(Value* t_value) {
   for (DFGNode* node: nodes) {
-    if (node->getInst() == t_value) {
+    if (node->getValue() == t_value) {
       return node;
     }
   }
@@ -1120,7 +1155,7 @@ DFGNode* DFG::getNode(Value* t_value) {
 
 bool DFG::hasNode(Value* t_value) {
   for (DFGNode* node: nodes) {
-    if (node->getInst() == t_value) {
+    if (node->getValue() == t_value) {
       return true;
     }
   }
@@ -1193,7 +1228,7 @@ bool DFG::hasDFGEdge(DFGNode* t_src, DFGNode* t_dst) {
   return false;
 }
 
-string DFG::changeIns2Str(Instruction* t_ins) {
+string DFG::changeIns2Str(Value* t_ins) {
   string temp_str;
   raw_string_ostream os(temp_str);
   t_ins->print(os);

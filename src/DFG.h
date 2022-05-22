@@ -51,7 +51,7 @@ class DFG {
 	list<string> *m_initPipelinedOpt;
 	map<string, int> *m_initExecLatency;
 
-    string changeIns2Str(Instruction* ins);
+    string changeIns2Str(Value* ins);
     //get value's name or inst's content
     StringRef getValueName(Value* v);
     void DFS_on_DFG(DFGNode*, DFGNode*, list<DFGNode*>*, list<DFGEdge*>*,
@@ -64,7 +64,7 @@ class DFG {
     bool hasDFGEdge(DFGNode*, DFGNode*);
     DFGEdge* getCtrlEdge(DFGNode*, DFGNode*);
     bool hasCtrlEdge(DFGNode*, DFGNode*);
-    bool shouldIgnore(Instruction*);
+    bool shouldIgnore(Value*);
     void tuneForBranch();
     void tuneForBitcast();
     void tuneForLoad();
@@ -79,8 +79,8 @@ class DFG {
     bool searchDFS(DFGNode*, DFGNode*, list<DFGNode*>*);
     void connectDFGNodes();
     bool isLiveInInst(BasicBlock*, Instruction*);
-    bool containsInst(BasicBlock*, Instruction*);
-    int getInstID(BasicBlock*, Instruction*);
+    bool containsInst(BasicBlock*, Value*);
+    int getInstID(BasicBlock*, Value*);
     // Reorder the DFG nodes (initial CPU execution ordering) in
     // ASAP (as soon as possible) or ALAP (as last as possible)
     // for mapping.

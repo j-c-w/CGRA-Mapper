@@ -13,7 +13,7 @@
 #include <iostream>
 #include <string>
 
-DFGNode::DFGNode(int t_id, bool t_precisionAware, Instruction* t_inst, std::string opcodeName,
+DFGNode::DFGNode(int t_id, bool t_precisionAware, Value* t_inst, std::string opcodeName,
                  StringRef t_stringRef) {
   m_id = t_id;
   m_precisionAware = t_precisionAware;
@@ -38,12 +38,6 @@ DFGNode::DFGNode(int t_id, bool t_precisionAware, Instruction* t_inst, std::stri
   m_isPredicater = false;
   m_patternNodes = new list<DFGNode*>();
   initType();
-}
-
-void DFGNode::setInstruction(Instruction *inst, StringRef name) {
-	m_opcodeName = inst->getOpcodeName();
-	m_stringRef = name;
-	m_inst = inst;
 }
 
 int DFGNode::getID() {
@@ -143,10 +137,27 @@ void DFGNode::clearMapped() {
 
 Instruction* DFGNode::getInst() {
   if (m_inst == nullptr) {
-	  assert(false); // To make egraphs easier, we don't generate Instruction nodes.
+	  assert(false); // To make egraphs easier, we don't generate Instruction nodes when not required.
 	  // only do that if you have to.
   }
-  return m_inst;
+  return cast<Instruction>(m_inst);
+}
+
+Value *DFGNode::getValue() {
+	if (m_inst == nullptr) {
+		assert(false);
+	}
+
+	return m_inst;
+}
+
+bool DFGNode::isInst() {
+	if (m_inst == nullptr) {
+		// as above
+		assert(false);
+	}
+
+	return isa<Instruction>(m_inst);
 }
 
 StringRef DFGNode::getStringRef() {
@@ -179,10 +190,14 @@ bool DFGNode::isTransparentOp() {
 			|| m_opcodeName.compare("phi") == 0
 			|| m_opcodeName.compare("bitcast") == 0
 			|| m_opcodeName.compare("trunc") == 0
+			|| m_opcodeName.compare("Constant") == 0
 			// These ones are not so much 'transparent'
 			// as "I'm not 100% sure that they
 			// are really different from load/store.  Perhaps
 			// we should just include these with them.
+			// The rewrite rules are not llvm-specific,
+			// so I guess the point is to ignore the llvm-specific
+			// ops because they aren't representative.
 			|| m_opcodeName.compare("getelementptr") == 0
 			|| m_opcodeName.compare("extractelement") == 0
 			|| m_opcodeName.compare("insertelement") == 0
