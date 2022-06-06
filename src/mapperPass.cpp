@@ -240,13 +240,13 @@ namespace {
 
 		  MapResult *res = mapper->heuristicMap(cgra, dfg, II, isStaticElasticCGRA, options->PrintMappingFailures);
 
-		  if ((winning_res->failed() || res->II() < winning_res->II()) && !res->failed()) {
+		  if ((winning_res->failed() || (res->II() < winning_res->II())) && !res->failed()) {
 			  delete winning_res;
 			  winning_res = res;
 			  winning_dfg = dfg;
 		  }
 		  if (options->DebugMappingLoop) {
-			  cout << "DFG Number " << dfg_no << " had II " << winning_res->II() << endl;
+			  cout << "DFG Number " << dfg_no << " had II " << res->II() << endl;
 		  }
 	  }
 	  II = winning_res->II();
