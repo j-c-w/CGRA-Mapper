@@ -10,6 +10,11 @@ pub(crate) fn rules() -> Vec<Rewrite<SymbolLang, ()>> {
         rewrite!("mul-to-neg"; "(mul const_-1 ?y)" => "(neg ?y)"),
         rewrite!("lsh-to-lshr-mul"; "(lsh ?x ?y)" => "(mul ?x (lshr const_IntMax (sub const_32 ?y)))"),
         rewrite!("lsh-to-ashr-mul"; "(lsh ?x ?y)" => "(mul ?x (ashr const_IntMax (sub const_32 ?y)))"),
+		// This is also in the GCC rules.
+		rewrite!("shl-const-to-mul"; "(shl ?x (Constant))" => "(mul ?x Constant)"),
+		rewrite!("ashr-const-to-div"; "(ashr ?x Constant)" => "(div ?x Constant)"),
+		rewrite!("lshr-const-to-div"; "(lshr ?x Constant)" => "(div ?x Constant)"), // Same thing,
+		// but would use a differenc onstant obviously.
 
         // Add into the highest bit leaves you with the equivalent
         // of a negation :)
@@ -42,7 +47,7 @@ pub(crate) fn rules() -> Vec<Rewrite<SymbolLang, ()>> {
         // this group of rules :)
         // The reason it's so complicated is because it tries
         // to support non-1 ?x/?y that are true
-        /// uses icmp eq
+        // uses icmp eq
         rewrite!("xor-to-icmp"; "(xor ?x ?y)" => "(not (icmp ?x ?y))"),
         // uses icmp eq.
         rewrite!("not-to-icmp"; "(not ?x)" => "(icmp ?x const_0)"),
@@ -125,7 +130,7 @@ pub(crate) fn rules() -> Vec<Rewrite<SymbolLang, ()>> {
 		rewrite!("xor-to-not-or"; "(xor ?x ?y)" => "(or (and ?x (not ?y)) (and (not ?x) ?y))"),
 		rewrite!("xot-to-add-and"; "(xor ?x ?y)" => "(add (and ?x (not ?y)) (and (not ?x) ?y))"),
 		// Line 1044:
-		rewrite!("or-to-and-xor"; "(or ?x ?y)" => "(xor (and (not ?x) ?b) ?x)"),
+		rewrite!("or-to-and-xor"; "(or ?x ?y)" => "(xor (and (not ?x) ?y) ?x)"),
 		// Line 1291:
 		rewrite!("neg-to-xor"; "(neg ?x)" => "(xor ?x const_-1)"),
 		// Abs rule on 1541
@@ -141,6 +146,7 @@ pub(crate) fn rules() -> Vec<Rewrite<SymbolLang, ()>> {
 		rewrite!("fdiv-to-fneg"; "(fdiv ?x (const_-1))" => "(fneg ?x)"),
 		// Line 544:
 		rewrite!("fmul-to-fdiv"; "(fdiv ?a (fmul ?b ?c))" => "(fdiv (fdiv ?a ?b) ?c)"), // Other
+		rewrite!("fmul-to-fdiv-2"; "(fmul ?a ?b)" => "(fdiv ?a (fdiv const_1 ?b))"),
 		// driection of that may be useful?
 		// Line 558:
 		rewrite!("fmul-to-fdiv-2"; "(fmul (fdiv ?a ?b) ?c)" => "(fdiv ?a (fdiv ?b ?c))"),

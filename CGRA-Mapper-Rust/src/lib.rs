@@ -104,10 +104,10 @@ pub extern "C" fn optimize_with_egraphs(dfg: CppDFG) -> CppDFGs {
 
 	let (egraph, mut roots) = dfg_to_egraph(dfg);
     println!("identified {} roots", roots.len());
-	egraph.dot().to_svg("/tmp/initial.svg").unwrap();
+	// egraph.dot().to_svg("/tmp/initial.svg").unwrap();
 
 	let runner = Runner::default().with_egraph(egraph).run(&rules);
-    runner.egraph.dot().to_svg("/tmp/egraph.svg").unwrap();
+    // runner.egraph.dot().to_svg("/tmp/egraph.svg").unwrap();
 
     for r in &mut roots[..] {
         *r = runner.egraph.find(*r);
