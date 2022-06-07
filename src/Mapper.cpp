@@ -18,7 +18,7 @@
 #include "json.hpp"
 
 // todo --- what should this be?
-#define MAX_II_DEPTH 200
+#define MAX_II_DEPTH 50
 
 //#include <nlohmann/json.hpp>
 //using json = nlohmann::json;

@@ -21,7 +21,9 @@ bool debugRustConversion = false;
 
 RustNode toRustNode(DFGNode *n, map<int, int> id_map) {
 	uint32_t num_children = n->getPredNodes()->size();
-
+	if (debugRustConversion) {
+		errs() << "Converting node (" << num_children << " children) from DFG to Rust: " << n->asString() << "\n";
+	}
 	uint32_t *child_ids = (uint32_t*) malloc(num_children * sizeof(uint32_t));
 
 	int i = 0;
@@ -68,6 +70,9 @@ RustDFG toRustDFG(DFG *dfg) {
 
 	// Build a lookup table for names.
 	for (DFGNode *n : ordered_nodes) {
+		if (debugRustConversion) {
+			errs() << "Setting ID of " << n->asString() << " to " << node_index << "\n";
+		}
 		id_lookup.insert({n->getID(), node_index});
 		node_index ++;
 	}

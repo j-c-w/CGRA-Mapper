@@ -1452,7 +1452,7 @@ void DFG::breakCycles() {
 
 	// This has to be done out here because the node numbers
 	// are not updated until the end of this loop.
-	int dummyNodeCounter = getMaxNodeNumber();
+	int dummyNodeCounter = getMaxNodeNumber() + 1;
 	// Break cycles to pass to the egraphs rewriter.
 	// To break the cycles, we introduce dummy nodes --- the dummy nodes
 	// can be rejoined with the joinCycles operation.
@@ -1550,6 +1550,7 @@ void DFG::breakCycles() {
 	// Now, we need to add the dummy nodes and edges to the DFG.
 	// Needs to be done outside the node iteration.
 	for (DFGNode *node : nodesToAdd) {
+    assert (node->getInEdges()->size() > 0 || node->getOutEdges()->size() > 0);
 		addNode(node);
 	}
 
