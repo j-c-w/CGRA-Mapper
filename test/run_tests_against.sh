@@ -30,6 +30,7 @@ typeset -a files
 for file in $(find $1 -name "loop*.c"); do
 	files+=($file)
 done
+echo "Running over files ${files[@]}"
 
 if [[ ${#use_egraphs} == 0 ]]; then
 	parallel -v '(

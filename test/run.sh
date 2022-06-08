@@ -1,3 +1,5 @@
+#!/bin/bash
+
 f=$1
 shift
 

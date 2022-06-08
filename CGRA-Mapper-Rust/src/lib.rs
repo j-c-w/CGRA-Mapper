@@ -159,7 +159,7 @@ pub extern "C" fn optimize_with_egraphs(dfg: CppDFG) -> CppDFGs {
 	{
 		let mut g: EGraph<SymbolLang, ()> = Default::default();
 		g.add_expr(&best);
-		g.dot().to_svg("/tmp/final.svg").unwrap();
+		// g.dot().to_svg("/tmp/final.svg").unwrap();
 	}
 
 	let dfgs_ptr = unsafe { libc::malloc(size_of::<CppDFG>()) } as *mut CppDFG;
