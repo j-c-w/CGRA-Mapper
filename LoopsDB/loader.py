@@ -18,7 +18,9 @@ if __name__ == "__main__":
     if os.path.exists(args.output_folder):
         shutil.rmtree(args.output_folder)
     os.mkdir(args.output_folder)
-    for s in cur.execute('select src from loops'):
+    for s in cur.execute('select * from loops'):
         with open(args.output_folder + "/loop" + str(counter) + ".c", 'w') as f:
-            f.write(s[0])
+            program = s[0]
+            program = program.replace('int\nmain', 'void loop')
+            f.write(program)
         counter += 1
