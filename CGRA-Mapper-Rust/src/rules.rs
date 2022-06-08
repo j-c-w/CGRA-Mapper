@@ -36,9 +36,9 @@ pub(crate) fn rules() -> Vec<Rewrite<SymbolLang, ()>> {
 
 		// TODO -- make sure these only apply to things treated
 		// as booleans.
-		rewrite!("and-to-mul"; "(and ?x ?y)" => "(mul ?x ?y)"),
-		rewrite!("or-to-add"; "(or ?x ?y)" => "(add ?x ?y)"),
-        rewrite!("xor-to-or-and"; "(xor ?x ?y)" => "(sub (or ?x ?y) (and ?x ?y))"),// actually I think this one is generic.
+		// rewrite!("and-to-mul"; "(and ?x ?y)" => "(mul ?x ?y)"),
+		// rewrite!("or-to-add"; "(or ?x ?y)" => "(add ?x ?y)"),
+        // rewrite!("xor-to-or-and"; "(xor ?x ?y)" => "(sub (or ?x ?y) (and ?x ?y))"),// actually I think this one is generic.
         
 
         // Rewrite logic ops into icmp --- also should be only
@@ -48,9 +48,9 @@ pub(crate) fn rules() -> Vec<Rewrite<SymbolLang, ()>> {
         // The reason it's so complicated is because it tries
         // to support non-1 ?x/?y that are true
         // uses icmp eq
-        rewrite!("xor-to-icmp"; "(xor ?x ?y)" => "(not (icmp ?x ?y))"),
+        // rewrite!("xor-to-icmp"; "(xor ?x ?y)" => "(not (icmp ?x ?y))"),
         // uses icmp eq.
-        rewrite!("not-to-icmp"; "(not ?x)" => "(icmp ?x const_0)"),
+        // rewrite!("not-to-icmp"; "(not ?x)" => "(icmp ?x const_0)"),
 		// note that there are in the GCC rules in more
 		// complex ways.
         rewrite!("and-to-or"; "(and ?x ?y)" => "(not (or (not ?x) (not ?y)))"),

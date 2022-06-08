@@ -177,7 +177,7 @@ pub extern "C" fn optimize_with_graphs(dfg: CppDFG) -> CppDFGs {
     let mut graph = dfg_to_graph(dfg);
     // TODO:
     // println!("identified {} roots", graph.roots.len());
-	graph.to_svg("/tmp/initial.svg").unwrap();
+	// graph.to_svg("/tmp/initial.svg").unwrap();
 
     let mut normalized = false;
     let mut applied = Vec::new();
@@ -202,7 +202,7 @@ pub extern "C" fn optimize_with_graphs(dfg: CppDFG) -> CppDFGs {
         }
     }
 
-	graph.to_svg("/tmp/final.svg").unwrap();
+	// graph.to_svg("/tmp/final.svg").unwrap();
     println!("applied rules: {:?}", applied);
 
     let best = graph.as_dfg();
