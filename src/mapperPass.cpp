@@ -214,7 +214,7 @@ namespace {
 
 	  list<DFG*> *generated_dfgs;
 	  if (options->UseRewriter) {
-		  generated_dfgs = rewrite_for_CGRA(cgra, dfg);
+		  generated_dfgs = rewrite_with_graphs(cgra, dfg, options->DebugRustConversion);
 	  } else if (options->UseEGraphs) {
 		  generated_dfgs = rewrite_with_egraphs(cgra, dfg, options->DebugRustConversion);
 	  } else {

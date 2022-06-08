@@ -191,6 +191,27 @@ DFG* toDFG(RustDFG rustDfg) {
 	return newDFG;
 }
 
+// As below, but use the rewrite_with_graphs interface instead.
+list<DFG*> *rewrite_with_graphs(CGRA *cgra, DFG *dfg, bool DebugRustConversion) {
+	RustDFG rdfg = toRustDFG(dfg);
+	RustDFGList rust_results = optimize_with_graphs(rdfg);
+
+	if (DebugRustConversion) {
+		errs() << "Sent over a graph to the graph rewriter: " << dfg->asString() << "\n";
+	}
+
+	list<DFG*> *dfg_results = new list<DFG*>();
+	for (int i = 0; i < rust_results.num_dfgs; i ++) {
+		dfg_results->push_back(toDFG(rust_results.dfgs[i]));
+	}
+
+	if (DebugRustConversion) {
+		errs() << "Returning " << rust_results.num_dfgs << "graphs from the rust wrapper";
+	}
+
+	return dfg_results;
+}
+
 list<DFG*> *rewrite_with_egraphs(CGRA *cgra, DFG *dfg, bool DebugRustConversion) {
 	debugRustConversion = DebugRustConversion;
 	// Create the Rust DFGs:

@@ -32,6 +32,7 @@ class Mapper {
     Mapper(){}
     int getResMII(DFG*, CGRA*);
     int getRecMII(DFG*);
+	int getMaxCycle();
     void constructMRRG(DFG*, CGRA*, int);
     MapResult *heuristicMap(CGRA*, DFG*, int, bool, bool);
     int exhaustiveMap(CGRA*, DFG*, int, bool, bool);

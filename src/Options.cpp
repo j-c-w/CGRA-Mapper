@@ -6,7 +6,7 @@ using namespace llvm;
 cl::opt<bool> BuildCGRA("build", cl::desc("Build the CGRA from the code rather than mapping to it."));
 
 // op mode flags.
-cl::opt<bool> UseRewriter("rewriter", cl::desc("Use the simple rewriter"));
+cl::opt<bool> UseRewriter("use-rewriter", cl::desc("Use the simple rewriter"));
 cl::opt<bool> UseEGraphs("use-egraphs", cl::desc("Use the egraphs-based rewriter"));
 
 // Debug flags

@@ -52,6 +52,18 @@ void Mapper::constructMRRG(DFG* t_dfg, CGRA* t_cgra, int t_II) {
   }
 }
 
+// Given that we have already scheduled something, get the max cycle.
+int Mapper::getMaxCycle() {
+	int maxCycleSoFar = 0;
+	for (const auto &[node, cycle] : m_mappingTiming) {
+		if (cycle > maxCycleSoFar) {
+			maxCycleSoFar = cycle;
+		}
+	}
+
+	return maxCycleSoFar;
+}
+
 // The arriving data can stay inside the input buffer
 map<CGRANode*, int>* Mapper::dijkstra_search(CGRA* t_cgra, DFG* t_dfg,
     int t_II, DFGNode* t_srcDFGNode, DFGNode* t_targetDFGNode,
@@ -517,7 +529,7 @@ void Mapper::showSchedule(CGRA* t_cgra, DFG* t_dfg, MapResult *res,
         display[i][j] = "\n";
     }
   }
-  int showCycleBoundary = t_cgra->getFUCount();
+  int showCycleBoundary = getMaxCycle();
   if (showCycleBoundary < res->latency()) {
     showCycleBoundary = res->latency();
   }
@@ -531,8 +543,7 @@ errs() << "Latency is " << res->latency() << "\n";
 		  (*(*op_map)[to_string(i)])[to_string(j)] = new list<string>();
 	  }
   }
-  if (t_isStaticElasticCGRA)
-    showCycleBoundary = t_dfg->getNodeCount();
+  cout << "Looking at DFG with show cycle boundary " << showCycleBoundary << "\n";
   while (cycle <= showCycleBoundary) {
     errs()<<"--------------------------- cycle:"<<cycle<<" ---------------------------\n";
     for (int i=0; i<t_cgra->getRows(); ++i) {
