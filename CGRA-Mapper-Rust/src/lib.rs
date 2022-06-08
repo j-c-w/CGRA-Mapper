@@ -27,27 +27,34 @@ pub struct CppDFGs {
   count: u32
 }
 
+fn dfg_nodes(dfg: &CppDFG) -> &[CppNode] {
+    unsafe { std::slice::from_raw_parts(dfg.nodes, dfg.count as usize) }
+}
+
+fn node_op(node: &CppNode) -> &str {
+    unsafe { std::ffi::CStr::from_ptr(node.op) }.to_str().unwrap()
+}
+
+fn node_children(node: &CppNode) -> &[u32] {
+    unsafe { std::slice::from_raw_parts(node.child_ids, node.num_children as usize) }
+}
+
 fn dfg_to_egraph(dfg: CppDFG) -> (EGraph<SymbolLang, ()>, Vec<Id>) {
-	let nodes = unsafe { std::slice::from_raw_parts(dfg.nodes, dfg.count as usize) };
+    let nodes = dfg_nodes(&dfg);
 	let mut egraph: EGraph<SymbolLang, ()> = Default::default();
 	let mut eclasses = vec![];
     let mut is_root = (0..nodes.len()).map(|_| true).collect::<Vec<_>>(); // could use bit vector
 	// DEBUG >>>
-	let test = 
-	unsafe { std::slice::from_raw_parts(std::ptr::null_mut(), 0) }.iter()
-		.map(|&c: &u32| eclasses[c as usize]).collect::<Vec<_>>();
-	println!("{:?}", test);
-	for (i, node) in nodes.iter().enumerate() {
-		let op = Symbol::from(unsafe { std::ffi::CStr::from_ptr(node.op) }.to_str().unwrap());
-		println!("{}: {} with children: {:?}", i, op,
-			unsafe { std::slice::from_raw_parts(node.child_ids, node.num_children as usize) });
-	}
+	// let test = 
+	// unsafe { std::slice::from_raw_parts(std::ptr::null_mut(), 0) }.iter()
+	//	.map(|&c: &u32| eclasses[c as usize]).collect::<Vec<_>>();
+	// println!("{:?}", test);
 	// <<<
 	for node in nodes {
-		let op = Symbol::from(unsafe { std::ffi::CStr::from_ptr(node.op) }.to_str().unwrap());
+		let op = Symbol::from(node_op(node));
 		// DEBUG
 		println!("{}: {} with {} children", eclasses.len(), op, node.num_children);
-		let children = unsafe { std::slice::from_raw_parts(node.child_ids, node.num_children as usize) }.iter()
+		let children = node_children(node).iter()
 			.map(|&c| {
 				// DEBUG
 				println!("access: {} / {}", c, eclasses.len());
@@ -63,6 +70,39 @@ fn dfg_to_egraph(dfg: CppDFG) -> (EGraph<SymbolLang, ()>, Vec<Id>) {
     roots.sort();
     roots.dedup();
 	(egraph, roots)
+}
+
+fn dfg_to_graph(dfg: CppDFG) -> Graph<SymbolLang> {
+    let nodes = dfg_nodes(&dfg);
+	let mut graph: Graph<SymbolLang> = Default::default();
+	let mut ids = Vec::with_capacity(nodes.len());
+    let mut is_root = (0..nodes.len()).map(|_| true).collect::<Vec<_>>(); // could use bit vector
+                                                                          //
+	for node in nodes {
+		let op = Symbol::from(node_op(node));
+		// DEBUG
+		println!("{}: {} with {} children", ids.len(), op, node.num_children);
+		let children = node_children(node).iter()
+			.map(|&c| {
+				// DEBUG
+				println!("access: {} / {}", c, ids.len());
+                is_root[c as usize] = false;
+				ids[c as usize]
+			}).collect::<Vec<_>>();
+		ids.push(graph.add(SymbolLang::new(op, children)));
+	}
+
+    let mut roots = ids.iter().cloned().zip(is_root.iter().cloned())
+        .filter_map(|(e, is_r)| if is_r { println!("{:?}", graph[e]); Some(e) } else { None }).collect::<Vec<_>>();
+    // we remove duplicates, why is this necessary?
+    roots.sort();
+    roots.dedup();
+
+    for r in roots {
+        graph.add_root(r);
+    }
+
+	graph
 }
 
 fn add_dfg<L: Language, N: Analysis<L>>(dfg: &RecExpr<L>, egraph: &mut EGraph<L, N>) -> Vec<Id> {
@@ -121,6 +161,51 @@ pub extern "C" fn optimize_with_egraphs(dfg: CppDFG) -> CppDFGs {
 		g.add_expr(&best);
 		g.dot().to_svg("/tmp/final.svg").unwrap();
 	}
+
+	let dfgs_ptr = unsafe { libc::malloc(size_of::<CppDFG>()) } as *mut CppDFG;
+	assert!(dfgs_ptr != std::ptr::null_mut());
+	unsafe { *dfgs_ptr = expr_to_dfg(best) };
+	
+	CppDFGs { dfgs: dfgs_ptr, count: 1 }
+}
+
+#[no_mangle]
+pub extern "C" fn optimize_with_graphs(dfg: CppDFG) -> CppDFGs {
+    println!("entering Rust, using standard rewriting");
+
+	let rules = rules();
+    let mut graph = dfg_to_graph(dfg);
+    // TODO:
+    // println!("identified {} roots", graph.roots.len());
+	graph.to_svg("/tmp/initial.svg").unwrap();
+
+    let mut normalized = false;
+    let mut applied = Vec::new();
+    while !normalized {
+        normalized = true;
+
+        for r in &rules {
+            // TODO: avoid recompiling Pattern here
+            let lhs = Pattern::from(r.searcher.get_pattern_ast().unwrap().clone());
+            let rhs = r.applier.get_pattern_ast().unwrap();
+
+            // TODO: replace pattern size with proper cost
+            if lhs.ast.as_ref().len() <= rhs.as_ref().len() {
+                break;
+            }
+
+            while let Some((id, subst)) = lhs.search_graph(&graph) {
+                graph.replace(id, &rhs, &subst);
+                applied.push(r.name);
+                normalized = false;
+            }
+        }
+    }
+
+	graph.to_svg("/tmp/final.svg").unwrap();
+    println!("applied rules: {:?}", applied);
+
+    let best = graph.as_dfg();
 
 	let dfgs_ptr = unsafe { libc::malloc(size_of::<CppDFG>()) } as *mut CppDFG;
 	assert!(dfgs_ptr != std::ptr::null_mut());

@@ -27,6 +27,7 @@ typedef struct RustDFGList {
 } RustDFGList;
 
 RustDFGList optimize_with_egraphs(RustDFG input);
+RustDFGList optimize_with_graphs(RustDFG input);
 
 #ifdef __cplusplus
 }
