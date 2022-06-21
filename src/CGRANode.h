@@ -21,6 +21,7 @@
 //#include <llvm/Support/FileSystem.h>
 #include <list>
 #include <string>
+#include <map>
 
 using namespace std;
 using namespace llvm;

@@ -15,6 +15,7 @@
 #include "CGRALink.h"
 #include <iostream>
 //#include <llvm/Support/raw_ostream.h>
+#include <map>
 
 using namespace llvm;
 

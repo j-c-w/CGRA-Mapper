@@ -34,6 +34,8 @@ add_library(mapperPass MODULE
 	RustConversion.h
 	Options.h
 	Options.cpp
+    MapAlgorithms.h
+    MapAlgorithms.cpp
 )
 
 # Use C++11 to compile our pass (i.e., supply -std=c++11).

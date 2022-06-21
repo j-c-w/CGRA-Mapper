@@ -993,7 +993,7 @@ void DFG::generateDot(Function *t_F, bool t_isTrimmedDemo) {
   string func_name = t_F->getName().str();
   string file_name = func_name + ".dot";
   StringRef fileName(file_name);
-  raw_fd_ostream file(fileName, error, sys::fs::F_None);
+  raw_fd_ostream file(fileName, error, sys::fs::OF_None);
 
   file << "digraph \"DFG for'" + t_F->getName() + "\' function\" {\n";
 
