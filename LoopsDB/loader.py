@@ -14,13 +14,14 @@ if __name__ == "__main__":
 
     con = apsw.Connection('loops.db')
     cur = con.cursor()
+
     counter = 0
     if os.path.exists(args.output_folder):
         shutil.rmtree(args.output_folder)
     os.mkdir(args.output_folder)
-    for s in cur.execute('select * from loops'):
+    for s in cur.execute('select body from loops'):
         with open(args.output_folder + "/loop" + str(counter) + ".c", 'w') as f:
             program = s[0]
-            program = program.replace('int\nmain', 'void loop')
-            f.write(program)
+            file = "TODO --- get source filename" # s[1]
+            f.write('// Source is: ' + file + '\n\n' + program)
         counter += 1
