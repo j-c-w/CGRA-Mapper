@@ -1,3 +1,5 @@
+#!/bin/bash
+
 set -e
 
 if [[ $# -ne 1 ]]; then
@@ -5,5 +7,5 @@ if [[ $# -ne 1 ]]; then
 	exit 1
 fi
 
-clang -emit-llvm -fno-unroll-loops -O3 -o ${1/.cpp/}.bc -c ${1}
+clang -emit-llvm -fno-unroll-loops -O0 -o ${1/.cpp/}.bc -c ${1}
 #llvm-dis fir.bc -o fir.ll

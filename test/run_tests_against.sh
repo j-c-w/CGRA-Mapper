@@ -2,8 +2,8 @@
 
 set -eu
 
-typeset use_egraphs
-zparseopts -D -E -use-egraphs=use_egraphs
+typeset use_egraphs use_rewriter
+zparseopts -D -E -use-egraphs=use_egraphs -use-rewriter=use_rewriter
 
 if [[ $# -ne 2 ]]; then
 	echo "Usage: $0 <CGRA Design File> <Other Input Files Base Folder>"
@@ -32,20 +32,21 @@ for file in $(find $1 -name "loop*.c"); do
 done
 echo "Running over files ${files[@]}"
 
+extra_flags=""
 if [[ ${#use_egraphs} == 0 ]]; then
-	parallel -v '(
-		cp {} kernel_{#}.cpp
-		./compile.sh kernel_{#}.cpp
-		./run.sh kernel_{#}.bc --params-file param.json
-		echo "Building {} "
-			)' ::: ${files[@]} &> run_output
-else
-	parallel '(
-		cp {} kernel_{#}.cpp
-		./compile.sh kernel_{#}.cpp
-		./run.sh kernel_{#}.bc --params-file param.json --use-egraphs
-		echo "Building {}")' ::: ${files[@]} &> run_output
+	extra_flags="$extra_flags --use-egraphs"
 fi
+if [[ ${#use_rewriter} == 0 ]]; then
+	extra_flags="$extra_flags --use-rewriter"
+fi
+
+parallel "(
+	echo 'Starting {}'
+	cp {} kernel_{/.}.cpp
+	./compile.sh kernel_{/.}.cpp
+	# A small number seem to cause loops somewhere --- just want to get non-buggy results
+	timeout 600 ./run.sh kernel_{/.}.bc --params-file param.json $extra_flags
+	echo 'Done Building {/}')" ::: ${files[@]} &> run_output
 
 success=$(grep -ce "Mapping:success" run_output || echo "")
 fails=$(grep -ce "Mapping:fail" run_output || echo "")

@@ -4,8 +4,8 @@
   "targetNested"        : true,
   "targetLoopsID"       : [0, 1],
   "doCGRAMapping"       : true,
-  "row"                 : 4,
-  "column"              : 4,
+  "row"                 : 3,
+  "column"              : 3,
   "precisionAware"      : true,
   "heterogeneity"       : true,
   "isTrimmedDemo"       : true,
@@ -25,28 +25,19 @@
   "operations":
 {
 "0": {
-"0": [],
-"1": [],
-"2": ["add", "add", "add"],
-"3": []
+"0": ["store", "store", "store"],
+"1": ["br", "br", "add", "Constant", "Constant", "Constant", "br", "br", "add", "Constant", "Constant", "Constant"],
+"2": ["fcmp", "Constant", "Constant"]
 },
 "1": {
-"0": [],
-"1": ["icmpbr", "icmpbr", "icmpbr", "icmpbr"],
-"2": ["phi", "phi", "phi", "phi", "phi", "phi", "phi", "phi"],
-"3": ["getelementptrload", "getelementptrload", "getelementptrload", "getelementptrload"]
+"0": ["store", "store", "Constant", "store", "Constant"],
+"1": ["load", "load", "load", "load", "load", "load", "load", "Constant", "br", "load", "load", "load", "load", "load", "load", "load", "load", "Constant", "br"],
+"2": ["add", "icmp", "br", "Constant", "Constant", "icmp", "icmp", "Constant", "Constant"]
 },
 "2": {
-"0": ["store", "store", "store"],
-"1": ["mul", "mul", "mul", "mul", "mul"],
-"2": ["add", "add", "add", "add", "add", "add", "add", "add", "add"],
-"3": []
-},
-"3": {
-"0": [],
-"1": ["getelementptrload", "sdiv", "getelementptrload", "sdiv", "getelementptrload", "sdiv", "getelementptrload", "sdiv"],
-"2": [],
-"3": []
+"0": ["store", "store"],
+"1": ["br", "br", "br", "Constant", "Constant", "getelementptr", "getelementptr", "br", "br", "Constant", "Constant"],
+"2": ["br", "Constant", "Constant"]
 }
 }
 }

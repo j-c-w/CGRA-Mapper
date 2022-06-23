@@ -1,5 +1,6 @@
 #!/bin/bash
 
+set -x
 f=$1
 shift
 
