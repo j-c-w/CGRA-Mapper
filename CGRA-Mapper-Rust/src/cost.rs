@@ -30,6 +30,20 @@ fn get_available_operations(path: &str) -> HashSet<String> {
 	operations.insert("fptosi".into());
 	operations.insert("sitofp".into());
 
+    // Various constants: we don't do a super efficient
+    // job of managing these, but do assume that they can be
+    // programmed into any PE in teh compiler.
+    operations.insert("const_-1".into());
+    operations.insert("Constant".into());
+    operations.insert("const_2".into());
+    operations.insert("const_32".into());
+    operations.insert("const_1".into());
+    operations.insert("const_0".into());
+    operations.insert("const_something".into());
+    operations.insert("const_31".into());
+    operations.insert("const_2pow32".into());
+
+
     // CGRA mapper sometimes produces loops w/out these.
     // I don't understand why that could be, because ISTM
     // like literally every loop ever needs to have both

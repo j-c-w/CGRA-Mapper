@@ -27,6 +27,12 @@ pub struct CppDFGs {
   count: u32
 }
 
+#[repr(C)]
+pub struct Rulesets {
+	names: * const*const c_char, // Name of each ruleset to use.
+	num_rulesets: u32 // How many rulesets?
+}
+
 fn dfg_nodes(dfg: &CppDFG) -> &[CppNode] {
     unsafe { std::slice::from_raw_parts(dfg.nodes, dfg.count as usize) }
 }
@@ -105,6 +111,26 @@ fn dfg_to_graph(dfg: CppDFG) -> Graph<SymbolLang> {
 	graph
 }
 
+fn load_rulesets(rsets: Rulesets) -> Vec<Rewrite<SymbolLang, ()>> {
+	let mut result = vec![];
+    let names = unsafe { std::slice::from_raw_parts(rsets.names, rsets.num_rulesets as usize) };
+	for name in names {
+		let rset_name = unsafe { std::ffi::CStr::from_ptr(*name) }.to_str().unwrap();
+		result.extend(load_ruleset(rset_name).clone());
+	}
+
+	result
+}
+
+fn load_ruleset(nm: &str) -> Vec<Rewrite<SymbolLang, ()>> {
+	match nm {
+		"int" => rules(), // These are the 'normal' rewrite rules
+		"fp" => fp_rules(), // These are rewrite rules for -ffast-math style rewrites
+		"boolean_logic" => boolean_logic(), // These are rewrite rules that assume ^&| are boolean rather than logical
+		_ => panic!("unknown ruleset")
+	}
+}
+
 fn add_dfg<L: Language, N: Analysis<L>>(dfg: &RecExpr<L>, egraph: &mut EGraph<L, N>) -> Vec<Id> {
     let nodes = dfg.as_ref();
     let mut eclasses = Vec::with_capacity(nodes.len());
@@ -137,10 +163,10 @@ fn expr_to_dfg(expr: RecExpr<SymbolLang>) -> CppDFG {
 }
 
 #[no_mangle]
-pub extern "C" fn optimize_with_egraphs(dfg: CppDFG) -> CppDFGs {
+pub extern "C" fn optimize_with_egraphs(dfg: CppDFG, rulesets: Rulesets) -> CppDFGs {
 	println!("entering Rust");
 
-	let rules = rules();
+	let rules = load_rulesets(rulesets);
 
 	let (egraph, mut roots) = dfg_to_egraph(dfg);
     println!("identified {} roots", roots.len());
@@ -170,10 +196,10 @@ pub extern "C" fn optimize_with_egraphs(dfg: CppDFG) -> CppDFGs {
 }
 
 #[no_mangle]
-pub extern "C" fn optimize_with_graphs(dfg: CppDFG) -> CppDFGs {
+pub extern "C" fn optimize_with_graphs(dfg: CppDFG, rulesets: Rulesets) -> CppDFGs {
     println!("entering Rust, using standard rewriting");
 
-	let rules = rules();
+	let rules = load_rulesets(rulesets);
     let mut graph = dfg_to_graph(dfg);
     // TODO:
     // println!("identified {} roots", graph.roots.len());
@@ -190,6 +216,7 @@ pub extern "C" fn optimize_with_graphs(dfg: CppDFG) -> CppDFGs {
             let rhs = r.applier.get_pattern_ast().unwrap();
 
             // TODO: replace pattern size with proper cost
+			// TODO -- do this more efficiently.
             if lhs.ast.as_ref().len() <= rhs.as_ref().len() {
                 break;
             }

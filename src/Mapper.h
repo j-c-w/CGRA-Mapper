@@ -35,7 +35,7 @@ class Mapper {
 	int getMaxCycle();
     void constructMRRG(DFG*, CGRA*, int);
     MapResult *heuristicMap(CGRA*, DFG*, int, bool, bool);
-    int exhaustiveMap(CGRA*, DFG*, int, bool, bool);
+    MapResult *exhaustiveMap(CGRA*, DFG*, int, bool, bool);
     map<CGRANode*, int>* calculateCost(CGRA*, DFG*, int, DFGNode*, CGRANode*, bool PrintMappingFailures);
     map<CGRANode*, int>* getPathWithMinCostAndConstraints(CGRA*, DFG*, int,
         DFGNode*, list<map<CGRANode*, int>*>*);

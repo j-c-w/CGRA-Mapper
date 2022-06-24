@@ -1,5 +1,65 @@
 use egg::*;
 
+// This set of rules assumes all logical operations are just boolean
+// operations.
+pub(crate) fn boolean_logic() -> Vec<Rewrite<SymbolLang, ()>> {
+	vec![
+		rewrite!("and-to-mul"; "(and ?x ?y)" => "(mul ?x ?y)"),
+		// Logic with this one is, to be x =1 and y=1, we must
+		// have not xor == 1 and add == 2 -- and that's the only way to get to
+		// 3 in total.
+		rewrite!("and-to-add-xor"; "(and ?x ?y)" => "(icmp (add (not (xor ?x ?y)) (add ?x ?y)) const_3)"),
+		rewrite!("or-to-xor"; "(or ?x ?y)" => "(xor ?x ?y)"),
+		// uses icmp neq
+		rewrite!("or-to-add"; "(or ?x ?y)" => "(icmp (add ?x ?y) const_0)"),
+        rewrite!("xor-to-or-and"; "(xor ?x ?y)" => "(sub (or ?x ?y) (and ?x ?y))"),// actually I think this one is generic.
+        
+
+        // Rewrite logic ops into icmp --- also should be only
+        // boolean logic ops here.
+        // I checked this one, it's the only non-trivial one in
+        // this group of rules :)
+        // The reason it's so complicated is because it tries
+        // to support non-1 ?x/?y that are true
+        // uses icmp eq
+        rewrite!("xor-to-icmp"; "(xor ?x ?y)" => "(not (icmp ?x ?y))"),
+        // uses icmp eq.
+        rewrite!("not-to-icmp"; "(not ?x)" => "(icmp ?x const_0)"),
+	]
+
+}
+
+// This is a set of rules that would run with flags
+// like ffast-math in gcc.
+// Note except where ohterwise specified, these rules
+// are takne from GCC.
+pub(crate) fn fp_rules() -> Vec<Rewrite<SymbolLang, ()>> {
+	vec![
+		// =========
+		// Floating Point Rules.
+		// Note that for FP rules, we generally assume -ffast-math or
+		// equivlanet.  Otherwise, very limited rules apply, so not worthwhile.
+		// Line 539:
+		rewrite!("fneg-to-fdiv"; "(fneg ?x)" => "(fdiv ?x (const_-1))"),
+		rewrite!("fdiv-to-fneg"; "(fdiv ?x (const_-1))" => "(fneg ?x)"),
+		// Line 544:
+		rewrite!("fmul-to-fdiv"; "(fdiv ?a (fmul ?b ?c))" => "(fdiv (fdiv ?a ?b) ?c)"), // Other
+		rewrite!("fmul-to-fdiv-2"; "(fmul ?a ?b)" => "(fdiv ?a (fdiv const_1 ?b))"),
+		// driection of that may be useful?
+		// Line 558:
+		rewrite!("fmul-to-fdiv-2"; "(fmul (fdiv ?a ?b) ?c)" => "(fdiv ?a (fdiv ?b ?c))"),
+		// Various FP math.h function rules from line 5965
+
+
+		// TODO --- note that there are a lot of rules around line 700 that may or may not be
+		// useful if we encounter library calls to math.h.
+
+		// TODO--- Useful rules copied up to line 1000, copy the remaining rules (jcw)
+
+	]
+}
+
+// These are generally applicable, alwaystrue, integer rules.
 pub(crate) fn rules() -> Vec<Rewrite<SymbolLang, ()>> {
     vec![
 		// Rules we came up with:
@@ -34,23 +94,6 @@ pub(crate) fn rules() -> Vec<Rewrite<SymbolLang, ()>> {
 		rewrite!("sext-to-logic-2"; "(sext ?x)" => "(or (bitcast ?x) (lsh (neg (icmp ?x const_0))
             const_31))"),
 
-		// TODO -- make sure these only apply to things treated
-		// as booleans.
-		// rewrite!("and-to-mul"; "(and ?x ?y)" => "(mul ?x ?y)"),
-		// rewrite!("or-to-add"; "(or ?x ?y)" => "(add ?x ?y)"),
-        // rewrite!("xor-to-or-and"; "(xor ?x ?y)" => "(sub (or ?x ?y) (and ?x ?y))"),// actually I think this one is generic.
-        
-
-        // Rewrite logic ops into icmp --- also should be only
-        // boolean logic ops here.
-        // I checked this one, it's the only non-trivial one in
-        // this group of rules :)
-        // The reason it's so complicated is because it tries
-        // to support non-1 ?x/?y that are true
-        // uses icmp eq
-        // rewrite!("xor-to-icmp"; "(xor ?x ?y)" => "(not (icmp ?x ?y))"),
-        // uses icmp eq.
-        // rewrite!("not-to-icmp"; "(not ?x)" => "(icmp ?x const_0)"),
 		// note that there are in the GCC rules in more
 		// complex ways.
         rewrite!("and-to-or"; "(and ?x ?y)" => "(not (or (not ?x) (not ?y)))"),
@@ -137,27 +180,6 @@ pub(crate) fn rules() -> Vec<Rewrite<SymbolLang, ()>> {
 
 		// Line 1790: -- possibly useful?
 
-		// =========
-		// Floating Point Rules.
-		// Note that for FP rules, we generally assume -ffast-math or
-		// equivlanet.  Otherwise, very limited rules apply, so not worthwhile.
-		// Line 539:
-		rewrite!("fneg-to-fdiv"; "(fneg ?x)" => "(fdiv ?x (const_-1))"),
-		rewrite!("fdiv-to-fneg"; "(fdiv ?x (const_-1))" => "(fneg ?x)"),
-		// Line 544:
-		rewrite!("fmul-to-fdiv"; "(fdiv ?a (fmul ?b ?c))" => "(fdiv (fdiv ?a ?b) ?c)"), // Other
-		rewrite!("fmul-to-fdiv-2"; "(fmul ?a ?b)" => "(fdiv ?a (fdiv const_1 ?b))"),
-		// driection of that may be useful?
-		// Line 558:
-		rewrite!("fmul-to-fdiv-2"; "(fmul (fdiv ?a ?b) ?c)" => "(fdiv ?a (fdiv ?b ?c))"),
-		// Various FP math.h function rules from line 5965
-
-
-		// TODO --- note that there are a lot of rules around line 700 that may or may not be
-		// useful if we encounter library calls to math.h.
-
-		// TODO--- Useful rules copied up to line 1000, copy the remaining rules (jcw)
-
 		// Other standard rules:
 
 		rewrite!("commute-add"; "(add ?x ?y)" => "(add ?y ?x)"),
@@ -167,4 +189,11 @@ pub(crate) fn rules() -> Vec<Rewrite<SymbolLang, ()>> {
 		rewrite!("mul-0"; "(mul ?x 0)" => "0"),
 		rewrite!("mul-1"; "(mul ?x 1)" => "?x"),
 	]
+}
+
+pub(crate) fn gcc_rules() -> Vec<Rewrite<SymbolLang, ()>> {
+	let mut intrules = rules().clone();
+	let fprules = fp_rules().clone();
+	intrules.extend(fprules);
+	intrules
 }

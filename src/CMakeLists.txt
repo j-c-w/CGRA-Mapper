@@ -8,9 +8,9 @@
 #  Date : July 16, 2019
 #
 
-add_library(mapperPass MODULE
-    # List your source files here.
-    mapperPass.cpp
+set(CMAKE_BUILD_TYPE Debug)
+
+list(APPEND local_sources
     DFGNode.h
     DFGNode.cpp
     DFGEdge.h
@@ -38,6 +38,23 @@ add_library(mapperPass MODULE
     MapAlgorithms.cpp
 )
 
+add_library(mapperPass MODULE
+    # List your source files here.
+    mapperPass.cpp
+    ${local_sources}
+)
+
+add_executable(dfgMapper
+    mapFromDFG.cpp
+    ${local_sources}
+)
+
+# Only needed for the standalone executbale because
+# the mapperPass is intended to be loaded into opt, which
+# will provide this.
+llvm_map_components_to_libnames(llvm_libs support core irreader all)
+target_link_libraries(dfgMapper ${llvm_libs})
+
 # Use C++11 to compile our pass (i.e., supply -std=c++11).
 #if (NOT CMAKE_VERSION VERSION_LESS 3.1)
 #  target_compile_features(mapperPass PRIVATE cxx_range_for cxx_auto_type)
@@ -48,8 +65,12 @@ add_library(mapperPass MODULE
 set_target_properties(mapperPass PROPERTIES
     COMPILE_FLAGS "-fno-rtti"
 )
+set_target_properties(dfgMapper PROPERTIES
+    COMPILE_FLAGS "-fno-rtti -DDISABLE_LLVM_CMDLINE"
+)
 
 target_link_libraries(mapperPass ${CMAKE_CURRENT_SOURCE_DIR}/../CGRA-Mapper-Rust/target/debug/libEggLib.so)
+target_link_libraries(dfgMapper ${CMAKE_CURRENT_SOURCE_DIR}/../CGRA-Mapper-Rust/target/debug/libEggLib.so)
 
 # Get proper shared-library behavior (where symbols are not necessarily
 # resolved when the shared library is linked) on OS X.

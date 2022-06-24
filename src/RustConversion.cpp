@@ -192,11 +192,11 @@ DFG* toDFG(RustDFG rustDfg) {
 }
 
 // As below, but use the rewrite_with_graphs interface instead.
-list<DFG*> *rewrite_with_graphs(CGRA *cgra, DFG *dfg, bool DebugRustConversion) {
+list<DFG*> *rewrite_with_graphs(Options *opts, CGRA *cgra, DFG *dfg) {
 	RustDFG rdfg = toRustDFG(dfg);
-	RustDFGList rust_results = optimize_with_graphs(rdfg);
+	RustDFGList rust_results = optimize_with_graphs(rdfg, opts->getRulesets());
 
-	if (DebugRustConversion) {
+	if (opts->DebugRustConversion) {
 		errs() << "Sent over a graph to the graph rewriter: " << dfg->asString() << "\n";
 	}
 
@@ -205,23 +205,23 @@ list<DFG*> *rewrite_with_graphs(CGRA *cgra, DFG *dfg, bool DebugRustConversion) 
 		dfg_results->push_back(toDFG(rust_results.dfgs[i]));
 	}
 
-	if (DebugRustConversion) {
+	if (opts->DebugRustConversion) {
 		errs() << "Returning " << rust_results.num_dfgs << "graphs from the rust wrapper";
 	}
 
 	return dfg_results;
 }
 
-list<DFG*> *rewrite_with_egraphs(CGRA *cgra, DFG *dfg, bool DebugRustConversion) {
-	debugRustConversion = DebugRustConversion;
+list<DFG*> *rewrite_with_egraphs(Options *opts, CGRA *cgra, DFG *dfg) {
+	debugRustConversion = opts->DebugRustConversion;
 	// Create the Rust DFGs:
 	RustDFG rdfg = toRustDFG(dfg);
 	// Call the rewriter
 	// Results are null-terminated.
-	RustDFGList rust_results = optimize_with_egraphs(rdfg);
+	RustDFGList rust_results = optimize_with_egraphs(rdfg, opts->getRulesets());
 	// Go through and look at the outputs
 
-	if (DebugRustConversion) {
+	if (opts->DebugRustConversion) {
 		errs() << "Sent over graph: " << dfg->asString() << "\n";
 	}
 	list<DFG*> *dfg_results = new list<DFG*>();
@@ -229,7 +229,7 @@ list<DFG*> *rewrite_with_egraphs(CGRA *cgra, DFG *dfg, bool DebugRustConversion)
 		// convert each result to a dfg.
 		dfg_results->push_back(toDFG(rust_results.dfgs[i]));
 	}
-	if (DebugRustConversion) {
+	if (opts->DebugRustConversion) {
 		errs() << "Returning " << rust_results.num_dfgs << " graphs from the Rust wrapper\n";
 		errs() << "First result is " << dfg_results->front()->asString();
 	}

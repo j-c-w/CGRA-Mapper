@@ -10,6 +10,7 @@
 
 #include "CGRANode.h"
 #include "OperationMap.h"
+#include "Options.h"
 #include <stdio.h>
 
 #define SINGLE_OCCUPY     0 // A single-cycle opt is in the FU
@@ -24,7 +25,7 @@
 //  m_canLoad = false;
 //}
 
-CGRANode::CGRANode(int t_id, int t_x, int t_y, list<OperationNumber>* ops, bool build_cgra) {
+CGRANode::CGRANode(int t_id, int t_x, int t_y, list<OperationNumber>* ops, Options *opts, Parameters *params) {
   m_id = t_id;
   m_currentCtrlMemItems = 0;
   m_disabled = false;
@@ -44,7 +45,8 @@ CGRANode::CGRANode(int t_id, int t_x, int t_y, list<OperationNumber>* ops, bool 
   m_regs_duration = NULL;
   m_regs_timing = NULL;
   operations = ops;
-  m_build_cgra = build_cgra;
+  m_build_cgra = opts->BuildCGRA;
+  m_params = params;
 }
 
 // FIXME: should handle the case that the data is maintained in the registers
@@ -187,6 +189,12 @@ bool CGRANode::canSupport(DFGNode* t_opt) {
       (t_opt->isCall()      and !canCall())  or
       (t_opt->hasCombined() and !supportComplex() )){
     return false;
+  }
+
+  // Do this check after the above --- homogenous PEs is not taken
+  // to mean that we can issue loads at every single cell.
+  if (m_params->homogenousPEs) {
+    return true;
   }
 
   if (t_opt->isConst()) {

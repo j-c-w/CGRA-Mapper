@@ -14,6 +14,7 @@
 #include "CGRALink.h"
 #include "DFGNode.h"
 #include "OperationMap.h"
+#include "Options.h"
 #include <iostream>
 //#include <llvm/IR/Function.h>
 //#include <llvm/IR/Value.h>
@@ -22,6 +23,7 @@
 #include <list>
 #include <string>
 #include <map>
+#include "Options.h"
 
 using namespace std;
 using namespace llvm;
@@ -33,6 +35,7 @@ class CGRANode {
 
   private:
 //    typedef std::pair<Value*, StringRef> DFG_Node;
+    Parameters *m_params;
     int m_id;
     int m_x;
     int m_y;
@@ -65,7 +68,7 @@ class CGRANode {
 	list<OperationNumber> *operations;
 
   public:
-    CGRANode(int, int, int, list<OperationNumber>*, bool);
+    CGRANode(int, int, int, list<OperationNumber>*, Options*, Parameters*);
 //    CGRANode(int, int, int, int, int);
     void setRegConstraint(int);
     void setCtrlMemConstraint(int);

@@ -1,7 +1,7 @@
-#include <llvm/Support/CommandLine.h>
 #include <fstream>
 #include "json.hpp"
 #include <iostream>
+#include <stdexcept>
 #include <string>
 #include <stdlib.h>
 #include "Options.h"
@@ -9,10 +9,22 @@
 #include "CGRA.h"
 #include "DFG.h"
 #include <list>
+#include <tclap/CmdLine.h>
+#include "RustTypes.h"
 
 using namespace llvm;
 using json = nlohmann::json;
 
+
+// Trouble figuring out how to link these defs in the standalone version
+// that uses the TClap processing anyway.
+// Given that these rely on opt --- I'm not 100% sure it's even possible
+// to link them.
+#ifndef DISABLE_LLVM_CMDLINE
+#include <llvm/Support/CommandLine.h>
+#warning "Adding LLVm options"
+// Due to having two different entry points, we have to maintain two differnet
+// sets of options (PITA).  LLVM opt options:
 cl::opt<bool> BuildCGRA("build", cl::desc("Build the CGRA from the code rather than mapping to it."));
 
 // op mode flags.
@@ -27,15 +39,100 @@ cl::opt<bool> LLVMDebugOperationMap ("debug-operation-map", cl::desc("Debug the 
 cl::opt<bool> PrintOperationCount("print-operation-count", cl::desc("Print the operation counts in the DFG for debugging rewrite rules"));
 
 cl::opt<std::string> Params("params-file", cl::desc("Json file with the CGRA parameters"));
+cl::list<std::string> RulesetsOpt("ruleset", cl::desc("Rulesets to use: valid options are: int, fp, boolean, gcc (default is gcc, gcc = int ruleset + fp ruleset)"));
+
+#endif
+
+bool is_valid_ruleset(std::string rname) {
+  return
+    (!rname.compare("fp")) ||
+    (!rname.compare("int")) ||
+    (!rname.compare("boolean")) ||
+    (!rname.compare("gcc"));
+}
+
+// Setup the options for non-llvm toolchain.
+TClapOptions *setupOptionsTClap(int argc, char **argv) {
+TCLAP::CmdLine cmd("Tool to schedule a DFG Json file onto a CGRA");
+  TCLAP::UnlabeledValueArg<std::string> dfg("DFGJson", "The JSON file with the DFG in it", true, "", "string");
+  TCLAP::UnlabeledValueArg<std::string> cgra("CGRAJson", "The params.json file that describes the CGRA", true, "", "string");
+
+  TCLAP::SwitchArg build_cgra("b", "build","Build the cgra rather than targeting a fixed one", cmd, false);
+  TCLAP::SwitchArg use_egraphs("e", "use-egraphs", "Use the egraph rewriter", cmd, false);
+  TCLAP::SwitchArg use_rewriter("r", "use-rewriter", "Use the standard rewriter", cmd, false);
+
+  TCLAP::SwitchArg debug_mapping_loop("", "debug-mapping-loop", "Debug the mapping loop", cmd, false);
+  TCLAP::SwitchArg print_mapping_failures("", "print-mapping-failures", "Debugg mapping failures", cmd, false);
+
+  TCLAP::MultiArg<std::string> trulesets("s", "ruleset", "Rulesets (valid sets are int, fp, boolean, gcc (gcc = int + fp).  Default is gcc", false, "ruleset", cmd);
+
+  try {
+    cmd.add(dfg);
+    cmd.add(cgra);
+
+    cmd.parse(argc, argv);
+  } catch (TCLAP::ArgException &e) {
+      std::cerr << "Error: " << e.error() << " with arg " << e.argId() << std::endl;
+  }
+  Options *opt = new Options();
+  opt->BuildCGRA = build_cgra;
+
+  opt->UseEGraphs = use_egraphs;
+  opt->UseRewriter = use_rewriter;
+
+  // TODO --- Support this.
+  opt->DebugMappingLoop = debug_mapping_loop;
+  opt->DebugRustConversion = false;
+  opt->DebugOperationMap = false;
+  opt->PrintMappingFailures = print_mapping_failures;
+  opt->PrintOperationCount = false;
+
+  opt->Params = cgra.getValue();
+  opt->rulesets = list<std::string>();
+
+  for (std::string value : trulesets.getValue()) {
+    if (!value.compare("gcc")) {
+      opt->rulesets.push_back("int");
+      opt->rulesets.push_back("fp");
+    } else if (is_valid_ruleset(value)) {
+      opt->rulesets.push_back(value);
+    } else {
+      throw invalid_argument("Invalid ruleset " + value);
+    }
+  }
+
+  TClapOptions *toptions = new TClapOptions();
+  toptions->options = opt;
+  toptions->dfg_file = dfg.getValue();
+  return toptions;
+}
 
 Options::Options () {}
+TClapOptions::TClapOptions() {}
+
+Rulesets Options::getRulesets() {
+  int size = rulesets.size();
+  const char **names = (const char**) malloc(sizeof(char*) * size);
+
+  int i = 0;
+  for (std::string nm : rulesets) {
+    names[i] = nm.c_str();
+    i ++;
+  }
+
+  Rulesets rset;
+  rset.names = names;
+  rset.num_names = size;
+  return rset;
+}
 
 // To be called after application has started.  Copies the command
 // line results into global variables that can be accessed
 // via Options.h
 Options *setupOptions() {
 	Options *opt = new Options();
-	opt->BuildCGRA = BuildCGRA;
+  #ifndef DISABLE_LLVM_CMDLINE
+  opt->BuildCGRA = BuildCGRA;
 
 	opt->UseRewriter = UseRewriter;
 	opt->UseEGraphs = UseEGraphs;
@@ -47,6 +144,24 @@ Options *setupOptions() {
 	opt->PrintOperationCount = PrintOperationCount;
 
 	opt->Params = Params;
+  opt->rulesets = list<std::string>();
+  for (std::string rnam : RulesetsOpt) {
+    if (!rnam.compare("gcc")) {
+      opt->rulesets.push_back("fp");
+      opt->rulesets.push_back("int");
+    } else if (is_valid_ruleset(rnam)) {
+      opt->rulesets.push_back(rnam);
+    } else {
+      // Invalid rulset
+      std::cout << "Invalid Ruleset " << rnam << " Requested. " << std::endl;
+      throw std::invalid_argument("Invalid ruleset");
+    }
+  }
+  if (opt->rulesets.size() == 0) {
+    opt->rulesets.push_back("fp");
+    opt->rulesets.push_back("int");
+  }
+  #endif
 
 	return opt;
 }
@@ -57,6 +172,7 @@ Parameters::Parameters(std::string filename) {
       // Initializes input parameters.
       rows                      = 4;
       columns                  = 4;
+      homogenousPEs = false; // Do PEs support all operations (alternative to the operation map)
       targetEntireFunction     = false;
       targetNested             = false;
       doCGRAMapping            = true;
@@ -94,6 +210,13 @@ Parameters::Parameters(std::string filename) {
           // cout<<"add index "<<loops[i]<<endl;
           (*functionWithLoop)[param["kernel"]]->push_back(loops[i]);
         }
+
+    if (param.contains("homogenousPEs")) {
+      cout << "Homogenous PEs is set\n";
+      homogenousPEs = param["homogenousPEs"];
+    } else {
+      cout << "Homogenous PEs not set\n";
+    }
 
 		// load ops.
 	  for (int row = 0; row < rows; row ++) {
@@ -153,8 +276,8 @@ Parameters::Parameters(std::string filename) {
           }
           cout<<endl;
         }
+        cout << "Parameters loaded!\n";
       }
-
 }
 
 DFG* Parameters::getDFG(Function &t_F, list<Loop *>* targetLoops) {
@@ -164,7 +287,7 @@ DFG* Parameters::getDFG(Function &t_F, list<Loop *>* targetLoops) {
 }
 
 CGRA* Parameters::getCGRA(Options *opts) {
-	CGRA *cgra = new CGRA(rows, columns, heterogeneity, additionalFunc, opmap, opts->BuildCGRA);
+	CGRA *cgra = new CGRA(opts, this);
 	return cgra;
 }
 
@@ -238,4 +361,3 @@ void addDefaultKernels(map<string, list<int>*>* t_functionWithLoop) {
   // (*t_functionWithLoop)["_Z6kernelPfS_S_"] = new list<int>();
   // (*t_functionWithLoop)["_Z6kernelPfS_S_"]->push_back(0);
 }
-

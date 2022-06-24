@@ -75,7 +75,13 @@ namespace {
       cgra->setCtrlMemConstraint(params->ctrlMemConstraint);
       cgra->setBypassConstraint(params->bypassConstraint);
 
-      runMapping(t_F, cgra, dfg, params, options);
+        // Generate the DFG dot file.
+        errs() << "==================================\n";
+        errs() << "[generate dot for DFG]\n";
+        dfg->generateDot(&t_F, params->isTrimmedDemo);
+
+
+      runMapping(cgra, dfg, params, options);
 
       return false;
     }

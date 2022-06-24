@@ -1318,16 +1318,16 @@ int max_cycle = 0;
   return result;
 }
 
-int Mapper::exhaustiveMap(CGRA* t_cgra, DFG* t_dfg, int t_II,
+MapResult *Mapper::exhaustiveMap(CGRA* t_cgra, DFG* t_dfg, int t_II,
     bool t_isStaticElasticCGRA, bool PrintMappingFailures) {
   list<map<CGRANode*, int>*>* exhaustivePaths = new list<map<CGRANode*, int>*>();
   list<DFGNode*>* mappedDFGNodes = new list<DFGNode*>();
   bool success = DFSMap(t_cgra, t_dfg, t_II, mappedDFGNodes,
       exhaustivePaths, t_isStaticElasticCGRA, PrintMappingFailures);
   if (success)
-    return t_II;
+    return new MapResult(true, t_II, t_II); // TODO --- properly get max cycle.
   else
-    return -1;
+    return new MapResult(false, -1, -1);
 }
 
 bool Mapper::DFSMap(CGRA* t_cgra, DFG* t_dfg, int t_II,

@@ -7,5 +7,5 @@
 #include <iostream>
 #include <sstream>
 
-void runMapping(Function& t_F, CGRA *cgra, DFG *dfg, Parameters *params, Options *options);
+void runMapping(CGRA *cgra, DFG *dfg, Parameters *params, Options *options);
 #endif

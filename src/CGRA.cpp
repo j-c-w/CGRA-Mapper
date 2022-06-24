@@ -11,32 +11,30 @@
 #include "CGRA.h"
 #include "OperationMap.h"
 
-CGRA::CGRA(int t_rows, int t_columns, bool t_heterogeneity,
-           map<string, list<int>*>* t_additionalFunc,
-		   map<int, map<int, list<OperationNumber>*>*> *operations,
-		   bool build_cgra) {
-  m_rows = t_rows;
-  m_columns = t_columns;
-  m_FUCount = t_rows * t_columns;
-  nodes = new CGRANode**[t_rows];
+CGRA::CGRA(Options *opts, Parameters *params) {
+  m_rows = params->rows;
+  m_columns = params->columns;
+  m_FUCount = m_rows * m_columns;
+  nodes = new CGRANode**[m_rows];
   // Initialize the unidirection connections.
-  m_LinkCount = 2 * (t_rows * (t_columns-1) + (t_rows-1) * t_columns);
+  m_LinkCount = 2 * (m_rows * (m_columns-1) + (m_rows-1) * m_columns);
   links = new CGRALink*[m_LinkCount];
+  m_params = params;
 
   // Initialize the CGRA nodes.
   int node_id = 0;
-  for(int i=0; i<t_rows; ++i) {
-    nodes[i] = new CGRANode*[t_columns];
-    for (int j=0; j<t_columns; ++j) {
-      nodes[i][j] = new CGRANode(node_id++, j, i, (*((*operations)[i]))[j], build_cgra);
+  for(int i=0; i<m_rows; ++i) {
+    nodes[i] = new CGRANode*[m_columns];
+    for (int j=0; j<m_columns; ++j) {
+      nodes[i][j] = new CGRANode(node_id++, j, i, (*((*(params->opmap))[i]))[j], opts, params);
     }
   }
 
   // Enable the load/store on specific CGRA nodes based on param.json.
   int loadCount = 0;
   int storeCount = 0;
-  for (map<string, list<int>*>::iterator iter=t_additionalFunc->begin();
-      iter!=t_additionalFunc->end(); ++iter) {
+  for (map<string, list<int>*>::iterator iter=params->additionalFunc->begin();
+      iter!=params->additionalFunc->end(); ++iter) {
     for (int nodeIndex: *(iter->second)) {
       if (nodeIndex >= m_FUCount) {
         cout<<"\033[0;31mInvalid CGRA node ID "<<nodeIndex<<" for operation "<<iter->first<<"\033[0m"<<endl;
@@ -60,13 +58,13 @@ CGRA::CGRA(int t_rows, int t_columns, bool t_heterogeneity,
   }
   if (storeCount == 0) {
     cout<<"Without customization in param.json, we enable store functionality on the left most column."<<endl;
-    for (int r=0; r<t_rows; ++r) {
+    for (int r=0; r<m_rows; ++r) {
       nodes[r][0]->enableStore();
     }
   }
   if (loadCount == 0) {
     cout<<"Without customization in param.json, we enable load functionality on the left most column."<<endl;
-    for (int r=0; r<t_rows; ++r) {
+    for (int r=0; r<m_rows; ++r) {
       nodes[r][0]->enableLoad();
     }
   }
@@ -74,30 +72,30 @@ CGRA::CGRA(int t_rows, int t_columns, bool t_heterogeneity,
 
   // Some other basic operations that can be indicated in the param.json:
   // Enable the specialized 'call' functionality.
-  for (int r=0; r<t_rows; ++r) {
+  for (int r=0; r<m_rows; ++r) {
     if (r%2 == 0)
-      nodes[r][t_columns-1]->enableCall();
+      nodes[r][m_columns-1]->enableCall();
   }
 
   // Enable the heterogeneity.
-  if (t_heterogeneity) {
-    for (int r=0; r<t_rows; ++r) {
-      for (int c=0; c<t_columns; ++c) {
+  if (params->heterogeneity) {
+    for (int r=0; r<m_rows; ++r) {
+      for (int c=0; c<m_columns; ++c) {
         if(r%2==1 and c%2 == 1)
           nodes[r][c]->enableComplex();
       }
     }
   }
 
-  for (int r=0; r<t_rows; ++r) {
-    nodes[r][t_columns-1]->enableReturn();
+  for (int r=0; r<m_rows; ++r) {
+    nodes[r][m_columns-1]->enableReturn();
   }
 
   // Connect the CGRA nodes with links.
   int link_id = 0;
-  for (int i=0; i<t_rows; ++i) {
-    for (int j=0; j<t_columns; ++j) {
-      if (i < t_rows - 1) {
+  for (int i=0; i<m_rows; ++i) {
+    for (int j=0; j<m_columns; ++j) {
+      if (i < m_rows - 1) {
         links[link_id] = new CGRALink(link_id);
         nodes[i][j]->attachOutLink(links[link_id]);
         nodes[i+1][j]->attachInLink(links[link_id]);
@@ -111,7 +109,7 @@ CGRA::CGRA(int t_rows, int t_columns, bool t_heterogeneity,
         links[link_id]->connect(nodes[i][j], nodes[i-1][j]);
         ++link_id;
       }
-      if (j < t_columns - 1) {
+      if (j < m_columns - 1) {
         links[link_id] = new CGRALink(link_id);
         nodes[i][j]->attachOutLink(links[link_id]);
         nodes[i][j+1]->attachInLink(links[link_id]);
@@ -131,8 +129,8 @@ CGRA::CGRA(int t_rows, int t_columns, bool t_heterogeneity,
 /*
   cout<<"[connection] horizontal and vertical."<<endl;
   // Connect the CGRA nodes with diagonal links.
-  for (int i=0; i<t_rows-1; ++i) {
-    for (int j=0; j<t_columns-1; ++j) {
+  for (int i=0; i<m_rows-1; ++i) {
+    for (int j=0; j<m_columns-1; ++j) {
       link = new CGRALink();
       nodes[i][j]->attachOutLink(link, _RIGHT_UP);
       nodes[i+1][j+1]->attachInLink(link, _LEFT_DOWN);

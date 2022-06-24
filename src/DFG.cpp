@@ -9,8 +9,10 @@
  */
 
 #include <fstream>
+#include "json.hpp"
 #include "DFG.h"
 #include "MapResult.h"
+using nlohmann::json;
 
 DFG::DFG(DFG &old): m_function(old.m_function) {
 	m_num = old.m_num;
@@ -64,6 +66,55 @@ DFG::DFG(list<DFGNode *> nodes, list<DFGEdge*> edges): m_function(nullptr), node
   m_precisionAware = false;
   m_initPipelinedOpt = new list<string>();
   m_initExecLatency = new map<string, int>();
+}
+
+DFG::DFG(std::string filename) {
+  cout << "Loading DFG From File\n";
+  std::ifstream i(filename);
+  json j;
+  i >> j;
+
+  // These arent needed --- they are from the CGRA mapper pass to allow it
+  // to extract from the llvm function --- if we are already in a DFG then there's
+  // not an issue.
+  m_orderedNodes = nullptr;
+  m_targetFunction = true;
+  m_targetLoops = nullptr;
+  m_orderedNodes = NULL;
+  m_CDFGFused = false;
+  m_cycleNodeLists = new list<list<DFGNode*>*>();
+  // TODO -- get these from the config file.
+  m_precisionAware = false;
+  m_initPipelinedOpt = new list<string>();
+  m_initExecLatency = new map<string, int>();
+
+  // Map to let us build the edges.
+  map<string, DFGNode*> node_name_lookup;
+
+  // Get the nodes:
+  cout << "Loading Nodes\n";
+  int id = 0;
+  for (json node : j["nodes"]) {
+    std::string node_name = node["name"].get<std::string>();
+    DFGNode *n = new DFGNode(id ++, false, nullptr, node["operation"].get<std::string>(), node_name);
+    nodes.push_back(n);
+    node_name_lookup.insert({node_name, n});
+  }
+
+  cout << "Loading Edges\n";
+  // Get the edges.
+  for (json edge : j["edges"]) {
+    cout << "Loading edge" << edge["to"].get<std::string>();
+    DFGNode *tnode = node_name_lookup.at(edge["to"].get<std::string>());
+    DFGNode *fnode = node_name_lookup.at(edge["from"].get<std::string>());
+
+    DFGEdge *thisEdge = new DFGEdge(id++, fnode, tnode);
+    tnode->addInEdge(thisEdge);
+    fnode->addOutEdge(thisEdge);
+    m_DFGEdges.push_back(thisEdge);
+    // todo --- The Json file has a "type" field to distinguish between
+    // control edges and data edges.  Need to handle that.
+  }
 }
 
 DFG::DFG(Function *t_F, list<Loop*>* t_loops, bool t_targetFunction,

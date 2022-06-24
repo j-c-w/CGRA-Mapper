@@ -8,18 +8,13 @@
 
 // This doesn't return anything, because it prints it out to stdout.
 // But it would probably be more useful if it did.
-void runMapping(Function &t_F, CGRA *cgra, DFG *dfg, Parameters *params, Options *options) {
+void runMapping(CGRA *cgra, DFG *dfg, Parameters *params, Options *options) {
     Mapper *mapper = new Mapper();
 
     // Show the count of different opcodes (IRs).
     errs() << "==================================\n";
     errs() << "[show opcode count]\n";
     dfg->showOpcodeDistribution();
-
-    // Generate the DFG dot file.
-    errs() << "==================================\n";
-    errs() << "[generate dot for DFG]\n";
-    dfg->generateDot(&t_F, params->isTrimmedDemo);
 
     // Generate the DFG dot file.
     errs() << "==================================\n";
@@ -51,11 +46,11 @@ void runMapping(Function &t_F, CGRA *cgra, DFG *dfg, Parameters *params, Options
     list<DFG *> *generated_dfgs;
     if (options->UseRewriter)
     {
-        generated_dfgs = rewrite_with_graphs(cgra, dfg, options->DebugRustConversion);
+        generated_dfgs = rewrite_with_graphs(options, cgra, dfg);
     }
     else if (options->UseEGraphs)
     {
-        generated_dfgs = rewrite_with_egraphs(cgra, dfg, options->DebugRustConversion);
+        generated_dfgs = rewrite_with_egraphs(options, cgra, dfg);
     }
     else
     {

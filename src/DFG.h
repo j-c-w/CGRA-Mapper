@@ -11,6 +11,7 @@
 #ifndef DFG_H
 #define DFG_H
 
+#include <string>
 #include <llvm/IR/Function.h>
 #include <llvm/IR/BasicBlock.h>
 #include <llvm/IR/Value.h>
@@ -95,6 +96,7 @@ class DFG {
 
   public:
 	DFG(DFG &old);
+    DFG(std::string filename); // Load form a json file.
 	DFG(list<DFGNode *> nodes, list<DFGEdge *> edges);
     DFG(Function*, list<Loop*>*, bool, bool, bool, map<string, int>*, list<string>*);
     list<list<DFGNode*>*>* m_cycleNodeLists;

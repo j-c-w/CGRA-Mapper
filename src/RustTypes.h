@@ -26,8 +26,13 @@ typedef struct RustDFGList {
 	uint32_t num_dfgs;
 } RustDFGList;
 
-RustDFGList optimize_with_egraphs(RustDFG input);
-RustDFGList optimize_with_graphs(RustDFG input);
+typedef struct Rulesets {
+	const char **names;
+	uint32_t num_names;
+} Rulesets;
+
+RustDFGList optimize_with_egraphs(RustDFG input, Rulesets rules);
+RustDFGList optimize_with_graphs(RustDFG input, Rulesets rules);
 
 #ifdef __cplusplus
 }

@@ -13,6 +13,7 @@
 //#include "llvm/Pass.h"
 #include "CGRANode.h"
 #include "CGRALink.h"
+#include "Options.h"
 #include <iostream>
 //#include <llvm/Support/raw_ostream.h>
 #include <map>
@@ -25,10 +26,11 @@ class CGRA {
     int m_LinkCount;
     int m_rows;
     int m_columns;
+    Parameters * m_params;
     void disable();
 
   public:
-    CGRA(int, int, bool, map<string, list<int>*>*, map<int, map<int, list<OperationNumber>*>*>*, bool);
+    CGRA(Options *, Parameters *);
     CGRANode ***nodes;
     CGRALink **links;
     int getFUCount();
