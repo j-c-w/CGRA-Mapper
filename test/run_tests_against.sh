@@ -8,6 +8,7 @@ zparseopts -D -E -use-egraphs=use_egraphs -use-rewriter=use_rewriter
 if [[ $# -ne 2 ]]; then
 	echo "Usage: $0 <CGRA Design File> <Other Input Files Base Folder>"
 	echo "--use-egraphs to use egraph rewriting"
+	echo "--use-rewriter to use greedy rewriting"
 	echo "Other files should all be in the format loopX.c (X a number)"
 	exit 1
 fi
@@ -33,10 +34,10 @@ done
 echo "Running over files ${files[@]}"
 
 extra_flags=""
-if [[ ${#use_egraphs} == 0 ]]; then
+if [[ ${#use_egraphs} -gt 0 ]]; then
 	extra_flags="$extra_flags --use-egraphs"
 fi
-if [[ ${#use_rewriter} == 0 ]]; then
+if [[ ${#use_rewriter} -gt 0 ]]; then
 	extra_flags="$extra_flags --use-rewriter"
 fi
 
@@ -45,7 +46,7 @@ parallel "(
 	cp {} kernel_{/.}.cpp
 	./compile.sh kernel_{/.}.cpp
 	# A small number seem to cause loops somewhere --- just want to get non-buggy results
-	timeout 600 ./run.sh kernel_{/.}.bc --params-file param.json $extra_flags
+	timeout 60 ./run.sh kernel_{/.}.bc --params-file param.json $extra_flags
 	echo 'Done Building {/}')" ::: ${files[@]} &> run_output
 
 success=$(grep -ce "Mapping:success" run_output || echo "")
