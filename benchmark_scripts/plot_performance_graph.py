@@ -72,12 +72,12 @@ def plot_speedups(cpu_cycles, cgra_cycles):
     stepsize = 1.0 / len(speedups)
     xvals = sorted(speedups)
     step = 1.0 / float(len(speedups))
-    yvals = np.arange(0.0, 1.0 + step, step)
+    yvals = np.linspace(0.0, 1.0, len(speedups))
     print("Got ", len(xvals), "xvals", len(yvals), "yvals")
 
     # duplicate the last element to make the graph go
     # all the way to the top and look cleaner.
-    plt.plot(xvals + [xvals[-1]], yvals, label='Loop Execution Time')
+    plt.plot(xvals, yvals, label='Loop Execution Time')
     plt.ylabel("Cumlative Distribution Function")
     plt.xlabel('Speedup')
     plt.ylim([0.0, 1.0])

@@ -13,7 +13,7 @@ for file in $(find $1 -name "*.c"); do
     # on it.
 	echo "Estimating performance on E21 for $file"
 	basename=$(basename $file)
-    ./install/bin/clang -target riscv32-unknown-linux-gnu $file -S -o- | ./install/bin/llvm-mca --march riscv32 -mcpu=sifive-e21 &> estimated_performance/${basename}.out
+    ./install/bin/clang -O3 -fno-unroll-loops -target riscv32-unknown-linux-gnu $file -S -o- | ./install/bin/llvm-mca --march riscv32 -mcpu=sifive-e21 &> estimated_performance/${basename}.out
 done
 
 # Now get the estimate cycles from each file.

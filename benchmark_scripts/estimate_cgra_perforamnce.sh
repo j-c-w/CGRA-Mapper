@@ -14,7 +14,7 @@ for file in $(find $1 -name *.egraphs.output); do
     # Note that these are in order, so we can seperate them
     # as the first kernel_X.bc corresponds to the frist II.
     iis=( $(grep --text $file -e "Mapping:success" -B2 | grep --text -e II | cut -f2 -d' ') )
-    kernels=( $(grep --text $file -e "Mapping:success" -A6 | grep --text -e Building | cut -f2 -d' ') )
+    kernels=( $(grep --text $file -e "Mapping:success" -A8 | grep --text -e Building | cut -f2 -d' ') )
     bfile=$(basename $file)
     target=cgra_performances/${bfile/egraphs.output/output}
     echo "Putting perfomacne in $target"

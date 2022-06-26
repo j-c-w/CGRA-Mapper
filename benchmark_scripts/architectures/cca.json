@@ -1,0 +1,60 @@
+{
+  "kernel"              : "_Z6kernelPiS_S_",
+  "targetFunction"      : false,
+  "targetNested"        : true,
+  "targetLoopsID"       : [0, 1],
+  "doCGRAMapping"       : true,
+  "row"                 : 4,
+  "column"              : 6,
+  "precisionAware"      : true,
+  "heterogeneity"       : true,
+  "isTrimmedDemo"       : true,
+  "heuristicMapping"    : true,
+  "bypassConstraint"    : 4,
+  "isStaticElasticCGRA" : false,
+  "ctrlMemConstraint"   : 200,
+  "regConstraint"       : 8,
+  "optLatency"          : {
+                            "store": 2
+                          },
+  "optPipelined"        : ["store"],
+  "additionalFunc"      : {
+                            "store": [4]
+                          },
+
+  "operations":
+{
+"0": {
+"0": ["and", "or", "xor", "lsh", "lshr", "ashr", "not"],
+"1": ["and", "or", "xor", "lsh", "lshr", "ashr", "not"],
+"2": ["and", "or", "xor", "lsh", "lshr", "ashr", "not"],
+"3": ["and", "or", "xor", "lsh", "lshr", "ashr", "not"],
+"4": ["and", "or", "xor", "lsh", "lshr", "ashr", "not"],
+"5": ["and", "or", "xor", "lsh", "lshr", "ashr", "not"],
+},
+"1": {
+"0": ["icmp"],
+"1": ["icmp"],
+"2": ["icmp"],
+"3": ["icmp"],
+"4": [],
+"5": []
+},
+"2": {
+"0": ["and", "or", "xor", "lsh", "lshr", "ashr", "not"],
+"1": ["and", "or", "xor", "lsh", "lshr", "ashr", "not"],
+"2": ["and", "or", "xor", "lsh", "lshr", "ashr", "not"],
+"3": [],
+"4": [],
+"5": [],
+},
+"3": {
+"0": ["icmp"],
+"1": ["icmp"],
+"2": ["load", "store"],
+"3": ["add"],
+"4": [],
+"5": []
+}
+}
+}
