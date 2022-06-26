@@ -32,6 +32,19 @@ def plot_line_from_dicts(tname, dicts):
             else:
                 zipped_lines[k] = [d[k]]
 
+    print("Before, length of zipped lines is ", len(zipped_lines))
+    # If every entry is 0, it's probably vecause tghe benchmark
+    # wasn't actually run -- delete it to allow for debugging w/out
+    # running everything.
+    for i in list(zipped_lines.keys()):
+        all_zero = True
+        for elem in zipped_lines[i]:
+            all_zero = all_zero and (elem == 0)
+
+        if all_zero:
+            del zipped_lines[i]
+    print("Afterwards, length of zipped lines is ", len(zipped_lines))
+
     # Now, sort that dict by magnitude of the first element, 
     # and unzip.
     unsortedd_and_zipped = [zipped_lines[k] for k in zipped_lines]
@@ -51,7 +64,7 @@ def plot_line_from_dicts(tname, dicts):
         plt.plot(xvalues, lines[i], label=labels[i], linestyle=styles[i]) 
 
     plt.legend()
-    plt.xlabel("CGRA Design Number")
+    plt.xlabel("CGRA Design No")
     plt.ylabel("Number of Loops that can Compile")
     plt.xlim([0, maxx])
     plt.ylim([0, maxy])

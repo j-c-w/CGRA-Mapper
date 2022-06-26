@@ -1,6 +1,8 @@
 #!/bin/bash
 
 set -x
+lmapper=$1
+shift
 f=$1
 shift
 
@@ -10,4 +12,6 @@ if [[ ! -f $f ]]; then
 fi
 echo "Building $f"
 
-opt -load ../build/src/libmapperPass.so -mapperPass $f "$@"
+set -x
+opt -load $lmapper -mapperPass $f "$@"
+echo "Finished $f"

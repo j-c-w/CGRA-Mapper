@@ -1,0 +1,43 @@
+{
+  "kernel"              : "_Z6kernelPiS_S_",
+  "targetFunction"      : false,
+  "targetNested"        : true,
+  "targetLoopsID"       : [0, 1],
+  "doCGRAMapping"       : true,
+  "row"                 : 3,
+  "column"              : 3,
+  "precisionAware"      : true,
+  "heterogeneity"       : true,
+  "isTrimmedDemo"       : true,
+  "heuristicMapping"    : true,
+  "bypassConstraint"    : 4,
+  "isStaticElasticCGRA" : false,
+  "ctrlMemConstraint"   : 200,
+  "regConstraint"       : 8,
+  "optLatency"          : {
+                            "store": 2
+                          },
+  "optPipelined"        : ["store"],
+  "additionalFunc"      : {
+                            "store": [4]
+                          },
+
+  "operations":
+{
+"0": {
+"0": ["store", "store", "store"],
+"1": ["br", "br", "add", "Constant", "Constant", "Constant", "br", "br", "add", "Constant", "Constant", "Constant"],
+"2": ["fcmp", "Constant", "Constant"]
+},
+"1": {
+"0": ["store", "store", "Constant", "store", "Constant"],
+"1": ["load", "load", "load", "load", "load", "load", "load", "Constant", "br", "load", "load", "load", "load", "load", "load", "load", "load", "Constant", "br"],
+"2": ["add", "icmp", "br", "Constant", "Constant", "icmp", "icmp", "Constant", "Constant"]
+},
+"2": {
+"0": ["store", "store"],
+"1": ["br", "br", "br", "Constant", "Constant", "getelementptr", "getelementptr", "br", "br", "Constant", "Constant"],
+"2": ["br", "Constant", "Constant"]
+}
+}
+}
