@@ -35,6 +35,18 @@ pub(crate) fn boolean_logic() -> Vec<Rewrite<SymbolLang, ()>> {
 // are takne from GCC.
 pub(crate) fn fp_rules() -> Vec<Rewrite<SymbolLang, ()>> {
 	vec![
+        // FP rule  we came up with:
+        // Not intended to be correct: require -funsafe-math-operations or similar.
+        // Apply a similar threshold to GCC for 'correctness' here.
+        rewrite!("fp-sub-to-add-neg"; "(fsub ?x ?y)" => "(fadd ?x (fmul const_-1 ?y))"),
+        rewrite!("fp-add-to-sub"; "(fadd ?x ?y)" => "(fsub ?x (fmul const_-1 ?y))"),
+        // Copy with Control-flow-edge options
+        rewrite!("fp-add-to-sub"; "(fadd ?x ?y ?z)" => "(fsub ?x (fmul const_-1 ?y) ?z)"),
+        rewrite!("fp-add-to-neg"; "(fadd ?x ?y)" => "(fsub ?x (fneg ?y))"),
+        rewrite!("fp-mul-to-neg"; "(fmul const_-1 ?y)" => "(fneg ?y)"),
+        // I think this might even infringe GCC's limits for ffast-math...
+        rewrite!("fp-mul-to-div"; "(fmul ?x ?y)" => "(fdiv ?x (fdiv const_1 ?y))"),
+
 		// =========
 		// Floating Point Rules.
 		// Note that for FP rules, we generally assume -ffast-math or
@@ -98,18 +110,6 @@ pub(crate) fn rules() -> Vec<Rewrite<SymbolLang, ()>> {
 		// complex ways.
         rewrite!("and-to-or"; "(and ?x ?y)" => "(not (or (not ?x) (not ?y)))"),
         rewrite!("or-to-and"; "(or ?x ?y)" => "(not (and (not ?x) (not ?y)))"),
-
-        // FP rule  we came up with:
-        // Not intended to be correct: require -funsafe-math-operations or similar.
-        // Apply a similar threshold to GCC for 'correctness' here.
-        rewrite!("fp-sub-to-add-neg"; "(fsub ?x ?y)" => "(fadd ?x (fmul const_-1 ?y))"),
-        rewrite!("fp-add-to-sub"; "(fadd ?x ?y)" => "(fsub ?x (fmul const_-1 ?y))"),
-        // Copy with Control-flow-edge options
-        rewrite!("fp-add-to-sub"; "(fadd ?x ?y ?z)" => "(fsub ?x (fmul const_-1 ?y) ?z)"),
-        rewrite!("fp-add-to-neg"; "(fadd ?x ?y)" => "(fsub ?x (fneg ?y))"),
-        rewrite!("fp-mul-to-neg"; "(fmul const_-1 ?y)" => "(fneg ?y)"),
-        // I think this might even infringe GCC's limits for ffast-math...
-        rewrite!("fp-mul-to-div"; "(fmul ?x ?y)" => "(fdiv ?x (fdiv const_1 ?y))"),
 
 		// Not sure what the 'not' in LLVM is called.
 		// This one is a logical not.

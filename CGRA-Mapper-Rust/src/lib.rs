@@ -116,6 +116,7 @@ fn load_rulesets(rsets: Rulesets) -> Vec<Rewrite<SymbolLang, ()>> {
     let names = unsafe { std::slice::from_raw_parts(rsets.names, rsets.num_rulesets as usize) };
 	for name in names {
 		let rset_name = unsafe { std::ffi::CStr::from_ptr(*name) }.to_str().unwrap();
+		println!("Loading ruleset {}", rset_name);
 		result.extend(load_ruleset(rset_name).clone());
 	}
 
@@ -126,7 +127,7 @@ fn load_ruleset(nm: &str) -> Vec<Rewrite<SymbolLang, ()>> {
 	match nm {
 		"int" => rules(), // These are the 'normal' rewrite rules
 		"fp" => fp_rules(), // These are rewrite rules for -ffast-math style rewrites
-		"boolean_logic" => boolean_logic(), // These are rewrite rules that assume ^&| are boolean rather than logical
+		"boolean" => boolean_logic(), // These are rewrite rules that assume ^&| are boolean rather than logical
 		_ => panic!("unknown ruleset")
 	}
 }
@@ -163,7 +164,7 @@ fn expr_to_dfg(expr: RecExpr<SymbolLang>) -> CppDFG {
 }
 
 #[no_mangle]
-pub extern "C" fn optimize_with_egraphs(dfg: CppDFG, rulesets: Rulesets) -> CppDFGs {
+pub extern "C" fn optimize_with_egraphs(dfg: CppDFG, rulesets: Rulesets, cgra_params: *const c_char) -> CppDFGs {
 	println!("entering Rust");
 
 	let rules = load_rulesets(rulesets);
@@ -178,8 +179,8 @@ pub extern "C" fn optimize_with_egraphs(dfg: CppDFG, rulesets: Rulesets) -> CppD
     for r in &mut roots[..] {
         *r = runner.egraph.find(*r);
     }
-	// TODO --- json as an argument rather than a constant?
-    let cost = BanCost::from_operations_file("param.json");
+    let cgrafilename = unsafe { std::ffi::CStr::from_ptr(cgra_params) }.to_str().unwrap();
+    let cost = BanCost::from_operations_file(cgrafilename);
 	let (best, _best_roots) = LpExtractor::new(&runner.egraph, cost).solve_multiple(&roots[..]);
 
 	{
@@ -196,9 +197,11 @@ pub extern "C" fn optimize_with_egraphs(dfg: CppDFG, rulesets: Rulesets) -> CppD
 }
 
 #[no_mangle]
-pub extern "C" fn optimize_with_graphs(dfg: CppDFG, rulesets: Rulesets) -> CppDFGs {
+pub extern "C" fn optimize_with_graphs(dfg: CppDFG, rulesets: Rulesets, cgra_params: *const c_char) -> CppDFGs {
     println!("entering Rust, using standard rewriting");
 
+    let cgrafilename = unsafe { std::ffi::CStr::from_ptr(cgra_params) }.to_str().unwrap();
+    let cost = BanCost::from_operations_file(cgrafilename);
 	let rules = load_rulesets(rulesets);
     let mut graph = dfg_to_graph(dfg);
     // TODO:
