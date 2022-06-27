@@ -1,8 +1,8 @@
-all: target/debug/libEggLib.so
-	g++ src/EggLib.cpp ./target/debug/libEggLib.so -L ./target/debug -lm
+all: target/release/libEggLib.so
+	g++ src/EggLib.cpp ./target/release/libEggLib.so -L ./target/release -lm
 
-target/debug/libEggLib.so: src/lib.rs Cargo.toml
-	cargo build
+target/release/libEggLib.so: src/lib.rs Cargo.toml
+	cargo build --release
 
 clean:
 	rm -rf target

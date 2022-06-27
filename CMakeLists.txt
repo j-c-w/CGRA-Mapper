@@ -16,19 +16,19 @@ include_directories(${LLVM_INCLUDE_DIRS})
 link_directories(${LLVM_LIBRARY_DIRS})
 
 add_custom_command (
-	OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/CGRA-Mapper-Rust/target/debug/libEggLib.so
+	OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/CGRA-Mapper-Rust/target/release/libEggLib.so
 	DEPENDS CGRA-Mapper-Rust/src
 	COMMAND make
 	WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/CGRA-Mapper-Rust/
 )
 
 # configure_file (
-# 	${CMAKE_SOURCE_DIR}/CGRA-Mapper-Rust/target/debug/libEggLib.so ${CMAKE_CURRENT_BINARY_DIR}/CGRA-Mapper-Rust/target/debug/libEggLib.so
+# 	${CMAKE_SOURCE_DIR}/CGRA-Mapper-Rust/target/release/libEggLib.so ${CMAKE_CURRENT_BINARY_DIR}/CGRA-Mapper-Rust/target/release/libEggLib.so
 # )
 
-add_library(eggLib SHARED ${CMAKE_CURRENT_BINARY_DIR}/CGRA-Mapper-Rust/target/debug/libEggLib.so)
+add_library(eggLib SHARED ${CMAKE_CURRENT_BINARY_DIR}/CGRA-Mapper-Rust/target/release/libEggLib.so)
 set_target_properties(eggLib PROPERTIES LINKER_LANGUAGE CXX)
 
-#set_property(TARGET eggLib PROPERTY IMPORTED_LOCATION ${CMAKE_CURRENT_BINARY_DIR}/CGRA-Mapper-Rust/target/debug/libEggLib.so)
+#set_property(TARGET eggLib PROPERTY IMPORTED_LOCATION ${CMAKE_CURRENT_BINARY_DIR}/CGRA-Mapper-Rust/target/release/libEggLib.so)
 
 add_subdirectory(src)  # Use your pass directory here.

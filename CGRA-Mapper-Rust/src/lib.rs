@@ -205,26 +205,30 @@ pub extern "C" fn optimize_with_graphs(dfg: CppDFG, rulesets: Rulesets) -> CppDF
     // println!("identified {} roots", graph.roots.len());
 	// graph.to_svg("/tmp/initial.svg").unwrap();
 
-    let mut normalized = false;
+	// TODO --- json as an argument rather than a constant?
+    let cost = BanCost::from_operations_file("param.json");
+
+    let mut local_minima = false;
     let mut applied = Vec::new();
-    while !normalized {
-        normalized = true;
+    while !local_minima {
+        local_minima = true;
 
         for r in &rules {
-            // TODO: avoid recompiling Pattern here
-            let lhs = Pattern::from(r.searcher.get_pattern_ast().unwrap().clone());
+            let lhs = r.searcher.get_pattern().unwrap();
             let rhs = r.applier.get_pattern_ast().unwrap();
 
-            // TODO: replace pattern size with proper cost
-			// TODO -- do this more efficiently.
-            if lhs.ast.as_ref().len() <= rhs.as_ref().len() {
-                break;
-            }
-
             while let Some((id, subst)) = lhs.search_graph(&graph) {
+				let mut backup = graph.clone();
                 graph.replace(id, &rhs, &subst);
-                applied.push(r.name);
-                normalized = false;
+
+				if backup.cost(&cost) > graph.cost(&cost) {
+					// TODO: computing costs could be cheaper,
+					// and maybe it can be predicted before actually replacing stuff
+					applied.push(r.name);
+					local_minima = false;
+				} else {
+					std::mem::swap(&mut graph, &mut backup);
+				}
             }
         }
     }
