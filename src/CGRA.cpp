@@ -23,9 +23,11 @@ CGRA::CGRA(Options *opts, Parameters *params) {
 
   // Initialize the CGRA nodes.
   int node_id = 0;
+  errs() << "Loading CGRA Nodes\n";
   for(int i=0; i<m_rows; ++i) {
     nodes[i] = new CGRANode*[m_columns];
     for (int j=0; j<m_columns; ++j) {
+      errs() << i << ", " << j << "\n";
       nodes[i][j] = new CGRANode(node_id++, j, i, (*((*(params->opmap))[i]))[j], opts, params);
     }
   }

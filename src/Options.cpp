@@ -110,14 +110,24 @@ TCLAP::CmdLine cmd("Tool to schedule a DFG Json file onto a CGRA");
 Options::Options () {}
 TClapOptions::TClapOptions() {}
 
+// Ruleset names for printing.
+std::string Options::getRulesetNames() {
+  std::string result;
+  for (std::string nm : rulesets) {
+    result += nm + ", ";
+  }
+
+  return result;
+}
+
 Rulesets Options::getRulesets() {
   int size = rulesets.size();
   const char **names = (const char**) malloc(sizeof(char*) * size);
 
-  int i = 0;
-  for (std::string nm : rulesets) {
-    names[i] = nm.c_str();
-    i ++;
+  list<std::string>::iterator nms = rulesets.begin();
+  for (int i = 0; i < size; i ++) {
+    names[i] = nms->c_str();
+    nms ++;
   }
 
   Rulesets rset;
@@ -203,6 +213,19 @@ Parameters::Parameters(std::string filename) {
       } else {
         json param;
         i >> param;
+        rows                  = param["row"];
+        columns               = param["column"];
+        targetEntireFunction  = param["targetFunction"];
+        targetNested          = param["targetNested"];
+        doCGRAMapping         = param["doCGRAMapping"];
+        isStaticElasticCGRA   = param["isStaticElasticCGRA"];
+        isTrimmedDemo         = param["isTrimmedDemo"];
+        ctrlMemConstraint     = param["ctrlMemConstraint"];
+        bypassConstraint      = param["bypassConstraint"];
+        regConstraint         = param["regConstraint"];
+        precisionAware        = param["precisionAware"];
+        heterogeneity         = param["heterogeneity"];
+        heuristicMapping      = param["heuristicMapping"];
  
         (*functionWithLoop)[param["kernel"]] = new list<int>();
         json loops = param["targetLoopsID"];
@@ -229,7 +252,7 @@ Parameters::Parameters(std::string filename) {
 			  /* cout << param["operations"][std::to_string(row)] << endl; */
 			  for (auto item : param["operations"][std::to_string(row)][std::to_string(col)].items()) {
 				  opslist->push_front(item.value());
-				  std::cout << item.value() << "added" << endl;
+				  std::cout << item.value() << "added, at " << row << ", "  << col << endl;
 			  }
 			  ( *submap )[col] = opslist;
 		  }
@@ -240,19 +263,6 @@ Parameters::Parameters(std::string filename) {
 
 
         // Configuration for customizable CGRA.
-        rows                  = param["row"];
-        columns               = param["column"];
-        targetEntireFunction  = param["targetFunction"];
-        targetNested          = param["targetNested"];
-        doCGRAMapping         = param["doCGRAMapping"];
-        isStaticElasticCGRA   = param["isStaticElasticCGRA"];
-        isTrimmedDemo         = param["isTrimmedDemo"];
-        ctrlMemConstraint     = param["ctrlMemConstraint"];
-        bypassConstraint      = param["bypassConstraint"];
-        regConstraint         = param["regConstraint"];
-        precisionAware        = param["precisionAware"];
-        heterogeneity         = param["heterogeneity"];
-        heuristicMapping      = param["heuristicMapping"];
         cout<<"Initialize opt latency for DFG nodes: "<<endl;
         for (auto& opt : param["optLatency"].items()) {
           cout<<opt.key()<<" : "<<opt.value()<<endl;

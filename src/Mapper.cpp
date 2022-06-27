@@ -535,11 +535,13 @@ void Mapper::showSchedule(CGRA* t_cgra, DFG* t_dfg, MapResult *res,
   }
 errs() << "Outputting to to " << showCycleBoundary << "\n";
 errs() << "Latency is " << res->latency() << "\n";
+errs() << "Rows is " << t_cgra->getRows() << "\n";
+errs() << "cols is " << t_cgra->getColumns() << "\n";
   // For outputing generated CGRA operations.
   auto op_map = new map<string, map<string, list<string>*>*>();
   for (int i = 0; i < t_cgra->getRows(); i ++) {
 	  (*op_map)[to_string(i)] = new map<string, list<string>*>;
-	  for (int j = 0; j < t_cgra->getRows(); j ++) {
+	  for (int j = 0; j < t_cgra->getColumns(); j ++) {
 		  (*(*op_map)[to_string(i)])[to_string(j)] = new list<string>();
 	  }
   }
@@ -572,6 +574,7 @@ errs() << "Latency is " << res->latency() << "\n";
         }
         string str_fu;
         if (fu_occupied) {
+          cout << "Showing" << i << ", " << j << "\n";
 			(*(*op_map)[to_string(i)])[to_string(j)]->push_front(dfgNode -> getOperation());
           if (t_dfg->getID(dfgNode) < 10)
             str_fu = "[  " + to_string(dfgNode->getID()) + " " + dfgNode->getOperation() + "  ]";

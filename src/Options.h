@@ -34,6 +34,7 @@ class Options {
 		list<std::string> rulesets;
 
 		Rulesets getRulesets(); // Return the ruleset names in C form to be passed to rust.
+		std::string getRulesetNames();
 };
 
 // Carries the normal options + the positional parameters that

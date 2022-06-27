@@ -194,7 +194,19 @@ DFG* toDFG(RustDFG rustDfg) {
 // As below, but use the rewrite_with_graphs interface instead.
 list<DFG*> *rewrite_with_graphs(Options *opts, CGRA *cgra, DFG *dfg) {
 	RustDFG rdfg = toRustDFG(dfg);
-	RustDFGList rust_results = optimize_with_graphs(rdfg, opts->getRulesets());
+	if (opts->DebugRustConversion) {
+		Rulesets r = opts->getRulesets();
+		for (int i = 0; i < r.num_names; i ++) {
+			errs() << "Using rulesets " << r.names[i] << ", ";
+			int j = 0;
+			while (r.names[i][j] != '\0') {
+				errs() << r.names[i][j];
+				j ++;
+			}
+		}
+		errs() << "Using rulesets " << opts->getRulesetNames() << "\n";
+	}
+	RustDFGList rust_results = optimize_with_graphs(rdfg, opts->getRulesets(), opts->Params.c_str());
 
 	if (opts->DebugRustConversion) {
 		errs() << "Sent over a graph to the graph rewriter: " << dfg->asString() << "\n";
@@ -218,7 +230,10 @@ list<DFG*> *rewrite_with_egraphs(Options *opts, CGRA *cgra, DFG *dfg) {
 	RustDFG rdfg = toRustDFG(dfg);
 	// Call the rewriter
 	// Results are null-terminated.
-	RustDFGList rust_results = optimize_with_egraphs(rdfg, opts->getRulesets());
+	if (opts->DebugRustConversion) {
+		errs() << "Using rulesets " << opts->getRulesetNames() << "\n";
+	}
+	RustDFGList rust_results = optimize_with_egraphs(rdfg, opts->getRulesets(), opts->Params.c_str());
 	// Go through and look at the outputs
 
 	if (opts->DebugRustConversion) {
