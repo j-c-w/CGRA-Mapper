@@ -218,16 +218,17 @@ pub extern "C" fn optimize_with_graphs(dfg: CppDFG, rulesets: Rulesets) -> CppDF
             let rhs = r.applier.get_pattern_ast().unwrap();
 
             while let Some((id, subst)) = lhs.search_graph(&graph) {
-				let mut backup = graph.clone();
-                graph.replace(id, &rhs, &subst);
+				let mut candidate = graph.clone();
+                candidate.replace(id, &rhs, &subst);
 
-				if backup.cost(&cost) > graph.cost(&cost) {
+				if candidate.cost(&cost) < graph.cost(&cost) {
 					// TODO: computing costs could be cheaper,
-					// and maybe it can be predicted before actually replacing stuff
+					// and maybe it can be predicted before actually replacing stuff,
+					// to avoid copy
+					
+					std::mem::swap(&mut graph, &mut candidate);
 					applied.push(r.name);
 					local_minima = false;
-				} else {
-					std::mem::swap(&mut graph, &mut backup);
 				}
             }
         }
