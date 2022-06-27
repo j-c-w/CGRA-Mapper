@@ -8,7 +8,7 @@
 #  Date : July 16, 2019
 #
 
-set(CMAKE_BUILD_TYPE Debug)
+set(CMAKE_BUILD_TYPE Release)
 
 list(APPEND local_sources
     DFGNode.h
@@ -69,8 +69,8 @@ set_target_properties(dfgMapper PROPERTIES
     COMPILE_FLAGS "-fno-rtti -DDISABLE_LLVM_CMDLINE"
 )
 
-target_link_libraries(mapperPass ${CMAKE_CURRENT_SOURCE_DIR}/../CGRA-Mapper-Rust/target/debug/libEggLib.so)
-target_link_libraries(dfgMapper ${CMAKE_CURRENT_SOURCE_DIR}/../CGRA-Mapper-Rust/target/debug/libEggLib.so)
+target_link_libraries(mapperPass ${CMAKE_CURRENT_SOURCE_DIR}/../CGRA-Mapper-Rust/target/release/libEggLib.so)
+target_link_libraries(dfgMapper ${CMAKE_CURRENT_SOURCE_DIR}/../CGRA-Mapper-Rust/target/release/libEggLib.so)
 
 # Get proper shared-library behavior (where symbols are not necessarily
 # resolved when the shared library is linked) on OS X.

@@ -110,12 +110,22 @@ impl BanCost {
     }
 }
 
+fn ban_cost(available: &HashSet<Symbol>, symbol: &Symbol) -> f64 {
+    if available.contains(symbol) {
+        1.0
+    } else {
+        1_000_000.0 // does not seem to like f64::INFINITY
+    }
+}
+
 impl LpCostFunction<SymbolLang, ()> for BanCost {
     fn node_cost(&mut self, _egraph: &EGraph<SymbolLang, ()>, _eclass: Id, enode: &SymbolLang) -> f64 {
-        if self.available.contains(&enode.op) {
-            1.0
-        } else {
-            1_000_000.0 // does not seem to like f64::INFINITY
-        }
+        ban_cost(&self.available, &enode.op)
+    }
+}
+
+impl GraphCostFunction<SymbolLang> for &BanCost {
+    fn node_cost(&mut self, enode: &SymbolLang) -> f64 {
+        ban_cost(&self.available, &enode.op)
     }
 }

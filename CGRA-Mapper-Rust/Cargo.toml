@@ -11,7 +11,6 @@ crate-type = ["dylib"]
 
 [dependencies]
 #egg = "0.7.1"
-#egg = { git = "https://github.com/egraphs-good/egg", rev = "269c78636f91674da8c38838410d6fbdea08e099", features = ["lp"] }
-egg = { git = "https://github.com/Bastacyclop/egg/", rev = "d6404b6b37bf66c44c47e05354346dad4f21387d", features = ["lp"] }
+egg = { git = "https://github.com/Bastacyclop/egg/", rev = "19a4508abe86d78a33d7d3acac681e00752b94ca", features = ["lp"] }
 libc = "0.2"
 tinyjson = "2"
