@@ -6,3 +6,6 @@ estimated_performance
 speedups.eps
 speedups.png
 cgra_performances
+compile_times
+compile_times.eps
+compile_times.png

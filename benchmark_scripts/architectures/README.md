@@ -1,5 +1,7 @@
 This folder contains a number of architectures of proposed domain-specific CGRAs.  These CGRAs have been repurposed from exsiting papers, and this file contains the references for those architectures.
 
+Because OpenCGRA uses LLVM, and integrates the loop control into the CGRA, we add the following operations to each of these architectures to enable them to be used with OpenCGRA: zext (zero extend), br (branch), icmp (compare).  Some of these CGRA already have these operations.
+
 revamp.json: From REVAMP: ASystematic Framework for Heterogeneous CGRA Realization (ASPLOS 2022), Figure 5
 
 cca.json, maeri.json: From DSAGEN: Synthesizing Programmable

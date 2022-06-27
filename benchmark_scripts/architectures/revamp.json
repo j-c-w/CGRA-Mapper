@@ -26,9 +26,9 @@
 {
 "0": {
 "0": ["load", "store"],
-"1": ["add", "sub"],
-"2": ["icmp"],
-"3": ["and", "or", "nor", "xor", "lsh", "lshr", "ashr"],
+"1": ["add", "sub", "zext", "sext"],
+"2": ["icmp", "br"],
+"3": ["and", "or", "nor", "xor", "lsh", "lshr", "ashr", "sext"],
 "4": ["add", "sub"],
 "5": ["load", "store"]
 },
