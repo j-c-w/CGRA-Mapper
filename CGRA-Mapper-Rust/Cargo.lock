@@ -59,7 +59,7 @@ checksum = "4902c2c164ed74da85aa8472c4a754de1d8164c1fd16d672ec0faf22da482fa9"
 [[package]]
 name = "egg"
 version = "0.8.1"
-source = "git+https://github.com/Bastacyclop/egg/?rev=19a4508abe86d78a33d7d3acac681e00752b94ca#19a4508abe86d78a33d7d3acac681e00752b94ca"
+source = "git+https://github.com/Bastacyclop/egg/?rev=e574ff272ebfddedb180dcdb55f987fad3e97dc6#e574ff272ebfddedb180dcdb55f987fad3e97dc6"
 dependencies = [
  "coin_cbc",
  "fxhash",

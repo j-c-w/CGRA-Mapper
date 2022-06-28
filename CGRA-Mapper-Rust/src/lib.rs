@@ -222,23 +222,27 @@ pub extern "C" fn optimize_with_graphs(dfg: CppDFG, rulesets: Rulesets, cgra_par
         local_minima = true;
 
         for r in &rules {
+			// println!("trying {}", r.name);
             let lhs = r.searcher.get_pattern().unwrap();
             let rhs = r.applier.get_pattern_ast().unwrap();
 
-            while let Some((id, subst)) = lhs.search_graph(&graph) {
+            // while let Some((id, subst)) = lhs.search_graph(&graph) {
+			let current_cost = graph.cost(&cost);
+			if let Some(mut improved) = lhs.search_graph_until(&graph, |id, subst| {
 				let mut candidate = graph.clone();
                 candidate.replace(id, &rhs, &subst);
 
-				if candidate.cost(&cost) < graph.cost(&cost) {
-					// TODO: computing costs could be cheaper,
-					// and maybe it can be predicted before actually replacing stuff,
-					// to avoid copy
-					
-					std::mem::swap(&mut graph, &mut candidate);
-					applied.push(r.name);
-					local_minima = false;
-				}
-            }
+				// TODO: computing costs could be cheaper,
+				// and maybe it can be predicted before actually replacing stuff,
+				// to avoid copy
+				let should_rewrite = candidate.cost(&cost) < current_cost;
+				if should_rewrite { Some(candidate) } else { None }
+            }) {
+				// println!("reducing cost to {}", improved.cost(&cost));
+				std::mem::swap(&mut graph, &mut improved);
+				applied.push(r.name);
+				local_minima = false;
+			}
         }
     }
 
