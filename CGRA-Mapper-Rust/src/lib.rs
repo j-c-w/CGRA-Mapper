@@ -174,6 +174,7 @@ pub extern "C" fn optimize_with_egraphs(dfg: CppDFG, rulesets: Rulesets, cgra_pa
 	// egraph.dot().to_svg("/tmp/initial.svg").unwrap();
 
 	let runner = Runner::default().with_egraph(egraph).run(&rules);
+	runner.print_report();
     // runner.egraph.dot().to_svg("/tmp/egraph.svg").unwrap();
 
     for r in &mut roots[..] {
@@ -181,7 +182,11 @@ pub extern "C" fn optimize_with_egraphs(dfg: CppDFG, rulesets: Rulesets, cgra_pa
     }
     let cgrafilename = unsafe { std::ffi::CStr::from_ptr(cgra_params) }.to_str().unwrap();
     let cost = BanCost::from_operations_file(cgrafilename);
+
+    let start_extraction = std::time::Instant::now();
 	let (best, _best_roots) = LpExtractor::new(&runner.egraph, cost).solve_multiple(&roots[..]);
+    let extraction_time = start_extraction.elapsed();
+    println!("extraction took {:?}", extraction_time);
 
 	{
 		let mut g: EGraph<SymbolLang, ()> = Default::default();
@@ -200,16 +205,16 @@ pub extern "C" fn optimize_with_egraphs(dfg: CppDFG, rulesets: Rulesets, cgra_pa
 pub extern "C" fn optimize_with_graphs(dfg: CppDFG, rulesets: Rulesets, cgra_params: *const c_char) -> CppDFGs {
     println!("entering Rust, using standard rewriting");
 
-    let cgrafilename = unsafe { std::ffi::CStr::from_ptr(cgra_params) }.to_str().unwrap();
-    let cost = BanCost::from_operations_file(cgrafilename);
 	let rules = load_rulesets(rulesets);
     let mut graph = dfg_to_graph(dfg);
     // TODO:
     // println!("identified {} roots", graph.roots.len());
 	// graph.to_svg("/tmp/initial.svg").unwrap();
 
-	// TODO --- json as an argument rather than a constant?
-    let cost = BanCost::from_operations_file("param.json");
+    let cgrafilename = unsafe { std::ffi::CStr::from_ptr(cgra_params) }.to_str().unwrap();
+    let cost = BanCost::from_operations_file(cgrafilename);
+	
+    let start_rewriting = std::time::Instant::now();
 
     let mut local_minima = false;
     let mut applied = Vec::new();
@@ -237,8 +242,10 @@ pub extern "C" fn optimize_with_graphs(dfg: CppDFG, rulesets: Rulesets, cgra_par
         }
     }
 
+    let rewriting_time = start_rewriting.elapsed();
 	// graph.to_svg("/tmp/final.svg").unwrap();
-    println!("applied rules: {:?}", applied);
+    println!("applied {} rules in {:?}:", applied.len(), rewriting_time);
+	println!("  {:?}", applied);
 
     let best = graph.as_dfg();
 
