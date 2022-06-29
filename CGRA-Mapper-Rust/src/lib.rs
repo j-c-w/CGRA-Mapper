@@ -173,7 +173,12 @@ pub extern "C" fn optimize_with_egraphs(dfg: CppDFG, rulesets: Rulesets, cgra_pa
     println!("identified {} roots", roots.len());
 	// egraph.dot().to_svg("/tmp/initial.svg").unwrap();
 
-	let runner = Runner::default().with_egraph(egraph).run(&rules);
+	let runner = Runner::default()
+		.with_iter_limit(50)
+		.with_node_limit(100_000)
+		.with_time_limit(std::time::Duration::from_secs(20))
+		.with_egraph(egraph)
+		.run(&rules);
 	runner.print_report();
     // runner.egraph.dot().to_svg("/tmp/egraph.svg").unwrap();
 
