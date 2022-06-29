@@ -164,7 +164,7 @@ fn expr_to_dfg(expr: RecExpr<SymbolLang>) -> CppDFG {
 }
 
 #[no_mangle]
-pub extern "C" fn optimize_with_egraphs(dfg: CppDFG, rulesets: Rulesets, cgra_params: *const c_char) -> CppDFGs {
+pub extern "C" fn optimize_with_egraphs(dfg: CppDFG, rulesets: Rulesets, cgra_params: *const c_char, frequency_cost: bool) -> CppDFGs {
 	println!("entering Rust");
 
 	let rules = load_rulesets(rulesets);
@@ -173,18 +173,28 @@ pub extern "C" fn optimize_with_egraphs(dfg: CppDFG, rulesets: Rulesets, cgra_pa
     println!("identified {} roots", roots.len());
 	// egraph.dot().to_svg("/tmp/initial.svg").unwrap();
 
-	let runner = Runner::default().with_egraph(egraph).run(&rules);
+	let runner = Runner::default()
+		.with_iter_limit(50)
+		.with_node_limit(100_000)
+		.with_time_limit(std::time::Duration::from_secs(20))
+		.with_egraph(egraph)
+		.run(&rules);
 	runner.print_report();
     // runner.egraph.dot().to_svg("/tmp/egraph.svg").unwrap();
 
     for r in &mut roots[..] {
         *r = runner.egraph.find(*r);
     }
-    let cgrafilename = unsafe { std::ffi::CStr::from_ptr(cgra_params) }.to_str().unwrap();
-    let cost = BanCost::from_operations_file(cgrafilename);
 
+    let cgrafilename = unsafe { std::ffi::CStr::from_ptr(cgra_params) }.to_str().unwrap();
     let start_extraction = std::time::Instant::now();
-	let (best, _best_roots) = LpExtractor::new(&runner.egraph, cost).solve_multiple(&roots[..]);
+	let (best, _best_roots) = if frequency_cost {
+		let cost = LookupCost::from_operations_frequencies(cgrafilename);
+		LpExtractor::new(&runner.egraph, cost).solve_multiple(&roots[..])
+	} else {
+		let cost = BanCost::from_operations_file(cgrafilename);
+		LpExtractor::new(&runner.egraph, cost).solve_multiple(&roots[..])
+	};
     let extraction_time = start_extraction.elapsed();
     println!("extraction took {:?}", extraction_time);
 
@@ -202,7 +212,7 @@ pub extern "C" fn optimize_with_egraphs(dfg: CppDFG, rulesets: Rulesets, cgra_pa
 }
 
 #[no_mangle]
-pub extern "C" fn optimize_with_graphs(dfg: CppDFG, rulesets: Rulesets, cgra_params: *const c_char) -> CppDFGs {
+pub extern "C" fn optimize_with_graphs(dfg: CppDFG, rulesets: Rulesets, cgra_params: *const c_char, frequency_cost: bool) -> CppDFGs {
     println!("entering Rust, using standard rewriting");
 
 	let rules = load_rulesets(rulesets);
@@ -212,7 +222,14 @@ pub extern "C" fn optimize_with_graphs(dfg: CppDFG, rulesets: Rulesets, cgra_par
 	// graph.to_svg("/tmp/initial.svg").unwrap();
 
     let cgrafilename = unsafe { std::ffi::CStr::from_ptr(cgra_params) }.to_str().unwrap();
-    let cost = BanCost::from_operations_file(cgrafilename);
+	let (freq_cost, ban_cost);
+    let cost: Box<dyn Fn(&Graph<SymbolLang>) -> f64> = if frequency_cost {
+		freq_cost = LookupCost::from_operations_frequencies(cgrafilename);
+		Box::new(|g| g.cost(&freq_cost))
+	} else {
+		ban_cost = BanCost::from_operations_file(cgrafilename);
+		Box::new(|g| g.cost(&ban_cost))
+	};
 	
     let start_rewriting = std::time::Instant::now();
 
@@ -227,7 +244,7 @@ pub extern "C" fn optimize_with_graphs(dfg: CppDFG, rulesets: Rulesets, cgra_par
             let rhs = r.applier.get_pattern_ast().unwrap();
 
             // while let Some((id, subst)) = lhs.search_graph(&graph) {
-			let current_cost = graph.cost(&cost);
+			let current_cost = cost(&graph);
 			if let Some(mut improved) = lhs.search_graph_until(&graph, |id, subst| {
 				let mut candidate = graph.clone();
                 candidate.replace(id, &rhs, &subst);
@@ -235,7 +252,7 @@ pub extern "C" fn optimize_with_graphs(dfg: CppDFG, rulesets: Rulesets, cgra_par
 				// TODO: computing costs could be cheaper,
 				// and maybe it can be predicted before actually replacing stuff,
 				// to avoid copy
-				let should_rewrite = candidate.cost(&cost) < current_cost;
+				let should_rewrite = cost(&candidate) < current_cost;
 				if should_rewrite { Some(candidate) } else { None }
             }) {
 				// println!("reducing cost to {}", improved.cost(&cost));
