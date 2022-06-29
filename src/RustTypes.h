@@ -31,8 +31,8 @@ typedef struct Rulesets {
 	uint32_t num_names;
 } Rulesets;
 
-RustDFGList optimize_with_egraphs(RustDFG input, Rulesets rules, const char *cgra_params_file);
-RustDFGList optimize_with_graphs(RustDFG input, Rulesets rules, const char *cgra_params_file);
+RustDFGList optimize_with_egraphs(RustDFG input, Rulesets rules, const char *cgra_params_file, bool frequency_cost);
+RustDFGList optimize_with_graphs(RustDFG input, Rulesets rules, const char *cgra_params_file, bool frequency_cost);
 
 #ifdef __cplusplus
 }
