@@ -14,7 +14,6 @@ if [[ $# -ne 3 ]]; then
 fi
 
 reduction_rate=$1 #Reduce teh computation load --- 1.0 means run everything, 0.0 mean snothing.
-# TODO implement.
 folder=$2
 target_files=( $(find $folder -name "loop*.c") )
 temp_folder=$3
@@ -46,30 +45,30 @@ if [[ ${#plot_only} -eq 0 ]]; then
 		bfile=$(basename $file)
 		./run_tests_against.sh $reduction_rate $file $folder $temp_folder &> run_all_benchmarks_outputs/stdout/${bfile}.no_rules
 		mv $temp_folder/run_output.old run_all_benchmarks_outputs/stdout/${bfile}.no_rules.output
-		echo "Starting with egraphs $file"
-		./run_tests_against.sh $reduction_rate $file $folder $temp_folder --use-egraphs &> run_all_benchmarks_outputs/stdout/${bfile}.egraphs
-		mv $temp_folder/run_output.old run_all_benchmarks_outputs/stdout/${bfile}.egraphs.output
-		echo "Starting with greedy rewriter $file"
+		echo "Starting with greedy $file"
+		./run_tests_against.sh $reduction_rate $file $folder $temp_folder --use-greedy &> run_all_benchmarks_outputs/stdout/${bfile}.greedy
+		mv $temp_folder/run_output.old run_all_benchmarks_outputs/stdout/${bfile}.greedy.output
+		echo "Starting with rewriter $file"
 		./run_tests_against.sh $reduction_rate $file $folder $temp_folder --use-rewriter &> run_all_benchmarks_outputs/stdout/${bfile}.rewriter
 		mv $temp_folder/run_output.old run_all_benchmarks_outputs/stdout/${bfile}.rewriter.output
 
 		# Run the rewriter with just the boolean ruleset enabled.
 		if [[ ${#run_individual_rulesets} -gt 0 ]]; then
 			echo "Starting with logic-as-bool  $file"
-			./run_tests_against.sh $reduction_rate $file $folder $temp_folder --use-egraphs --logic-as-bool-rules &> run_all_benchmarks_outputs/stdout/${bfile}.logic_as_bool
+			./run_tests_against.sh $reduction_rate $file $folder $temp_folder --use-rewriter --logic-as-bool-rules &> run_all_benchmarks_outputs/stdout/${bfile}.logic_as_bool
 			mv $temp_folder/run_output.old run_all_benchmarks_outputs/stdout/${bfile}.logic_as_bool.output
 
 			# echo "Starting with fp-rules $file"
 			echo "Starting with fp rules  $file"
-			./run_tests_against.sh $reduction_rate $file $folder $temp_folder --use-egraphs --fp-rules &> run_all_benchmarks_outputs/stdout/${bfile}.fp_rules
+			./run_tests_against.sh $reduction_rate $file $folder $temp_folder --use-rewriter --fp-rules &> run_all_benchmarks_outputs/stdout/${bfile}.fp_rules
 			mv $temp_folder/run_output.old run_all_benchmarks_outputs/stdout/${bfile}.fp_rules.output
 
 			echo "Starting with int-rules $file"
-			./run_tests_against.sh $reduction_rate $file $folder $temp_folder --use-egraphs --int-rules &> run_all_benchmarks_outputs/stdout/${bfile}.int_rules
+			./run_tests_against.sh $reduction_rate $file $folder $temp_folder --use-rewriter --int-rules &> run_all_benchmarks_outputs/stdout/${bfile}.int_rules
 			mv $temp_folder/run_output.old run_all_benchmarks_outputs/stdout/${bfile}.int_rules.output
 
 			echo "Starting with all-rules $file"
-			./run_tests_against.sh $reduction_rate $file $folder $temp_folder --use-egraphs --all-rules &> run_all_benchmarks_outputs/stdout/${bfile}.all_rules
+			./run_tests_against.sh $reduction_rate $file $folder $temp_folder --use-rewriter --all-rules &> run_all_benchmarks_outputs/stdout/${bfile}.all_rules
 			mv $temp_folder/run_output.old run_all_benchmarks_outputs/stdout/${bfile}.all_rules.output
 		fi
 	done
@@ -79,8 +78,16 @@ fi
 
 get_successes() {
 	local fname=$1
-	outfile=$2
+	local outfile=$2
+	local bybmark_out=run_all_benchmarks_outputs/${outfile}_by_benchmark
 
+	# Use a python script for this because it involves some complicated
+	# tallying.  But we can apply grep first to keep the size
+	# of the inputs down a bit.
+	touch $bybmark_out
+	python get_results_by_benchmark.py $fname run_all_benchmarks_outputs/stdout/${fname} $bybmark_out
+
+	# Also get the overall successes
 	succ=$(cat run_all_benchmarks_outputs/stdout/${fname} | grep --binary-files=text "^Have" | cut -f2 -d ' ')
 	fails=$(cat run_all_benchmarks_outputs/stdout/${fname} | grep --binary-files=text "^Have" | cut -f4 -d ' ')
 	echo "$fname,$succ,$fails" >> run_all_benchmarks_outputs/$outfile
@@ -88,7 +95,7 @@ get_successes() {
 if [[ ${#gather_only} -eq 0 ]]; then
 	# clear them incase we are running --plot-only
 	echo -n "" > run_all_benchmarks_outputs/no_rules_data
-	echo -n "" > run_all_benchmarks_outputs/egraphs_data
+	echo -n "" > run_all_benchmarks_outputs/greedy_data
 	echo -n "" > run_all_benchmarks_outputs/rewriter_data
 
 	if [[ ${#run_individual_rulesets} -gt 0 ]]; then
@@ -102,7 +109,7 @@ if [[ ${#gather_only} -eq 0 ]]; then
 		bfile=$(basename $file)
 
 		get_successes ${bfile}.no_rules no_rules_data
-		get_successes ${bfile}.egraphs egraphs_data
+		get_successes ${bfile}.greedy greedy_data
 		get_successes ${bfile}.rewriter rewriter_data
 
 		if [[ ${#run_individual_rulesets} -gt 0 ]]; then
@@ -113,7 +120,7 @@ if [[ ${#gather_only} -eq 0 ]]; then
 		fi
 	done
 
-	python plot_successes.py run_all_benchmarks_outputs/graph.png run_all_benchmarks_outputs/no_rules_data run_all_benchmarks_outputs/rewriter_data run_all_benchmarks_outputs/egraphs_data
+	python plot_successes.py run_all_benchmarks_outputs/graph.png run_all_benchmarks_outputs/no_rules_data run_all_benchmarks_outputs/greedy_data run_all_benchmarks_outputs/rewriter_data
 
 	if [[ ${#run_individual_rulesets} -gt 0 ]]; then
 		python plot_successes.py ruleset_successes.png run_all_benchmarks_outputs/int_rules_data run_all_benchmarks_outputs/fp_rules_data run_all_benchmarks_outputs/logic_as_bool_data run_all_benchmarks_outputs/all_rules_data --rulesets

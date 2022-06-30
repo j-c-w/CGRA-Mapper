@@ -11,10 +11,10 @@ fi
 if [[ ${#plot_only} == 0 ]]; then
     pushd ../../test
 
-    ./run_against_architectures.sh ../benchmark_scripts/architectures/cca.json ../Loops2 cca_output
-    ./run_against_architectures.sh ../benchmark_scripts/architectures/maeri.json ../Loops2 maeri_output
-    ./run_against_architectures.sh ../benchmark_scripts/architectures/revamp.json ../Loops2 revamp_output
-    ./run_against_architectures.sh ../benchmark_scripts/architectures/sc-cgra.json ../Loops2 sc_cgra_output
+    # ./run_against_architectures.sh ../benchmark_scripts/architectures/cca.json ../Loops3 cca_output
+    ./run_against_architectures.sh ../benchmark_scripts/architectures/maeri.json ../Loops3 maeri_output
+    # ./run_against_architectures.sh ../benchmark_scripts/architectures/revamp.json ../Loops3 revamp_output
+    # ./run_against_architectures.sh ../benchmark_scripts/architectures/sc-cgra.json ../Loops3 sc_cgra_output
 
     popd
 fi
@@ -32,11 +32,11 @@ get_compile_rates() {
 
     rewriter_succ=$(cat $data_folder/stdout/rewriter.out | grep --binary-files=text "^Have" | cut -f2 -d ' ')
     rewriter_fails=$(cat $data_folder/stdout/rewriter.out | grep --binary-files=text "^Have" | cut -f4 -d ' ')
-    echo "Greedy Rewriter,$rewriter_succ,$rewriter_fails" >> $output_file
+    echo "FlexC,$rewriter_succ,$rewriter_fails" >> $output_file
 
-    egraphs_succ=$(cat $data_folder/stdout/egraphs.out | grep --binary-files=text "^Have" | cut -f2 -d ' ')
-    egraphs_fails=$(cat $data_folder/stdout/egraphs.out | grep --binary-files=text "^Have" | cut -f4 -d ' ')
-    echo "EGraphs,$egraphs_succ,$egraphs_fails" >> $output_file
+    greedy_succ=$(cat $data_folder/stdout/greedy.out | grep --binary-files=text "^Have" | cut -f2 -d ' ')
+    greedy_fails=$(cat $data_folder/stdout/greedy.out | grep --binary-files=text "^Have" | cut -f4 -d ' ')
+    echo "Greedy Rewriter,$greedy_succ,$greedy_fails" >> $output_file
 }
 
 mkdir -p data

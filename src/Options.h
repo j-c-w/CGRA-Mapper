@@ -23,6 +23,7 @@ class Options {
 		bool BuildCGRA;
 		bool UseRewriter;
 		bool UseEGraphs;
+		bool UseGreedy;
 
 		bool DebugOperationMap;
 		bool DebugRustConversion;

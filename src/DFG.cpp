@@ -169,6 +169,10 @@ std::string DFG::asString() {
 	return graph;
 }
 
+std::string DFG::getSourceFileName() {
+  return m_function->getParent()->getSourceFileName();
+}
+
 // FIXME: only combine operations of mul+alu and alu+cmp for now,
 //        since these two are the most common patterns across all
 //        the kernels.

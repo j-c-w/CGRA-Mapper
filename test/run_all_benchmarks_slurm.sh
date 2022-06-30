@@ -8,5 +8,5 @@ fi
 
 fraction_to_run=$2
 for loop in $(seq 1 $1); do
-	srun --cpus-per-task 40 --mem=40GB -t 180 execute_slurm.sh $loop $fraction_to_run &
+	srun --cpus-per-task 40 --mem=100GB -t 360 execute_slurm.sh $loop $fraction_to_run &
 done

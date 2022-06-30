@@ -8,7 +8,7 @@
 #  Date : July 16, 2019
 #
 
-set(CMAKE_BUILD_TYPE Release)
+set(CMAKE_BUILD_TYPE Debug)
 
 list(APPEND local_sources
     DFGNode.h

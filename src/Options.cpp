@@ -30,6 +30,7 @@ cl::opt<bool> BuildCGRA("build", cl::desc("Build the CGRA from the code rather t
 // op mode flags.
 cl::opt<bool> UseRewriter("use-rewriter", cl::desc("Use the simple rewriter"));
 cl::opt<bool> UseEGraphs("use-egraphs", cl::desc("Use the egraphs-based rewriter"));
+cl::opt<bool> UseGreedy("use-greedy", cl::desc("Use greedy rewriter"));
 
 // Debug flags
 cl::opt<bool> PrintMappingFailures("print-mapping-failures", cl::desc("Print the operations where mapping fails"));
@@ -61,6 +62,7 @@ TCLAP::CmdLine cmd("Tool to schedule a DFG Json file onto a CGRA");
   TCLAP::SwitchArg build_cgra("b", "build","Build the cgra rather than targeting a fixed one", cmd, false);
   TCLAP::SwitchArg use_egraphs("e", "use-egraphs", "Use the egraph rewriter", cmd, false);
   TCLAP::SwitchArg use_rewriter("r", "use-rewriter", "Use the standard rewriter", cmd, false);
+  TCLAP::SwitchArg use_greedy("g", "use-greedy", "Use the greedy rewriter", cmd, false);
 
   TCLAP::SwitchArg debug_mapping_loop("", "debug-mapping-loop", "Debug the mapping loop", cmd, false);
   TCLAP::SwitchArg print_mapping_failures("", "print-mapping-failures", "Debugg mapping failures", cmd, false);
@@ -80,6 +82,7 @@ TCLAP::CmdLine cmd("Tool to schedule a DFG Json file onto a CGRA");
 
   opt->UseEGraphs = use_egraphs;
   opt->UseRewriter = use_rewriter;
+  opt->UseGreedy = use_greedy;
 
   // TODO --- Support this.
   opt->DebugMappingLoop = debug_mapping_loop;

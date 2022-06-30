@@ -1,0 +1,52 @@
+{
+  "kernel"              : "_Z6kernelPiS_S_",
+  "targetFunction"      : false,
+  "targetNested"        : true,
+  "targetLoopsID"       : [0, 1],
+  "doCGRAMapping"       : true,
+  "row"                 : 4,
+  "column"              : 4,
+  "precisionAware"      : true,
+  "heterogeneity"       : true,
+  "isTrimmedDemo"       : true,
+  "heuristicMapping"    : true,
+  "bypassConstraint"    : 4,
+  "isStaticElasticCGRA" : false,
+  "ctrlMemConstraint"   : 200,
+  "regConstraint"       : 8,
+  "optLatency"          : {
+                            "store": 2
+                          },
+  "optPipelined"        : ["store"],
+  "additionalFunc"      : {
+                            "store": [4]
+                          },
+
+  "operations":
+{
+"0": {
+"0": ["add-shifter", "isc-mul", "br", "sub", "neg", "icmp", "and", "or", "nor", "xor", "lsh", "lshr", "ashr", "add", "sext"],
+"1": ["add-shifter", "isc-mul", "br", "sub", "neg", "icmp", "and", "or", "nor", "xor", "lsh", "lshr", "ashr", "sext"],
+"2": ["add-shifter", "isc-mul", "br", "sub", "neg", "icmp", "and", "or", "nor", "xor", "lsh", "lshr", "ashr", "sext"],
+"3": ["add-shifter", "isc-mul", "br", "sub", "neg", "icmp", "and", "or", "nor", "xor", "lsh", "lshr", "ashr", "sext"]
+},
+"1": {
+"0": ["add-shifter", "isc-mul", "br", "sub", "neg", "icmp", "and", "or", "nor", "xor", "lsh", "lshr", "ashr", "sext"],
+"1": ["add-shifter", "isc-mul", "br", "sub", "neg", "icmp", "and", "or", "nor", "xor", "lsh", "lshr", "ashr", "sext"],
+"2": ["add-shifter", "isc-mul", "br", "sub", "neg", "icmp", "and", "or", "nor", "xor", "lsh", "lshr", "ashr", "sext"],
+"3": ["add-shifter", "isc-mul", "br", "sub", "neg", "icmp", "and", "or", "nor", "xor", "lsh", "lshr", "ashr", "sext"]
+},
+"2": {
+"0": ["add-shifter", "isc-mul", "br", "sub", "neg", "icmp", "and", "or", "nor", "xor", "lsh", "lshr", "ashr", "sext"],
+"1": ["add-shifter", "isc-mul", "br", "sub", "neg", "icmp", "and", "or", "nor", "xor", "lsh", "lshr", "ashr", "sext"],
+"2": ["add-shifter", "isc-mul", "br", "sub", "neg", "icmp", "and", "or", "nor", "xor", "lsh", "lshr", "ashr", "sext"],
+"3": ["add-shifter", "isc-mul", "br", "sub", "neg", "icmp", "and", "or", "nor", "xor", "lsh", "lshr", "ashr", "sext"]
+},
+"3": {
+"0": ["add-shifter", "isc-mul", "br", "sub", "neg", "icmp", "and", "or", "nor", "xor", "lsh", "lshr", "ashr", "sext"],
+"1": ["add-shifter", "isc-mul", "br", "sub", "neg", "icmp", "and", "or", "nor", "xor", "lsh", "lshr", "ashr", "sext"],
+"2": ["add-shifter", "isc-mul", "br", "sub", "neg", "icmp", "and", "or", "nor", "xor", "lsh", "lshr", "ashr", "sext"],
+"3": ["add-shifter", "isc-mul", "br", "sub", "neg", "icmp", "and", "or", "nor", "xor", "lsh", "lshr", "ashr", "sext"]
+}
+}
+}

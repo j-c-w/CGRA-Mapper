@@ -125,6 +125,7 @@ class DFG {
 	void addEdge(DFGEdge *edge);
 	int getMaxNodeNumber();
 	OperationNumber getOperation();
+    std::string getSourceFileName();
 };
 
 #endif
