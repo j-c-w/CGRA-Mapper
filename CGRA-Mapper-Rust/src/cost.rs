@@ -116,7 +116,7 @@ fn ban_cost(available: &HashSet<Symbol>, symbol: &Symbol) -> f64 {
     if available.contains(symbol) {
         1.0
     } else {
-        1_000_000.0 // does not seem to like f64::INFINITY
+        1_000.0 // does not seem to like f64::INFINITY
     }
 }
 
