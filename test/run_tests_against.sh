@@ -111,7 +111,7 @@ parallel "(
 
 # Get the successes/fails for each file and print them for further parsing.
 # These should be in order, so you get a succ/fail followed by a done that corresponds to it.
-grep -e "Mapping:success" -e "Mapping:fail" -e "Done File: "
+grep run_output -e "Mapping:success" -e "Mapping:fail" -e "Done File: "
 
 success=$(grep -ce "Mapping:success" run_output || echo "")
 fails=$(grep -ce "Mapping:fail" run_output || echo "")
