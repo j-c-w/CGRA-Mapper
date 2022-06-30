@@ -19,8 +19,11 @@ if __name__ == "__main__":
     if os.path.exists(args.output_folder):
         shutil.rmtree(args.output_folder)
     os.mkdir(args.output_folder)
-    for s in cur.execute('select distinct loops.src, loops.filename from loops where loops.meta_clang_returncode is 0 and loops.meta_stmt_counts_IfStmt is null and loops.meta_stmt_counts_CallExpr is null'):
-        with open(args.output_folder + "/loop" + str(counter) + ".c", 'w') as f:
+
+    for s in cur.execute('select distinct loops.src, loops.filename, loops.meta_project from loops where loops.meta_clang_returncode is 0 and loops.meta_stmt_counts_IfStmt is null and loops.meta_stmt_counts_CallExpr is null'):
+        project = s[2]
+
+        with open(args.output_folder + "/loop_" + project + "_" + str(counter) + ".c", 'w') as f:
             program = s[0]
             file = s[1]
             f.write('// Source is: ' + file + '\n\n' + program)
