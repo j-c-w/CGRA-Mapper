@@ -5,7 +5,7 @@ with pkgs;
 mkShell {
 	buildInputs = [
 		llvm clang
-		cmake ctags gdb cargo rustc CoinMP
+		cmake ctags gdb cargo rustc CoinMP cbc
 		# Deps for the DFG Mapping
 		tclap
 	# Script deps

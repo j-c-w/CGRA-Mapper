@@ -39,7 +39,7 @@ cl::opt<bool> LLVMDebugOperationMap ("debug-operation-map", cl::desc("Debug the 
 cl::opt<bool> PrintOperationCount("print-operation-count", cl::desc("Print the operation counts in the DFG for debugging rewrite rules"));
 
 cl::opt<std::string> Params("params-file", cl::desc("Json file with the CGRA parameters"));
-cl::list<std::string> RulesetsOpt("ruleset", cl::desc("Rulesets to use: valid options are: int, fp, boolean, gcc (default is gcc, gcc = int ruleset + fp ruleset)"));
+cl::list<std::string> RulesetsOpt("ruleset", cl::desc("Rulesets to use: valid options are: int, fp, boolean, stochastic, gcc (default is gcc, gcc = int ruleset + fp ruleset)"));
 
 #endif
 
@@ -48,6 +48,7 @@ bool is_valid_ruleset(std::string rname) {
     (!rname.compare("fp")) ||
     (!rname.compare("int")) ||
     (!rname.compare("boolean")) ||
+    (!rname.compare("stochastic")) ||
     (!rname.compare("gcc"));
 }
 

@@ -12,12 +12,12 @@ def load_data(f):
             # Should we track fails? (line[2])
     return lines
 
-def plot(cca, maeri, revamp):
+def plot(cca, maeri, revamp, sc_cgra):
     # Create a series for each entry.
-    xlabels = cca.keys()
+    snames = cca.keys()
     series = []
     names = []
-    for label in xlabels:
+    for label in snames:
         values = [
             cca[label],
             maeri[label],
@@ -27,15 +27,19 @@ def plot(cca, maeri, revamp):
         names.append(label)
 
     width = 0.75 / float(len(series))
-    offset = -width * (float(len(series)) / 2.0)
-    xvals = range(len(series[0]))
+    offset = -width
+    print("Offset is ", offset)
+    xvals = np.arange(len(series[0]))
 
     for i in range(len(series)):
-        plt.bar(xvals + offset, series[i], width=width)
+        plt.bar(xvals + offset, series[i], width=width, label=names[i])
+        offset += width
     
+    plt.gca().set_xticks(xvals)
+    xlabels = ["CCA", "Maeri", "REVAMP", "SC-CGRA"]
     plt.gca().set_xticklabels(xlabels)
     plt.xlabel("Architecture")
-    plt.label("Compiles")
+    plt.ylabel("Compiles")
     plt.legend()
 
     plt.savefig("case_studies.png")
@@ -51,5 +55,6 @@ if __name__ == "__main__":
     cca = load_data(args.cca)
     maeri = load_data(args.maeri)
     revamp = load_data(args.revamp)
+    sc_cgra = load_data(args.sc_cgra)
 
     plot(cca, maeri, revamp)

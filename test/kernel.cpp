@@ -1,82 +1,13 @@
-// Source is: TODO --- get source filename
+// Source is: /home/alex/.local/share/compy-Learn/1.0/libav/content/libavcodec/apedec.c
 
-long k;
-struct
-{
-  long Ion;
-  long J5;
-  long K2;
-  long K3;
-  long MULTI;
-  long Laps;
-  long Loop;
-  long M;
-  long Kr;
-  long It;
-  long N13h;
-  long Ibuf;
-  long Npass;
-  long Nfail;
-  long N;
-  long N1;
-  long N2;
-  long N13;
-  long N213;
-  long N813;
-  long N14;
-  long N16;
-  long N416;
-  long N21;
-  long Nt1;
-  long Nt2;
-} spaces_;
-struct
-{
-  double U[1001];
-  double V[1001];
-  double W[1001];
-  double X[1001];
-  double Y[1001];
-  double Z[1001];
-  double G[1001];
-  double Du1[101];
-  double Du2[101];
-  double Du3[101];
-  double Grd[1001];
-  double Dex[1001];
-  double Xi[1001];
-  double Ex[1001];
-  double Ex1[1001];
-  double Dex1[1001];
-  double Vx[1001];
-  double Xx[1001];
-  double Rx[1001];
-  double Rh[2048];
-  double Vsp[101];
-  double Vstp[101];
-  double Vxne[101];
-  double Vxnd[101];
-  double Ve3[101];
-  double Vlr[101];
-  double Vlin[101];
-  double B5[101];
-  double Plan[300];
-  double D[300];
-  double Sa[101];
-  double Sb[101];
-} space1_;
-long l;
+#include <stdint.h>
+#include <stdio.h>
+
+
+typedef __uint16_t uint16_t;
 
 int
-main ()
+fn (int cf, int symbol, const uint16_t * counts)
 {
-  for (l = 1; l <= spaces_.Loop; l++)
-    {
-      spaces_.M = 0;
-      for (k = 1; k < spaces_.N; k++)
-	{
-	  if (space1_.X[k] < space1_.X[spaces_.M])
-	    spaces_.M = k;
-	}
-    }
+  for (symbol = 0; counts[symbol + 1] <= cf; symbol++);
 }

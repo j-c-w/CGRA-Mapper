@@ -1,6 +1,7 @@
 import matplotlib.pyplot as plt
 import numpy as np
 import argparse
+import statistics
 
 def load_from_file(f):
     res = {}
@@ -15,22 +16,26 @@ def load_from_file(f):
             res[bname] = succs
     return res
 
-labels = ['OpenCGRA', 'Rewriter', 'EGraphCGRA']
-styles = ['--', '-.', ':']
-def plot_line_from_dicts(tname, dicts):
+rewriter_modes_labels = ['OpenCGRA', 'Rewriter', 'EGraphCGRA']
+rulesets_labels = ['Integer', 'Floating Point', 'Logic as Boolean', 'All']
+styles = ['--', '-.', ':', '-']
+def plot_line_from_dicts(labels, tname, dicts, plotting_rulesets):
     zipped_lines = {}
     first_dsize = len(dicts[0])
     for d in dicts:
+        print(d)
+        print(len(d))
         dsize = len(d)
         assert dsize == first_dsize # If these are different, something failed e.g. with eggraphs that didn't fail without it 
         # They should both be equally excluded at a previous stage (since if egraphs fails we just won't use it and
         # can assume unchanged support --- really going to be due to bugs rather than fundamental issues though.)
         # TODO -- we could probably support that in this graph anyway?
         for k in d.keys():
-            if k in zipped_lines:
-                zipped_lines[k].append(d[k])
+            new_k = k.split('.')[0] # Stupid hack to get rid of trailing notes that include the method used to get this number
+            if new_k in zipped_lines:
+                zipped_lines[new_k].append(d[k])
             else:
-                zipped_lines[k] = [d[k]]
+                zipped_lines[new_k] = [d[k]]
 
     print("Before, length of zipped lines is ", len(zipped_lines))
     # If every entry is 0, it's probably vecause tghe benchmark
@@ -47,6 +52,8 @@ def plot_line_from_dicts(tname, dicts):
 
     # Now, sort that dict by magnitude of the first element, 
     # and unzip.
+    if not plotting_rulesets:
+        improvements = [float(zipped_lines[k][2]) / float(zipped_lines[k][0]) for k in zipped_lines if zipped_lines[k][0] > 0]
     unsortedd_and_zipped = [zipped_lines[k] for k in zipped_lines]
     sorted_and_zipped = sorted(unsortedd_and_zipped)
     lines = [[] for i in range(len(sorted_and_zipped[0]))]
@@ -67,11 +74,15 @@ def plot_line_from_dicts(tname, dicts):
     plt.xlabel("CGRA Design No")
     plt.ylabel("Number of Loops that can Compile")
     plt.xlim([0, maxx])
-    plt.ylim([0, maxy])
+    plt.ylim([0, maxy + 1])
     plt.savefig(tname + "_lines.png")
     plt.savefig(tname + "_lines.eps")
 
-def plot_from_dicts(tname, dicts):
+    print("Done!")
+    if not plotting_rulesets:
+        print("Geomean improvement is ", statistics.geometric_mean(improvements))
+
+def plot_from_dicts(names, tname, dicts):
     xvalues = set()
     for d in dicts:
         for k in d.keys():
@@ -86,7 +97,7 @@ def plot_from_dicts(tname, dicts):
     plt.ylabel('How Many Loops can Compile to this CGRA?')
     i = 0
     for d in dicts:
-        lab = labels[i]
+        lab = names[i]
         i += 1
         # Build y values for this set of results.
         yvalues = []
@@ -108,11 +119,16 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument('target_graph_name')
     parser.add_argument('files', nargs='+')
+    parser.add_argument('--rulesets', help='Draw the rulesets graph', action='store_true', default=False)
 
     args = parser.parse_args()
     results = []
     for f in args.files:
         results.append(load_from_file(f))
 
-    plot_from_dicts(args.target_graph_name, results)
-    plot_line_from_dicts(args.target_graph_name, results)
+    if args.rulesets:
+        plot_from_dicts(rulesets_labels, args.target_graph_name, results)
+        plot_line_from_dicts(rulesets_labels, args.target_graph_name, results, args.rulesets)
+    else:
+        plot_from_dicts(rewriter_modes_labels, args.target_graph_name, results)
+        plot_line_from_dicts(rewriter_modes_labels, args.target_graph_name, results, args.rulesets)

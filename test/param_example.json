@@ -4,8 +4,8 @@
   "targetNested"        : true,
   "targetLoopsID"       : [0, 1],
   "doCGRAMapping"       : true,
-  "row"                 : 3,
-  "column"              : 3,
+  "row"                 : 6,
+  "column"              : 6,
   "precisionAware"      : true,
   "heterogeneity"       : true,
   "isTrimmedDemo"       : true,
@@ -27,17 +27,50 @@
 "0": {
 "0": ["store", "store", "store"],
 "1": ["br", "br", "add", "Constant", "Constant", "Constant", "br", "br", "add", "Constant", "Constant", "Constant"],
-"2": ["fcmp", "Constant", "Constant"]
+"2": ["fcmp", "Constant", "Constant"],
+"3": ["fcmp", "Constant", "Constant"],
+"4": ["fcmp", "Constant", "Constant"],
+"5": ["fcmp", "Constant", "Constant"]
 },
 "1": {
 "0": ["store", "store", "Constant", "store", "Constant"],
 "1": ["load", "load", "load", "load", "load", "load", "load", "Constant", "br", "load", "load", "load", "load", "load", "load", "load", "load", "Constant", "br"],
-"2": ["add", "icmp", "br", "Constant", "Constant", "icmp", "icmp", "Constant", "Constant"]
+"2": ["add", "icmp", "br", "Constant", "Constant", "icmp", "icmp", "Constant", "Constant"],
+"3": ["fcmp", "Constant", "Constant"],
+"4": ["fcmp", "Constant", "Constant"],
+"5": ["fcmp", "Constant", "Constant"]
 },
 "2": {
 "0": ["store", "store"],
 "1": ["br", "br", "br", "Constant", "Constant", "getelementptr", "getelementptr", "br", "br", "Constant", "Constant"],
-"2": ["br", "Constant", "Constant"]
+"2": ["br", "Constant", "Constant"],
+"3": ["fcmp", "Constant", "Constant"],
+"4": ["fcmp", "Constant", "Constant"],
+"5": ["fcmp", "Constant", "Constant"]
+},
+"3": {
+"0": ["store", "store"],
+"1": ["br", "br", "br", "Constant", "Constant", "getelementptr", "getelementptr", "br", "br", "Constant", "Constant"],
+"2": ["br", "Constant", "Constant"],
+"3": ["fcmp", "Constant", "Constant"],
+"4": ["fcmp", "Constant", "Constant"],
+"5": ["fcmp", "Constant", "Constant"]
+},
+"4": {
+"0": ["store", "store"],
+"1": ["br", "br", "br", "Constant", "Constant", "getelementptr", "getelementptr", "br", "br", "Constant", "Constant"],
+"2": ["br", "Constant", "Constant"],
+"3": ["fcmp", "Constant", "Constant"],
+"4": ["fcmp", "Constant", "Constant"],
+"5": ["fcmp", "Constant", "Constant"]
+},
+"5": {
+"0": ["store", "store"],
+"1": ["br", "br", "br", "Constant", "Constant", "getelementptr", "getelementptr", "br", "br", "Constant", "Constant"],
+"2": ["br", "Constant", "Constant"],
+"3": ["fcmp", "Constant", "Constant"],
+"4": ["fcmp", "Constant", "Constant"],
+"5": ["fcmp", "Constant", "Constant"]
 }
 }
 }

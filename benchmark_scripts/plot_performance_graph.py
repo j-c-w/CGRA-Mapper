@@ -3,6 +3,7 @@ import matplotlib.pyplot as plt
 import argparse
 import os
 import numpy as np
+import statistics
 
 def load_estimated_performances(folder):
     performance_dict = {} #Lookup is from loop number to the estimated number of cycles.
@@ -45,13 +46,14 @@ def load_cgra_performances(cgra_folder):
 # This converts the CPU model to time.
 # From doc here: https://riscv.org/wp-content/uploads/2018/07/DAC-SiFive-Drew-Barbier.pdf
 def compute_processor_time(proc_cycles):
-    freq = 210.0 # Mhz --- 50mhz in low power mode, 210 in hp mode.
+    freq = 50.0 # Mhz --- 50mhz in low power mode, 210 in hp mode.
     time = proc_cycles / (freq * 1000_000.0)
     return time
 
 # This converts the CGRA model to time.
+# Using the paramters from Snafu
 def compute_cgra_time(cgra_cycles):
-    freq = 100 # Mhz
+    freq = 50.0 # Mhz
     time = cgra_cycles / (freq * 1000_000.0)
     return time
 
@@ -83,6 +85,8 @@ def plot_speedups(cpu_cycles, cgra_cycles):
     plt.ylim([0.0, 1.0])
     plt.savefig('speedups.png')
     plt.savefig('speedups.eps')
+    print ("Done!")
+    print ("Geomean improvement is ", statistics.geometric_mean(speedups))
 
 
 if __name__ == "__main__":

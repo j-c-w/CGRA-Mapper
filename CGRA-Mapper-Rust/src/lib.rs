@@ -128,6 +128,7 @@ fn load_ruleset(nm: &str) -> Vec<Rewrite<SymbolLang, ()>> {
 		"int" => rules(), // These are the 'normal' rewrite rules
 		"fp" => fp_rules(), // These are rewrite rules for -ffast-math style rewrites
 		"boolean" => boolean_logic(), // These are rewrite rules that assume ^&| are boolean rather than logical
+		"stochastic" => stochastic(),
 		_ => panic!("unknown ruleset")
 	}
 }

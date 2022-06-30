@@ -4,8 +4,8 @@
   "targetNested"        : true,
   "targetLoopsID"       : [0, 1],
   "doCGRAMapping"       : true,
-  "row"                 : 3,
-  "column"              : 3,
+  "row"                 : 50,
+  "column"              : 50,
   "precisionAware"      : true,
   "heterogeneity"       : true,
   "isTrimmedDemo"       : true,
@@ -25,19 +25,52 @@
   "operations":
 {
 "0": {
-"0": ["store", "store", "store"],
-"1": ["br", "br", "add", "Constant", "Constant", "Constant", "br", "br", "add", "Constant", "Constant", "Constant"],
-"2": ["fcmp", "Constant", "Constant"]
+"0": ["load", "store"],
+"1": ["add", "sub"],
+"2": ["icmp"],
+"3": ["and", "or", "nor", "xor", "lsh", "lshr", "ashr"],
+"4": ["add", "sub"],
+"5": ["load", "store"]
 },
 "1": {
-"0": ["store", "store", "Constant", "store", "Constant"],
-"1": ["load", "load", "load", "load", "load", "load", "load", "Constant", "br", "load", "load", "load", "load", "load", "load", "load", "load", "Constant", "br"],
-"2": ["add", "icmp", "br", "Constant", "Constant", "icmp", "icmp", "Constant", "Constant"]
+"0": ["load", "store"],
+"1": ["add", "sub"],
+"2": ["mul"],
+"3": ["add", "sub", "icmp"],
+"4": ["add", "sub"],
+"5": ["load", "store"]
 },
 "2": {
-"0": ["store", "store"],
-"1": ["br", "br", "br", "Constant", "Constant", "getelementptr", "getelementptr", "br", "br", "Constant", "Constant"],
-"2": ["br", "Constant", "Constant"]
+"0": ["load", "store"],
+"1": ["add", "sub", "icmp"],
+"2": ["add", "sub", "icmp", "and", "or", "nor", "xor", "lsh", "lshr", "ashr", "mul"],
+"3": ["add", "sub", "icmp", "and", "or", "nor", "xor", "lsh", "lshr", "ashr", "mul"],
+"4": ["mul"],
+"5": ["load", "store"]
+},
+"3": {
+"0": ["load", "store"],
+"1": ["mul"],
+"2": ["add", "sub", "icmp", "and", "or", "nor", "xor", "lsh", "lshr", "ashr", "mul"],
+"3": ["add", "sub", "icmp", "and", "or", "nor", "xor", "lsh", "lshr", "ashr", "mul"],
+"4": ["add", "sub", "and", "or", "nor", "xor", "lsh", "lshr", "ashr"],
+"5": ["load", "store"]
+},
+"4": {
+"0": ["load", "store"],
+"1": ["add"],
+"2": ["add", "sub", "and", "or", "nor", "xor", "lsh", "lshr", "ashr"],
+"3": ["mul"],
+"4": ["add", "sub"],
+"5": ["load", "store"]
+},
+"5": {
+"0": ["load", "store"],
+"1": ["add"],
+"2": ["and", "or", "nor", "xor", "lsh", "lshr", "ashr"],
+"3": ["icmp"],
+"4": ["add", "sub"],
+"5": ["load", "store"]
 }
 }
 }

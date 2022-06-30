@@ -1,5 +1,37 @@
 use egg::*;
 
+pub(crate) fn stochastic() -> Vec<Rewrite<SymbolLang, ()>> {
+	vec![
+		rewrite!("mul-to-and"; "(mul ?x ?y)" => "(and ?x ?y)"),
+		// We have a case study of Wang 2022 DATE, which uses a custom
+		// isc-mul node --- IMO wouldnae be unfair to just pretend
+		// it's an add, but better to be explicit than implicit :)
+		// The paper also notes that each node supports muls of different
+		// accuracies, so allow rewrites to any of those. (For completeness,
+		// it doesnt' make any diff to this algorithm --- we'd need a better
+		// cost model to take advantage)
+		rewrite!("mul-to-isc-and"; "(mul ?x ?y)" => "(isc-mul ?x ?y)"),
+		// IDK if any CGRA actually has support for a mux function
+		// but suppose they could do (see https://arxiv.org/pdf/2108.12326.pdf)
+		// Note that the difficulty is obtaining the third stream
+		// for the bit-wise selection from the add.
+		rewrite!("add-to-mux"; "(add ?x ?y)" => "(mux ?x ?y)"),
+		// See note above about Wang 2022
+		rewrite!("add-to-mux-wang"; "(add ?x ?y)" => "(add-shifter ?x ?y)"),
+		// Stochastic computing tolerates bit-errors very well,
+		// we can introduce these error-inducing things
+		// to get more compiles:
+		// Perhaps these should really be under a different flag.
+		// rewrite!("lshr-to-ashr"; "(lshr ?x ?y)" => "(ashr ?x ?y)"),
+		// rewrite!("ashr-to-lshr"; "(ashr ?x ?y)" => "(lshr ?x ?y)"),
+		// rewrite!("or-to-xor"; "(or ?x ?y)" => "(xor ?x ?y)"),
+		// rewrite!("xor-to-or"; "(xor ?x ?y)" => "(or ?x ?y)")
+		// Really, I'd like to include those, but the stochastic computing
+		// people usually do a whole analysis before they
+		// propose stuff like this...
+	]
+}
+
 // This set of rules assumes all logical operations are just boolean
 // operations.
 pub(crate) fn boolean_logic() -> Vec<Rewrite<SymbolLang, ()>> {
@@ -9,7 +41,6 @@ pub(crate) fn boolean_logic() -> Vec<Rewrite<SymbolLang, ()>> {
 		// have not xor == 1 and add == 2 -- and that's the only way to get to
 		// 3 in total.
 		rewrite!("and-to-add-xor"; "(and ?x ?y)" => "(icmp (add (not (xor ?x ?y)) (add ?x ?y)) const_3)"),
-		rewrite!("or-to-xor"; "(or ?x ?y)" => "(xor ?x ?y)"),
 		// uses icmp neq
 		rewrite!("or-to-add"; "(or ?x ?y)" => "(icmp (add ?x ?y) const_0)"),
         rewrite!("xor-to-or-and"; "(xor ?x ?y)" => "(sub (or ?x ?y) (and ?x ?y))"),// actually I think this one is generic.
@@ -80,8 +111,11 @@ pub(crate) fn rules() -> Vec<Rewrite<SymbolLang, ()>> {
         rewrite!("add-to-sub-neg"; "(add ?x ?y)" => "(sub ?x (mul const_-1 ?y))"),
 		// This is in GCC also (3889)
         rewrite!("mul-to-neg"; "(mul const_-1 ?y)" => "(neg ?y)"),
-        rewrite!("lsh-to-lshr-mul"; "(lsh ?x ?y)" => "(mul ?x (lshr const_IntMax (sub const_32 ?y)))"),
-        rewrite!("lsh-to-ashr-mul"; "(lsh ?x ?y)" => "(mul ?x (ashr const_IntMax (sub const_32 ?y)))"),
+		// Const here is 0
+		rewrite!("neg-to-sub"; "(neg ?y)" => "(sub Const ?y)"),
+		// First constant is Int Max, second is 32
+        rewrite!("shl-to-lshr-mul"; "(shl ?x ?y)" => "(mul ?x (lshr Constant (sub Constant ?y)))"),
+        rewrite!("shl-to-ashr-mul"; "(shl ?x ?y)" => "(mul ?x (ashr Constant (sub Constant ?y)))"),
 		// This is also in the GCC rules.
 		rewrite!("shl-const-to-mul"; "(shl ?x (Constant))" => "(mul ?x Constant)"),
 		rewrite!("ashr-const-to-div"; "(ashr ?x Constant)" => "(div ?x Constant)"),
@@ -103,7 +137,7 @@ pub(crate) fn rules() -> Vec<Rewrite<SymbolLang, ()>> {
             (icmp ?x const_0))))"),
 		// Also do a version w/out the mul, since
 		// we know that the result of the icmp must be -1, 0 or 1
-		rewrite!("sext-to-logic-2"; "(sext ?x)" => "(or (bitcast ?x) (lsh (neg (icmp ?x const_0))
+		rewrite!("sext-to-logic-2"; "(sext ?x)" => "(or (bitcast ?x) (shl (neg (icmp ?x const_0))
             const_31))"),
 
 		// note that there are in the GCC rules in more
@@ -152,8 +186,8 @@ pub(crate) fn rules() -> Vec<Rewrite<SymbolLang, ()>> {
 		// Line 320: TODO (IMO probably a somewhat useful one) (jcw)
 		// Line 368: TODO -- only works for unsigned a.  Is there a way to check for this? (We can
 		// probably skp this rule?)
-		rewrite!("ashr-to-lsl-div"; "(ashr ?a ?b)" => "(div ?a (shl 1 ?b))"),
-		rewrite!("lshr-to-lsl-div"; "(lshr ?a ?b)" => "(div ?a (shl 1 ?b))"),
+		rewrite!("ashr-to-lsl-div"; "(ashr ?a ?b)" => "(div ?a (shl const_1 ?b))"),
+		rewrite!("lshr-to-lsl-div"; "(lshr ?a ?b)" => "(div ?a (shl const_1 ?b))"),
 		// Line 401:
 		rewrite!("neg-to-div"; "(neg ?x)" => "(div ?x (const_-1))"),
 		rewrite!("div-to-neg"; "(div ?x (const_-1))" => "(neg ?x)"), // TODO -- Thomas: this is cyclical,
