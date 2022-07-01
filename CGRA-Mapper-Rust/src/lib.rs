@@ -175,11 +175,12 @@ pub extern "C" fn optimize_with_egraphs(dfg: CppDFG, rulesets: Rulesets, cgra_pa
 	// egraph.dot().to_svg("/tmp/initial.svg").unwrap();
 
 	let runner = Runner::default()
-		.with_iter_limit(50)
+		.with_iter_limit(30)
 		.with_node_limit(100_000)
 		.with_time_limit(std::time::Duration::from_secs(20))
 		.with_egraph(egraph)
-		.run(&rules);
+		.run(&rules)
+		.with_scheduler(SimpleScheduler);
 	runner.print_report();
     // runner.egraph.dot().to_svg("/tmp/egraph.svg").unwrap();
 
@@ -190,9 +191,11 @@ pub extern "C" fn optimize_with_egraphs(dfg: CppDFG, rulesets: Rulesets, cgra_pa
     let cgrafilename = unsafe { std::ffi::CStr::from_ptr(cgra_params) }.to_str().unwrap();
     let start_extraction = std::time::Instant::now();
 	let (best, _best_roots) = if frequency_cost {
+		println!("Running egraphs with frequency cost");
 		let cost = LookupCost::from_operations_frequencies(cgrafilename);
 		LpExtractor::new(&runner.egraph, cost).solve_multiple(&roots[..])
 	} else {
+		println!("Running egraphs with ban cost");
 		let cost = BanCost::from_operations_file(cgrafilename);
 		LpExtractor::new(&runner.egraph, cost).solve_multiple(&roots[..])
 	};
@@ -225,9 +228,11 @@ pub extern "C" fn optimize_with_graphs(dfg: CppDFG, rulesets: Rulesets, cgra_par
     let cgrafilename = unsafe { std::ffi::CStr::from_ptr(cgra_params) }.to_str().unwrap();
 	let (freq_cost, ban_cost);
     let cost: Box<dyn Fn(&Graph<SymbolLang>) -> f64> = if frequency_cost {
+		println!("Running with frequency cost");
 		freq_cost = LookupCost::from_operations_frequencies(cgrafilename);
 		Box::new(|g| g.cost(&freq_cost))
 	} else {
+		println!("Running with ban cost");
 		ban_cost = BanCost::from_operations_file(cgrafilename);
 		Box::new(|g| g.cost(&ban_cost))
 	};

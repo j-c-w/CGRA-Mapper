@@ -136,7 +136,7 @@ pub(crate) fn rules() -> Vec<Rewrite<SymbolLang, ()>> {
         // first icmp is icmp slt, second is sgt
 		rewrite!("sext-to-logic"; "(sext ?x)" => "(mul (bitcast ?x) (add (neg (icmp ?x const_0) (icmp ?x const_0))))"),
 		// Also do a version w/out the mul, since
-		rewrite!("to-logic-2"; "(mul (bitcast ?x) (add (neg (icmp ?x const_0) (icmp ?x const_0))))" => "(or (bitcast ?x) (shl (neg (icmp ?x const_0)) const_31))")
+		rewrite!("to-logic-2"; "(mul (bitcast ?x) (add (neg (icmp ?x const_0) (icmp ?x const_0))))" => "(or (bitcast ?x) (shl (neg (icmp ?x const_0)) const_31))"),
 
 		// note that there are in the GCC rules in more
 		// complex ways.
@@ -159,7 +159,38 @@ pub(crate) fn rules() -> Vec<Rewrite<SymbolLang, ()>> {
         // and can overflow)
         rewrite!("fp-fneg-to-add"; "(fneg ?x)" => "(add const_2pow32 ?x)"),
 
+		// Rules that are in GCC, but needed reformatting due to poor hanlding of
+		// constants.  Obviously we could handle more cases.
+		rewrite!("div-2"; "(sdiv ?x const_2)" => "(ashr ?x const_1)"),
+		rewrite!("div-4"; "(sdiv ?x const_4)" => "(ashr ?x const_2)"),
+		rewrite!("div-8"; "(sdiv ?x const_8)" => "(ashr ?x const_3)"),
+		rewrite!("div-16"; "(sdiv ?x const_16)" => "(ashr ?x const_4)"),
+		rewrite!("div-32"; "(sdiv ?x const_32)" => "(ashr ?x const_5)"),
+		rewrite!("div-64"; "(sdiv ?x const_64)" => "(ashr ?x const_6)"),
 
+		rewrite!("div-2"; "(udiv ?x const_2)" => "(lshr ?x const_1)"),
+		rewrite!("div-4"; "(udiv ?x const_4)" => "(lshr ?x const_2)"),
+		rewrite!("div-8"; "(udiv ?x const_8)" => "(lshr ?x const_3)"),
+		rewrite!("div-16"; "(udiv ?x const_16)" => "(lshr ?x const_4)"),
+		rewrite!("div-32"; "(udiv ?x const_32)" => "(lshr ?x const_5)"),
+		rewrite!("div-64"; "(udiv ?x const_64)" => "(lshr ?x const_6)"),
+
+		rewrite!("mul-2"; "(mul ?x const_2)" => "(shl ?x const_1)"),
+		rewrite!("mul-4"; "(mul ?x const_4)" => "(shl ?x const_2)"),
+		rewrite!("mul-8"; "(mul ?x const_8)" => "(shl ?x const_3)"),
+		rewrite!("mul-16"; "(mul ?x const_16)" => "(shl ?x const_4)"),
+		rewrite!("mul-32"; "(mul ?x const_32)" => "(shl ?x const_5)"),
+		rewrite!("mul-64"; "(mul ?x const_64)" => "(shl ?x const_6)"),
+
+		rewrite!("add-1"; "(add ?x ?x)" => "(mul ?x const_2)"),
+		// These aren't in GCC I don't htink --- they could be though.
+		rewrite!("mul-1"; "(mul ?x const_1)" => "?x"),
+		rewrite!("mul-3"; "(mul ?x const_3)" => "(add (mul ?x const_2) ?x)"),
+		rewrite!("mul-5"; "(mul ?x const_5)" => "(add (mul ?x const_4) ?x)"),
+		rewrite!("mul-6"; "(mul ?x const_6)" => "(add (mul ?x const_4) (add ?x ?x))"),
+		rewrite!("mul-7"; "(mul ?x const_7)" => "(sub (mul ?x const_8) ?x)"),
+		rewrite!("mul-9"; "(mul ?x const_9)" => "(add (mul ?x const_8) ?x)"),
+		// Again, could obviously support more of those --just hanlde hte comon cases here.
 
 		// Rules from GCC (these are from :
 		// https://github.com/gcc-mirror/gcc/blob/master/gcc/match.pd commit https://github.com/gcc-mirror/gcc/blob/7690bee9f36ee02b7ad0b8a7e7a3e08357890dc0/gcc/match.pd
@@ -177,9 +208,9 @@ pub(crate) fn rules() -> Vec<Rewrite<SymbolLang, ()>> {
 		// (31 is actually meant to be precision - 1).
 		rewrite!("abs-expand-a"; "(abs ?x)" => "(xor (add (ashr ?x 31) ?x) (ashr ?x (31)))"),
 		rewrite!("abs-expand-l"; "(abs ?x)" => "(xor (add (lshr ?x 31) ?x) (lshr ?x (31)))"),
-		// Line: 280
-		rewrite!("neg-to-mul"; "(neg ?x)" => "(mul ?x (const_-1))"),
-		rewrite!("mul-to-neg"; "(mul ?x (const_-1))" => "(neg ?x)"), // TODO -- Thomas: This is cyclical,
+		// Line: 280 (as above)
+		// rewrite!("neg-to-mul"; "(neg ?x)" => "(mul ?x (const_-1))"),
+		// rewrite!("mul-to-neg"; "(mul ?x (const_-1))" => "(neg ?x)"), // TODO -- Thomas: This is cyclical,
 		// should we consider it?
 		// Line 320: TODO (IMO probably a somewhat useful one) (jcw)
 		// Line 368: TODO -- only works for unsigned a.  Is there a way to check for this? (We can

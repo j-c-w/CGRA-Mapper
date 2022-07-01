@@ -489,13 +489,39 @@ void DFG::construct(Function *t_F) {
 			Value *op = curII->getOperand(i);
 			if (isa<Constant>(op)) {
 				errs() << "Loaded a constant argument\n";
+        DFGNode *cnode;
+        bool already_set = false;
+
+        if (isa<ConstantInt>(op)) {
+          APInt value = static_cast<ConstantInt *>(op)->getValue();
+
+          // cout << "Is an int\n";
+          // Put this in a 64 bit int unless it is too big:
+          if (value.sgt((int64_t) 1 << 63)) {
+            already_set = true;
+            int64_t ivalue = value.extractBitsAsZExtValue(64, 64);
+            // cout << "Extracted " << ivalue << "\n";
+            cnode = new DFGNode(nodeID ++, m_precisionAware, op, "const_" + std::to_string(ivalue), "const_" + std::to_string(ivalue));
+          } else {
+            // cout << "Value " << op->getName().bytes_begin() << " was too big\n";
+          }
+        }  else {
+          // cout << "Value is not an int ";
+        }
+        
+        if (!already_set) {
 				// It would be good to actually load this constant
 				// in... as some rules no doubt will require
 				// the actual value to apply.
-				DFGNode *cnode = new DFGNode(nodeID ++, m_precisionAware, op, "Constant", "Constant");
+        // This currently happens for fps or large int64_ts 
+				cnode = new DFGNode(nodeID ++, m_precisionAware, op, "Constant", "Constant");
+        }
 				nodes.push_back(cnode);
 			}
 		}
+    // The operands are pushed on backwards --- don't think that this
+    // matters for CGRA Mapper, but it does matter for rewriting :)
+    nodes.reverse();
 
       }
 	  errs() << "Got DFGNode " << dfgNode->asString() << "\n";

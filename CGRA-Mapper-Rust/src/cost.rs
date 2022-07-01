@@ -100,7 +100,9 @@ impl BanCost {
     {
         let operations = get_available_operations(path.as_ref());
         println!("supported operations are {:?}", operations);
-        BanCost::from_available(operations.keys())
+        let ban_cost = BanCost::from_available(operations.keys());
+        println!("Available ops are {:?}", ban_cost.available);
+        ban_cost
     }
 
     pub(crate) fn from_available<I>(available: I) -> Self
@@ -113,10 +115,17 @@ impl BanCost {
 }
 
 fn ban_cost(available: &HashSet<Symbol>, symbol: &Symbol) -> f64 {
-    if available.contains(symbol) {
+    // println!("Looking up {}", symbol);
+    if symbol.as_str().starts_with("Dummy") || symbol.as_str().starts_with("const") {
+        // println!("Was a dummy node!");
+        // The C part inserts dummy nodes to break cycles.
+        0.0
+    } else if available.contains(symbol) {
+        // println!("Found find symbol");
         1.0
     } else {
-        1_000.0 // does not seem to like f64::INFINITY
+        // println!("Didn't find symbol");
+        10_000.0 // does not seem to like f64::INFINITY
     }
 }
 
@@ -156,7 +165,11 @@ impl LookupCost {
 }
 
 fn lookup_cost(costs: &HashMap<Symbol, f64>, default: f64, symbol: &Symbol) -> f64 {
-    costs.get(symbol).cloned().unwrap_or(default)
+    if symbol.as_str().starts_with("Dummy") || symbol.as_str().starts_with("const") {
+        0.0
+    } else {
+        costs.get(symbol).cloned().unwrap_or(default)
+    }
 }
 
 impl LpCostFunction<SymbolLang, ()> for LookupCost {

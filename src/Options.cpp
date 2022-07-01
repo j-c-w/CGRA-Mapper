@@ -150,6 +150,7 @@ Options *setupOptions() {
 
 	opt->UseRewriter = UseRewriter;
 	opt->UseEGraphs = UseEGraphs;
+  opt->UseGreedy = UseGreedy;
 
 	opt->DebugOperationMap = LLVMDebugOperationMap;
 	opt->DebugRustConversion = DebugRustConversion;

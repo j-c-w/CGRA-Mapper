@@ -7,8 +7,7 @@
 #include "MapResult.h"
 
 MapResult *doMap(Options *options, Parameters *params, CGRA *cgra, Mapper *mapper, list<DFG *> *generated_dfgs, int II) {
-    MapResult *winning_res = new MapResult(true, -1, -1);
-    DFG* winning_dfg;
+    MapResult *winning_res = new MapResult(true, -1, -1, nullptr);
     int dfg_no = 0;
     for (DFG *dfg : *generated_dfgs)
     {
@@ -29,7 +28,6 @@ MapResult *doMap(Options *options, Parameters *params, CGRA *cgra, Mapper *mappe
         {
             delete winning_res;
             winning_res = res;
-            winning_dfg = dfg;
         }
         if (options->DebugMappingLoop)
         {
@@ -75,24 +73,26 @@ void runMapping(CGRA *cgra, DFG *dfg, Parameters *params, Options *options) {
     // a acceptable II.
     // Jackson's Code Starts Here:
     // Get the winning DFG.
-    DFG *winning_dfg;
     MapResult *mapResult;
     cout << "Options settings are " << options->UseRewriter << "\n";
 
     list<DFG *> *generated_dfgs;
     if (options->UseGreedy)
     {
+        cout << "Using Greedy Only Mode\n";
         generated_dfgs = rewrite_with_graphs(options, cgra, dfg);
 
         mapResult = doMap(options, params, cgra, mapper, generated_dfgs, II);
     }
     else if (options->UseEGraphs)
     {
+        cout << "Using EGraphs Only Mode\n";
         generated_dfgs = rewrite_with_egraphs(options, cgra, dfg);
         mapResult = doMap(options, params, cgra, mapper, generated_dfgs, II);
     }
     else if (options->UseRewriter)
     {
+        cout << "Using FlexC Rewriter Mode\n";
         // call the copy constructor
         DFG copied_dfg(*dfg); // need to copy before this changes the DFG.
         // Try the normal rewriter first.
@@ -104,6 +104,8 @@ void runMapping(CGRA *cgra, DFG *dfg, Parameters *params, Options *options) {
             // try again with egraphs.
             generated_dfgs = rewrite_with_egraphs(options, cgra, &copied_dfg);
             mapResult = doMap(options, params, cgra, mapper, generated_dfgs, II);
+        } else {
+            cout << "Initial Greedy Pass Succeeded\n";
         }
     }
     else
@@ -125,11 +127,11 @@ void runMapping(CGRA *cgra, DFG *dfg, Parameters *params, Options *options) {
         errs() << "[Mapping:fail]\n";
     else
     {
-        mapper->showSchedule(cgra, winning_dfg, mapResult, params->isStaticElasticCGRA);
+        mapper->showSchedule(cgra, mapResult->winningDFG(), mapResult, params->isStaticElasticCGRA);
         errs() << "==================================\n";
         errs() << "[Mapping:success]\n";
         errs() << "==================================\n";
-        mapper->generateJSON(cgra, winning_dfg, mapResult, params->isStaticElasticCGRA);
+        mapper->generateJSON(cgra, mapResult->winningDFG(), mapResult, params->isStaticElasticCGRA);
         errs() << "[Output Json]\n";
     }
     errs() << "==================================\n";
