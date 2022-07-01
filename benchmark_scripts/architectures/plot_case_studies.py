@@ -1,6 +1,7 @@
 import matplotlib.pyplot as plt
 import argparse
 import numpy as np
+import statistics
 
 def load_data(f):
     lines = {}
@@ -8,13 +9,15 @@ def load_data(f):
         for line in f.readlines():
             line = line.split(',')
             # Get the number of successes
-            lines[line[0]] = int(line[1])
+            succs = int(line[1])
+            fails = int(line[2])
+            lines[line[0]] = float(succs) / (float (succs + fails))
             # Should we track fails? (line[2])
     return lines
 
 def plot(cca, maeri, revamp, sc_cgra):
     # Create a series for each entry.
-    snames = cca.keys()
+    snames = sorted(cca.keys(), key=lambda x: cca[x])
     series = []
     names = []
     for label in snames:
@@ -26,6 +29,17 @@ def plot(cca, maeri, revamp, sc_cgra):
         ]
         series.append(values)
         names.append(label)
+        if label == 'OpenCGRA':
+            baselines = values
+        elif label == 'FlexC':
+            increase = values
+
+    increases = []
+    for i in range(len(baselines)):
+        increases.append(increase[i]/ baselines[i])
+
+    print("Increases were: ", increases)
+    print("Geomean is: ", statistics.geometric_mean(increases))
 
     width = 0.75 / float(len(series[0]))
     offset = -width * 2.0
@@ -40,7 +54,7 @@ def plot(cca, maeri, revamp, sc_cgra):
     xlabels = ["CCA", "Maeri", "REVAMP", "SC-CGRA"]
     plt.gca().set_xticklabels(xlabels)
     plt.xlabel("Architecture")
-    plt.ylabel("Compiles")
+    plt.ylabel("Fraction of Loops Successfully Compiled")
     plt.legend()
 
     plt.savefig("case_studies.png")
