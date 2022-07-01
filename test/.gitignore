@@ -14,3 +14,5 @@ successes.png
 successes.png_lines.eps
 successes.png_lines.png
 temp*
+*_output
+.nfs*

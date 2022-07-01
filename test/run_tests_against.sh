@@ -2,8 +2,8 @@
 
 set -eu
 
-typeset use_egraphs use_rewriter use_greedy logic_bool_rules int_rules all_rules fp_rules
-zparseopts -D -E -use-egraphs=use_egraphs -use-rewriter=use_rewriter -logic-as-bool-rules=logic_bool_rules -fp-rules=fp_rules -int-rules=int_rules -all-rules=all_rules -use-greedy=use_greedy
+typeset use_egraphs use_rewriter use_greedy logic_bool_rules int_rules all_rules fp_rules stochastic_rules
+zparseopts -D -E -use-egraphs=use_egraphs -use-rewriter=use_rewriter -logic-as-bool-rules=logic_bool_rules -fp-rules=fp_rules -int-rules=int_rules -all-rules=all_rules -use-greedy=use_greedy -stochastic-rules=stochastic_rules
 
 if [[ $# -ne 4 ]]; then
 	echo "Usage: $0 <Reduction Rate> <CGRA Design File> <Other Input Files Base Folder> <Temp Folder>"
@@ -38,12 +38,12 @@ if [[ $2 == *.cpp ]] || [[ $2 == *.c ]]; then
 	$original_folder/compile.sh kernel.cpp
 	$original_folder/run.sh $original_folder/$lmapper kernel.bc --build
 	$original_folder/build_param.sh $original_folder/param_skeleton operations.json param.json
-	timeout=60 # Use 60s timeout --- as we are using small CGRAs for this.
+	timeout=300 # Use 300s timeout --- as we are using small CGRAs for this.
 elif [[ "$2" == *.json ]]; then
 	echo "Using a pre-specified CGRA"
 	# This is a pre-specified architecture --- load the JSON file into here:
 	cp $original_folder/$2 param.json
-	timeout=300 # Use large timeout because these architectures are much larger, so OpenCGRA is much slower (there's also fewer
+	timeout=600 # Use large timeout because these architectures are much larger, so OpenCGRA is much slower (there's also fewer
 	# fewer results to get, so we can use a longer timeout :)
 else
 	echo "Input file $2 was neither CPP nor a JSON file --- not sure how to create an architecture spec from this"
@@ -86,8 +86,11 @@ fi
 if [[ ${#fp_rules} -gt 0 ]]; then
 	extra_flags="$extra_flags --ruleset fp"
 fi
+if [[ ${#stochastic_rules} -gt 0 ]]; then
+	extra_flags="$extra_flags --ruleset stochastic"
+fi
 if [[ ${#all_rules} -gt 0 ]]; then
-	extra_flags="$extra_flags --ruleset boolean --ruleset int --ruleset fp"
+	extra_flags="$extra_flags --ruleset boolean --ruleset int --ruleset fp --ruleset stochastic"
 fi
 
 parallel "(
@@ -111,7 +114,7 @@ parallel "(
 
 # Get the successes/fails for each file and print them for further parsing.
 # These should be in order, so you get a succ/fail followed by a done that corresponds to it.
-grep run_output -e "Mapping:success" -e "Mapping:fail" -e "Done File: "
+grep --text run_output -e "Mapping:success" -e "Mapping:fail" -e "Done File: "
 
 success=$(grep -ce "Mapping:success" run_output || echo "")
 fails=$(grep -ce "Mapping:fail" run_output || echo "")

@@ -11,6 +11,7 @@ random.seed(0)
 def get_name(f):
     try:
         nam =  f.split('_')[1]
+        return nam
     except:
         # For backwards compatability --- previous versions
         # did not distinguish by suite.
@@ -44,7 +45,6 @@ if __name__ == "__main__":
         # Random, but repeatable shuffle.
         random.shuffle(by_suite[n])
         end_suite[n] = by_suite[n][:new_num]
-        print("Reduced to ", len(end_suite[n]), "newnum", new_num)
 
     # Print out the benchmark suites
     for n in end_suite:

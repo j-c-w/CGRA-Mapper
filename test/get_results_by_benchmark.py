@@ -3,11 +3,11 @@ import argparse
 # Add to a dict
 def add(d, v):
     if v in d:
-        d[v] = 1
-    else:
         d[v] += 1
+    else:
+        d[v] = 1
 
-if __name__ == "__main__"
+if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("LoopName") # Just for insertion into the result csv
     parser.add_argument("InputFile")
@@ -37,9 +37,9 @@ if __name__ == "__main__"
                 success = True
             if "Mapping:fail" in line:
                 fail = True
-            if "File Done" in line:
+            if "Done File" in line:
                 fname = line.split(':')[1]
-                bname = fname.split('_')[1]
+                bname = fname.split('_')[2] # at 2 because the script prefixes kernel_ onto things
                 if success:
                     add(successes_dict, bname)
                     success = False
@@ -55,8 +55,8 @@ if __name__ == "__main__"
         string = args.LoopName
 
         for key in successes_dict:
-            string += ",success:" + key + ":" + successes_dict[key]
+            string += ",success:" + key + ":" + str(successes_dict[key])
         for key in fails_dict:
-            string += ",fail:" + key + ":" + fails_dict[key]
+            string += ",fail:" + key + ":" + str(fails_dict[key])
 
         f.write(string + "\n")
