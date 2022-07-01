@@ -77,6 +77,8 @@ pub(crate) fn fp_rules() -> Vec<Rewrite<SymbolLang, ()>> {
         rewrite!("fp-mul-to-neg"; "(fmul const_-1 ?y)" => "(fneg ?y)"),
         // I think this might even infringe GCC's limits for ffast-math...
         rewrite!("fp-mul-to-div"; "(fmul ?x ?y)" => "(fdiv ?x (fdiv const_1 ?y))"),
+		rewrite!("fp-neg-to-sub"; "(fneg ?x)" => "(fsub const_0 ?x)"),
+		rewrite!("fp-neg-to-mul"; "(fneg ?x)" => "(fmul const_-1 ?x)"),
 
 		// =========
 		// Floating Point Rules.
@@ -97,8 +99,6 @@ pub(crate) fn fp_rules() -> Vec<Rewrite<SymbolLang, ()>> {
 		// TODO --- note that there are a lot of rules around line 700 that may or may not be
 		// useful if we encounter library calls to math.h.
 
-		// TODO--- Useful rules copied up to line 1000, copy the remaining rules (jcw)
-
 	]
 }
 
@@ -118,10 +118,57 @@ pub(crate) fn rules() -> Vec<Rewrite<SymbolLang, ()>> {
 		// First constant is Int Max, second is 32
         rewrite!("shl-to-lshr-mul"; "(shl ?x ?y)" => "(mul ?x (lshr Constant (sub Constant ?y)))"),
         rewrite!("shl-to-ashr-mul"; "(shl ?x ?y)" => "(mul ?x (ashr Constant (sub Constant ?y)))"),
-		// This is also in the GCC rules.
-		rewrite!("shl-const-to-mul"; "(shl ?x Constant)" => "(mul ?x Constant)"),
-		rewrite!("ashr-const-to-div"; "(ashr ?x Constant)" => "(sdiv ?x Constant)"),
-		rewrite!("lshr-const-to-div"; "(lshr ?x Constant)" => "(sdiv ?x Constant)"),
+		// This is also in the GCC rules --- note we should obviously handle this
+		// better -- just do the obvious cases.
+		rewrite!("shl-const-to-mul"; "(shl ?x const_1)" => "(mul ?x const_2)"),
+		rewrite!("ashr-const-to-div"; "(ashr ?x const_1)" => "(sdiv ?x const_2)"),
+		rewrite!("lshr-const-to-div"; "(lshr ?x const_1)" => "(sdiv ?x const_2)"),
+		rewrite!("shl-const-to-mul-2"; "(shl ?x const_2)" => "(mul ?x Constant)"),
+		rewrite!("ashr-const-to-div-2"; "(ashr ?x const_2)" => "(sdiv ?x Constant)"),
+		rewrite!("lshr-const-to-div-2"; "(lshr ?x const_2)" => "(sdiv ?x Constant)"),
+		rewrite!("shl-const-to-mul-3"; "(shl ?x const_3)" => "(mul ?x Constant)"),
+		rewrite!("ashr-const-to-div-3"; "(ashr ?x const_3)" => "(sdiv ?x Constant)"),
+		rewrite!("lshr-const-to-div-3"; "(lshr ?x const_3)" => "(sdiv ?x Constant)"),
+		rewrite!("shl-const-to-mul-4"; "(shl ?x const_4)" => "(mul ?x Constant)"),
+		rewrite!("ashr-const-to-div-4"; "(ashr ?x const_4)" => "(sdiv ?x Constant)"),
+		rewrite!("lshr-const-to-div-4"; "(lshr ?x const_4)" => "(sdiv ?x Constant)"),
+		rewrite!("shl-const-to-mul-5"; "(shl ?x const_5)" => "(mul ?x Constant)"),
+		rewrite!("ashr-const-to-div-5"; "(ashr ?x const_5)" => "(sdiv ?x Constant)"),
+		rewrite!("lshr-const-to-div-5"; "(lshr ?x const_5)" => "(sdiv ?x Constant)"),
+		rewrite!("shl-const-to-mul-6"; "(shl ?x const_6)" => "(mul ?x Constant)"),
+		rewrite!("ashr-const-to-div-6"; "(ashr ?x const_6)" => "(sdiv ?x Constant)"),
+		rewrite!("lshr-const-to-div-6"; "(lshr ?x const_6)" => "(sdiv ?x Constant)"),
+		rewrite!("shl-const-to-mul-7"; "(shl ?x const_7)" => "(mul ?x Constant)"),
+		rewrite!("ashr-const-to-div-7"; "(ashr ?x const_7)" => "(sdiv ?x Constant)"),
+		rewrite!("lshr-const-to-div-7"; "(lshr ?x const_7)" => "(sdiv ?x Constant)"),
+		rewrite!("shl-const-to-mul-8"; "(shl ?x const_8)" => "(mul ?x Constant)"),
+		rewrite!("ashr-const-to-div-8"; "(ashr ?x const_8)" => "(sdiv ?x Constant)"),
+		rewrite!("lshr-const-to-div-8"; "(lshr ?x const_8)" => "(sdiv ?x Constant)"),
+		rewrite!("shl-const-to-mul-9"; "(shl ?x const_9)" => "(mul ?x Constant)"),
+		rewrite!("ashr-const-to-div-9"; "(ashr ?x const_9)" => "(sdiv ?x Constant)"),
+		rewrite!("lshr-const-to-div-9"; "(lshr ?x const_9)" => "(sdiv ?x Constant)"),
+		rewrite!("shl-const-to-mul-10"; "(shl ?x const_10)" => "(mul ?x Constant)"),
+		rewrite!("ashr-const-to-div-10"; "(ashr ?x const_10)" => "(sdiv ?x Constant)"),
+		rewrite!("lshr-const-to-div-10"; "(lshr ?x const_10)" => "(sdiv ?x Constant)"),
+		rewrite!("shl-const-to-mul-11"; "(shl ?x const_11)" => "(mul ?x Constant)"),
+		rewrite!("ashr-const-to-div-11"; "(ashr ?x const_11)" => "(sdiv ?x Constant)"),
+		rewrite!("lshr-const-to-div-11"; "(lshr ?x const_11)" => "(sdiv ?x Constant)"),
+		rewrite!("shl-const-to-mul-12"; "(shl ?x const_12)" => "(mul ?x Constant)"),
+		rewrite!("ashr-const-to-div-12"; "(ashr ?x const_12)" => "(sdiv ?x Constant)"),
+		rewrite!("lshr-const-to-div-12"; "(lshr ?x const_12)" => "(sdiv ?x Constant)"),
+		rewrite!("shl-const-to-mul-13"; "(shl ?x const_13)" => "(mul ?x Constant)"),
+		rewrite!("ashr-const-to-div-13"; "(ashr ?x const_13)" => "(sdiv ?x Constant)"),
+		rewrite!("lshr-const-to-div-13"; "(lshr ?x const_13)" => "(sdiv ?x Constant)"),
+		rewrite!("shl-const-to-mul-14"; "(shl ?x const_14)" => "(mul ?x Constant)"),
+		rewrite!("ashr-const-to-div-14"; "(ashr ?x const_14)" => "(sdiv ?x Constant)"),
+		rewrite!("lshr-const-to-div-14"; "(lshr ?x const_14)" => "(sdiv ?x Constant)"),
+		rewrite!("shl-const-to-mul-15"; "(shl ?x const_15)" => "(mul ?x Constant)"),
+		rewrite!("ashr-const-to-div-15"; "(ashr ?x const_15)" => "(sdiv ?x Constant)"),
+		rewrite!("lshr-const-to-div-15"; "(lshr ?x const_15)" => "(sdiv ?x Constant)"),
+		rewrite!("shl-const-to-mul-16"; "(shl ?x const_16)" => "(mul ?x Constant)"),
+		rewrite!("ashr-const-to-div-16"; "(ashr ?x const_16)" => "(sdiv ?x Constant)"),
+		rewrite!("lshr-const-to-div-16"; "(lshr ?x const_16)" => "(sdiv ?x Constant)"),
+		// End of the stupid expansion of the shifting rules.
 
         // Add into the highest bit leaves you with the equivalent
         // of a negation (I think it doesn't?)
@@ -168,12 +215,12 @@ pub(crate) fn rules() -> Vec<Rewrite<SymbolLang, ()>> {
 		rewrite!("div-32"; "(sdiv ?x const_32)" => "(ashr ?x const_5)"),
 		rewrite!("div-64"; "(sdiv ?x const_64)" => "(ashr ?x const_6)"),
 
-		rewrite!("div-2"; "(udiv ?x const_2)" => "(lshr ?x const_1)"),
-		rewrite!("div-4"; "(udiv ?x const_4)" => "(lshr ?x const_2)"),
-		rewrite!("div-8"; "(udiv ?x const_8)" => "(lshr ?x const_3)"),
-		rewrite!("div-16"; "(udiv ?x const_16)" => "(lshr ?x const_4)"),
-		rewrite!("div-32"; "(udiv ?x const_32)" => "(lshr ?x const_5)"),
-		rewrite!("div-64"; "(udiv ?x const_64)" => "(lshr ?x const_6)"),
+		rewrite!("udiv-2"; "(udiv ?x const_2)" => "(lshr ?x const_1)"),
+		rewrite!("udiv-4"; "(udiv ?x const_4)" => "(lshr ?x const_2)"),
+		rewrite!("udiv-8"; "(udiv ?x const_8)" => "(lshr ?x const_3)"),
+		rewrite!("udiv-16"; "(udiv ?x const_16)" => "(lshr ?x const_4)"),
+		rewrite!("udiv-32"; "(udiv ?x const_32)" => "(lshr ?x const_5)"),
+		rewrite!("udiv-64"; "(udiv ?x const_64)" => "(lshr ?x const_6)"),
 
 		rewrite!("mul-2"; "(mul ?x const_2)" => "(shl ?x const_1)"),
 		rewrite!("mul-4"; "(mul ?x const_4)" => "(shl ?x const_2)"),
