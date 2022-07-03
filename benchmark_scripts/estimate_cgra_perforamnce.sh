@@ -9,14 +9,14 @@ rm -rf cgra_performances
 mkdir cgra_performances
 
 # Get all the successes, but only the successes:
-for file in $(find $1 -name *.egraphs.output); do
+for file in $(find $1 -name *.rewriter.output); do
     echo "Inspecting $file"
     # Note that these are in order, so we can seperate them
     # as the first kernel_X.bc corresponds to the frist II.
     iis=( $(grep --text $file -e "Mapping:success" -B2 | grep --text -e II | cut -f2 -d' ') )
-    kernels=( $(grep --text $file -e "Mapping:success" -A8 | grep --text -e Building | cut -f2 -d' ') )
+    kernels=( $(grep --text $file -e "Mapping:success" -A8 | grep --text -e "Done File" | cut -f3 -d' ') )
     bfile=$(basename $file)
-    target=cgra_performances/${bfile/egraphs.output/output}
+    target=cgra_performances/${bfile/rewriter.output/output}
     echo "Putting perfomacne in $target"
     echo -n "" > $target
 

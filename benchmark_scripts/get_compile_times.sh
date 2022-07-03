@@ -16,7 +16,7 @@ if [[ ${#plot_only} == 0 ]]; then
     # to demonstrate is that Flex is fast enough to be useful
     typeset -a egraph_successes
     typeset -a egraph_fails
-    for file in $(find $basefolder -name "*.egraphs.output" ); do
+    for file in $(find $basefolder -name "*.rewriter.output" ); do
         # Look for the timeout 60 entries because those correspond to the ones
         # that did not time out.  We also should add the timeouts to the fails.
         for time in $(grep --text $file -e Mapping:success -A7 | grep "timeout 60" | cut -f11 -d' '); do
