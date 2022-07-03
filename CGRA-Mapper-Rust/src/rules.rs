@@ -190,6 +190,19 @@ pub(crate) fn rules() -> Vec<Rewrite<SymbolLang, ()>> {
         rewrite!("and-to-or"; "(and ?x ?y)" => "(not (or (not ?x) (not ?y)))"),
         rewrite!("or-to-and"; "(or ?x ?y)" => "(not (and (not ?x) (not ?y)))"),
 
+		// See https://stackoverflow.com/questions/2982729/is-it-possible-to-implement-bitwise-operators-using-integer-arithmetic
+		// Constant is 2^bit size. note that it's possible that not all models of CGRA support
+		// this.
+		// Not 100% clear how to write this---maybe it needs a br also?  Regardless,
+		// We always have br nodes for the loop header.
+		rewrite!("shl-to-mul-generic"; "(shl ?x ?y)" => "(phi (icmp ?y Constant) (load (mul ?x (add
+			?y Constant))))"),
+		rewrite!("rshl-to-div-generic"; "(shl ?x ?y)" => "(phi (icmp ?y Constant) (phi (icmp ?x
+		const_0) const_0 const_-1) (phi (icmp ?x const_0) (sub (load (sub Constant ?y)) (div (add ?x Constant) (load (add ?y
+		Constant))))) (div ?x (load (add ?y Constant)))))"),
+		// TODO -- it might be good to handle the AND -> ADD loops they propose in that question.
+		// We need a better cost model for that I think.
+
 		// Not sure what the 'not' in LLVM is called.
 		// This one is a logical not.
 		rewrite!("not-to-xor"; "(not ?x)" => "(xor ?x const_0)"),
