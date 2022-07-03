@@ -53,7 +53,7 @@ def plot_line_from_dicts(labels, tname, dicts, plotting_rulesets):
     # Now, sort that dict by magnitude of the first element, 
     # and unzip.
     if not plotting_rulesets:
-        improvements = [float(zipped_lines[k][2]) / float(zipped_lines[k][0]) for k in zipped_lines if zipped_lines[k][0] > 0]
+        improvements = [float(zipped_lines[k][2]) / float(zipped_lines[k][0]) for k in zipped_lines if zipped_lines[k][0] > 0 and zipped_lines[k][2] > 0]
     unsortedd_and_zipped = [zipped_lines[k] for k in zipped_lines]
     sorted_and_zipped = sorted(unsortedd_and_zipped)
     lines = [[] for i in range(len(sorted_and_zipped[0]))]
@@ -80,6 +80,7 @@ def plot_line_from_dicts(labels, tname, dicts, plotting_rulesets):
 
     print("Done!")
     if not plotting_rulesets:
+        print(improvements)
         print("Geomean improvement is ", statistics.geometric_mean(improvements))
 
 def plot_from_dicts(names, tname, dicts):

@@ -7,4 +7,10 @@ if [[ $# -ne 3 ]]; then
     exit 1
 fi
 
+if [[ ! -f $2 ]]; then
+    echo "File $s not found, skipping..."
+    exit 1
+fi
+
+echo "File name is $2"
 python $(dirname $(which $0))/get_results_by_benchmark.py $1 <(grep --text $2 -e 'Mapping:' -e 'Done File') $3

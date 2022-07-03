@@ -61,7 +61,7 @@ done
 echo "Before reducing, have ${#files[@]}"
 # Do this in python, because it is a bit easier to manage the
 # dict of arrays in python.
-files=( $(python $original_folder/reducer.py $reduction_rate ${files[@]}) )
+files=( $(python $original_folder/reducer.py --rate $reduction_rate ${files[@]}) )
 echo "Running over files ${files[@]}"
 
 extra_flags=""
@@ -99,7 +99,7 @@ parallel "(
 	$original_folder/compile.sh kernel_{/.}.cpp
 	# A small number seem to cause loops somewhere --- just want to get non-buggy results
 	time timeout $timeout $original_folder/run.sh $original_folder/$lmapper kernel_{/.}.bc --params-file $PWD/param.json $extra_flags
-	if [[ \$? == 124 ]] && [[ $egraphs == \"true\" ]]; then
+	if [[ \$? != 0 ]] && [[ $egraphs == \"true\" ]]; then
 		# We timed out, so we should fall back to the mapper without
 		# rewriting.  This would ideally happen interally within
 		# flex, but it means the same thing happening here :)

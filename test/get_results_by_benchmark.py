@@ -32,14 +32,23 @@ if __name__ == "__main__":
         successes_dict = {}
         fails_dict = {}
 
-        for line in f.readlines():
+        # Skip the loop compiling to itself --- sometimes cgra-mapper fails to map
+        # the original loop to a cgra at all, so just skip those.
+        for line in f.readlines()[2:]:
             if "Mapping:success" in line:
                 success = True
             if "Mapping:fail" in line:
                 fail = True
             if "Done File" in line:
                 fname = line.split(':')[1]
-                bname = fname.split('_')[2] # at 2 because the script prefixes kernel_ onto things
+                if fname.strip() == 'kernel.cpp':
+                    # fname is the kernle th eloop was
+                    # originally designed for
+                    # different index because this doesn't get
+                    # kenerl_ prefixed onto it
+                    bname = args.LoopName.split('_')[1]
+                else:
+                    bname = fname.split('_')[2] # at 2 because the script prefixes kernel_ onto things
                 if success:
                     add(successes_dict, bname)
                     success = False

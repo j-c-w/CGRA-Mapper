@@ -20,7 +20,10 @@ def get_name(f):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument("reduction_rate", type=float)
+    # Two modes --- either reduce to a particular fraction of benchmarks or
+    # to a praticular number of benchmarks
+    parser.add_argument('--rate', dest="reduction_rate", type=float, default=None)
+    parser.add_argument('--number', dest='number', type=int, default=None)
     parser.add_argument("files", nargs='+')
 
     args = parser.parse_args()
@@ -38,7 +41,20 @@ if __name__ == "__main__":
     # the other scirpts easier.
     end_suite = {}
     for n in by_suite:
-        new_num = int(len(by_suite[n]) * args.reduction_rate)
+        if args.reduction_rate:
+            new_num = int(len(by_suite[n]) * args.reduction_rate)
+        elif args.number:
+            # Divy up equally between architectures.
+            new_num = int(args.number // len(by_suite))
+            if new_num > len(by_suite[n]):
+                # Can't go beyond the end of the benchmark suite however.
+                # We choose not to make this up --- this is a fuzzy
+                # tool to help reduce the computation power required :)
+                new_num = len(by_suite[n])
+        else:
+            print ("Must have one of number or reduction rate set")
+            assert False # Need to have one
+
         if new_num == 0:
             new_num = 1
         
