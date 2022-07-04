@@ -251,6 +251,8 @@ pub(crate) fn rules() -> Vec<Rewrite<SymbolLang, ()>> {
 		rewrite!("mul-7"; "(mul ?x const_7)" => "(sub (mul ?x const_8) ?x)"),
 		rewrite!("mul-9"; "(mul ?x const_9)" => "(add (mul ?x const_8) ?x)"),
 		// Again, could obviously support more of those --just hanlde hte comon cases here.
+		// also handle the case study example:
+		rewrite!("mul-20"; "(mul ?x const_20)" => "(add (mul ?x const_16) (mul ?x const_4))"),
 
 		// Rules from GCC (these are from :
 		// https://github.com/gcc-mirror/gcc/blob/master/gcc/match.pd commit https://github.com/gcc-mirror/gcc/blob/7690bee9f36ee02b7ad0b8a7e7a3e08357890dc0/gcc/match.pd
