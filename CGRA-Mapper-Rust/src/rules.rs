@@ -10,14 +10,14 @@ pub(crate) fn stochastic() -> Vec<Rewrite<SymbolLang, ()>> {
 		// accuracies, so allow rewrites to any of those. (For completeness,
 		// it doesnt' make any diff to this algorithm --- we'd need a better
 		// cost model to take advantage)
-		rewrite!("mul-to-isc-and"; "(mul ?x ?y)" => "(isc-mul ?x ?y)"),
+		rewrite!("mul-to-isc-and"; "(mul ?x ?y)" => "(isc_mul ?x ?y)"),
 		// IDK if any CGRA actually has support for a mux function
 		// but suppose they could do (see https://arxiv.org/pdf/2108.12326.pdf)
 		// Note that the difficulty is obtaining the third stream
 		// for the bit-wise selection from the add.
 		rewrite!("add-to-mux"; "(add ?x ?y)" => "(mux ?x ?y)"),
 		// See note above about Wang 2022
-		rewrite!("add-to-mux-wang"; "(add ?x ?y)" => "(add-shifter ?x ?y)"),
+		rewrite!("add-to-mux-wang"; "(add ?x ?y)" => "(add_shifter ?x ?y)"),
 		// Stochastic computing tolerates bit-errors very well,
 		// we can introduce these error-inducing things
 		// to get more compiles:
