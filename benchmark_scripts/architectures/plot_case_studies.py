@@ -5,6 +5,7 @@ import statistics
 
 colors=['#818fa6', '#6ea5ff', '#95c983', '#c99083', '#e079d6']
 hatching=['O', 'o', '.', '-', 'x']
+skip_bars=["All Rules"] # Just plot individual rulesets
 
 # Note that this function is used by the plot_case_studies_rules.py
 # script.
@@ -16,18 +17,21 @@ def load_data(f):
             # Get the number of successes
             succs = int(line[1])
             fails = int(line[2])
-            lines[line[0]] = float(succs) / (float (succs + fails))
+            total = int(line[3])
+            lines[line[0]] = float(succs) / (float (total))
             # Should we track fails? (line[2])
     return lines
 
 def plot(name, cca, maeri, revamp, sc_cgra):
     # Create a series for each entry.
-    snames = sorted(cca.keys(), key=lambda x: cca[x])
+    snames = sorted(cca.keys(), key=lambda x: sc_cgra[x])
     series = []
     names = []
     baselines = []
     increase = []
     for label in snames:
+        if label in skip_bars:
+            continue
         values = [
             cca[label],
             maeri[label],
@@ -49,8 +53,8 @@ def plot(name, cca, maeri, revamp, sc_cgra):
     if len(increases) > 0:
         print("Geomean is: ", statistics.geometric_mean(increases))
 
-    width = 0.75 / float(len(series[0]))
-    offset = -width * 1.0
+    width = 0.75 / float(len(series))
+    offset = -width * len(series) / 2.0
     print("Offset is ", offset, "xvals is ", len(series[0]))
     xvals = np.arange(len(series[0]))
 
@@ -63,7 +67,11 @@ def plot(name, cca, maeri, revamp, sc_cgra):
     plt.gca().set_xticklabels(xlabels)
     plt.xlabel("Architecture")
     plt.ylabel("Fraction of Loops Compiled to Accelerator")
-    plt.legend()
+    if name == 'case_studies':
+        plt.legend()
+    else:
+        plt.legend(ncol=3, loc=(0, 1.08))
+    plt.tight_layout()
 
     plt.savefig(name + ".png")
     plt.savefig(name + ".eps")

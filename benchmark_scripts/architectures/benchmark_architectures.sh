@@ -25,12 +25,12 @@ if [[ ${#plot_only} == 0 ]]; then
     pushd ../../test
 
 	# note that --int-rules is implicit unless otherwise specified.
-    # ./run_against_architectures.sh ../benchmark_scripts/architectures/cca.json $benchmark_folder cca_output
+    ./run_against_architectures.sh ../benchmark_scripts/architectures/cca.json $benchmark_folder cca_output
 	# Use the FP rules also for maeri since it supports FP expressions
-    # ./run_against_architectures.sh ../benchmark_scripts/architectures/maeri.json $benchmark_folder maeri_output --fp-rules --int-rules
-    # ./run_against_architectures.sh ../benchmark_scripts/architectures/revamp.json $benchmark_folder revamp_output
+    ./run_against_architectures.sh ../benchmark_scripts/architectures/maeri.json $benchmark_folder maeri_output --fp-rules --int-rules
+    ./run_against_architectures.sh ../benchmark_scripts/architectures/revamp.json $benchmark_folder revamp_output
 	# Use the stochastic ruleset for SC-CGRA since it is a stochastic cgra.
-    # ./run_against_architectures.sh ../benchmark_scripts/architectures/sc-cgra.json $benchmark_folder sc_cgra_output --stochastic-rules --int-rules
+    ./run_against_architectures.sh ../benchmark_scripts/architectures/sc-cgra.json $benchmark_folder sc_cgra_output --stochastic-rules --int-rules
 
 	# Run these architectures with the different rulesets to explore how those do.
 	run_architectures_with_rules ../benchmark_scripts/architectures/cca.json cca_rules
@@ -52,7 +52,8 @@ get_compile_rates() {
     # Get the successes and the fails for each.
     norules_succ=$(cat $data_folder/stdout/no_rules.out | grep --binary-files=text "^Have" | cut -f2 -d ' ')
     norules_fails=$(cat $data_folder/stdout/no_rules.out | grep --binary-files=text "^Have" | cut -f4 -d ' ')
-    echo "OpenCGRA,$norules_succ,$norules_fails" >> $output_file
+	norules_total=$(cat $data_folder/stdout/no_rules.out | grep --binary-files=text "^Running over files" | cut -f4 -d ' ')
+    echo "OpenCGRA,$norules_succ,$norules_fails,$norules_total" >> $output_file
 	local bybmark_out=$out_folder/no_rules_by_benchmark
 	# Use a python script for this because it involves some complicated
 	# tallying.  But we can apply grep first to keep the size
@@ -62,7 +63,8 @@ get_compile_rates() {
 
     rewriter_succ=$(cat $data_folder/stdout/rewriter.out | grep --binary-files=text "^Have" | cut -f2 -d ' ')
     rewriter_fails=$(cat $data_folder/stdout/rewriter.out | grep --binary-files=text "^Have" | cut -f4 -d ' ')
-    echo "FlexC,$rewriter_succ,$rewriter_fails" >> $output_file
+	rewriter_total=$(cat $data_folder/stdout/rewriter.out | grep --binary-files=text "^Running over files" | cut -f4 -d ' ')
+    echo "FlexC,$rewriter_succ,$rewriter_fails,$rewriter_total" >> $output_file
 	local bybmark_out=$out_folder/rewriter_by_benchmark
 	# Use a python script for this because it involves some complicated
 	# tallying.  But we can apply grep first to keep the size
@@ -72,7 +74,8 @@ get_compile_rates() {
 
     greedy_succ=$(cat $data_folder/stdout/greedy.out | grep --binary-files=text "^Have" | cut -f2 -d ' ')
     greedy_fails=$(cat $data_folder/stdout/greedy.out | grep --binary-files=text "^Have" | cut -f4 -d ' ')
-    echo "Greedy Rewriter,$greedy_succ,$greedy_fails" >> $output_file
+	greedy_total=$(cat $data_folder/stdout/greedy.out | grep --binary-files=text "^Running over files" | cut -f4 -d ' ')
+    echo "Greedy Rewriter,$greedy_succ,$greedy_fails,$greedy_total" >> $output_file
 	local bybmark_out=$out_folder/greedy_by_benchmark
 	# Use a python script for this because it involves some complicated
 	# tallying.  But we can apply grep first to keep the size
@@ -91,23 +94,28 @@ get_compile_rates_for_rulesets() {
 
     succ=$(cat ${data_folder}_int/stdout/rewriter.out | grep --binary-files=text "^Have" | cut -f2 -d ' ')
     fails=$(cat ${data_folder}_int/stdout/rewriter.out | grep --binary-files=text "^Have" | cut -f4 -d ' ')
-    echo "Int Rules,$succ,$fails" >> $output_file
+    total=$(cat ${data_folder}_int/stdout/rewriter.out | grep --binary-files=text "^Running over files" | cut -f4 -d ' ')
+    echo "Int Rules,$succ,$fails,$total" >> $output_file
 
     succ=$(cat ${data_folder}_fp/stdout/rewriter.out | grep --binary-files=text "^Have" | cut -f2 -d ' ')
     fails=$(cat ${data_folder}_fp/stdout/rewriter.out | grep --binary-files=text "^Have" | cut -f4 -d ' ')
-    echo "FP Rules,$succ,$fails" >> $output_file
+    total=$(cat ${data_folder}_fp/stdout/rewriter.out | grep --binary-files=text "^Running over files" | cut -f4 -d ' ')
+    echo "FP Rules,$succ,$fails,$total" >> $output_file
 
     succ=$(cat ${data_folder}_stochastic/stdout/rewriter.out | grep --binary-files=text "^Have" | cut -f2 -d ' ')
     fails=$(cat ${data_folder}_stochastic/stdout/rewriter.out | grep --binary-files=text "^Have" | cut -f4 -d ' ')
-    echo "Stochastic Rules,$succ,$fails" >> $output_file
+    total=$(cat ${data_folder}_stochastic/stdout/rewriter.out | grep --binary-files=text "^Running over files" | cut -f4 -d ' ')
+    echo "Stochastic Rules,$succ,$fails,$total" >> $output_file
 
 	succ=$(cat ${data_folder}_logic_as_bool/stdout/rewriter.out | grep --binary-files=text "^Have" | cut -f2 -d ' ')
 	fails=$(cat ${data_folder}_logic_as_bool/stdout/rewriter.out | grep --binary-files=text "^Have" | cut -f4 -d ' ')
-    echo "Logic-as-Boolean Rules,$succ,$fails" >> $output_file
+    total=$(cat ${data_folder}_logic_as_bool/stdout/rewriter.out | grep --binary-files=text "^Running over files" | cut -f4 -d ' ')
+    echo "Logic-as-Boolean Rules,$succ,$fails,$total" >> $output_file
 
     succ=$(cat ${data_folder}_all_rules/stdout/rewriter.out | grep --binary-files=text "^Have" | cut -f2 -d ' ')
     fails=$(cat ${data_folder}_all_rules/stdout/rewriter.out | grep --binary-files=text "^Have" | cut -f4 -d ' ')
-    echo "All Rules,$succ,$fails" >> $output_file
+    total=$(cat ${data_folder}_all_rules/stdout/rewriter.out | grep --binary-files=text "^Running over files" | cut -f4 -d ' ')
+    echo "All Rules,$succ,$fails,$total" >> $output_file
 }
 
 # These file are built up within each call.  Clear them preemptively
@@ -126,11 +134,12 @@ get_compile_rates ../../test/sc_cgra_output data/sc_cgra SC-CGRA data
 get_compile_rates_for_rulesets ../../test/cca_rules data/cca_rules
 get_compile_rates_for_rulesets ../../test/maeri_rules data/maeri_rules
 get_compile_rates_for_rulesets ../../test/revamp_rules data/revamp_rules
-get_compile_rates_for_rulesets ../../test/sc_cgra_rules data/sc_cgra_rules
+# Note that I typoed the _ into a - for that name.
+get_compile_rates_for_rulesets ../../test/sc-cgra_rules data/sc_cgra_rules
 
 # Now plot
 python plot_case_studies.py case_studies data/cca data/maeri data/revamp data/sc_cgra
 
 # Also do the by-benchmark plot --- we don't use this here right now, but could do.
-python ../../test/plot_successes_by_benchmark.py case_studies_by_benchmark data/rewriter_by_benchmark
+# python ../../test/plot_successes_by_benchmark.py graph_by_benchmark.png run_all_benchmarks_outputs/no_rules_data_by_benchmark run_all_benchmarks_outputs/rewriter_data_by_benchmark
 python plot_case_studies.py ruleset_studies data/cca_rules data/maeri_rules data/revamp_rules data/sc_cgra_rules

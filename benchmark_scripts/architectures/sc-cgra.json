@@ -25,28 +25,28 @@
   "operations":
 {
 "0": {
-"0": ["add-shifter", "isc-mul", "br", "sub", "neg", "icmp", "and", "or", "nor", "xor", "lsh", "lshr", "ashr", "add", "sext"],
-"1": ["add-shifter", "isc-mul", "br", "sub", "neg", "icmp", "and", "or", "nor", "xor", "lsh", "lshr", "ashr", "sext"],
-"2": ["add-shifter", "isc-mul", "br", "sub", "neg", "icmp", "and", "or", "nor", "xor", "lsh", "lshr", "ashr", "sext"],
-"3": ["add-shifter", "isc-mul", "br", "sub", "neg", "icmp", "and", "or", "nor", "xor", "lsh", "lshr", "ashr", "sext"]
+"0": ["add_shifter", "isc_mul", "br", "sub", "neg", "icmp", "and", "or", "nor", "xor", "lsh", "lshr", "ashr", "add", "sext"],
+"1": ["add_shifter", "isc_mul", "br", "sub", "neg", "icmp", "and", "or", "nor", "xor", "lsh", "lshr", "ashr", "sext"],
+"2": ["add_shifter", "isc_mul", "br", "sub", "neg", "icmp", "and", "or", "nor", "xor", "lsh", "lshr", "ashr", "sext"],
+"3": ["add_shifter", "isc_mul", "br", "sub", "neg", "icmp", "and", "or", "nor", "xor", "lsh", "lshr", "ashr", "sext"]
 },
 "1": {
-"0": ["add-shifter", "isc-mul", "br", "sub", "neg", "icmp", "and", "or", "nor", "xor", "lsh", "lshr", "ashr", "sext"],
-"1": ["add-shifter", "isc-mul", "br", "sub", "neg", "icmp", "and", "or", "nor", "xor", "lsh", "lshr", "ashr", "sext"],
-"2": ["add-shifter", "isc-mul", "br", "sub", "neg", "icmp", "and", "or", "nor", "xor", "lsh", "lshr", "ashr", "sext"],
-"3": ["add-shifter", "isc-mul", "br", "sub", "neg", "icmp", "and", "or", "nor", "xor", "lsh", "lshr", "ashr", "sext"]
+"0": ["add_shifter", "isc_mul", "br", "sub", "neg", "icmp", "and", "or", "nor", "xor", "lsh", "lshr", "ashr", "sext"],
+"1": ["add_shifter", "isc_mul", "br", "sub", "neg", "icmp", "and", "or", "nor", "xor", "lsh", "lshr", "ashr", "sext"],
+"2": ["add_shifter", "isc_mul", "br", "sub", "neg", "icmp", "and", "or", "nor", "xor", "lsh", "lshr", "ashr", "sext"],
+"3": ["add_shifter", "isc_mul", "br", "sub", "neg", "icmp", "and", "or", "nor", "xor", "lsh", "lshr", "ashr", "sext"]
 },
 "2": {
-"0": ["add-shifter", "isc-mul", "br", "sub", "neg", "icmp", "and", "or", "nor", "xor", "lsh", "lshr", "ashr", "sext"],
-"1": ["add-shifter", "isc-mul", "br", "sub", "neg", "icmp", "and", "or", "nor", "xor", "lsh", "lshr", "ashr", "sext"],
-"2": ["add-shifter", "isc-mul", "br", "sub", "neg", "icmp", "and", "or", "nor", "xor", "lsh", "lshr", "ashr", "sext"],
-"3": ["add-shifter", "isc-mul", "br", "sub", "neg", "icmp", "and", "or", "nor", "xor", "lsh", "lshr", "ashr", "sext"]
+"0": ["add_shifter", "isc_mul", "br", "sub", "neg", "icmp", "and", "or", "nor", "xor", "lsh", "lshr", "ashr", "sext"],
+"1": ["add_shifter", "isc_mul", "br", "sub", "neg", "icmp", "and", "or", "nor", "xor", "lsh", "lshr", "ashr", "sext"],
+"2": ["add_shifter", "isc_mul", "br", "sub", "neg", "icmp", "and", "or", "nor", "xor", "lsh", "lshr", "ashr", "sext"],
+"3": ["add_shifter", "isc_mul", "br", "sub", "neg", "icmp", "and", "or", "nor", "xor", "lsh", "lshr", "ashr", "sext"]
 },
 "3": {
-"0": ["add-shifter", "isc-mul", "br", "sub", "neg", "icmp", "and", "or", "nor", "xor", "lsh", "lshr", "ashr", "sext"],
-"1": ["add-shifter", "isc-mul", "br", "sub", "neg", "icmp", "and", "or", "nor", "xor", "lsh", "lshr", "ashr", "sext"],
-"2": ["add-shifter", "isc-mul", "br", "sub", "neg", "icmp", "and", "or", "nor", "xor", "lsh", "lshr", "ashr", "sext"],
-"3": ["add-shifter", "isc-mul", "br", "sub", "neg", "icmp", "and", "or", "nor", "xor", "lsh", "lshr", "ashr", "sext"]
+"0": ["add_shifter", "isc_mul", "br", "sub", "neg", "icmp", "and", "or", "nor", "xor", "lsh", "lshr", "ashr", "sext"],
+"1": ["add_shifter", "isc_mul", "br", "sub", "neg", "icmp", "and", "or", "nor", "xor", "lsh", "lshr", "ashr", "sext"],
+"2": ["add_shifter", "isc_mul", "br", "sub", "neg", "icmp", "and", "or", "nor", "xor", "lsh", "lshr", "ashr", "sext"],
+"3": ["add_shifter", "isc_mul", "br", "sub", "neg", "icmp", "and", "or", "nor", "xor", "lsh", "lshr", "ashr", "sext"]
 }
 }
 }

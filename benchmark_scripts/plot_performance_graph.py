@@ -56,14 +56,14 @@ def load_cgra_performances(cgra_folder):
 # This converts the CPU model to time.
 # From doc here: https://riscv.org/wp-content/uploads/2018/07/DAC-SiFive-Drew-Barbier.pdf
 def compute_processor_time(proc_cycles):
-    freq = 50.0 # Mhz --- 50mhz in low power mode, 210 in hp mode.
+    freq = 210.0 # Mhz --- 50mhz in low power mode, 210 in hp mode.
     time = proc_cycles / (freq * 1000_000.0)
     return time
 
 # This converts the CGRA model to time.
-# Using the paramters from Snafu
+# Using the paramters from ADRES reported by REVAMP
 def compute_cgra_time(cgra_cycles):
-    freq = 50.0 # Mhz
+    freq = 100.0 # Mhz
     time = cgra_cycles / (freq * 1000_000.0)
     return time
 
@@ -94,11 +94,13 @@ def plot_speedups(cpu_cycles, cgra_cycles):
 
     # duplicate the last element to make the graph go
     # all the way to the top and look cleaner.
-    plt.plot(xvals, yvals, label='Loop Execution Time')
+    plt.plot(yvals, xvals, label='Loop Execution Time')
     plt.ylabel("Cumlative Distribution Function")
-    plt.xlabel('Speedup')
-    plt.ylim([0.0, 1.0])
-    plt.xlim([0.0, 10.0])
+    plt.ylabel('Speedup')
+    plt.xlabel('Loop/Architecture Combination (ordered by speedup)')
+    plt.xlim([0.0, 1.0])
+    # plt.xlim([0.0, 20.0])
+    plt.gca().axhline(1.0, color='black', linestyle='--')
     plt.savefig('speedups.png')
     plt.savefig('speedups.eps')
     print ("Done!")

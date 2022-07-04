@@ -8,6 +8,9 @@ if [[ $# -ne 1 ]]; then
     exit 1
 fi
 
+# Keep runtime reasonable -- just sample from the output files
+number_of_files=100
+
 if [[ ${#plot_only} == 0 ]]; then
     basefolder=$1
 
@@ -16,22 +19,37 @@ if [[ ${#plot_only} == 0 ]]; then
     # to demonstrate is that Flex is fast enough to be useful
     typeset -a egraph_successes
     typeset -a egraph_fails
-    for file in $(find $basefolder -name "*.rewriter.output" ); do
+    fileno=0
+    for file in $(find $basefolder -name "*rewriter.out*" | sort -z); do
+        fileno=$((fileno + 1))
+        if [[ $fileno -gt $number_of_files ]]; then
+            break
+        fi
+		if [[ ! -f $file ]]; then
+			break
+		fi
+        echo "Looking at file $file"
         # Look for the timeout 60 entries because those correspond to the ones
         # that did not time out.  We also should add the timeouts to the fails.
-        for time in $(grep --text $file -e Mapping:success -A7 | grep "timeout 60" | cut -f11 -d' '); do
+        for time in $(grep --text $file -e Mapping:success -A7 | grep "timeout 300" | cut -f16 -d' '); do
             egraph_successes+="$time,"
         done
-        for time in $(grep --text $file -e Mapping:fail -A7 | grep "timeout 60" | cut -f11 -d' '); do
+        for time in $(grep --text $file -e Mapping:fail -A7 | grep "timeout 300" | cut -f16 -d' '); do
             egraph_fails+="$time,"
         done
+		for time in $(grep --text $file -e "timeout 300" -B7 | grep -v Mapping | grep timeout | grep kernel | cut -f16 -d' '); do
+			# There was a bug ---timeotus were not retried with the simple mapper like they
+			# shuld have been.
+			egraph_fails+="$time,"
+		done
+		# There seems to have been a bug where the fallback wasn't triggered.
         for time in $(grep --text $file -e 'Rewriter timed out, running without rewriter.'); do
             # These are timeouts --- we fallback to the original
             # OpenCGRA if this happens, but the failure
             # takes 60 seconds.
             # TODO --- figure out a way to make this less bug prone.
             # (i.e. if we change the timeout limit)
-            egraph_fails+="60,"
+            egraph_fails+="300,"
         done
     done
 
