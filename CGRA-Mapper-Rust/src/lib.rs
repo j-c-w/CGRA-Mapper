@@ -1,6 +1,7 @@
 use egg::*;
 use std::os::raw::c_char;
 use std::mem::size_of;
+use std::collections::{HashSet, HashMap};
 use cost::*;
 use rules::*;
 
@@ -45,9 +46,10 @@ fn node_children(node: &CppNode) -> &[u32] {
     unsafe { std::slice::from_raw_parts(node.child_ids, node.num_children as usize) }
 }
 
-fn dfg_to_egraph(dfg: CppDFG) -> (EGraph<SymbolLang, ()>, Vec<Id>) {
-    let nodes = dfg_nodes(&dfg);
-	let mut egraph: EGraph<SymbolLang, ()> = Default::default();
+// NOTE: enables explanations
+fn dfg_to_egraph(dfg: &CppDFG) -> (EGraph<SymbolLang, ()>, Vec<Id>) {
+    let nodes = dfg_nodes(dfg);
+	let mut egraph = EGraph::<SymbolLang, ()>::default().with_explanations_enabled();
 	let mut eclasses = vec![];
     let mut is_root = (0..nodes.len()).map(|_| true).collect::<Vec<_>>(); // could use bit vector
 	// DEBUG >>>
@@ -59,11 +61,11 @@ fn dfg_to_egraph(dfg: CppDFG) -> (EGraph<SymbolLang, ()>, Vec<Id>) {
 	for node in nodes {
 		let op = Symbol::from(node_op(node));
 		// DEBUG
-		println!("{}: {} with {} children", eclasses.len(), op, node.num_children);
+		// println!("{}: {} with {} children", eclasses.len(), op, node.num_children);
 		let children = node_children(node).iter()
 			.map(|&c| {
 				// DEBUG
-				println!("access: {} / {}", c, eclasses.len());
+				// println!("access: {} / {}", c, eclasses.len());
                 is_root[c as usize] = false;
 				eclasses[c as usize]
 			}).collect::<Vec<_>>();
@@ -71,7 +73,7 @@ fn dfg_to_egraph(dfg: CppDFG) -> (EGraph<SymbolLang, ()>, Vec<Id>) {
 	}
 
     let mut roots = eclasses.iter().cloned().zip(is_root.iter().cloned())
-        .filter_map(|(e, is_r)| if is_r { println!("{:?}", egraph[e]); Some(e) } else { None }).collect::<Vec<_>>();
+        .filter_map(|(e, is_r)| if is_r { Some(e) } else { None }).collect::<Vec<_>>();
     // we remove duplicates, why is this necessary?
     roots.sort();
     roots.dedup();
@@ -87,11 +89,11 @@ fn dfg_to_graph(dfg: CppDFG) -> Graph<SymbolLang> {
 	for node in nodes {
 		let op = Symbol::from(node_op(node));
 		// DEBUG
-		println!("{}: {} with {} children", ids.len(), op, node.num_children);
+		// println!("{}: {} with {} children", ids.len(), op, node.num_children);
 		let children = node_children(node).iter()
 			.map(|&c| {
 				// DEBUG
-				println!("access: {} / {}", c, ids.len());
+				// println!("access: {} / {}", c, ids.len());
                 is_root[c as usize] = false;
 				ids[c as usize]
 			}).collect::<Vec<_>>();
@@ -99,7 +101,7 @@ fn dfg_to_graph(dfg: CppDFG) -> Graph<SymbolLang> {
 	}
 
     let mut roots = ids.iter().cloned().zip(is_root.iter().cloned())
-        .filter_map(|(e, is_r)| if is_r { println!("{:?}", graph[e]); Some(e) } else { None }).collect::<Vec<_>>();
+        .filter_map(|(e, is_r)| if is_r { Some(e) } else { None }).collect::<Vec<_>>();
     // we remove duplicates, why is this necessary?
     roots.sort();
     roots.dedup();
@@ -164,21 +166,84 @@ fn expr_to_dfg(expr: RecExpr<SymbolLang>) -> CppDFG {
 	CppDFG { nodes: nodes_ptr, count: enodes.len().try_into().unwrap() }
 }
 
+fn dfg_to_rooted_expr(dfg: &CppDFG) -> RecExpr<SymbolLang> {
+    let nodes = dfg_nodes(dfg);
+	let mut expr: RecExpr<SymbolLang> = Default::default();
+	let mut ids = vec![];
+    let mut is_root = (0..nodes.len()).map(|_| true).collect::<Vec<_>>(); // could use bit vector
+
+	for node in nodes {
+		let op = Symbol::from(node_op(node));
+		let children = node_children(node).iter()
+			.map(|&c| {
+                is_root[c as usize] = false;
+				ids[c as usize]
+			}).collect::<Vec<_>>();
+		ids.push(expr.add(SymbolLang::new(op, children)));
+	}
+
+    let mut roots = ids.iter().cloned().zip(is_root.iter().cloned())
+        .filter_map(|(e, is_r)| if is_r { Some(e) } else { None }).collect::<Vec<_>>();
+    
+	// we remove duplicates, why is this necessary?
+    roots.sort();
+    roots.dedup();
+
+	expr.add(SymbolLang::new("__root", roots));
+	expr
+}
+
+fn rooted_expr(e: &RecExpr<SymbolLang>, roots: Vec<Id>) -> RecExpr<SymbolLang> {
+	let mut rooted = e.clone();
+	rooted.add(SymbolLang::new("__root", roots));
+	rooted
+}
+
+fn explanation_statistics(e: &Explanation<SymbolLang>) {
+	fn rec(t: &TreeExplanation<SymbolLang>,
+		   visited: &mut HashSet<*const TreeTerm<SymbolLang>>,
+		   applied_rules: &mut HashMap<Symbol, u16>) {
+		for tt in t {
+			let ttp = std::rc::Rc::as_ptr(tt);
+			if visited.contains(&ttp) { continue; }
+			visited.insert(ttp);
+
+			let ropts = &[tt.backward_rule, tt.forward_rule];
+			for &r in ropts.iter().flatten() {
+				*(applied_rules.entry(r).or_insert(0)) += 1;
+			}
+
+			for cp in &tt.child_proofs {
+				rec(cp, visited, applied_rules);
+			}
+		}
+	}
+
+	// println!("-- explanation:");
+	// println!("{}", e.get_string_with_let());
+	// println!("--");
+
+	let mut applied_rules = HashMap::new();
+	rec(&e.explanation_trees, &mut HashSet::new(), &mut applied_rules);
+	println!("applied {} rules: {:?}", applied_rules.len(), applied_rules);
+}
+
 #[no_mangle]
 pub extern "C" fn optimize_with_egraphs(dfg: CppDFG, rulesets: Rulesets, cgra_params: *const c_char, frequency_cost: bool) -> CppDFGs {
 	println!("entering Rust");
 
 	let rules = load_rulesets(rulesets);
 
-	let (egraph, mut roots) = dfg_to_egraph(dfg);
+	let (egraph, mut roots) = dfg_to_egraph(&dfg);
     println!("identified {} roots", roots.len());
 	// egraph.dot().to_svg("/tmp/initial.svg").unwrap();
 
-	let runner = Runner::default()
+	let mut runner = Runner::default()
 		.with_iter_limit(10)
 		.with_node_limit(100_000)
 		.with_time_limit(std::time::Duration::from_secs(20))
 		.with_egraph(egraph)
+		.with_explanations_enabled()
 		.run(&rules)
 		.with_scheduler(SimpleScheduler);
 	runner.print_report();
@@ -190,7 +255,7 @@ pub extern "C" fn optimize_with_egraphs(dfg: CppDFG, rulesets: Rulesets, cgra_pa
 
     let cgrafilename = unsafe { std::ffi::CStr::from_ptr(cgra_params) }.to_str().unwrap();
     let start_extraction = std::time::Instant::now();
-	let (best, _best_roots) = if frequency_cost {
+	let (best, best_roots) = if frequency_cost {
 		println!("Running egraphs with frequency cost");
 		let cost = LookupCost::from_operations_frequencies(cgrafilename);
 		LpExtractor::new(&runner.egraph, cost).solve_multiple(&roots[..])
@@ -202,11 +267,15 @@ pub extern "C" fn optimize_with_egraphs(dfg: CppDFG, rulesets: Rulesets, cgra_pa
     let extraction_time = start_extraction.elapsed();
     println!("extraction took {:?}", extraction_time);
 
-	{
+	explanation_statistics(&runner.explain_equivalence(
+		&dfg_to_rooted_expr(&dfg),
+		&rooted_expr(&best, best_roots)));
+
+	/* {
 		let mut g: EGraph<SymbolLang, ()> = Default::default();
 		g.add_expr(&best);
-		// g.dot().to_svg("/tmp/final.svg").unwrap();
-	}
+		g.dot().to_svg("/tmp/final.svg").unwrap();
+	} */
 
 	let dfgs_ptr = unsafe { libc::malloc(size_of::<CppDFG>()) } as *mut CppDFG;
 	assert!(dfgs_ptr != std::ptr::null_mut());
