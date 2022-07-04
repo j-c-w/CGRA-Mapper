@@ -62,7 +62,7 @@ echo "Before reducing, have ${#files[@]}"
 # Do this in python, because it is a bit easier to manage the
 # dict of arrays in python.
 files=( $(python $original_folder/reducer.py --rate $reduction_rate ${files[@]}) )
-echo "Running over files ${files[@]}"
+echo "Running over files ${#files[@]}"
 
 extra_flags=""
 egraphs="false"
@@ -72,10 +72,10 @@ if [[ ${#use_egraphs} -gt 0 ]]; then
 fi
 if [[ ${#use_greedy} -gt 0 ]]; then
 	extra_flags="$extra_flags --use-greedy"
-	egraphs="true"
 fi
 if [[ ${#use_rewriter} -gt 0 ]]; then
 	extra_flags="$extra_flags --use-rewriter"
+	egraphs="true"
 fi
 if [[ ${#logic_bool_rules} -gt 0 ]]; then
 	extra_flags="$extra_flags --ruleset boolean"
