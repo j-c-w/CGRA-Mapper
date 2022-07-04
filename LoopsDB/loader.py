@@ -20,8 +20,16 @@ if __name__ == "__main__":
         shutil.rmtree(args.output_folder)
     os.mkdir(args.output_folder)
 
-    for s in cur.execute('select distinct loops.src, loops.filename, loops.meta_project from loops where loops.meta_clang_returncode is 0 and loops.meta_stmt_counts_IfStmt is null and loops.meta_stmt_counts_CallExpr is null'):
+    # Get the non-duplicate loops out.
+    for s in cur.execute("""
+    select * from (
+            select loops.src, loops.filename, loops.meta_project, loops.rowid, ROW_NUMBER() OVER(PARTITION BY loops.body ORDER BY loops.rowid DESC) rn
+            from loops
+            where loops.meta_clang_returncode is 0 and loops.meta_stmt_counts_IfStmt is null and loops.meta_stmt_counts_CallExpr is null and loops.meta_project != 'libav'
+            ) a
+    where rn = 1"""):
         project = s[2]
+        rowid = s[3]
 
         with open(args.output_folder + "/loop_" + project + "_" + str(counter) + ".c", 'w') as f:
             program = s[0]
