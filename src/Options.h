@@ -30,6 +30,7 @@ class Options {
 		bool DebugMappingLoop;
 		bool PrintMappingFailures;
 		bool PrintOperationCount;
+		bool PrintUsedRules;
 		
 		std::string Params;
 		list<std::string> rulesets;

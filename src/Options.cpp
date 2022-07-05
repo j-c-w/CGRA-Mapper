@@ -38,6 +38,7 @@ cl::opt<bool> DebugMappingLoop("debug-mapping-loop", cl::desc("Debug the mapping
 cl::opt<bool> DebugRustConversion("debug-rust-conversion", cl::desc("Debug the egraphs interface on the C++ side"));
 cl::opt<bool> LLVMDebugOperationMap ("debug-operation-map", cl::desc("Debug the node-by-node operation mapping"));
 cl::opt<bool> PrintOperationCount("print-operation-count", cl::desc("Print the operation counts in the DFG for debugging rewrite rules"));
+cl::opt<bool> PrintUsedRules("print-used-rules", cl::desc("Print the number of used rules"));
 
 cl::opt<std::string> Params("params-file", cl::desc("Json file with the CGRA parameters"));
 cl::list<std::string> RulesetsOpt("ruleset", cl::desc("Rulesets to use: valid options are: int, fp, boolean, stochastic, gcc (default is gcc, gcc = int ruleset + fp ruleset)"));
@@ -90,6 +91,7 @@ TCLAP::CmdLine cmd("Tool to schedule a DFG Json file onto a CGRA");
   opt->DebugOperationMap = false;
   opt->PrintMappingFailures = print_mapping_failures;
   opt->PrintOperationCount = false;
+  opt->PrintUsedRules = false;
 
   opt->Params = cgra.getValue();
   opt->rulesets = list<std::string>();

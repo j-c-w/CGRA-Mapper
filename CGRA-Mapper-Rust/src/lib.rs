@@ -226,10 +226,11 @@ fn explanation_statistics(e: &Explanation<SymbolLang>) {
 	let mut applied_rules = HashMap::new();
 	rec(&e.explanation_trees, &mut HashSet::new(), &mut applied_rules);
 	println!("applied {} rules: {:?}", applied_rules.len(), applied_rules);
+	println!("done listing rules");
 }
 
 #[no_mangle]
-pub extern "C" fn optimize_with_egraphs(dfg: CppDFG, rulesets: Rulesets, cgra_params: *const c_char, frequency_cost: bool) -> CppDFGs {
+pub extern "C" fn optimize_with_egraphs(dfg: CppDFG, rulesets: Rulesets, cgra_params: *const c_char, frequency_cost: bool, print_used_rules: bool) -> CppDFGs {
 	println!("entering Rust");
 
 	let rules = load_rulesets(rulesets);
@@ -267,9 +268,11 @@ pub extern "C" fn optimize_with_egraphs(dfg: CppDFG, rulesets: Rulesets, cgra_pa
     let extraction_time = start_extraction.elapsed();
     println!("extraction took {:?}", extraction_time);
 
-	explanation_statistics(&runner.explain_equivalence(
-		&dfg_to_rooted_expr(&dfg),
-		&rooted_expr(&best, best_roots)));
+	if print_used_rules {
+		explanation_statistics(&runner.explain_equivalence(
+			&dfg_to_rooted_expr(&dfg),
+			&rooted_expr(&best, best_roots)));
+	};
 
 	/* {
 		let mut g: EGraph<SymbolLang, ()> = Default::default();
@@ -285,7 +288,7 @@ pub extern "C" fn optimize_with_egraphs(dfg: CppDFG, rulesets: Rulesets, cgra_pa
 }
 
 #[no_mangle]
-pub extern "C" fn optimize_with_graphs(dfg: CppDFG, rulesets: Rulesets, cgra_params: *const c_char, frequency_cost: bool) -> CppDFGs {
+pub extern "C" fn optimize_with_graphs(dfg: CppDFG, rulesets: Rulesets, cgra_params: *const c_char, frequency_cost: bool, print_used_rules: bool) -> CppDFGs {
     println!("entering Rust, using standard rewriting");
 
 	let rules = load_rulesets(rulesets);
