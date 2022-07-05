@@ -28,7 +28,7 @@
 "0": ["load", "store"],
 "1": ["add", "sub", "zext", "sext"],
 "2": ["icmp", "br"],
-"3": ["and", "or", "nor", "xor", "lsh", "lshr", "ashr", "sext"],
+"3": ["and", "or", "nor", "xor", "shl", "lshr", "ashr", "sext"],
 "4": ["add", "sub"],
 "5": ["load", "store"]
 },
@@ -43,23 +43,23 @@
 "2": {
 "0": ["load", "store"],
 "1": ["add", "sub", "icmp"],
-"2": ["add", "sub", "icmp", "and", "or", "nor", "xor", "lsh", "lshr", "ashr", "mul"],
-"3": ["add", "sub", "icmp", "and", "or", "nor", "xor", "lsh", "lshr", "ashr", "mul"],
+"2": ["add", "sub", "icmp", "and", "or", "nor", "xor", "shl", "lshr", "ashr", "mul"],
+"3": ["add", "sub", "icmp", "and", "or", "nor", "xor", "shl", "lshr", "ashr", "mul"],
 "4": ["mul"],
 "5": ["load", "store"]
 },
 "3": {
 "0": ["load", "store"],
 "1": ["mul"],
-"2": ["add", "sub", "icmp", "and", "or", "nor", "xor", "lsh", "lshr", "ashr", "mul"],
-"3": ["add", "sub", "icmp", "and", "or", "nor", "xor", "lsh", "lshr", "ashr", "mul"],
-"4": ["add", "sub", "and", "or", "nor", "xor", "lsh", "lshr", "ashr"],
+"2": ["add", "sub", "icmp", "and", "or", "nor", "xor", "shl", "lshr", "ashr", "mul"],
+"3": ["add", "sub", "icmp", "and", "or", "nor", "xor", "shl", "lshr", "ashr", "mul"],
+"4": ["add", "sub", "and", "or", "nor", "xor", "shl", "lshr", "ashr"],
 "5": ["load", "store"]
 },
 "4": {
 "0": ["load", "store"],
 "1": ["add"],
-"2": ["add", "sub", "and", "or", "nor", "xor", "lsh", "lshr", "ashr"],
+"2": ["add", "sub", "and", "or", "nor", "xor", "shl", "lshr", "ashr"],
 "3": ["mul"],
 "4": ["add", "sub"],
 "5": ["load", "store"]
@@ -67,7 +67,7 @@
 "5": {
 "0": ["load", "store"],
 "1": ["add"],
-"2": ["and", "or", "nor", "xor", "lsh", "lshr", "ashr"],
+"2": ["and", "or", "nor", "xor", "shl", "lshr", "ashr"],
 "3": ["icmp"],
 "4": ["add", "sub"],
 "5": ["load", "store"]

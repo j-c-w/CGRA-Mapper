@@ -25,12 +25,12 @@
   "operations":
 {
 "0": {
-"0": ["and", "or", "xor", "lsh", "lshr", "ashr", "not"],
-"1": ["and", "or", "xor", "lsh", "lshr", "ashr", "not"],
-"2": ["and", "or", "xor", "lsh", "lshr", "ashr", "not"],
-"3": ["and", "or", "xor", "lsh", "lshr", "ashr", "not"],
-"4": ["and", "or", "xor", "lsh", "lshr", "ashr", "not"],
-"5": ["and", "or", "xor", "lsh", "lshr", "ashr", "not"]
+"0": ["and", "or", "xor", "shl", "lshr", "ashr", "not"],
+"1": ["and", "or", "xor", "shl", "lshr", "ashr", "not"],
+"2": ["and", "or", "xor", "shl", "lshr", "ashr", "not"],
+"3": ["and", "or", "xor", "shl", "lshr", "ashr", "not"],
+"4": ["and", "or", "xor", "shl", "lshr", "ashr", "not"],
+"5": ["and", "or", "xor", "shl", "lshr", "ashr", "not"]
 },
 "1": {
 "0": ["icmp"],
@@ -41,9 +41,9 @@
 "5": []
 },
 "2": {
-"0": ["and", "or", "xor", "lsh", "lshr", "ashr", "not"],
-"1": ["and", "or", "xor", "lsh", "lshr", "ashr", "not"],
-"2": ["and", "or", "xor", "lsh", "lshr", "ashr", "not"],
+"0": ["and", "or", "xor", "shl", "lshr", "ashr", "not"],
+"1": ["and", "or", "xor", "shl", "lshr", "ashr", "not"],
+"2": ["and", "or", "xor", "shl", "lshr", "ashr", "not"],
 "3": [],
 "4": [],
 "5": []
