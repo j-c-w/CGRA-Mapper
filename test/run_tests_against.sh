@@ -2,8 +2,8 @@
 
 set -eu
 
-typeset use_egraphs use_rewriter use_greedy logic_bool_rules int_rules all_rules fp_rules stochastic_rules
-zparseopts -D -E -use-egraphs=use_egraphs -use-rewriter=use_rewriter -logic-as-bool-rules=logic_bool_rules -fp-rules=fp_rules -int-rules=int_rules -all-rules=all_rules -use-greedy=use_greedy -stochastic-rules=stochastic_rules
+typeset use_egraphs use_rewriter use_greedy logic_bool_rules int_rules all_rules fp_rules stochastic_rules print_used_rules
+zparseopts -D -E -use-egraphs=use_egraphs -use-rewriter=use_rewriter -logic-as-bool-rules=logic_bool_rules -fp-rules=fp_rules -int-rules=int_rules -all-rules=all_rules -use-greedy=use_greedy -stochastic-rules=stochastic_rules -print-used-rules=print_used_rules
 
 if [[ $# -ne 4 ]]; then
 	echo "Usage: $0 <Reduction Rate> <CGRA Design File> <Other Input Files Base Folder> <Temp Folder>"
@@ -91,6 +91,9 @@ if [[ ${#stochastic_rules} -gt 0 ]]; then
 fi
 if [[ ${#all_rules} -gt 0 ]]; then
 	extra_flags="$extra_flags --ruleset boolean --ruleset int --ruleset fp --ruleset stochastic"
+fi
+if [[ ${#print_used_rules} -gt 0 ]]; then
+	extra_flags="$extra_flags --print-used-rules"
 fi
 
 parallel "(

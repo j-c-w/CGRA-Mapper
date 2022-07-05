@@ -12,6 +12,7 @@ if __name__ == "__main__":
     parser.add_argument("LoopName") # Just for insertion into the result csv
     parser.add_argument("InputFile")
     parser.add_argument("OutputFile")
+    parser.add_argument('--accelerator-size', required=True, type=int, help='The size of the accelerator --- for drawing the by-size graph.', dest='accelerator_size')
 
     args = parser.parse_args()
 
@@ -61,7 +62,7 @@ if __name__ == "__main__":
         # We do this not as a true CSV because it's possible 
         # (although it shouldn't happen) that not all benchmarks
         # will be there for each run.
-        string = args.LoopName
+        string = args.LoopName + ":" + str(args.accelerator_size)
 
         for key in successes_dict:
             string += ",success:" + key + ":" + str(successes_dict[key])

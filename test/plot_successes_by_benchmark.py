@@ -2,6 +2,9 @@ import argparse
 import matplotlib.pyplot as plt
 import numpy as np
 
+colors=['#818fa6', '#6ea5ff', '#95c983', '#c99083', '#e079d6']
+hatching=['O', 'o', '.', '-', 'x']
+
 labels = ['freeimage', 'ffmpeg', 'DarkNet', 'LivermoreC', 'bzip2']
 
 def name_from_file(f):
@@ -13,6 +16,10 @@ def name_from_file(f):
         # not exist.
         return splitup[0]
 
+def load_size_dict(f):
+    #TODO
+    pass
+
 # Line format (see get_results_by_benchmark.py)
 # is fname,success:bname:N,...,fail:bnameX:M,...
 
@@ -20,7 +27,12 @@ def name_from_file(f):
 # contains each of the benchmarks run, and the inner
 # dict contains each ofht individual results.
 # Done in this way so we can change what we are plotting.
-def load_from_file(f):
+
+# We can also plot the same graph, but by the number of operations
+# availbale on the CGRA rather than the benchmark name.
+# To do this, a map from the kernel name to the number of operations
+# should be provided.  That is loaded by a the load_size_dict() function.
+def load_from_file(f, by_size, size_lookup={}):
     succ_dict = {}
     fail_dict = {}
 
@@ -28,10 +40,28 @@ def load_from_file(f):
         for line in f.readlines():
             print("Loading line ", line)
             line = line.split(",")
-            fname_source = line[0]
+            fname_source = line[0].split(':')[0]
+            size_acc = int(line[0].split(':')[1])
+            # Load eitehr by the benchmark suite or
+            # the size of the accelerator
+            if by_size:
+                base_key = size_acc
+                lookup_name = ''.join(fname_source.split('.')[:-1]) #These have a .mode on the end that we mmorev
+                if size_acc == 0 and lookup_name in size_lookup:
+                    # Due to crappy scripts, the size isn't recoreded
+                    # in the non-egraphs node (actually it's a missing
+                    # print in FlexC).
+                    # To make up for that, we load with a dict
+                    # that maps filename to size.
+                    base_key = size_lookup[lookup_name]
+                elif size_acc > 0:
+                    size_lookup[lookup_name] = size_acc
+            else:
+                base_key = fname_source
+
             # Go over every sub-part to that thing.
-            succ_dict[fname_source] = {}
-            fail_dict[fname_source] = {}
+            succ_dict[base_key] = {}
+            fail_dict[base_key] = {}
             for elem in line[1:]:
                 elem = elem.split(":")
                 mode = elem[0] # success or fail
@@ -39,13 +69,13 @@ def load_from_file(f):
                 num = int(elem[2].strip()) # how many benchmarks did this thing.
 
                 if mode == "success":
-                    succ_dict[fname_source][bname] = num
+                    succ_dict[base_key][bname] = num
                 elif mode == "fail":
-                    fail_dict[fname_source][bname] = num
+                    fail_dict[base_key][bname] = num
                 else:
                     print (mode)
                     assert False # Needs to be success or fail.
-    return succ_dict, fail_dict
+    return succ_dict, fail_dict, size_lookup
 
 
 #given these two oddly formatted dicts, computes a single
@@ -53,7 +83,7 @@ def load_from_file(f):
 # { 'bmark': {'subbmark': rate, ...}}
 # Where this means accelerators for loops in bmark, targted by accelerators
 # in loop 'subbmark' had success rate rate.
-def load_in_vs_out_of_benchmark_compiles(succ_dict, fail_dict):
+def load_in_vs_out_of_benchmark_compiles(succ_dict, fail_dict, by_size):
     res_dict = {}
 
     all_keys = set()
@@ -63,19 +93,22 @@ def load_in_vs_out_of_benchmark_compiles(succ_dict, fail_dict):
     print (fail_dict)
     print ("all keys is ", all_keys)
     for fname in succ_dict: # guarnateed to have same keys
-        bname = name_from_file(fname)
+        if by_size:
+            bname = fname
+        else:
+            bname = name_from_file(fname)
         if bname not in res_dict:
             res_dict[bname] = {}
             for key in all_keys:
                 res_dict[bname][key] = []
 
         for sub_bname in all_keys:
-            print("Looking at ", sub_bname, fname)
+            # print("Looking at ", sub_bname, fname)
             if sub_bname in succ_dict[fname]:
                 succs = succ_dict[fname][sub_bname]
             else:
                 succs = 0
-            print(bname, "have ", succs, 'succs')
+            # print(bname, "have ", succs, 'succs')
             if sub_bname in fail_dict[fname]:
                 fails = fail_dict[fname][sub_bname]
             else:
@@ -86,7 +119,7 @@ def load_in_vs_out_of_benchmark_compiles(succ_dict, fail_dict):
                 continue
             res_value = float(succs) / (float(succs + fails))
             res_dict[bname][sub_bname].append(res_value)
-            print(res_value)
+            # print(res_value)
 
     # Now, go through thre res dict list and turn those into
     # average success rates.
@@ -147,21 +180,115 @@ def plot_same_and_different(baseline_dict, rewriter_dict, outname):
     plt.savefig(outname + '_basic.eps')
     plt.savefig(outname + '_basic.png')
 
+def plot_from_size(baseline_dict, rewriter_dict, outname):
+    def average_dict(d):
+        newd = {}
+        for k in d:
+            if k == 0:
+                continue # Some loops fail all together.
+            vs = []
+            for k2 in d[k]:
+                vs.append(d[k][k2])
+            newd[k] = np.mean(vs)
+        xs = sorted(newd.keys())
+        ys = [newd[x] for x in xs]
+        return xs, ys
+
+    base_x, base_y = average_dict(baseline_dict)
+    xs, ys = average_dict(rewriter_dict)
+    xvalues = np.arange(min(xs), max(xs) + 1)
+    base_xvalues = np.arange(min(base_x), max(base_x) + 1)
+    plt.clf()
+    print(len(xvalues))
+    print(len(ys))
+    plt.bar(base_xvalues-0.15, base_y, label='OpenCGRA', width=0.30, color=colors[0], hatch=hatching[0])
+    plt.bar(xvalues+0.15, ys, label='FlexC', width=0.30, color=colors[2], hatch=hatching[2])
+    plt.legend()
+    plt.gca().set_xticks(xvalues)
+    plt.gca().set_xticklabels([str(x) for x in xs]) #not sure why we have to do this.
+    plt.xlabel("Number of Different Operations in Accelerator")
+    plt.ylabel("Compilation Rate")
+    plt.savefig(outname + '_by_size.png')
+    plt.savefig(outname + '_by_size.eps')
+
+    print("Done with by size graph (in " + outname + '_by_size.png)')
+
+def plot_case_studies_graph(outname, opencgra, greedy, flexc):
+    architectures = ["CCA", "Maeri", "REVAMP", "SC-CGRA"]
+    bmarks = ["LivermoreC", "DarkNet", "ffmpeg", "bzip2", "freeimage"]
+
+    plt.clf()
+    # First, we want to build the relevant series.
+    fig, ax = plt.subplots(1, 4, figsize=(12, 3))
+
+    # REeturn the y values in a consistent order
+    def y_values_for(d):
+        ys = []
+        for b in bmarks:
+            ys.append(d[b])
+        return ys
+
+    for i in range(4): # one for each arch.
+        arch = architectures[i]
+        opencgra_data = opencgra[arch]
+        greedy_data = greedy[arch]
+        flexc_data = flexc[arch]
+        xpoints = np.arange(len(bmarks))
+        width = 0.25
+
+        ax[i].set_title(arch)
+        ax[i].bar(xpoints - width, y_values_for(opencgra_data), width=width, label='OpenCGRA', color=colors[0], hatch=hatching[0])
+        ax[i].bar(xpoints, y_values_for(greedy_data), width=width, label='Greedy', color=colors[1], hatch=hatching[1])
+        ax[i].bar(xpoints + width, y_values_for(flexc_data), width=width, label='FlexC', color=colors[2], hatch=hatching[2])
+        ax[i].set_ylim([0, 1.0])
+        ax[i].set_xticks(xpoints)
+        ax[i].set_xticklabels(bmarks, rotation=90)
+        if i == 0:
+            ax[i].legend()
+
+    plt.tight_layout()
+    plt.savefig(outname + "_case_studies_by_benchmark.png")
+    plt.savefig(outname + "_case_studies_by_benchmark.eps")
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
 
     parser.add_argument("output_filename")
     parser.add_argument("input_filename_baseline")
+    parser.add_argument("input_filename_greedy", help="Not currently used in loop-on-loop case")
     parser.add_argument("input_filename_rewriter")
+    parser.add_argument("--case-studies", default=False, action='store_true', dest='case_studies')
 
     args = parser.parse_args()
 
-    s_dict, f_dict = load_from_file(args.input_filename_rewriter)
-    # see comment on below function for documentation.
-    rewriter_dict = load_in_vs_out_of_benchmark_compiles(s_dict, f_dict)
+    if args.case_studies:
+        s_dict, f_dict, _ = load_from_file(args.input_filename_rewriter, False)
+        rewriter_dict = load_in_vs_out_of_benchmark_compiles(s_dict, f_dict, False)
 
-    s_dict, f_dict = load_from_file(args.input_filename_baseline)
-    baseline_dict = load_in_vs_out_of_benchmark_compiles(s_dict, f_dict)
+        s_dict, f_dict, _ = load_from_file(args.input_filename_greedy, False)
+        greedy_dict = load_in_vs_out_of_benchmark_compiles(s_dict, f_dict, False)
 
-    plot_same_and_different(baseline_dict, rewriter_dict, args.output_filename)
+        s_dict, f_dict, _ = load_from_file(args.input_filename_baseline, False)
+        baseline_dict = load_in_vs_out_of_benchmark_compiles(s_dict, f_dict, False)
+
+        plot_case_studies_graph(args.output_filename, baseline_dict, greedy_dict, rewriter_dict)
+    else:
+        # Plot the results by benchmark suite.
+        s_dict, f_dict, _ = load_from_file(args.input_filename_rewriter, False)
+        # see comment on below function for documentation.
+        rewriter_dict = load_in_vs_out_of_benchmark_compiles(s_dict, f_dict, False)
+
+        s_dict, f_dict, _ = load_from_file(args.input_filename_baseline, False)
+        baseline_dict = load_in_vs_out_of_benchmark_compiles(s_dict, f_dict, False)
+
+        plot_same_and_different(baseline_dict, rewriter_dict, args.output_filename)
+
+        # Plot the results by benchmark suite.
+        s_dict, f_dict, size_lookup = load_from_file(args.input_filename_rewriter, True)
+        print('dict is ', size_lookup)
+        rewriter_dict_by_size = load_in_vs_out_of_benchmark_compiles(s_dict, f_dict, True)
+        s_dict, f_dict, _ = load_from_file(args.input_filename_baseline, True, size_lookup)
+        baseline_dict_by_size = load_in_vs_out_of_benchmark_compiles(s_dict, f_dict, True)
+        print("By size is", rewriter_dict_by_size)
+        print("orig is ", baseline_dict_by_size)
+        plot_from_size(baseline_dict_by_size, rewriter_dict_by_size, args.output_filename)

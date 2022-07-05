@@ -17,7 +17,7 @@ shift 3
 # these only require 9,000 compiles per benchmark
 # rather than the 9 million or so required by the full
 # benchmarking run.
-fraction_to_run=0.2
+fraction_to_run=1.0
 
 mkdir -p $output/stdout
 
