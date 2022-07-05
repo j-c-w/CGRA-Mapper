@@ -100,11 +100,15 @@ def plot_speedups(cpu_cycles, cgra_cycles):
     plt.xlabel('Loop/Architecture Combination (ordered by speedup)')
     plt.xlim([0.0, 1.0])
     # plt.xlim([0.0, 20.0])
+    gmean = statistics.geometric_mean(speedups)
+    plt.gca().axhline(gmean, color='green', linestyle='--')
+    plt.text(0.2, gmean + 0.2, 'Geomean ({gmean:.2f})'.format(gmean=gmean), color='green')
     plt.gca().axhline(1.0, color='black', linestyle='--')
+    plt.text(0.1, 1.0 - 0.6, 'Speedup Threshold', color='black')
     plt.savefig('speedups.png')
     plt.savefig('speedups.eps')
     print ("Done!")
-    print ("Geomean improvement is ", statistics.geometric_mean(speedups))
+    print ("Geomean improvement is ", gmean)
 
 
 if __name__ == "__main__":

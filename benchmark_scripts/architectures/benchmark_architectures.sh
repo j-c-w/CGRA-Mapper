@@ -32,6 +32,13 @@ if [[ ${#plot_only} == 0 ]]; then
 	# Use the stochastic ruleset for SC-CGRA since it is a stochastic cgra.
     ./run_against_architectures.sh ../benchmark_scripts/architectures/sc-cgra.json $benchmark_folder sc_cgra_output --stochastic-rules --int-rules
 
+	# Get the data for the ruleset table -- this is more compute intensive, so re-gather the
+	# data completely.
+    ./run_against_architectures.sh ../benchmark_scripts/architectures/cca.json $benchmark_folder cca_output_rules_metadata --print-used-rules --rewriter-only
+    ./run_against_architectures.sh ../benchmark_scripts/architectures/maeri.json $benchmark_folder maeri_output_rules_metadata --print-used-rules --fp-rules --int-rules --rewriter-only
+    ./run_against_architectures.sh ../benchmark_scripts/architectures/revamp.json $benchmark_folder revamp_output_rules_metadata --print-used-rules --rewriter-only
+    ./run_against_architectures.sh ../benchmark_scripts/architectures/sc-cgra.json $benchmark_folder sc_cgra_output_rules_metadata --print-used-rules --stochastic-rules --int-rules --rewriter-only
+
 	# Run these architectures with the different rulesets to explore how those do.
 	run_architectures_with_rules ../benchmark_scripts/architectures/cca.json cca_rules
 	run_architectures_with_rules ../benchmark_scripts/architectures/maeri.json maeri_rules
@@ -82,6 +89,14 @@ get_compile_rates() {
 	# of the inputs down a bit.
 	touch $bybmark_out
 	../../test/get_results_by_benchmark.sh greedy_${archname} $data_folder/greedy.out $bybmark_out
+}
+
+get_rules_applied() {
+	# Get a list of the rules applied for each architecture
+	local filename=$1/rewriter.out
+	local output=$2
+
+	grep --text $filename -e 'applied ' -A1 > $output
 }
 
 # Like the above, by don't bother with the results by benchmark, since
@@ -137,9 +152,21 @@ get_compile_rates_for_rulesets ../../test/revamp_rules data/revamp_rules
 # Note that I typoed the _ into a - for that name.
 get_compile_rates_for_rulesets ../../test/sc-cgra_rules data/sc_cgra_rules
 
+# Get the ruleset info
+get_rules_applied ../../test/cca_output_rules_metadata data/cca_applied
+get_rules_applied ../../test/maeri_output_rules_metadata data/maeri_applied
+get_rules_applied ../../test/revamp_output_rules_metadata data/revamp_applied
+get_rules_applied ../../test/sc_cgra_output_rules_metadata data/sc_cgra_applied
+
 # Now plot
 python plot_case_studies.py case_studies data/cca data/maeri data/revamp data/sc_cgra
 
 # Also do the by-benchmark plot --- we don't use this here right now, but could do.
-# python ../../test/plot_successes_by_benchmark.py graph_by_benchmark.png run_all_benchmarks_outputs/no_rules_data_by_benchmark run_all_benchmarks_outputs/rewriter_data_by_benchmark
+python ../../test/plot_successes_by_benchmark.py case_studies_by_benchmark data/no_rules_by_benchmark data/greedy_by_benchmark data/rewriter_by_benchmark --case-studies
 python plot_case_studies.py ruleset_studies data/cca_rules data/maeri_rules data/revamp_rules data/sc_cgra_rules
+
+# Now, put the table information into a table
+python generate_rules_table.py data/cca_applied
+python generate_rules_table.py data/maeri_applied
+python generate_rules_table.py data/revamp_applied
+python generate_rules_table.py data/sc_cgra_applied
