@@ -108,6 +108,7 @@ def plot_from_dicts(names, tname, dicts):
             else:
                 # Presumably due to failure?  Perhaps should mark as so?
                 yvalues.append(0)
+        print("Success rate for ", lab, " is ", np.sum(yvalues))
         # Plot
         print("Plotting ", yvalues)
         plt.bar(xpos, yvalues, width=offset, label=lab)

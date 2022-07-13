@@ -68,7 +68,9 @@ def plot(name, cca, maeri, revamp, sc_cgra):
     plt.xlabel("Architecture")
     plt.ylabel("Fraction of Loops Compiled to Accelerator")
     if name == 'case_studies':
+        plt.text(2.7, 0.68, 'Stochastic\n  Ruleset')
         plt.legend()
+        plt.ylim(0.0, 0.735)
     else:
         plt.legend(ncol=3, loc=(0, 1.08))
     plt.tight_layout()

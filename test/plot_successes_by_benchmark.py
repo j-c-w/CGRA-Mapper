@@ -1,6 +1,7 @@
 import argparse
 import matplotlib.pyplot as plt
 import numpy as np
+import statistics
 
 colors=['#818fa6', '#6ea5ff', '#95c983', '#c99083', '#e079d6']
 hatching=['O', 'o', '.', '-', 'x']
@@ -38,7 +39,6 @@ def load_from_file(f, by_size, size_lookup={}):
 
     with open(f) as f:
         for line in f.readlines():
-            print("Loading line ", line)
             line = line.split(",")
             fname_source = line[0].split(':')[0]
             size_acc = int(line[0].split(':')[1])
@@ -89,9 +89,7 @@ def load_in_vs_out_of_benchmark_compiles(succ_dict, fail_dict, by_size):
     all_keys = set()
     for fname in succ_dict:
         all_keys = all_keys.union(set(list(succ_dict[fname].keys()) + list(fail_dict[fname].keys())))
-    print (succ_dict)
-    print (fail_dict)
-    print ("all keys is ", all_keys)
+    # print ("all keys is ", all_keys)
     for fname in succ_dict: # guarnateed to have same keys
         if by_size:
             bname = fname
@@ -166,8 +164,8 @@ def plot_same_and_different(baseline_dict, rewriter_dict, outname):
     global labels
     xvals = np.arange(0, len(labels))
     print("Have labels", labels)
-    print("Same series is (baseline)", same_series_baseline)
-    print("Different series is (baseline)", diff_series_baseline)
+    # print("Same series is (baseline)", same_series_baseline)
+    # print("Different series is (baseline)", diff_series_baseline)
     plt.bar(xvals - width * 1.7, diff_series_baseline, hatch='x', color='#818fa6', label="OpenCGRA: Other Suites", width=width)
     plt.bar(xvals - width * 0.7, same_series_baseline, hatch='x', color='#c99083', label="OpenCGRA: Same Suite", width=width)
     plt.bar(xvals + width * 0.7, diff_series_rewriter, hatch='.', color='#818fa6', label="FlexC: Other Suites", width=width)
@@ -175,12 +173,24 @@ def plot_same_and_different(baseline_dict, rewriter_dict, outname):
     plt.gca().set_xticklabels([''] + labels) #not sure why we have to do this.
     plt.gca().set_ylabel("Fraction of Loops Compiled to Accelerator")
     plt.gca().set_xlabel("Benchmark Suite Original Accelerator was Selected From")
+    plt.text(-width * 1.7, 0.4, 'OpenCGRA', rotation=90)
+    plt.text(-width * 2.8, 0.35, '}', size=30, rotation=90)
+    plt.text(+width * 0.7, 0.5, 'FlexC', rotation=90)
+    plt.text(-width * 0.5, 0.45, '}', size=30, rotation=90)
     plt.ylim([0, 1])
     plt.legend()
     plt.savefig(outname + '_basic.eps')
     plt.savefig(outname + '_basic.png')
+    same_suite_improvements = []
+    for i in range(len(same_series_baseline)):
+        same_suite_improvements.append(same_series_rewriter[i] / same_series_baseline[i])
+    diff_suite_improvements = []
+    for i in range(len(same_series_baseline)):
+        diff_suite_improvements.append(diff_series_rewriter[i] / diff_series_baseline[i])
+    print("Geomean within same suite is " + str(statistics.geometric_mean(same_suite_improvements)))
+    print("Geomean between suites is " + str(statistics.geometric_mean(diff_suite_improvements)))
 
-def plot_from_size(baseline_dict, rewriter_dict, outname):
+def plot_from_size(baseline_dict, greedy_dict, rewriter_dict, outname):
     def average_dict(d):
         newd = {}
         for k in d:
@@ -195,18 +205,23 @@ def plot_from_size(baseline_dict, rewriter_dict, outname):
         return xs, ys
 
     base_x, base_y = average_dict(baseline_dict)
+    greedy_x, greedy_y = average_dict(greedy_dict)
     xs, ys = average_dict(rewriter_dict)
     xvalues = np.arange(min(xs), max(xs) + 1)
     base_xvalues = np.arange(min(base_x), max(base_x) + 1)
+    base_greedy_values = np.arange(min(greedy_x), max(greedy_x) + 1)
+
     plt.clf()
-    print(len(xvalues))
-    print(len(ys))
-    plt.bar(base_xvalues-0.15, base_y, label='OpenCGRA', width=0.30, color=colors[0], hatch=hatching[0])
-    plt.bar(xvalues+0.15, ys, label='FlexC', width=0.30, color=colors[2], hatch=hatching[2])
+    # print(len(xvalues))
+    # print(len(ys))
+    width=0.2
+    plt.bar(base_xvalues-width, base_y, label='OpenCGRA', width=width, color=colors[0], hatch=hatching[0])
+    plt.bar(greedy_x, greedy_y, label='Greedy Rewriter', width=width, color=colors[1], hatch=hatching[1])
+    plt.bar(xvalues+width, ys, label='FlexC', width=width, color=colors[2], hatch=hatching[2])
     plt.legend()
     plt.gca().set_xticks(xvalues)
     plt.gca().set_xticklabels([str(x) for x in xs]) #not sure why we have to do this.
-    plt.xlabel("Number of Different Operations in Accelerator")
+    plt.xlabel("Number of Different Operations Supported by Accelerator")
     plt.ylabel("Compilation Rate")
     plt.savefig(outname + '_by_size.png')
     plt.savefig(outname + '_by_size.eps')
@@ -287,8 +302,11 @@ if __name__ == "__main__":
         s_dict, f_dict, size_lookup = load_from_file(args.input_filename_rewriter, True)
         print('dict is ', size_lookup)
         rewriter_dict_by_size = load_in_vs_out_of_benchmark_compiles(s_dict, f_dict, True)
+        s_dict, f_dict, _ = load_from_file(args.input_filename_greedy, True, size_lookup)
+        greedy_dict_by_size = load_in_vs_out_of_benchmark_compiles(s_dict, f_dict, True)
         s_dict, f_dict, _ = load_from_file(args.input_filename_baseline, True, size_lookup)
         baseline_dict_by_size = load_in_vs_out_of_benchmark_compiles(s_dict, f_dict, True)
+
         print("By size is", rewriter_dict_by_size)
         print("orig is ", baseline_dict_by_size)
-        plot_from_size(baseline_dict_by_size, rewriter_dict_by_size, args.output_filename)
+        plot_from_size(baseline_dict_by_size, greedy_dict_by_size, rewriter_dict_by_size, args.output_filename)
