@@ -9,9 +9,16 @@ mkShell {
 		# Deps for the DFG Mapping
 		tclap
 	# Script deps
-	zsh python39 python39Packages.apsw python39Packages.numpy python39Packages.matplotlib parallel 
+	zsh parallel 
+	# python39 python39Packages.apsw python39Packages.numpy python39Packages.matplotlib
 	# TOols to make developement within this shell bearable
 	git vim
+
+	# Requirements for RL
+	conda
 ];
 	SHELL_NAME="CGRA-Mapper";
+	shellHook = ''
+	export PATH=$PATH:$PWD/bin
+		'';
 }
