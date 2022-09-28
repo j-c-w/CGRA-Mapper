@@ -4,7 +4,7 @@ import numpy as np
 import statistics
 
 colors=['#818fa6', '#6ea5ff', '#95c983', '#c99083', '#e079d6']
-hatching=['O', 'o', '.', '-', 'x']
+hatching=['', 'O', 'o', '.', '-', 'x']
 skip_bars=["All Rules"] # Just plot individual rulesets
 
 # Note that this function is used by the plot_case_studies_rules.py
@@ -32,12 +32,20 @@ def plot(name, cca, maeri, revamp, sc_cgra):
     for label in snames:
         if label in skip_bars:
             continue
-        values = [
-            cca[label],
-            maeri[label],
-            revamp[label],
-            sc_cgra[label]
-        ]
+        if label == 'Stochastic Rules':
+            # Stochastic rules are only applicable to the SC-CGRA
+            values = [
+                    # Not clear if there is a better way to do this?
+                    0.0, 0.0, 0.0,
+                    sc_cgra[label]
+                ]
+        else:
+            values = [
+                cca[label],
+                maeri[label],
+                revamp[label],
+                sc_cgra[label]
+            ]
         series.append(values)
         names.append(label)
         if label == 'OpenCGRA':
