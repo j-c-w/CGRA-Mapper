@@ -131,6 +131,7 @@ fn load_ruleset(nm: &str) -> Vec<Rewrite<SymbolLang, ()>> {
 		"fp" => fp_rules(), // These are rewrite rules for -ffast-math style rewrites
 		"boolean" => boolean_logic(), // These are rewrite rules that assume ^&| are boolean rather than logical
 		"stochastic" => stochastic(),
+		"cannonicalization" => gcc_style_rules(),  // Load rules as they are used in LLVM or GCC: to cannonicalize and simplify.
 		_ => panic!("unknown ruleset")
 	}
 }
