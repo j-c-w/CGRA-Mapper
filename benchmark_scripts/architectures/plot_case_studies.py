@@ -4,7 +4,7 @@ import numpy as np
 import statistics
 
 colors=['#818fa6', '#6ea5ff', '#95c983', '#c99083', '#e079d6']
-hatching=['', 'O', 'o', '.', '-', 'x']
+hatching=['O', 'o', '.', '-', 'x']
 skip_bars=["All Rules"] # Just plot individual rulesets
 
 # Note that this function is used by the plot_case_studies_rules.py
