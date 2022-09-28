@@ -70,6 +70,14 @@ namespace {
       // TODO: will make a list of patterns/tiles to illustrate how the
       //       heterogeneity is
       DFG* dfg = params->getDFG(t_F, targetLoops);
+      if (options->DumpFeatures.compare("") != 0) {
+        errs() << "Dumping DFG Features to " << options->DumpFeatures << "\n";
+        dfg->dumpFeatures(options->DumpFeatures);
+        errs() << "Done Dumping DFG Features\n";
+      }
+      /* if (options.DumpDFG) { */
+      /*   dfg->dumpAsJson("DFG.json"); */
+      /* } */
       CGRA* cgra = params->getCGRA(options);
       cgra->setRegConstraint(params->regConstraint);
       cgra->setCtrlMemConstraint(params->ctrlMemConstraint);

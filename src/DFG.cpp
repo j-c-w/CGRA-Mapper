@@ -1793,3 +1793,120 @@ OperationNumber DFG::getOperation() {
   // cout<<"*** current function: "<<m_function.getName().data()<<"\n";
   return m_function->getName().data();
 }
+
+// Return the shortest path from t_src to t_dst, not only following succs.
+int getShortestForwardPath(DFGNode* t_src, DFGNode* t_dst) {
+  set<DFGNode*> visitedNodes;
+  list<DFGNode*> toVisit;
+  list<int> distances;
+
+  toVisit.push_back(t_src);
+  distances.push_back(0);
+  bool found = false;
+  int foundDistance = 0;
+
+  while (toVisit.size() > 0 && !found) {
+    DFGNode* curNode = toVisit.front();
+    toVisit.pop_front();
+    int curDistance = distances.front();
+    distances.pop_front();
+    if (curNode == t_dst) {
+      found = true;
+      foundDistance = curDistance;
+      break;
+    }
+    visitedNodes.insert(curNode);
+    for (DFGNode* succNode: *(curNode->getSuccNodes())) {
+      if (visitedNodes.find(succNode) == visitedNodes.end()) {
+        toVisit.push_back(succNode);
+        distances.push_back(curDistance + 1);
+      }
+    }
+  }
+
+  if (found)
+    return foundDistance;
+  else
+    return 1000000000;
+}
+
+int getShortestPath(DFGNode* t_src, DFGNode* t_dst) {
+  int shortestPathBefore = getShortestForwardPath(t_src, t_dst);
+  int shortestPathAfter = getShortestForwardPath(t_dst, t_src);
+
+  if (shortestPathBefore < shortestPathAfter)
+    return shortestPathBefore;
+  else
+    return shortestPathAfter;
+}
+
+json DFG::computeFrequencies() {
+  json result;
+
+  for (DFGNode *dfgNode : nodes) {
+    std::string node_op = dfgNode->getOpcodeName();
+    if (!result.contains(node_op)) {
+      result[node_op] = 1;
+    } else {
+      result[node_op] = result[node_op].get<int>() + 1;
+    }
+  }
+
+  return result;
+}
+
+json DFG::computeDistances() {
+  json result;
+
+  for (DFGNode* dfgNode: nodes) {
+    // Get the operation of this node:
+    std::string node_op = dfgNode->getOpcodeName();
+    errs() << "node_op: " << node_op << "\n";
+    if (!result.contains(node_op)) {
+      json sub_dict = json::object();
+      result[node_op] = sub_dict;
+    }
+
+    // Now, get the distances (forward and backward to every other node)
+    for (DFGNode *otherNode : nodes) {
+      if (otherNode == dfgNode) {
+        continue;
+      }
+
+      // If the nodes are not equal, get the shortest path
+      int pathDistance = getShortestPath(dfgNode, otherNode);
+      std::string otherName = otherNode->getOpcodeName();
+      if (!result[node_op].contains(otherName)) {
+        errs() << "otherName: " << otherName << "\n";
+        errs() << "Json is " << result[node_op].dump() << "\n";
+        result[node_op][otherName] = json::array();
+        errs() << "Json (after set) is " << result[node_op].dump() << "\n";
+      }
+
+      errs() << "Json is " << result[node_op].dump() << " for name " << node_op << " and name " << otherName << "\n";
+      if (pathDistance < 1000000000) {
+        // If there was no path, don't add.
+        result[node_op][otherName].push_back(pathDistance);
+      }
+      errs() << "Json is " << result[node_op].dump() << "\n";
+    }
+  }
+
+  return result;
+}
+
+void DFG::dumpFeatures(std::string name) {
+  // Compute the features from the DFG.
+  json distances = computeDistances();
+
+  std::ofstream output(name);
+  output << distances;
+}
+
+void DFG::dumpFrequencies(std::string name) {
+  // Compute the number of each operation used in the DFG.
+  json numOperations = computeFrequencies();
+
+  std::ofstream output(name);
+  output << numOperations;
+}

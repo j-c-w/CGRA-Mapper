@@ -21,6 +21,10 @@ class Options {
 	public:
 		Options();
 		bool BuildCGRA;
+		bool DumpDFG;
+		std::string DumpFeatures;
+		std::string DumpFrequencies;
+
 		bool UseRewriter;
 		bool UseEGraphs;
 		bool UseGreedy;

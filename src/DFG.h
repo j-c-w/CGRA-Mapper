@@ -30,9 +30,11 @@
 #include "DFGNode.h"
 #include "DFGEdge.h"
 #include "OperationMap.h"
+#include "json.hpp"
 
 using namespace llvm;
 using namespace std;
+using nlohmann::json;
 
 class DFG {
   private:
@@ -126,6 +128,12 @@ class DFG {
 	int getMaxNodeNumber();
 	OperationNumber getOperation();
     std::string getSourceFileName();
+
+    void dumpFeatures(std::string filename);
+    json computeDistances();
+
+    void dumpFrequencies(std::string filename);
+    json computeFrequencies();
 };
 
 #endif

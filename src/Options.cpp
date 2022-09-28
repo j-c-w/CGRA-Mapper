@@ -26,6 +26,9 @@ using json = nlohmann::json;
 // Due to having two different entry points, we have to maintain two differnet
 // sets of options (PITA).  LLVM opt options:
 cl::opt<bool> BuildCGRA("build", cl::desc("Build the CGRA from the code rather than mapping to it."));
+cl::opt<bool> DumpDFG("dump-dfg", cl::desc("Dump the DFG to a file (DFG.json) for use with other tools. UNIMPLEMENTED"));
+cl::opt<std::string> DumpFeatures("features", cl::desc("Dump the of the DFG to a file (specified as arg to flag) for use with other tools. "));
+cl::opt<std::string> DumpFrequencies("frequencies", cl::desc("Dump the operation frequencies into a file (specified as arg to flag) for use with other tools."));
 
 // op mode flags.
 cl::opt<bool> UseRewriter("use-rewriter", cl::desc("Use the simple rewriter"));
@@ -51,6 +54,7 @@ bool is_valid_ruleset(std::string rname) {
     (!rname.compare("int")) ||
     (!rname.compare("boolean")) ||
     (!rname.compare("stochastic")) ||
+    (!rname.compare("cannonicalize")) ||
     (!rname.compare("gcc"));
 }
 
@@ -80,6 +84,9 @@ TCLAP::CmdLine cmd("Tool to schedule a DFG Json file onto a CGRA");
   }
   Options *opt = new Options();
   opt->BuildCGRA = build_cgra;
+  opt->DumpDFG = false;
+  opt->DumpFeatures = "";
+  opt->DumpFrequencies = "";
 
   opt->UseEGraphs = use_egraphs;
   opt->UseRewriter = use_rewriter;
@@ -149,6 +156,9 @@ Options *setupOptions() {
 	Options *opt = new Options();
   #ifndef DISABLE_LLVM_CMDLINE
   opt->BuildCGRA = BuildCGRA;
+  opt->DumpDFG = DumpDFG;
+  opt->DumpFeatures = DumpFeatures;
+  opt->DumpFrequencies = DumpFrequencies;
 
 	opt->UseRewriter = UseRewriter;
 	opt->UseEGraphs = UseEGraphs;
