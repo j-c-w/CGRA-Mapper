@@ -2,12 +2,13 @@
 
 set -eu
 
-typeset use_egraphs use_rewriter use_greedy logic_bool_rules int_rules all_rules fp_rules stochastic_rules print_used_rules
-zparseopts -D -E -use-egraphs=use_egraphs -use-rewriter=use_rewriter -logic-as-bool-rules=logic_bool_rules -fp-rules=fp_rules -int-rules=int_rules -all-rules=all_rules -use-greedy=use_greedy -stochastic-rules=stochastic_rules -print-used-rules=print_used_rules
+typeset use_egraphs use_rewriter use_greedy use_llvm logic_bool_rules int_rules all_rules fp_rules stochastic_rules print_used_rules
+zparseopts -D -E -use-egraphs=use_egraphs -use-rewriter=use_rewriter -logic-as-bool-rules=logic_bool_rules -fp-rules=fp_rules -int-rules=int_rules -all-rules=all_rules -use-greedy=use_greedy -stochastic-rules=stochastic_rules -print-used-rules=print_used_rules -use-llvm=use_llvm
 
 if [[ $# -ne 4 ]]; then
 	echo "Usage: $0 <Reduction Rate> <CGRA Design File> <Other Input Files Base Folder> <Temp Folder>"
 	echo "--use-egraphs to use egraph rewriting"
+	echo "--use-llvm to use the llvm rewriter"
 	echo "--use-greedy to use the greedy rewriter"
 	echo "--use-rewriter to use rewriting"
 	echo "-- other options see the otp of the bash file o--- for controlling what rulesets to use"
@@ -65,6 +66,7 @@ files=( $(python $original_folder/reducer.py --rate $reduction_rate ${files[@]})
 echo "Running over files ${#files[@]}"
 
 extra_flags=""
+extra_compile_flags=""
 egraphs="false"
 if [[ ${#use_egraphs} -gt 0 ]]; then
 	extra_flags="$extra_flags --use-egraphs"
@@ -76,6 +78,9 @@ fi
 if [[ ${#use_rewriter} -gt 0 ]]; then
 	extra_flags="$extra_flags --use-rewriter"
 	egraphs="true"
+fi
+if [[ ${#use_llvm} -gt 0 ]]; then
+	extra_compile_flags="$extra_compile_flags --use-llvm-cannonicalizer"
 fi
 if [[ ${#logic_bool_rules} -gt 0 ]]; then
 	extra_flags="$extra_flags --ruleset boolean"
@@ -99,7 +104,7 @@ fi
 parallel "(
 	echo 'Starting {}'
 	cp {} kernel_{/.}.cpp
-	$original_folder/compile.sh kernel_{/.}.cpp
+	$original_folder/compile.sh $extra_compile_flags kernel_{/.}.cpp
 	# A small number seem to cause loops somewhere --- just want to get non-buggy results
 	time timeout $timeout $original_folder/run.sh $original_folder/$lmapper kernel_{/.}.bc --params-file $PWD/param.json $extra_flags
 	if [[ \$? != 0 ]] && [[ $egraphs == \"true\" ]]; then

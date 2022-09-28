@@ -28,6 +28,9 @@ if [[ ${#rewriter_only} -eq 0 ]]; then
 	echo "Starting $param_file with greedy"
 	./run_tests_against.sh $fraction_to_run $param_file $bmarks temp_architecture_greedy --use-greedy $@ &> $output/stdout/greedy.out
 	cp temp_architecture_greedy/run_output.old $output/greedy.out
+	echo "Starting $param_file with llvm"
+	./run_tests_against.sh $fraction_to_run $param_file $bmarks temp_architecture_llvm --use-llvm $@ &> $output/stdout/llvm.out
+	cp temp_architecture_llvm/run_output.old $output/llvm.out
 fi
 
 echo "Staring $param_file  with rewriter"

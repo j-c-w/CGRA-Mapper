@@ -54,6 +54,9 @@ if [[ ${#plot_only} -eq 0 ]]; then
 		echo "Starting with rewriter $file"
 		./run_tests_against.sh $reduction_rate $file $folder $temp_folder --use-rewriter &> run_all_benchmarks_outputs/stdout/${bfile}.rewriter
 		mv $temp_folder/run_output.old run_all_benchmarks_outputs/stdout/${bfile}.rewriter.output
+		echo "Staring with LLVM rewriter $file"
+		./run_tests_against.sh $reduction_rate $file $folder $temp_folder --use-llvm &> run_all_benchmarks_outputs/stdout/${bfile}.llvm
+		mv $temp_folder/run_output.old run_all_benchmarks_outputs/stdout/${bfile}.llvm.output
 
 		# Run the rewriter with just the boolean ruleset enabled.
 		if [[ ${#run_individual_rulesets} -gt 0 ]]; then

@@ -1,11 +1,19 @@
-#!/bin/bash
+#!/bin/zsh
 
 set -e
+
+typeset -a use_llvm_cannonicalizer
+zparseopts -D -E -use-llvm-cannonicalizer=use_llvm_cannonicalizer
 
 if [[ $# -ne 1 ]]; then
 	echo "Usage: $0 <filename>"
 	exit 1
 fi
 
-clang -emit-llvm -fno-unroll-loops -O0 -o ${1/.cpp/}.bc -c ${1}
+newfilename=${1/.cpp/}.bc
+clang -Xclang -disable-O0-optnone -emit-llvm -fno-unroll-loops -O0 -o $newfilename -c ${1}
+
+if [[ ${#use_llvm_cannonicalizer} -gt 0 ]]; then
+	opt -instcombine -aggressive-instcombine $newfilename -S -o $newfilename
+fi
 #llvm-dis fir.bc -o fir.ll
