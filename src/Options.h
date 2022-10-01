@@ -22,6 +22,7 @@ class Options {
 		Options();
 		bool BuildCGRA;
 		bool DumpDFG;
+		bool SkipBuild;
 		std::string DumpFeatures;
 		std::string DumpFrequencies;
 

@@ -75,6 +75,12 @@ namespace {
         dfg->dumpFeatures(options->DumpFeatures);
         errs() << "Done Dumping DFG Features\n";
       }
+      if (options->DumpFrequencies.compare("") != 0) {
+        errs() << "Dumping DFG Frequencies to " << options->DumpFrequencies << "\n";
+        dfg->dumpFrequencies(options->DumpFrequencies);
+        errs() << "Done Dumping DFG Frequencies\n";
+      }
+
       /* if (options.DumpDFG) { */
       /*   dfg->dumpAsJson("DFG.json"); */
       /* } */
@@ -88,6 +94,9 @@ namespace {
         errs() << "[generate dot for DFG]\n";
         dfg->generateDot(&t_F, params->isTrimmedDemo);
 
+      if (options->SkipBuild) {
+        return false;
+      }
 
       runMapping(cgra, dfg, params, options);
 

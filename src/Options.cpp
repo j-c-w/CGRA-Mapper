@@ -27,6 +27,7 @@ using json = nlohmann::json;
 // sets of options (PITA).  LLVM opt options:
 cl::opt<bool> BuildCGRA("build", cl::desc("Build the CGRA from the code rather than mapping to it."));
 cl::opt<bool> DumpDFG("dump-dfg", cl::desc("Dump the DFG to a file (DFG.json) for use with other tools. UNIMPLEMENTED"));
+cl::opt<bool> SkipBuild("skip-build", cl::desc("Skip building for the CGRA. (for use with dumping functions) "));
 cl::opt<std::string> DumpFeatures("features", cl::desc("Dump the of the DFG to a file (specified as arg to flag) for use with other tools. "));
 cl::opt<std::string> DumpFrequencies("frequencies", cl::desc("Dump the operation frequencies into a file (specified as arg to flag) for use with other tools."));
 
@@ -71,6 +72,7 @@ TCLAP::CmdLine cmd("Tool to schedule a DFG Json file onto a CGRA");
 
   TCLAP::SwitchArg debug_mapping_loop("", "debug-mapping-loop", "Debug the mapping loop", cmd, false);
   TCLAP::SwitchArg print_mapping_failures("", "print-mapping-failures", "Debugg mapping failures", cmd, false);
+  TCLAP::SwitchArg skip_build("", "skip-build", "only do dump", cmd, false);
 
   TCLAP::MultiArg<std::string> trulesets("s", "ruleset", "Rulesets (valid sets are int, fp, boolean, gcc (gcc = int + fp).  Default is gcc", false, "ruleset", cmd);
 
@@ -85,6 +87,7 @@ TCLAP::CmdLine cmd("Tool to schedule a DFG Json file onto a CGRA");
   Options *opt = new Options();
   opt->BuildCGRA = build_cgra;
   opt->DumpDFG = false;
+  opt->SkipBuild = skip_build;
   opt->DumpFeatures = "";
   opt->DumpFrequencies = "";
 
@@ -157,6 +160,7 @@ Options *setupOptions() {
   #ifndef DISABLE_LLVM_CMDLINE
   opt->BuildCGRA = BuildCGRA;
   opt->DumpDFG = DumpDFG;
+  opt->SkipBuild = SkipBuild;
   opt->DumpFeatures = DumpFeatures;
   opt->DumpFrequencies = DumpFrequencies;
 
