@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import argparse
+import re
 import apsw
 import shutil
 import os
@@ -40,6 +41,8 @@ if __name__ == "__main__":
         sources.append(Source(s[0], s[1]))
 
     loops_string = ""
+    runfuns = []
+    imports = set()
 
     for loop in sources:
         runnable = loop.runnable
@@ -47,8 +50,26 @@ if __name__ == "__main__":
         runnable = runnable.replace('fn (', loop.fname + ' (')
         runnable = runnable.replace('fn(', loop.fname + '(')
 
-        runnable = runnable.replace(loop.fname + '(', 'START("' + str(loop.source_hash) + '");' + loop.fname + '(')
+        runnable = runnable.replace(loop.fname + '(', 'START("' + str(loop.source_hash) + '");\n' + loop.fname + '(')
         runnable = runnable.replace('return 0;', 'END("' + str(loop.source_hash) + '"); return 0;')
+
+        # Custom function name:
+        runnable = runnable.replace('int main()', 'int run_' + loop.fname + '()')
+        runfuns.append('run_' + loop.fname)
+
+        # Remove imports to top.
+        for line in runnable.split('\n'):
+            if line.startswith("#include"):
+                imports.add(line)
+        runnable = re.sub('#include.*?\n', '', runnable)
+
+
+        # add #define to track how many times the loop executed.
+        insert_index = re.finditer('for (.*)[ \t\n]*?{', runnable)
+        for match in insert_index:
+            # Insert the 'define after end.
+            end = match.end(0)
+            runnable = runnable[0:end] + "\nLOOP_ITERATION;\n" + runnable[end:]
 
         # Write the loop individually into a matched source
         # file so we can get the CGRA-Mapper compile time.
@@ -57,6 +78,11 @@ if __name__ == "__main__":
 
         loops_string += "\n" + runnable + "\n"
 
+    # Add a main function and imports to the loops_string
+    imports = "".join(imports)
+    runfuns = [runfun + "();" for runfun in runfuns]
+    mainfun = "int main() {" + "\n".join(runfuns) + "}"
+
     with open(args.output_folder + '/runnable.c', 'w') as f:
-        f.write(loops_string)
+        f.write(imports + loops_string + mainfun)
 
