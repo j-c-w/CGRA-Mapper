@@ -79,7 +79,7 @@ if __name__ == "__main__":
         loops_string += "\n" + runnable + "\n"
 
     # Add a main function and imports to the loops_string
-    imports = "".join(imports)
+    imports = "\n".join(imports)
     runfuns = [runfun + "();" for runfun in runfuns]
     mainfun = "int main() {" + "\n".join(runfuns) + "}"
 
