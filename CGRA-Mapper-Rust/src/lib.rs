@@ -131,7 +131,7 @@ fn load_ruleset(nm: &str) -> Vec<Rewrite<SymbolLang, ()>> {
 		"fp" => fp_rules(), // These are rewrite rules for -ffast-math style rewrites
 		"boolean" => boolean_logic(), // These are rewrite rules that assume ^&| are boolean rather than logical
 		"stochastic" => stochastic(),
-		"cannonicalization" => gcc_style_rules(),  // Load rules as they are used in LLVM or GCC: to cannonicalize and simplify.
+		// "cannonicalization" => gcc_style_rules(),  // Load rules as they are used in LLVM or GCC: to cannonicalize and simplify.
 		_ => panic!("unknown ruleset")
 	}
 }
@@ -240,14 +240,15 @@ pub extern "C" fn optimize_with_egraphs(dfg: CppDFG, rulesets: Rulesets, cgra_pa
     println!("identified {} roots", roots.len());
 	// egraph.dot().to_svg("/tmp/initial.svg").unwrap();
 
-	let mut runner = Runner::default()
-		.with_iter_limit(10)
-		.with_node_limit(100_000)
-		.with_time_limit(std::time::Duration::from_secs(20))
-		.with_egraph(egraph)
-		.with_explanations_enabled()
-		.run(&rules)
-		.with_scheduler(SimpleScheduler);
+	let mut runner =
+		Runner::default()
+			.with_iter_limit(10)
+			.with_node_limit(100_000)
+			.with_time_limit(std::time::Duration::from_secs(20))
+			.with_egraph(egraph)
+			// .with_explanations_enabled()
+			.run(&rules)
+			.with_scheduler(SimpleScheduler);
 	runner.print_report();
     // runner.egraph.dot().to_svg("/tmp/egraph.svg").unwrap();
 
@@ -269,6 +270,7 @@ pub extern "C" fn optimize_with_egraphs(dfg: CppDFG, rulesets: Rulesets, cgra_pa
     let extraction_time = start_extraction.elapsed();
     println!("extraction took {:?}", extraction_time);
 
+	println!("Explanation required: {:?}", print_used_rules);
 	if print_used_rules {
 		explanation_statistics(&runner.explain_equivalence(
 			&dfg_to_rooted_expr(&dfg),
