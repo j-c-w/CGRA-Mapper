@@ -40,6 +40,7 @@ cl::opt<bool> UseGreedy("use-greedy", cl::desc("Use greedy rewriter"));
 cl::opt<bool> PrintMappingFailures("print-mapping-failures", cl::desc("Print the operations where mapping fails"));
 cl::opt<bool> DebugMappingLoop("debug-mapping-loop", cl::desc("Debug the mapping loop."));
 cl::opt<bool> DebugRustConversion("debug-rust-conversion", cl::desc("Debug the egraphs interface on the C++ side"));
+cl::opt<bool> DebugBreakCycles("debug-break-cycles", cl::desc("Debug break cycles"));
 cl::opt<bool> LLVMDebugOperationMap ("debug-operation-map", cl::desc("Debug the node-by-node operation mapping"));
 cl::opt<bool> PrintOperationCount("print-operation-count", cl::desc("Print the operation counts in the DFG for debugging rewrite rules"));
 cl::opt<bool> PrintUsedRules("print-used-rules", cl::desc("Print the number of used rules"));
@@ -99,6 +100,7 @@ TCLAP::CmdLine cmd("Tool to schedule a DFG Json file onto a CGRA");
   opt->DebugMappingLoop = debug_mapping_loop;
   opt->DebugRustConversion = false;
   opt->DebugOperationMap = false;
+  opt->DebugBreakCycles = false;
   opt->PrintMappingFailures = print_mapping_failures;
   opt->PrintOperationCount = false;
   opt->PrintUsedRules = false;
@@ -170,9 +172,11 @@ Options *setupOptions() {
 
 	opt->DebugOperationMap = LLVMDebugOperationMap;
 	opt->DebugRustConversion = DebugRustConversion;
+  opt->DebugBreakCycles = DebugBreakCycles;
 	opt->DebugMappingLoop = DebugMappingLoop;
 	opt->PrintMappingFailures = PrintMappingFailures;
 	opt->PrintOperationCount = PrintOperationCount;
+  opt->PrintUsedRules = PrintUsedRules;
 
 	opt->Params = Params;
   opt->rulesets = list<std::string>();

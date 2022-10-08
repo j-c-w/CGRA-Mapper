@@ -31,6 +31,7 @@
 #include "DFGEdge.h"
 #include "OperationMap.h"
 #include "json.hpp"
+#include "Options.h"
 
 using namespace llvm;
 using namespace std;
@@ -110,7 +111,7 @@ class DFG {
     int getNodeCount();
     void construct(Function*);
     void setupCycles();
-	void breakCycles();
+	void breakCycles(Options*);
 	void rejoinCycles();
     list<list<DFGEdge*>*>* calculateCycles();
     list<list<DFGNode*>*>* getCycleLists();
