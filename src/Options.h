@@ -33,6 +33,7 @@ class Options {
 		bool DebugOperationMap;
 		bool DebugRustConversion;
 		bool DebugMappingLoop;
+		bool DebugBreakCycles;
 		bool PrintMappingFailures;
 		bool PrintOperationCount;
 		bool PrintUsedRules;

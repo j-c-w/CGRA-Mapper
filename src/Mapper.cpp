@@ -353,7 +353,7 @@ map<CGRANode*, int>* Mapper::calculateCost(CGRA* t_cgra, DFG* t_dfg,
         tempPath = dijkstra_search(t_cgra, t_dfg, t_II, pre,
             t_dfgNode, t_fu); 
 	  else {
-		  cout << "Failed to support " << t_dfgNode->getOperation() << " on node " << t_fu->getX() << ", " << t_fu->getY() << endl;
+		  // cout << "Failed to support " << t_dfgNode->getOperation() << " on node " << t_fu->getX() << ", " << t_fu->getY() << endl;
 		  t_fu->print_operations();
 	  }
       if (tempPath == NULL)
@@ -375,7 +375,7 @@ map<CGRANode*, int>* Mapper::calculateCost(CGRA* t_cgra, DFG* t_dfg,
   // TODO: should also consider the current config mem iterms.
   if (!isAnyPredDFGNodeMapped) {
     if (!t_fu->canSupport(t_dfgNode)) {
-		  cout << "Failed to support " << t_dfgNode->getOperation() << " on node " << t_fu->getX() << ", " << t_fu->getY() << endl;
+		  // cout << "Failed to support " << t_dfgNode->getOperation() << " on node " << t_fu->getX() << ", " << t_fu->getY() << endl;
 		  t_fu->print_operations();
       return NULL;
 	}
@@ -472,7 +472,7 @@ int Mapper::schedule(CGRA* t_cgra, DFG* t_dfg, int t_II,
     if (m_mapping.find(node) != m_mapping.end()) {
       if (m_mapping[(node)] == onePredCGRANode and
           onePredCGRANode->getMappedDFGNode(onePredCGRANodeTiming)==node) {
-        cout<<"[CHENG] skip predecessor routing -- dfgNode: "<<node->getID()<<"\n";
+        // cout<<"[CHENG] skip predecessor routing -- dfgNode: "<<node->getID()<<"\n";
         continue;
       }
 //      if (m_mapping[(node)] != onePredCGRANode) {
@@ -840,9 +840,9 @@ void Mapper::generateJSON(CGRA* t_cgra, DFG* t_dfg, MapResult *r,
                   if (il->isOccupied(t_tmp, r->II(), t_isStaticElasticCGRA) and
                       il->isBypass(t_tmp) and
                       il->getMappedDFGNode(t_tmp) == ol->getMappedDFGNode(next_t)) {
-                    cout<<"[cheng] inside roi for CGRA node "<<currentCGRANode->getID()<<"...\n";
+                    // cout<<"[cheng] inside roi for CGRA node "<<currentCGRANode->getID()<<"...\n";
                     if (il->getMappedDFGNode(t_tmp) == NULL)
-                      cout<<"[cheng] none..."<<il->getMappedDFGNode(t_tmp)<<"\n";
+                      // cout<<"[cheng] none..."<<il->getMappedDFGNode(t_tmp)<<"\n";
                     stringDst[outIndex] = to_string(il->getDirectionID(currentCGRANode));//+"; t_tmp: "+to_string(t_tmp)+"; dfg node: " + to_string(il->getMappedDFGNode(t_tmp)->getID());
                   }
                 }
@@ -1032,7 +1032,7 @@ bool Mapper::tryToRoute(CGRA* t_cgra, DFG* t_dfg, int t_II,
     DFGNode* t_srcDFGNode, CGRANode* t_srcCGRANode, DFGNode* t_dstDFGNode,
     CGRANode* t_dstCGRANode, int t_dstCycle, bool t_isBackedge,
     bool t_isStaticElasticCGRA) {
-  cout<<"[cheng] tryToRoute -- srcDFGNode: "<<t_srcDFGNode->getID()<<", srcCGRANode: "<<t_srcCGRANode->getID()<<"; dstDFGNode: "<<t_dstDFGNode->getID()<<", dstCGRANode: "<<t_dstCGRANode->getID()<<"; backEdge: "<<t_isBackedge<<endl;
+  // cout<<"[cheng] tryToRoute -- srcDFGNode: "<<t_srcDFGNode->getID()<<", srcCGRANode: "<<t_srcCGRANode->getID()<<"; dstDFGNode: "<<t_dstDFGNode->getID()<<", dstCGRANode: "<<t_dstCGRANode->getID()<<"; backEdge: "<<t_isBackedge<<endl;
   list<CGRANode*> searchPool;
   map<CGRANode*, int> distance;
   map<CGRANode*, int> timing;
@@ -1175,10 +1175,10 @@ bool Mapper::tryToRoute(CGRA* t_cgra, DFG* t_dfg, int t_II,
 
   map<int, CGRANode*>::iterator previousIter;
   map<int, CGRANode*>::reverse_iterator riter = reorderPath->rbegin();
-  cout<<"[cheng] check route size: "<<reorderPath->size()<<"\n";
+  // cout<<"[cheng] check route size: "<<reorderPath->size()<<"\n";
   if (reorderPath->size() == 1) {
     int duration = (t_II+(t_dstCycle-(*riter).first)%t_II)%t_II;
-    cout<<"[cheng] allocate for local reg maintain... duration="<<duration<<" last cycle: "<<(*riter).first<<"\n";
+    // cout<<"[cheng] allocate for local reg maintain... duration="<<duration<<" last cycle: "<<(*riter).first<<"\n";
     (*riter).second->allocateReg(4, (*riter).first, duration, t_II);
   }
   bool generatedOut = true;
@@ -1193,10 +1193,10 @@ bool Mapper::tryToRoute(CGRA* t_cgra, DFG* t_dfg, int t_II,
         isBypass = true;
       else {
         duration = (t_II+(t_dstCycle-(*previousIter).first)%t_II)%t_II;
-        cout<<"[cheng] reset duration: "<<duration<<" t_dstCycle: "<<t_dstCycle<<" previous: "<<(*previousIter).first<<" II: "<<t_II<<"\n";
+        // cout<<"[cheng] reset duration: "<<duration<<" t_dstCycle: "<<t_dstCycle<<" previous: "<<(*previousIter).first<<" II: "<<t_II<<"\n";
       }
       if (duration == 0) {
-        cout<<"[cheng] reset duration is 0...\n";
+        // cout<<"[cheng] reset duration is 0...\n";
         // The successor can only be done within an interval of II, otherwise
         // the II is no longer II but II*2.
         if (t_isBackedge) {

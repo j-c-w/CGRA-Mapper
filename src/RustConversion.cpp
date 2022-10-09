@@ -57,11 +57,11 @@ RustNode toRustNode(DFGNode *n, map<int, int> id_map) {
 	return rnode;
 }
 
-RustDFG toRustDFG(DFG *dfg) {
+RustDFG toRustDFG(DFG *dfg, Options *options) {
 	map<int, int> id_lookup; // Translate between the IDs used in the DFG and the implicit IDs used in the Rust DFG.
 
 	// Need to break cycles before we convert into a rust DFG.
-	dfg->breakCycles();
+	dfg->breakCycles(options);
 
 	// RustNode *nodes = (RustNode* )malloc(sizeof(RustNode) * dfg->nodes.size());
 	auto nodes = std::make_unique<RustNode[]>(dfg->nodes.size());
@@ -193,7 +193,9 @@ DFG* toDFG(RustDFG rustDfg) {
 
 // As below, but use the rewrite_with_graphs interface instead.
 list<DFG*> *rewrite_with_graphs(Options *opts, CGRA *cgra, DFG *dfg) {
-	RustDFG rdfg = toRustDFG(dfg);
+	debugRustConversion = opts->DebugRustConversion;
+
+	RustDFG rdfg = toRustDFG(dfg, opts);
 	if (opts->DebugRustConversion) {
 		Rulesets r = opts->getRulesets();
 		for (int i = 0; i < r.num_names; i ++) {
@@ -228,7 +230,7 @@ list<DFG*> *rewrite_with_graphs(Options *opts, CGRA *cgra, DFG *dfg) {
 list<DFG*> *rewrite_with_egraphs(Options *opts, CGRA *cgra, DFG *dfg) {
 	debugRustConversion = opts->DebugRustConversion;
 	// Create the Rust DFGs:
-	RustDFG rdfg = toRustDFG(dfg);
+	RustDFG rdfg = toRustDFG(dfg, opts);
 	// Call the rewriter
 	// Results are null-terminated.
 	if (opts->DebugRustConversion) {

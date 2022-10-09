@@ -74,7 +74,7 @@ void CGRANode::allocateReg(int t_port_id, int t_cycle, int t_duration, int t_II)
       }
     }
     if (reg_occupied == false) {
-      cout<<"[cheng] in allocateReg() t_cycle: "<<t_cycle<<"; i: "<<i<<" CGRA node: "<<this->getID()<<"; link: "<<t_port_id<<" duration "<<t_duration<<"\n";
+      // cout<<"[cheng] in allocateReg() t_cycle: "<<t_cycle<<"; i: "<<i<<" CGRA node: "<<this->getID()<<"; link: "<<t_port_id<<" duration "<<t_duration<<"\n";
       for (int cycle=t_cycle; cycle<m_cycleBoundary; cycle+=t_II) {
         m_regs_timing[cycle][i] = t_port_id;
 //        if (cycle < 20)
@@ -327,7 +327,7 @@ void CGRANode::setDFGNode(DFGNode* t_opt, int t_cycle, int t_II,
     }
   }
 
-  cout<<"[CHENG] setDFGNode "<<t_opt->getID()<<" onto CGRANode "<<getID()<<" at cycle: "<<t_cycle<<"\n";
+  // cout<<"[CHENG] setDFGNode "<<t_opt->getID()<<" onto CGRANode "<<getID()<<" at cycle: "<<t_cycle<<"\n";
   ++m_currentCtrlMemItems;
   t_opt->setMapped();
 }

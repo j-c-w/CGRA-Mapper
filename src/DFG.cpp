@@ -69,7 +69,7 @@ DFG::DFG(list<DFGNode *> nodes, list<DFGEdge*> edges): m_function(nullptr), node
 }
 
 DFG::DFG(std::string filename) {
-  cout << "Loading DFG From File\n";
+  /* cout << "Loading DFG From File\n"; */
   std::ifstream i(filename);
   json j;
   i >> j;
@@ -104,7 +104,7 @@ DFG::DFG(std::string filename) {
   cout << "Loading Edges\n";
   // Get the edges.
   for (json edge : j["edges"]) {
-    cout << "Loading edge" << edge["to"].get<std::string>();
+    /* cout << "Loading edge" << edge["to"].get<std::string>(); */
     DFGNode *tnode = node_name_lookup.at(edge["to"].get<std::string>());
     DFGNode *fnode = node_name_lookup.at(edge["from"].get<std::string>());
 
@@ -325,7 +325,7 @@ bool DFG::shouldIgnore(Value* t_value) {
 	  std::string str;
 	llvm::raw_string_ostream rso(str);
 	t_inst->print(rso);
-	  cout << "Looking at membership for instruction " << str << "\n;" << "result is " << contains << "\n";
+	  /* cout << "Looking at membership for instruction " << str << "\n;" << "result is " << contains << "\n"; */
     if (contains) {
       return false;
     }
@@ -383,20 +383,20 @@ list<DFGNode*>* DFG::getDFSOrderedNodes() {
       }
     }
   }
-  errs()<<"\nordered nodes: \n";
-  for (DFGNode* dfgNode: *m_orderedNodes) {
-    errs()<<dfgNode->getID()<<"  ";
-  }
-  errs()<<"\n";
-  errs()<<"\nedges:\n";
-  errs()<<"\n noes:\n";
-  for (DFGNode *node : nodes) {
-	  errs()<<node->getID()<<" ";
-	  for (DFGEdge *edge : *node->getInEdges()) {
-		  errs() << "Edge: " << edge->asString();
-	  }
-  }
-  errs()<<"\n";
+  /* /1* errs()<<"\nordered nodes: \n"; *1/ */
+  /* for (DFGNode* dfgNode: *m_orderedNodes) { */
+  /*   errs()<<dfgNode->getID()<<"  "; */
+  /* } */
+  /* errs()<<"\n"; */
+  /* errs()<<"\nedges:\n"; */
+  /* errs()<<"\n noes:\n"; */
+  /* for (DFGNode *node : nodes) { */
+	  /* errs()<<node->getID()<<" "; */
+	  /* for (DFGEdge *edge : *node->getInEdges()) { */
+		  /* errs() << "Edge: " << edge->asString(); */
+	  /* } */
+  /* } */
+  /* errs()<<"\n"; */
   assert(m_orderedNodes->size() == nodes.size());
   return m_orderedNodes;
 }
@@ -730,7 +730,7 @@ void DFG::construct(Function *t_F) {
 		  default: {
 			for (Instruction::op_iterator op = curII->op_begin(), opEnd = curII->op_end(); op != opEnd; ++op) {
 			  Value* tempInst = cast<Value>(*op);
-			  errs() << "Looking at inst " << *tempInst << "\n";
+			  /* errs() << "Looking at inst " << *tempInst << "\n"; */
 			  if (tempInst and !shouldIgnore(tempInst)) {
 	//            if(node->isBranch()) {
 	//              errs()<<"  the real branch's pred: "<<*tempInst<<"\n";
@@ -1488,10 +1488,10 @@ void DFG::rejoinCycles() {
 		// of these is going to have a single edge.
 		DFGEdge *sourceEdge = (*sourceNode->getInEdges()).front();
 		DFGEdge *destEdge = (*targetNode->getOutEdges()).front();
-		errs() << "Source node is " << sourceNode->asString();
-		errs() << "Number of in edges to the source node is " << sourceNode->getInEdges()->size() << "\n";
-		errs() << "Target node is " << targetNode->asString();
-		errs() << "Number of out edges to the target node is " << targetNode->getOutEdges()->size() << "\n";
+		/* errs() << "Source node is " << sourceNode->asString(); */
+		/* errs() << "Number of in edges to the source node is " << sourceNode->getInEdges()->size() << "\n"; */
+		/* errs() << "Target node is " << targetNode->asString(); */
+		/* errs() << "Number of out edges to the target node is " << targetNode->getOutEdges()->size() << "\n"; */
 
 
 		// New edge: (IIRC the edge IDs don't matter?)
@@ -1525,7 +1525,7 @@ void DFG::rejoinCycles() {
 	}
 }
 
-void DFG::breakCycles() {
+void DFG::breakCycles(Options *options) {
 	// This introduces dummy nodes -- to keep track of them
 	// We need to add them to the DFG when we are done.
 	list<DFGEdge *> edgesToAdd;
@@ -1551,6 +1551,10 @@ void DFG::breakCycles() {
 		list<DFGEdge *> tempEdges;
 		list<DFGNode *> tempNodes;
 
+    if (options->DebugBreakCycles) {
+      cout << "Starting to break cyles on node " << dfgNode->asString();
+    }
+
 		DFGNode *brnode = nullptr;
 		for (DFGEdge *edge : *dfgNode->getInEdges()) {
 			DFGNode *srcnode = edge->getSrc();
@@ -1566,9 +1570,11 @@ void DFG::breakCycles() {
 					// TODO -- more intelligent logic to figure out which of these is the loop br.
 					if (brnode != srcnode) {
 						// We choose the last one?
-						cout << "Expected a different brnode!\n";
-						cout << "Brnode is " << brnode->asString() << "\n";
-						cout << "Dstnode is "<< srcnode->asString() << "\n";
+            if (options->DebugBreakCycles) {
+              cout << "Expected a different brnode!\n";
+              cout << "Brnode is " << brnode->asString() << "\n";
+              cout << "Dstnode is "<< srcnode->asString() << "\n";
+            }
 						brnode = srcnode;
 						inEdgesToRemove.clear();
 						inEdgesToRemove.push_back(edge);
@@ -1579,6 +1585,10 @@ void DFG::breakCycles() {
 				}
 			}
 		}
+
+    if (options->DebugBreakCycles && brnode) {
+      cout << "Breaknode is " << brnode->asString();
+    }
 
 		list<DFGEdge *> outEdgesToRemove;
 		for (DFGEdge *edge : *dfgNode->getOutEdges()) {
@@ -1594,9 +1604,11 @@ void DFG::breakCycles() {
 
 				if (brnode) {
 					if (brnode != dstnode) {
-						cout << "Expected a different brnode!\n";
-						cout << "Brnode is " << brnode->asString() << "\n";
-						cout << "Dstnode is "<< dstnode->asString() << "\n";
+            if (options->DebugBreakCycles) {
+              cout << "Expected a different brnode!\n";
+              cout << "Brnode is " << brnode->asString() << "\n";
+              cout << "Dstnode is "<< dstnode->asString() << "\n";
+            }
 						// We use the last one --- assume it's a looping BR
 					}
 				} else {
@@ -1605,25 +1617,35 @@ void DFG::breakCycles() {
 			}
 		}
 
-		cout << "Before removing, have " << dfgNode->getInEdges()->size() << "edges in\n";
-		cout << "Before removing, have " << dfgNode->getOutEdges()->size() << "edges out\n";
+    if (options->DebugBreakCycles) {
+      cout << "Before removing, node is " << dfgNode->asString() << "\n";
+      cout << "Before removing, have " << dfgNode->getInEdges()->size() << "edges in\n";
+      cout << "Before removing, have " << dfgNode->getOutEdges()->size() << "edges out\n";
+    }
 		// Clear the edges:
 		for (DFGEdge * r: inEdgesToRemove) {
-			cout << "Removing edge " << r->asString() << "\n";
+      if (options->DebugBreakCycles) {
+        cout << "Removing edge " << r->asString() << "\n";
+      }
 			dfgNode->getInEdges()->remove(r);
 
 			splitEdge(r, &dummyNodeCounter, &nodesToAdd, &edgesToAdd);
 		}
 
 		for (DFGEdge * r: outEdgesToRemove) {
-			cout << "Removing edge  " << r->asString() << "\n";
+      if (options->DebugBreakCycles) {
+        cout << "Removing edge  " << r->asString() << "\n";
+      }
 			dfgNode->getOutEdges()->remove(r);
 
 			splitEdge(r, &dummyNodeCounter, &nodesToAdd, &edgesToAdd);
 		}
 
-		cout << "After removing, have " << dfgNode->getInEdges()->size() << "edges in\n";
-		cout << "After removing, have " << dfgNode->getOutEdges()->size() << "edges out\n";
+    if (options->DebugBreakCycles) {
+      cout << "For node " << dfgNode->asString() << " have:\n";
+      cout << "After removing, have " << dfgNode->getInEdges()->size() << "edges in\n";
+      cout << "After removing, have " << dfgNode->getOutEdges()->size() << "edges out\n";
+    }
 		// Clear the cahced info for this node.
 		dfgNode->clearCachedNodes();
 	}
