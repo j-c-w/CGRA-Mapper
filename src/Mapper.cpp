@@ -416,7 +416,7 @@ int Mapper::schedule(CGRA* t_cgra, DFG* t_dfg, int t_II,
 
   map<int, CGRANode*>::reverse_iterator ri = reorderPath->rbegin();
   CGRANode* fu = (*ri).second;
-  errs()<<"schedule dfg node["<<t_dfg->getID(t_dfgNode)<<"] onto fu["<<fu->getID()<<"] at cycle "<<(*t_path)[fu]<<" within II: "<<t_II<<"\n";
+  // errs()<<"schedule dfg node["<<t_dfg->getID(t_dfgNode)<<"] onto fu["<<fu->getID()<<"] at cycle "<<(*t_path)[fu]<<" within II: "<<t_II<<"\n";
 
   // Map the DFG node onto the CGRA nodes across cycles.
   m_mapping[t_dfgNode] = fu;

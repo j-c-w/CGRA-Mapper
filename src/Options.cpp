@@ -47,6 +47,7 @@ cl::opt<bool> PrintUsedRules("print-used-rules", cl::desc("Print the number of u
 
 cl::opt<std::string> Params("params-file", cl::desc("Json file with the CGRA parameters"));
 cl::list<std::string> RulesetsOpt("ruleset", cl::desc("Rulesets to use: valid options are: int, fp, boolean, stochastic, gcc (default is gcc, gcc = int ruleset + fp ruleset)"));
+cl::opt<std::string> EGraphsMode("egraph-mode", cl::desc("Rewrite mode used by EGraphs.  Options are: binary, fractional."))
 
 #endif
 
