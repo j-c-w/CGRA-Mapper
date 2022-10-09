@@ -103,11 +103,120 @@ def fix_calls(runnable):
 def fix_defs(runnable):
     runnable = re.replace('\[1024\] = ', '[2048] =', runnable)
 
-# Skip these as they crash.  Don't know wy they aren't picked up by Alex's tool.
-skips = [
-        "f4950273923585529084",
-        "f1668337996997030710"
-        ]
+def assign_const_ints(runnable):
+    const_assigns = re.finditer('const int [a-zA-Z0-9_]*?;', runnable)
+    replace_texts = []
+
+    for match in const_assigns:
+        match_test = runnable[match.start(0):match.end(0)]
+
+        replace_texts.append(match_test)
+
+    for replacable in replace_texts:
+        new_text = replacable.replace(';', ' = 32;')
+        runnable = runnable.replace(replacable, new_text)
+
+    return runnable
+
+def insert_running_loop(runnable):
+    # Find the START and END points --- we insert a loop between those.
+    startpoint = re.finditer("START.*?;\n", runnable)
+    endpoint = re.finditer("END", runnable)
+
+    # Pre-code:
+    pre_loop = """int __FlexCLoopCounter = 0;
+    for (; __FlexCLoopCounter < TIMES; __FlexCLoopCounter ++) {
+    """
+    post_loop = "\n}\n"
+
+    # Now, splice together
+    starts = 0
+    for match in startpoint:
+        starts += 1
+        start = match.end(0)
+
+    ends = 0
+    for match in endpoint:
+        ends += 1
+        end = match.start(0)
+
+    if not(starts == 1 and ends == 1):
+        print("Runnable, ", runnable, "donens't have right number of starts and ends")
+        assert False
+
+    call_contents = runnable[start:end]
+
+    return runnable[:start] + pre_loop + call_contents + post_loop + runnable[end:]
+
+def cast_arguments_to_void(runnable):
+    funcall = re.finditer('fn\(.*?\)[^\[]', runnable)
+    matches = 0
+    for match in funcall:
+        matches += 1
+        funcall_string = runnable[match.start(0) + 3:match.end(0) - 2]
+
+    if matches != 1:
+        print ("Runnable", runnable, "has too many matches")
+        assert False
+
+    fundef = re.finditer('fn \([\s\S]*?\)[^\[]', runnable)
+    defmatches = 0
+    for defmatch in fundef:
+        defmatches += 1
+        fundef_string = runnable[defmatch.start(0):defmatch.end(0) - 1]
+
+    if defmatches != 1:
+        print("Def maches is none on ", runnable)
+        assert False
+
+    # Get the types of every def --- it's all but the last word (including '*' if that eists)
+    fundef_string = fundef_string[4:-1] # drop fn ( and )
+    vardefs = fundef_string.split(',')
+    cast_types = []
+    for vardef in vardefs:
+        if 'e_curr' in vardef:
+            # There ecurr types have weird formatting -- skip.
+            cast_types.append(None)
+            continue
+        vardef = vardef.replace('*', '* ')
+        type = ' '.join(vardef.split(' ')[:-1])
+        cast_types.append(type.strip())
+
+    # split by args.
+    funcall_string = funcall_string.replace(',', ' ').split(' ')
+    # filter out empties
+    funcall_args = [ff for ff in funcall_string if ff]
+
+    # everything but first is a funarg.
+    cast_args = []
+    i = 0
+    for arg in funcall_args:
+        if cast_types[i]:
+            cast_args.append('(' + cast_types[i] + ')' + arg)
+        else:
+            cast_args.append(arg)
+        i += 1
+
+    newcall = "fn(" + ", ".join(cast_args) + ");"
+
+    return runnable[:match.start(0)] + newcall + runnable[match.end(0):]
+
+
+def fix_broken_const_assignments(runnable):
+    const_assignments = re.finditer('const .*?\[.*?\].*?[=;]', runnable)
+    to_swap = []
+    for match in const_assignments:
+        string = runnable[match.start(0):match.end(0)]
+        values = string.replace(';', ' ;').split(' ')
+        if len(values) == 3:
+            new_string = 'const int ' + ''.join(values[1:])
+            to_swap.append((string, new_string.replace(' ;', ';')))
+        
+    for (swap_from, swap_to) in to_swap:
+        runnable = runnable.replace(swap_from, swap_to)
+
+    return runnable
+
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
@@ -141,13 +250,11 @@ if __name__ == "__main__":
     loops_string = ""
     runfuns = []
     imports = set()
+    imports.add('#include "../utils.h"')
     used_fnames = set()
 
     for loop in sources:
         runnable = loop.runnable
-        if loop.fname in skips:
-            # Skip that thing too.
-            continue
         # There are some dups in the set.
         # Dont' need to measure those twice.
         if loop.fname in used_fnames:
@@ -161,13 +268,24 @@ if __name__ == "__main__":
         # There are some issues in the loop extractor when generating calls to fixed-length
         # arrays --- fix those.
         runnable = fix_calls(runnable)
+        runnable = assign_const_ints(runnable)
+
+        # embedded armcc doesn't support this apparently.
+        runnable = runnable.replace('__restrict', ' ')
+
+        # Alex's code is a bit broken: try and fix it up here with void* casts and -fpermissive.
+        # needs ot happen befoer the fn( replacement.
+        runnable = cast_arguments_to_void(runnable)
+        # Alex's code is also a bit broken here: for const inputs it doesn't generate
+        # everything.
+        runnable = fix_broken_const_assignments(runnable)
 
         # We do some rewriting to the runnable one for tracking.
         runnable = runnable.replace('fn (', loop.fname + ' (')
         runnable = runnable.replace('fn(', loop.fname + '(')
 
         runnable = runnable.replace(loop.fname + '(', 'START("' + str(loop.source_hash) + '");\n' + loop.fname + '(')
-        runnable = runnable.replace('return 0;', 'END("' + str(loop.source_hash) + '"); return 0;')
+        runnable = runnable.replace('return 0;\n}', 'END("' + str(loop.source_hash) + '"); return 0;\n}')
 
         # Custom function name:
         runnable = runnable.replace('int main()', 'int run_' + loop.fname + '()')
@@ -212,6 +330,10 @@ if __name__ == "__main__":
             for match in tail_insert_index:
                 end = match.end(0)
                 runnable = runnable[:end] + ";}" + runnable[end:]
+
+        # Insert a running loop to allow this to be run mnay times.  Note that this has
+        # to happen last --- otherwise it will interfere with the other stuff here.
+        runnable = insert_running_loop(runnable)
 
         # Write the loop individually into a matched source
         # file so we can get the CGRA-Mapper compile time.
