@@ -60,8 +60,9 @@ def load_from_file(f, by_size, size_lookup={}):
                 base_key = fname_source
 
             # Go over every sub-part to that thing.
-            succ_dict[base_key] = {}
-            fail_dict[base_key] = {}
+            if base_key not in succ_dict:
+                succ_dict[base_key] = {}
+                fail_dict[base_key] = {}
             for elem in line[1:]:
                 elem = elem.split(":")
                 mode = elem[0] # success or fail
@@ -69,9 +70,15 @@ def load_from_file(f, by_size, size_lookup={}):
                 num = int(elem[2].strip()) # how many benchmarks did this thing.
 
                 if mode == "success":
-                    succ_dict[base_key][bname] = num
+                    if bname in succ_dict[base_key]:
+                        succ_dict[base_key][bname] += num
+                    else:
+                        succ_dict[base_key][bname] = num
                 elif mode == "fail":
-                    fail_dict[base_key][bname] = num
+                    if bname in fail_dict[base_key]:
+                        fail_dict[base_key][bname] += num
+                    else:
+                        fail_dict[base_key][bname] = num
                 else:
                     print (mode)
                     assert False # Needs to be success or fail.
@@ -200,8 +207,8 @@ def plot_from_size(baseline_dict, llvm_dict, greedy_dict, rewriter_dict, outname
             for k2 in d[k]:
                 vs.append(d[k][k2])
             newd[k] = np.mean(vs)
-        xs = sorted(newd.keys())
-        ys = [newd[x] for x in xs]
+        xs = np.array(sorted(newd.keys()))
+        ys = np.array([newd[x] for x in xs])
         return xs, ys
 
     base_x, base_y = average_dict(baseline_dict)
@@ -215,11 +222,11 @@ def plot_from_size(baseline_dict, llvm_dict, greedy_dict, rewriter_dict, outname
     plt.clf()
     # print(len(xvalues))
     # print(len(ys))
-    width=0.15
-    plt.bar(base_xvalues-width, base_y, label='OpenCGRA', width=width, color=colors[0], hatch=hatching[0])
-    plt.bar(llvm_x, llvm_y, label='LLVM', width=width, color=colors[1], hatch=hatching[1])
-    plt.bar(greedy_x, greedy_y, label='Greedy Rewriter', width=width, color=colors[2], hatch=hatching[2])
-    plt.bar(xvalues+width, ys, label='FlexC', width=width, color=colors[3], hatch=hatching[3])
+    width=0.20
+    plt.bar(base_xvalues-width*1.5, base_y, label='OpenCGRA', width=width, color=colors[0], hatch=hatching[0])
+    plt.bar(llvm_x-width*0.5, llvm_y, label='LLVM', width=width, color=colors[1], hatch=hatching[1])
+    plt.bar(greedy_x+width*0.5, greedy_y, label='Greedy Rewriter', width=width, color=colors[2], hatch=hatching[2])
+    plt.bar(xvalues+width*1.5, ys, label='FlexC', width=width, color=colors[3], hatch=hatching[3])
     plt.legend()
     plt.gca().set_xticks(xvalues)
     plt.gca().set_xticklabels([str(x) for x in xs]) #not sure why we have to do this.
@@ -307,13 +314,13 @@ if __name__ == "__main__":
         s_dict, f_dict, _ = load_from_file(args.input_filename_baseline, False)
         baseline_dict = load_in_vs_out_of_benchmark_compiles(s_dict, f_dict, False)
 
-        plot_same_and_different(baseline_dict, llvm_dict, rewriter_dict, args.output_filename)
+        plot_same_and_different(baseline_dict, rewriter_dict, args.output_filename)
 
         # Plot the results by benchmark suite.
         s_dict, f_dict, size_lookup = load_from_file(args.input_filename_rewriter, True)
         print('dict is ', size_lookup)
         rewriter_dict_by_size = load_in_vs_out_of_benchmark_compiles(s_dict, f_dict, True)
-        s_dict, f_dict, size_lookup = load_from_file(args.input_filename_llvm, True)
+        s_dict, f_dict, _ = load_from_file(args.input_filename_llvm, True, size_lookup)
         llvm_dict_by_size = load_in_vs_out_of_benchmark_compiles(s_dict, f_dict, True)
         s_dict, f_dict, _ = load_from_file(args.input_filename_greedy, True, size_lookup)
         greedy_dict_by_size = load_in_vs_out_of_benchmark_compiles(s_dict, f_dict, True)
