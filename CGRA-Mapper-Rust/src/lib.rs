@@ -231,7 +231,9 @@ fn explanation_statistics(e: &Explanation<SymbolLang>) {
 }
 
 #[no_mangle]
-pub extern "C" fn optimize_with_egraphs(dfg: CppDFG, rulesets: Rulesets, cgra_params: *const c_char, frequency_cost: bool, print_used_rules: bool) -> CppDFGs {
+pub extern "C" fn optimize_with_egraphs(dfg: CppDFG, rulesets: Rulesets, cgra_params: *const
+										c_char, print_used_rules: bool,
+										cost_mode: *const) -> CppDFGs {
 	println!("entering Rust");
 
 	let rules = load_rulesets(rulesets);
@@ -258,7 +260,7 @@ pub extern "C" fn optimize_with_egraphs(dfg: CppDFG, rulesets: Rulesets, cgra_pa
 
     let cgrafilename = unsafe { std::ffi::CStr::from_ptr(cgra_params) }.to_str().unwrap();
     let start_extraction = std::time::Instant::now();
-	let (best, best_roots) = if frequency_cost {
+	let (best, best_roots) = if cost_mode == "frequency" {
 		println!("Running egraphs with frequency cost");
 		let cost = LookupCost::from_operations_frequencies(cgrafilename);
 		LpExtractor::new(&runner.egraph, cost).solve_multiple(&roots[..])

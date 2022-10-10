@@ -40,6 +40,7 @@ class Options {
 		
 		std::string Params;
 		list<std::string> rulesets;
+		std::string EGraphMode;
 
 		Rulesets getRulesets(); // Return the ruleset names in C form to be passed to rust.
 		std::string getRulesetNames();
