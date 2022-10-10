@@ -1,0 +1,20 @@
+#include <stdint.h>
+#include <stdio.h>
+
+
+
+
+typedef __uint8_t uint8_t;
+
+int
+fn (const uint8_t * s1, int x, const uint8_t * s0, const uint8_t * s3,
+    uint8_t * dst, const uint8_t * s2, const uint8_t * w)
+{
+  for (x = 0; x < 8; x++)
+    {
+      (dst[x]) =
+	(((dst[x]) +
+	  ((s0[x] * w[0] + s1[x] * w[1] + s2[x] * w[2] + s3[x] * w[3] +
+	    8) >> 4) + 1) >> 1);
+    }
+}
