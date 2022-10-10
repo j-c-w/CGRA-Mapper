@@ -26,6 +26,7 @@ reduction_rate=$4 # Float from 0.0 to 1.0 --- how many loops to try
 
 cd ~/nix
 ./nix-user-chroot ~/.nix bash -c "
+source ~/.bashrc
 cd ~/Projects/CGRA/CGRA-Mapper
 nix-shell shell.nix --run '
 set -x

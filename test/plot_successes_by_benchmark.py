@@ -4,7 +4,7 @@ import numpy as np
 import statistics
 
 colors=['#818fa6', '#6ea5ff', '#95c983', '#c99083', '#e079d6']
-hatching=['O', 'o', '.', '-', 'x']
+hatching=['O', 'o', '.', '..', '-', 'x']
 
 labels = ['freeimage', 'ffmpeg', 'DarkNet', 'LivermoreC', 'bzip2']
 
@@ -160,7 +160,7 @@ def plot_same_and_different(baseline_dict, rewriter_dict, outname):
     same_series_baseline, diff_series_baseline = get_series_from_dict(baseline_dict)
     same_series_rewriter, diff_series_rewriter = get_series_from_dict(rewriter_dict)
 
-    width = 0.15
+    width = 0.8
     global labels
     xvals = np.arange(0, len(labels))
     print("Have labels", labels)
@@ -190,7 +190,7 @@ def plot_same_and_different(baseline_dict, rewriter_dict, outname):
     print("Geomean within same suite is " + str(statistics.geometric_mean(same_suite_improvements)))
     print("Geomean between suites is " + str(statistics.geometric_mean(diff_suite_improvements)))
 
-def plot_from_size(baseline_dict, greedy_dict, rewriter_dict, outname):
+def plot_from_size(baseline_dict, llvm_dict, greedy_dict, rewriter_dict, outname):
     def average_dict(d):
         newd = {}
         for k in d:
@@ -205,6 +205,7 @@ def plot_from_size(baseline_dict, greedy_dict, rewriter_dict, outname):
         return xs, ys
 
     base_x, base_y = average_dict(baseline_dict)
+    llvm_x, llvm_y = average_dict(llvm_dict)
     greedy_x, greedy_y = average_dict(greedy_dict)
     xs, ys = average_dict(rewriter_dict)
     xvalues = np.arange(min(xs), max(xs) + 1)
@@ -214,10 +215,11 @@ def plot_from_size(baseline_dict, greedy_dict, rewriter_dict, outname):
     plt.clf()
     # print(len(xvalues))
     # print(len(ys))
-    width=0.2
+    width=0.15
     plt.bar(base_xvalues-width, base_y, label='OpenCGRA', width=width, color=colors[0], hatch=hatching[0])
-    plt.bar(greedy_x, greedy_y, label='Greedy Rewriter', width=width, color=colors[1], hatch=hatching[1])
-    plt.bar(xvalues+width, ys, label='FlexC', width=width, color=colors[2], hatch=hatching[2])
+    plt.bar(llvm_x, llvm_y, label='LLVM', width=width, color=colors[1], hatch=hatching[1])
+    plt.bar(greedy_x, greedy_y, label='Greedy Rewriter', width=width, color=colors[2], hatch=hatching[2])
+    plt.bar(xvalues+width, ys, label='FlexC', width=width, color=colors[3], hatch=hatching[3])
     plt.legend()
     plt.gca().set_xticks(xvalues)
     plt.gca().set_xticklabels([str(x) for x in xs]) #not sure why we have to do this.
@@ -228,7 +230,7 @@ def plot_from_size(baseline_dict, greedy_dict, rewriter_dict, outname):
 
     print("Done with by size graph (in " + outname + '_by_size.png)')
 
-def plot_case_studies_graph(outname, opencgra, greedy, flexc):
+def plot_case_studies_graph(outname, opencgra, llvm, greedy, flexc):
     architectures = ["CCA", "Maeri", "REVAMP", "SC-CGRA"]
     bmarks = ["LivermoreC", "DarkNet", "ffmpeg", "bzip2", "freeimage"]
 
@@ -246,20 +248,22 @@ def plot_case_studies_graph(outname, opencgra, greedy, flexc):
     for i in range(4): # one for each arch.
         arch = architectures[i]
         opencgra_data = opencgra[arch]
+        llvm_data = llvm[arch]
         greedy_data = greedy[arch]
         flexc_data = flexc[arch]
         xpoints = np.arange(len(bmarks))
-        width = 0.25
+        width = 0.15
 
         ax[i].set_title(arch)
-        ax[i].bar(xpoints - width, y_values_for(opencgra_data), width=width, label='OpenCGRA', color=colors[0], hatch=hatching[0])
-        ax[i].bar(xpoints, y_values_for(greedy_data), width=width, label='Greedy', color=colors[1], hatch=hatching[1])
-        ax[i].bar(xpoints + width, y_values_for(flexc_data), width=width, label='FlexC', color=colors[2], hatch=hatching[2])
+        ax[i].bar(xpoints - 1.5 * width, y_values_for(opencgra_data), width=width, label='OpenCGRA', color=colors[0], hatch=hatching[0])
+        ax[i].bar(xpoints - 0.5 * width, y_values_for(llvm_data), width=width, label='LLVM', color=colors[1], hatch=hatching[1])
+        ax[i].bar(xpoints + 0.5 * width, y_values_for(greedy_data), width=width, label='Greedy', color=colors[2], hatch=hatching[2])
+        ax[i].bar(xpoints + 1.5 * width, y_values_for(flexc_data), width=width, label='FlexC', color=colors[3], hatch=hatching[3])
         ax[i].set_ylim([0, 1.0])
         ax[i].set_xticks(xpoints)
         ax[i].set_xticklabels(bmarks, rotation=90)
-        if i == 0:
-            ax[i].legend()
+        if i == 1:
+            ax[i].legend(ncol=1, prop={'size': 9})
 
     plt.tight_layout()
     plt.savefig(outname + "_case_studies_by_benchmark.png")
@@ -270,6 +274,7 @@ if __name__ == "__main__":
 
     parser.add_argument("output_filename")
     parser.add_argument("input_filename_baseline")
+    parser.add_argument("input_filename_llvm")
     parser.add_argument("input_filename_greedy", help="Not currently used in loop-on-loop case")
     parser.add_argument("input_filename_rewriter")
     parser.add_argument("--case-studies", default=False, action='store_true', dest='case_studies')
@@ -280,28 +285,36 @@ if __name__ == "__main__":
         s_dict, f_dict, _ = load_from_file(args.input_filename_rewriter, False)
         rewriter_dict = load_in_vs_out_of_benchmark_compiles(s_dict, f_dict, False)
 
+        s_dict, f_dict, _ = load_from_file(args.input_filename_llvm, False)
+        llvm_dict = load_in_vs_out_of_benchmark_compiles(s_dict, f_dict, False)
+
         s_dict, f_dict, _ = load_from_file(args.input_filename_greedy, False)
         greedy_dict = load_in_vs_out_of_benchmark_compiles(s_dict, f_dict, False)
 
         s_dict, f_dict, _ = load_from_file(args.input_filename_baseline, False)
         baseline_dict = load_in_vs_out_of_benchmark_compiles(s_dict, f_dict, False)
 
-        plot_case_studies_graph(args.output_filename, baseline_dict, greedy_dict, rewriter_dict)
+        plot_case_studies_graph(args.output_filename, baseline_dict, llvm_dict, greedy_dict, rewriter_dict)
     else:
         # Plot the results by benchmark suite.
         s_dict, f_dict, _ = load_from_file(args.input_filename_rewriter, False)
         # see comment on below function for documentation.
         rewriter_dict = load_in_vs_out_of_benchmark_compiles(s_dict, f_dict, False)
 
+        s_dict, f_dict, _ = load_from_file(args.input_filename_llvm, False)
+        llvm_dict = load_in_vs_out_of_benchmark_compiles(s_dict, f_dict, False)
+
         s_dict, f_dict, _ = load_from_file(args.input_filename_baseline, False)
         baseline_dict = load_in_vs_out_of_benchmark_compiles(s_dict, f_dict, False)
 
-        plot_same_and_different(baseline_dict, rewriter_dict, args.output_filename)
+        plot_same_and_different(baseline_dict, llvm_dict, rewriter_dict, args.output_filename)
 
         # Plot the results by benchmark suite.
         s_dict, f_dict, size_lookup = load_from_file(args.input_filename_rewriter, True)
         print('dict is ', size_lookup)
         rewriter_dict_by_size = load_in_vs_out_of_benchmark_compiles(s_dict, f_dict, True)
+        s_dict, f_dict, size_lookup = load_from_file(args.input_filename_llvm, True)
+        llvm_dict_by_size = load_in_vs_out_of_benchmark_compiles(s_dict, f_dict, True)
         s_dict, f_dict, _ = load_from_file(args.input_filename_greedy, True, size_lookup)
         greedy_dict_by_size = load_in_vs_out_of_benchmark_compiles(s_dict, f_dict, True)
         s_dict, f_dict, _ = load_from_file(args.input_filename_baseline, True, size_lookup)
@@ -309,4 +322,4 @@ if __name__ == "__main__":
 
         print("By size is", rewriter_dict_by_size)
         print("orig is ", baseline_dict_by_size)
-        plot_from_size(baseline_dict_by_size, greedy_dict_by_size, rewriter_dict_by_size, args.output_filename)
+        plot_from_size(baseline_dict_by_size, llvm_dict_by_size, greedy_dict_by_size, rewriter_dict_by_size, args.output_filename)

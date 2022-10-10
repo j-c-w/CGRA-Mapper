@@ -16,7 +16,7 @@ def load_from_file(f):
             res[bname] = succs
     return res
 
-rewriter_modes_labels = ['OpenCGRA', 'Greedy', 'FlexC']
+rewriter_modes_labels = ['OpenCGRA', 'LLVM', 'Greedy', 'FlexC']
 rulesets_labels = ['Integer', 'Floating Point', 'Logic as Boolean', 'All']
 styles = ['--', '-.', ':', '-']
 def plot_line_from_dicts(labels, tname, dicts, plotting_rulesets):
