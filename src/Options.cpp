@@ -47,7 +47,7 @@ cl::opt<bool> PrintUsedRules("print-used-rules", cl::desc("Print the number of u
 
 cl::opt<std::string> Params("params-file", cl::desc("Json file with the CGRA parameters"));
 cl::list<std::string> RulesetsOpt("ruleset", cl::desc("Rulesets to use: valid options are: int, fp, boolean, stochastic, gcc (default is gcc, gcc = int ruleset + fp ruleset)"));
-cl::opt<std::string> EGraphsMode("egraph-mode", cl::desc("Rewrite mode used by EGraphs.  Options are: binary, fractional."))
+cl::opt<std::string> EGraphMode("egraph-mode", cl::desc("Rewrite mode used by EGraphs.  Options are: binary, frequency."), cl::init("binary"));
 
 #endif
 
@@ -108,6 +108,11 @@ TCLAP::CmdLine cmd("Tool to schedule a DFG Json file onto a CGRA");
 
   opt->Params = cgra.getValue();
   opt->rulesets = list<std::string>();
+  opt->EGraphMode = EGraphMode.getValue();
+
+  if (opt->EGraphMode.compare("binary") && opt->EGraphMode.compare("frequency")) {
+	  throw invalid_argument("Invlaid mode " + opt->EGraphMode);
+  }
 
   for (std::string value : trulesets.getValue()) {
     if (!value.compare("gcc")) {

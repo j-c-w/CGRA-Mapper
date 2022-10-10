@@ -236,8 +236,7 @@ list<DFG*> *rewrite_with_egraphs(Options *opts, CGRA *cgra, DFG *dfg) {
 	if (opts->DebugRustConversion) {
 		errs() << "Using rulesets " << opts->getRulesetNames() << "\n";
 	}
-  bool frequency_cost = false;
-	RustDFGList rust_results = optimize_with_egraphs(rdfg, opts->getRulesets(), opts->Params.c_str(), frequency_cost, opts->PrintUsedRules);
+	RustDFGList rust_results = optimize_with_egraphs(rdfg, opts->getRulesets(), opts->Params.c_str(), opts->PrintUsedRules, opts->EGraphMode);
 	// Go through and look at the outputs
 
 	if (opts->DebugRustConversion) {
