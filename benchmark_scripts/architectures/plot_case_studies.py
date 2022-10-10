@@ -4,15 +4,17 @@ import numpy as np
 import statistics
 
 colors=['#818fa6', '#6ea5ff', '#95c983', '#c99083', '#e079d6']
-hatching=['O', 'o', '.', '-', 'x']
+hatching=['O', 'o', '.', '..', '-', 'x']
 skip_bars=["All Rules"] # Just plot individual rulesets
 
 # Note that this function is used by the plot_case_studies_rules.py
 # script.
 def load_data(f):
     lines = {}
+    print("For file ", f)
     with open(f) as f:
         for line in f.readlines():
+            print("Line is ", line)
             line = line.split(',')
             # Get the number of successes
             succs = int(line[1])
@@ -62,7 +64,7 @@ def plot(name, cca, maeri, revamp, sc_cgra):
         print("Geomean is: ", statistics.geometric_mean(increases))
 
     width = 0.75 / float(len(series))
-    offset = -width * len(series) / 2.0
+    offset = -width * len(series) / 2.5
     print("Offset is ", offset, "xvals is ", len(series[0]))
     xvals = np.arange(len(series[0]))
 
