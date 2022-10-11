@@ -80,6 +80,7 @@ if __name__ == "__main__":
 
     # Assume CGRA running at same freq as processor.
     speedups = []
+    print("Looking at ", len(IIs), "measured on CGRAs")
     # print("at_times nums is ", a5_times.keys())
     for (num, II) in IIs:
         # Some of the parameter initializations do not
@@ -93,10 +94,11 @@ if __name__ == "__main__":
             # smaller -> faster, so speedup >1 if II < base_cycles_per_iter.
             speedups.append(base_cycles_per_iter / II)
         else:
-            print("Num", num, "did not get benchmarked on CPU.")
+            # print("Num", num, "did not get benchmarked on CPU.")
             pass
 
     # sort speeds and then plot as a line.
+    print("Only", len(speedups), 'benchmarked on cpus also')
     speedups = sorted(speedups)
 
     plot(speedups)
