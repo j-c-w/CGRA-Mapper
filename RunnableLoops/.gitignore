@@ -4,4 +4,7 @@ tempout
 tmp
 loops_runnable_v2.db
 marss-riscv/
+slurm-*.out
 output_*/
+temp_slurm
+run_cgra_benchmark_outputs/

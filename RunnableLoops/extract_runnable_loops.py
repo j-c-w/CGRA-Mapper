@@ -297,7 +297,6 @@ if __name__ == "__main__":
                 imports.add(line)
         runnable = re.sub('#include.*?\n', '', runnable)
 
-
         # add #define to track how many times the loop executed.
         insert_index = re.finditer('for (.*)[ \t\n]*?{', runnable)
         match_found = False
@@ -349,4 +348,3 @@ if __name__ == "__main__":
 
     with open(args.output_folder + '/runnable.c', 'w') as f:
         f.write(imports + loops_string + mainfun)
-
