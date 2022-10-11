@@ -108,11 +108,6 @@ TCLAP::CmdLine cmd("Tool to schedule a DFG Json file onto a CGRA");
 
   opt->Params = cgra.getValue();
   opt->rulesets = list<std::string>();
-  opt->EGraphMode = EGraphMode.getValue();
-
-  if (opt->EGraphMode.compare("binary") && opt->EGraphMode.compare("frequency")) {
-	  throw invalid_argument("Invlaid mode " + opt->EGraphMode);
-  }
 
   for (std::string value : trulesets.getValue()) {
     if (!value.compare("gcc")) {
@@ -186,6 +181,11 @@ Options *setupOptions() {
 
 	opt->Params = Params;
   opt->rulesets = list<std::string>();
+  opt->EGraphMode = EGraphMode;
+
+  if (opt->EGraphMode.compare("binary") && opt->EGraphMode.compare("frequency")) {
+	  throw invalid_argument("Invlaid mode " + opt->EGraphMode);
+  }
   for (std::string rnam : RulesetsOpt) {
     if (!rnam.compare("gcc")) {
       opt->rulesets.push_back("fp");

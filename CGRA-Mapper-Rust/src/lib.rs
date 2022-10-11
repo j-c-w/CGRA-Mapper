@@ -233,7 +233,7 @@ fn explanation_statistics(e: &Explanation<SymbolLang>) {
 #[no_mangle]
 pub extern "C" fn optimize_with_egraphs(dfg: CppDFG, rulesets: Rulesets, cgra_params: *const
 										c_char, print_used_rules: bool,
-										cost_mode: *const) -> CppDFGs {
+										cost_mode: *const c_char) -> CppDFGs {
 	println!("entering Rust");
 
 	let rules = load_rulesets(rulesets);
@@ -242,15 +242,16 @@ pub extern "C" fn optimize_with_egraphs(dfg: CppDFG, rulesets: Rulesets, cgra_pa
     println!("identified {} roots", roots.len());
 	// egraph.dot().to_svg("/tmp/initial.svg").unwrap();
 
-	let mut runner =
+	let runner =
 		Runner::default()
 			.with_iter_limit(10)
 			.with_node_limit(100_000)
 			.with_time_limit(std::time::Duration::from_secs(20))
 			.with_egraph(egraph)
 			// .with_explanations_enabled()
-			.run(&rules)
 			.with_scheduler(SimpleScheduler);
+	let runner = if print_used_rules { runner.with_explanations_enabled() } else { runner };
+	let mut runner = runner.run(&rules);
 	runner.print_report();
     // runner.egraph.dot().to_svg("/tmp/egraph.svg").unwrap();
 
@@ -259,8 +260,9 @@ pub extern "C" fn optimize_with_egraphs(dfg: CppDFG, rulesets: Rulesets, cgra_pa
     }
 
     let cgrafilename = unsafe { std::ffi::CStr::from_ptr(cgra_params) }.to_str().unwrap();
+    let cost_mode_string = unsafe { std::ffi::CStr::from_ptr(cost_mode) }.to_str().unwrap();
     let start_extraction = std::time::Instant::now();
-	let (best, best_roots) = if cost_mode == "frequency" {
+	let (best, best_roots) = if cost_mode_string == "frequency" {
 		println!("Running egraphs with frequency cost");
 		let cost = LookupCost::from_operations_frequencies(cgrafilename);
 		LpExtractor::new(&runner.egraph, cost).solve_multiple(&roots[..])
