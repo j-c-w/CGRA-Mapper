@@ -1,0 +1,3 @@
+#!/bin/bash
+
+$(dirname $(which $0))/../build/src/dfgMapper "$@"

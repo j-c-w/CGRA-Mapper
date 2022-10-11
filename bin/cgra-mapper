@@ -1,0 +1,22 @@
+#!/bin/bash
+
+if [[ $# -lt 1 ]]; then
+echo "Usage : $0 <filename> [flags for the cgra mapper]"
+exit 1
+fi
+
+dir=$(dirname $(which $0))/..
+current=$PWD
+original_name=$1
+fname=${1}.bc
+shift
+
+~/nix/nix-user-chroot ~/.nix zsh -c "
+set -x
+cd $dir
+nix-shell --run \"
+	cd $current
+	pwd
+	compile.sh $original_name
+	run.sh $fname $@ \"
+"
