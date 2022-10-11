@@ -2,8 +2,8 @@
 
 set -eu
 
-typeset use_egraphs use_rewriter use_greedy use_llvm logic_bool_rules int_rules all_rules fp_rules stochastic_rules print_used_rules
-zparseopts -D -E -use-egraphs=use_egraphs -use-rewriter=use_rewriter -logic-as-bool-rules=logic_bool_rules -fp-rules=fp_rules -int-rules=int_rules -all-rules=all_rules -use-greedy=use_greedy -stochastic-rules=stochastic_rules -print-used-rules=print_used_rules -use-llvm=use_llvm
+typeset use_egraphs use_rewriter use_greedy use_llvm logic_bool_rules int_rules all_rules fp_rules stochastic_rules print_used_rules use_latencies
+zparseopts -D -E -use-latencies=use_latencies -use-egraphs=use_egraphs -use-rewriter=use_rewriter -logic-as-bool-rules=logic_bool_rules -fp-rules=fp_rules -int-rules=int_rules -all-rules=all_rules -use-greedy=use_greedy -stochastic-rules=stochastic_rules -print-used-rules=print_used_rules -use-llvm=use_llvm
 
 if [[ $# -ne 4 ]]; then
 	echo "Usage: $0 <Reduction Rate> <CGRA Design File> <Other Input Files Base Folder> <Temp Folder>"
@@ -11,6 +11,7 @@ if [[ $# -ne 4 ]]; then
 	echo "--use-llvm to use the llvm rewriter"
 	echo "--use-greedy to use the greedy rewriter"
 	echo "--use-rewriter to use rewriting"
+	echo "--use-latencies to use latencies for the A5 (estimated from scheduler)"
 	echo "-- other options see the otp of the bash file o--- for controlling what rulesets to use"
 	echo "Other files should all be in the format loopX.c (X a number)"
 	echo "Reduction rate is the fraction of files to benchmark agains.  Files will be sorted with the gnu sort, then the first <reduction rate> fraction will be used."
@@ -38,7 +39,12 @@ if [[ $2 == *.cpp ]] || [[ $2 == *.c ]]; then
 	cp $original_folder/param_example.json param.json #use the param example to build the actual params.
 	$original_folder/compile.sh kernel.cpp
 	$original_folder/run.sh $original_folder/$lmapper kernel.bc --build
-	$original_folder/build_param.sh $original_folder/param_skeleton operations.json param.json
+	if [[ ${#use_latencies} -eq 0 ]]; then
+		$original_folder/build_param.sh $original_folder/param_skeleton operations.json param.json
+	else
+		# Use the latencies for the A5 processor (modified to account for pipelining, which obviosuly doens't exist on CGRA ---taken from gcc scheduler for a5.)
+		$original_folder/build_param.sh $original_folder/param_skeleton_a5_latencies operations.json param.json
+	fi
 	timeout=300 # Use 300s timeout --- as we are using small CGRAs for this.
 elif [[ "$2" == *.json ]]; then
 	echo "Using a pre-specified CGRA"
@@ -56,7 +62,7 @@ touch run_output
 ## Now run over all other input files.
 typeset -a files
 echo "Looking for files in $original_folder/$3"
-for file in $(find $original_folder/$3 -name "loop*.c" -print0 | sort -z); do
+for file in $(find $original_folder/$3 -name "*.c" -print0 | sort -z); do
 	files+=($file)
 done
 echo "Before reducing, have ${#files[@]}"

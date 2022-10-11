@@ -15,6 +15,8 @@ def get_name(f):
     except:
         # For backwards compatability --- previous versions
         # did not distinguish by suite.
+        # Note that the performace graph doens't do this either
+        # due to the hashing approach
         print("Warning: no benchmark suite found", file=sys.stderr)
         return ""
 

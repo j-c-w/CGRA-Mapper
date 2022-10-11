@@ -31,6 +31,7 @@ cd ~/Projects/CGRA/CGRA-Mapper
 nix-shell shell.nix --run '
 set -x
 cd test
+# test-loops here specifies only the base file --- it's compared against everyting else (reduced by reduction rate)
 ./run_all_benchmarks.sh $run_individual_rulesets_flag $reduction_rate $loops_folder temp_slurm/temp$loopno --gather-only --test-loops $loopname
 '
 "

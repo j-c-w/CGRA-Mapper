@@ -1,0 +1,32 @@
+{
+  "kernel"              : "_Z6kernelPiS_S_",
+  "targetFunction"      : false,
+  "targetNested"        : true,
+  "targetLoopsID"       : [0, 1],
+  "doCGRAMapping"       : true,
+  "row"                 : 6,
+  "column"              : 6,
+  "precisionAware"      : true,
+  "heterogeneity"       : true,
+  "isTrimmedDemo"       : true,
+  "heuristicMapping"    : true,
+  "bypassConstraint"    : 4,
+  "isStaticElasticCGRA" : false,
+  "ctrlMemConstraint"   : 200,
+  "regConstraint"       : 8,
+  "optLatency"          : {
+                            "store": 2,
+                            "load": 2,
+							"sdiv": 15,
+							"udiv": 15,
+                            "fmul": 3,
+                            "fadd": 3,
+                            "fsub": 3,
+                            "fdiv": 14
+                          },
+  "optPipelined"        : ["store"],
+  "additionalFunc"      : {
+                            "store": [4]
+                          },
+
+  "operations":

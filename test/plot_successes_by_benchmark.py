@@ -167,7 +167,7 @@ def plot_same_and_different(baseline_dict, rewriter_dict, outname):
     same_series_baseline, diff_series_baseline = get_series_from_dict(baseline_dict)
     same_series_rewriter, diff_series_rewriter = get_series_from_dict(rewriter_dict)
 
-    width = 0.8
+    width = 0.15
     global labels
     xvals = np.arange(0, len(labels))
     print("Have labels", labels)
