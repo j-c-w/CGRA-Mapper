@@ -1,7 +1,7 @@
 #!/bin/zsh
 
-typeset -a rewriter_only
-zparseopts -D -E -rewriter-only=rewriter_only
+typeset -a rewriter_only print_used_rules
+zparseopts -D -E -rewriter-only=rewriter_only -print-used-rules=print_used_rules
 
 if [[ $# -lt 3 ]]; then
 	echo "Usage: $0 <Architecture parameters file> <Loops benchmark directory> <output directory> [optional extra flags to pass to run_tests_against.sh]"
@@ -18,6 +18,14 @@ shift 3
 # rather than the 9 million or so required by the full
 # benchmarking run.
 fraction_to_run=1.0
+
+# The print-used-rules flag only works for the egraph rewriter backend iirc.
+# Note that Egg (Egrpah library) is a bit buggy, so enabling this reduces
+# gthe successful compile rate.
+rewriter_extra_flags=""
+if [[ ${#print_used_rules} -gt 0 ]]; then
+	rewriter_extra_flags="$extra_flags --print-used-rules"
+fi
 
 mkdir -p $output/stdout
 mkdir -p $output/{temp_architecture_greedy,temp_architecture_llvm,temp_architecture_no_rules,temp_architecture_rewriter}
@@ -38,6 +46,6 @@ if [[ ${#rewriter_only} -eq 0 ]]; then
 fi
 
 echo "Staring $param_file  with rewriter"
-./run_tests_against.sh $fraction_to_run $param_file $bmarks $output/temp_architecture_rewriter --use-rewriter $@ &> $output/stdout/rewriter.out
+./run_tests_against.sh $rewriter_extra_flags $fraction_to_run $param_file $bmarks $output/temp_architecture_rewriter --use-rewriter $@ &> $output/stdout/rewriter.out
 cp $output/temp_architecture_rewriter/run_output.old $output/rewriter.out
 rm -rf $output/temp_architecture_rewriter
