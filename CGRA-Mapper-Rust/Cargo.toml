@@ -10,7 +10,9 @@ name = "EggLib"
 crate-type = ["dylib"]
 
 [dependencies]
-#egg = "0.7.1"
-egg = { git = "https://github.com/Bastacyclop/egg/", rev = "e574ff272ebfddedb180dcdb55f987fad3e97dc6", features = ["lp"] }
+#egg = "0.8.1"
+#egg = { git = "https://github.com/Bastacyclop/egg/", rev = "e574ff272ebfddedb180dcdb55f987fad3e97dc6", features = ["lp"] }
+egg = { git = "https://github.com/Bastacyclop/egg/", rev = "d664a0f42cf7510d9da31b2ba08cb289ec33251c", features = ["lp"] }
 libc = "0.2"
 tinyjson = "2"
+env_logger = { version = "0.9.0", default-features = false }

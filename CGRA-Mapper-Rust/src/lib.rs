@@ -235,6 +235,7 @@ pub extern "C" fn optimize_with_egraphs(dfg: CppDFG, rulesets: Rulesets, cgra_pa
 										c_char, print_used_rules: bool,
 										cost_mode: *const c_char) -> CppDFGs {
 	println!("entering Rust");
+    env_logger::init();
 
 	let rules = load_rulesets(rulesets);
 
