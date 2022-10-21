@@ -22,7 +22,7 @@ MapResult *doMap(Options *options, Parameters *params, CGRA *cgra, Mapper *mappe
         // anyway, suspect it's negligable.
         dfg->rejoinCycles();
 
-        MapResult *res = mapper->heuristicMap(cgra, dfg, II, params->isStaticElasticCGRA, options->PrintMappingFailures);
+        MapResult *res = mapper->heuristicMap(params, options, cgra, dfg, II);
 
         if ((winning_res->failed() || (res->II() < winning_res->II())) && !res->failed())
         {
@@ -49,9 +49,9 @@ void runMapping(CGRA *cgra, DFG *dfg, Parameters *params, Options *options) {
     dfg->showOpcodeDistribution();
 
     // Generate the DFG dot file.
-    errs() << "==================================\n";
-    errs() << "[generate JSON for DFG]\n";
-    dfg->generateJSON();
+    // errs() << "==================================\n";
+    // errs() << "[generate JSON for DFG]\n";
+    // dfg->generateJSON();
 
     // Initialize the II.
     int ResMII = mapper->getResMII(dfg, cgra);
@@ -75,6 +75,7 @@ void runMapping(CGRA *cgra, DFG *dfg, Parameters *params, Options *options) {
     // Get the winning DFG.
     MapResult *mapResult;
     cout << "Options settings are " << options->UseRewriter << "\n";
+    bool greedy_success = false;
 
     list<DFG *> *generated_dfgs;
     if (options->UseGreedy)
@@ -105,7 +106,11 @@ void runMapping(CGRA *cgra, DFG *dfg, Parameters *params, Options *options) {
             generated_dfgs = rewrite_with_egraphs(options, cgra, &copied_dfg);
             mapResult = doMap(options, params, cgra, mapper, generated_dfgs, II);
         } else {
-            cout << "Initial Greedy Pass Succeeded\n";
+            errs() << "Initial Greedy Pass Succeeded\n";
+            // errs() << "==================================\n";
+            errs() << "[Mapping:success]\n";
+            greedy_success = true;
+            // errs() << "II: " << mapResult->II() << "\n";
         }
     }
     else
@@ -127,12 +132,16 @@ void runMapping(CGRA *cgra, DFG *dfg, Parameters *params, Options *options) {
         errs() << "[Mapping:fail]\n";
     else
     {
-        mapper->showSchedule(cgra, mapResult->winningDFG(), mapResult, params->isStaticElasticCGRA);
-        errs() << "==================================\n";
-        errs() << "[Mapping:success]\n";
-        errs() << "==================================\n";
-        mapper->generateJSON(cgra, mapResult->winningDFG(), mapResult, params->isStaticElasticCGRA);
-        errs() << "[Output Json]\n";
+        // mapper->showSchedule(cgra, mapResult->winningDFG(), mapResult, params->isStaticElasticCGRA);
+        // if (!already_printed) {
+            cout << "==================================\n";
+            if (!greedy_success) {
+                cout << "[Mapping:success]\n";
+            }
+            cout << "II: " << mapResult->II() << "\n";
+            mapper->generateJSON(cgra, mapResult->winningDFG(), mapResult, params->isStaticElasticCGRA);
+            cout << "[Output Json]\n";
+        // }
     }
     errs() << "==================================\n";
     errs() << "Done File: " << dfg->getSourceFileName() << "\n";

@@ -44,6 +44,7 @@ cl::opt<bool> DebugBreakCycles("debug-break-cycles", cl::desc("Debug break cycle
 cl::opt<bool> LLVMDebugOperationMap ("debug-operation-map", cl::desc("Debug the node-by-node operation mapping"));
 cl::opt<bool> PrintOperationCount("print-operation-count", cl::desc("Print the operation counts in the DFG for debugging rewrite rules"));
 cl::opt<bool> PrintUsedRules("print-used-rules", cl::desc("Print the number of used rules"));
+cl::opt<int> MaxII("max-ii", cl::desc("Max II to scan up to"), cl::init(50));
 
 cl::opt<std::string> Params("params-file", cl::desc("Json file with the CGRA parameters"));
 cl::list<std::string> RulesetsOpt("ruleset", cl::desc("Rulesets to use: valid options are: int, fp, boolean, stochastic, gcc (default is gcc, gcc = int ruleset + fp ruleset)"));
@@ -105,6 +106,7 @@ TCLAP::CmdLine cmd("Tool to schedule a DFG Json file onto a CGRA");
   opt->PrintMappingFailures = print_mapping_failures;
   opt->PrintOperationCount = false;
   opt->PrintUsedRules = false;
+  opt->MaxII = 50;
 
   opt->Params = cgra.getValue();
   opt->rulesets = list<std::string>();
@@ -178,6 +180,8 @@ Options *setupOptions() {
 	opt->PrintMappingFailures = PrintMappingFailures;
 	opt->PrintOperationCount = PrintOperationCount;
   opt->PrintUsedRules = PrintUsedRules;
+
+  opt->MaxII = MaxII;
 
 	opt->Params = Params;
   opt->rulesets = list<std::string>();

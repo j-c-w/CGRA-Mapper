@@ -11,6 +11,7 @@
 #include "DFG.h"
 #include "CGRA.h"
 #include "MapResult.h"
+#include "Options.h"
 
 class Mapper {
   private:
@@ -34,7 +35,7 @@ class Mapper {
     int getRecMII(DFG*);
 	int getMaxCycle();
     void constructMRRG(DFG*, CGRA*, int);
-    MapResult *heuristicMap(CGRA*, DFG*, int, bool, bool);
+    MapResult *heuristicMap(Parameters *, Options*, CGRA*, DFG*, int);
     MapResult *exhaustiveMap(CGRA*, DFG*, int, bool, bool);
     map<CGRANode*, int>* calculateCost(CGRA*, DFG*, int, DFGNode*, CGRANode*, bool PrintMappingFailures);
     map<CGRANode*, int>* getPathWithMinCostAndConstraints(CGRA*, DFG*, int,

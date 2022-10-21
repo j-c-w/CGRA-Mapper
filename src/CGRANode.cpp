@@ -97,7 +97,7 @@ void CGRANode::allocateReg(int t_port_id, int t_cycle, int t_duration, int t_II)
       break;
     }
   }
-  cout<<"[tan] done reg allocation"<<endl;
+  // cout<<"[tan] done reg allocation"<<endl;
   //assert(allocated);
 }
 

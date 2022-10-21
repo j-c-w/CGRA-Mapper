@@ -37,6 +37,8 @@ class Options {
 		bool PrintMappingFailures;
 		bool PrintOperationCount;
 		bool PrintUsedRules;
+
+		int MaxII;
 		
 		std::string Params;
 		list<std::string> rulesets;

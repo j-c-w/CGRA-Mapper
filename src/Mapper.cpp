@@ -16,6 +16,7 @@
 #include <map>
 #include <fstream>
 #include "json.hpp"
+#include "Options.h"
 
 // todo --- what should this be?
 #define MAX_II_DEPTH 50
@@ -32,7 +33,7 @@ int Mapper::getRecMII(DFG* t_dfg) {
   float RecMII = 0.0;
   float temp_RecMII = 0.0;
   list<list<DFGNode*>*>* cycles = t_dfg->getCycleLists();//calculateCycles();
-  errs()<<"... number of cycles: "<<cycles->size()<<" ...\n";
+  // errs()<<"... number of cycles: "<<cycles->size()<<" ...\n";
   // TODO: RecMII = MAX (delay(c) / distance(c))
   for( list<DFGNode*>* cycle: *cycles) {
     temp_RecMII = float(cycle->size()) / 1.0;
@@ -354,7 +355,7 @@ map<CGRANode*, int>* Mapper::calculateCost(CGRA* t_cgra, DFG* t_dfg,
             t_dfgNode, t_fu); 
 	  else {
 		  // cout << "Failed to support " << t_dfgNode->getOperation() << " on node " << t_fu->getX() << ", " << t_fu->getY() << endl;
-		  t_fu->print_operations();
+		  // t_fu->print_operations();
 	  }
       if (tempPath == NULL)
         return NULL;
@@ -376,7 +377,7 @@ map<CGRANode*, int>* Mapper::calculateCost(CGRA* t_cgra, DFG* t_dfg,
   if (!isAnyPredDFGNodeMapped) {
     if (!t_fu->canSupport(t_dfgNode)) {
 		  // cout << "Failed to support " << t_dfgNode->getOperation() << " on node " << t_fu->getX() << ", " << t_fu->getY() << endl;
-		  t_fu->print_operations();
+		  // t_fu->print_operations();
       return NULL;
 	}
     int cycle = 0;
@@ -478,7 +479,7 @@ int Mapper::schedule(CGRA* t_cgra, DFG* t_dfg, int t_II,
 //      if (m_mapping[(node)] != onePredCGRANode) {
       if (!tryToRoute(t_cgra, t_dfg, t_II, node, m_mapping[node], t_dfgNode, fu,
           m_mappingTiming[t_dfgNode], false, t_isStaticElasticCGRA)){
-        cout<<"DEBUG target DFG node: "<<t_dfgNode->getID()<<" on fu: "<<fu->getID()<<" failed, mapped pred DFG node: "<<node->getID()<<"; return -1\n";
+        cout<<"DEBUG target DFG node: "<<t_dfgNode->asString()<<" on fu: "<<fu->getID()<<" failed, mapped pred DFG node: "<<node->getID()<<"; return -1\n";
         return -1;
       }
 //    }
@@ -533,10 +534,10 @@ void Mapper::showSchedule(CGRA* t_cgra, DFG* t_dfg, MapResult *res,
   if (showCycleBoundary < res->latency()) {
     showCycleBoundary = res->latency();
   }
-errs() << "Outputting to to " << showCycleBoundary << "\n";
-errs() << "Latency is " << res->latency() << "\n";
-errs() << "Rows is " << t_cgra->getRows() << "\n";
-errs() << "cols is " << t_cgra->getColumns() << "\n";
+// errs() << "Outputting to to " << showCycleBoundary << "\n";
+// errs() << "Latency is " << res->latency() << "\n";
+// errs() << "Rows is " << t_cgra->getRows() << "\n";
+// errs() << "cols is " << t_cgra->getColumns() << "\n";
   // For outputing generated CGRA operations.
   auto op_map = new map<string, map<string, list<string>*>*>();
   for (int i = 0; i < t_cgra->getRows(); i ++) {
@@ -545,9 +546,9 @@ errs() << "cols is " << t_cgra->getColumns() << "\n";
 		  (*(*op_map)[to_string(i)])[to_string(j)] = new list<string>();
 	  }
   }
-  cout << "Looking at DFG with show cycle boundary " << showCycleBoundary << "\n";
+  // cout << "Looking at DFG with show cycle boundary " << showCycleBoundary << "\n";
   while (cycle <= showCycleBoundary) {
-    errs()<<"--------------------------- cycle:"<<cycle<<" ---------------------------\n";
+    // errs()<<"--------------------------- cycle:"<<cycle<<" ---------------------------\n";
     for (int i=0; i<t_cgra->getRows(); ++i) {
       for (int j=0; j<t_cgra->getColumns(); ++j) {
 
@@ -642,7 +643,7 @@ errs() << "cols is " << t_cgra->getColumns() << "\n";
 //    for (int i=0; i<displayRows; ++i) {
     for (int i=displayRows-1; i>=0; --i) {
       for (int j=0; j<displayColumns; ++j) {
-        errs()<<display[i][j];
+        // errs()<<display[i][j];
       }
     }
     ++cycle;
@@ -687,7 +688,7 @@ void Mapper::generateJSON(CGRA* t_cgra, DFG* t_dfg, MapResult *r,
   jsonFile<<"[\n";
   if (!t_isStaticElasticCGRA) {
     // TODO: will support dynamic CGRA JSON output soon.
-    errs()<<"Will support dynamic CGRA JSON output soon.\n";
+    // errs()<<"Will support dynamic CGRA JSON output soon.\n";
 
     bool first = true;
     for (int t=0; t<r->latency() + 1; ++t) {
@@ -1223,12 +1224,11 @@ bool Mapper::tryToRoute(CGRA* t_cgra, DFG* t_dfg, int t_II,
   return true;
 }
 
-MapResult *Mapper::heuristicMap(CGRA* t_cgra, DFG* t_dfg, int t_II,
-    bool t_isStaticElasticCGRA, bool PrintMappingFailures) {
+MapResult *Mapper::heuristicMap(Parameters *params, Options *opts, CGRA* t_cgra, DFG* t_dfg, int t_II) {
   bool fail = false;
 int max_cycle = 0;
   while (1) {
-	  if (PrintMappingFailures) {
+	  if (opts->PrintMappingFailures) {
     cout<<"----------------------------------------\n";
     cout<<"DEBUG start heuristic algorithm with II="<<t_II<<"\n";
 	  }
@@ -1241,41 +1241,41 @@ int max_cycle = 0;
       for (int i=0; i<t_cgra->getRows(); ++i) {
         for (int j=0; j<t_cgra->getColumns(); ++j) {
           CGRANode* fu = t_cgra->nodes[i][j];
-		  if (PrintMappingFailures) {
+		  if (opts->PrintMappingFailures) {
           errs()<<"DEBUG cgrapass: dfg node: "<<*(*dfgNode)->getInst()<<",["<<i<<"]["<<j<<"]\n";
 		}
           map<CGRANode*, int>* tempPath =
-              calculateCost(t_cgra, t_dfg, t_II, *dfgNode, fu, PrintMappingFailures);
+              calculateCost(t_cgra, t_dfg, t_II, *dfgNode, fu, opts->PrintMappingFailures);
           if(tempPath != NULL and tempPath->size() != 0) {
             paths.push_back(tempPath);
-          } else if (PrintMappingFailures) {
+          } else if (opts->PrintMappingFailures) {
             cout<<"DEBUG no available path for DFG node "<<(*dfgNode)->getID()
                 <<" on CGRA node "<<fu->getID()<<" within II "<<t_II<<"; path size: "<<paths.size()<<".\n";
           }
         }
       }
-	  if (PrintMappingFailures) {
+	  if (opts->PrintMappingFailures) {
 		  cout << "Paths calculated: computing optimal paths\n";
 	  }
       // Found some potential mappings.
       if (paths.size() != 0) {
         map<CGRANode*, int>* optimalPath =
             getPathWithMinCostAndConstraints(t_cgra, t_dfg, t_II, *dfgNode, &paths);
-		if (PrintMappingFailures) {
+		if (opts->PrintMappingFailures) {
 			errs() << "For oepration " << *(*dfgNode)->getInst() << " have optimal path size " << optimalPath->size();
 		}
         if (optimalPath->size() != 0) {
-			int cycle = schedule(t_cgra, t_dfg, t_II, *dfgNode, optimalPath, t_isStaticElasticCGRA);
+			int cycle = schedule(t_cgra, t_dfg, t_II, *dfgNode, optimalPath, params->isStaticElasticCGRA);
 			if (cycle > max_cycle) {
 				max_cycle = cycle;
 			}
           if (cycle == -1) {
-			  if (PrintMappingFailures) {
+			  if (opts->PrintMappingFailures) {
             cout<<"DEBUG fail1 in schedule() II: "<<t_II<<"\n";
 			  }
             for (map<CGRANode*,int>::iterator iter = optimalPath->begin();
                 iter!=optimalPath->end(); ++iter) {
-				if (PrintMappingFailures) {
+				if (opts->PrintMappingFailures) {
               cout<<"[tan] the failed path -- cycle: "<<(*iter).second<<" CGRANode: "<<(*iter).first->getID()<<"\n";
 				}
             }
@@ -1283,12 +1283,12 @@ int max_cycle = 0;
             fail = true;
             break;
           } else {
-		  if (PrintMappingFailures) {
+		  if (opts->PrintMappingFailures) {
           cout<<"DEBUG success in schedule()\n";
 		  }
 		  }
         } else {
-			if (PrintMappingFailures) {
+			if (opts->PrintMappingFailures) {
           cout<<"DEBUG fail2 in schedule() II: "<<t_II<<"\n";
 			}
           fail = true;
@@ -1296,7 +1296,7 @@ int max_cycle = 0;
         }
       } else {
         fail = true;
-		if (PrintMappingFailures) {
+		if (opts->PrintMappingFailures) {
         cout<<"DEBUG [else] no available path for DFG node "<<(*dfgNode)->getID()
             <<" within II "<<t_II<<".\n";
 		}
@@ -1305,12 +1305,12 @@ int max_cycle = 0;
     }
     if (!fail)
       break;
-    else if (t_isStaticElasticCGRA) {
+    else if (params->isStaticElasticCGRA) {
       break;
     }
 
 	// Break from loop if we have done too many.
-	if (t_II > MAX_II_DEPTH){
+	if (t_II > opts->MaxII){
 
 		break;
 	}

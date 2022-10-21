@@ -90,9 +90,9 @@ namespace {
       cgra->setBypassConstraint(params->bypassConstraint);
 
         // Generate the DFG dot file.
-        errs() << "==================================\n";
-        errs() << "[generate dot for DFG]\n";
-        dfg->generateDot(&t_F, params->isTrimmedDemo);
+        // errs() << "==================================\n";
+        // errs() << "[generate dot for DFG]\n";
+        // dfg->generateDot(&t_F, params->isTrimmedDemo);
 
       if (options->SkipBuild) {
         return false;
@@ -124,21 +124,21 @@ namespace {
             // Targets innermost loop if the param targetNested is not set.
             if (!t_targetNested) {
               while (!current_loop->getSubLoops().empty()) {
-                errs()<<"[explore] nested loop ... subloop size: "<<current_loop->getSubLoops().size()<<"\n";
+                // errs()<<"[explore] nested loop ... subloop size: "<<current_loop->getSubLoops().size()<<"\n";
                 // TODO: might change '0' to a reasonable index
                 current_loop = current_loop->getSubLoops()[0];
               }
             }
             targetLoops->push_back(current_loop);
-            errs()<<"*** reach target loop ID: "<<tempLoopID<<"\n";
+            // errs()<<"*** reach target loop ID: "<<tempLoopID<<"\n";
             break;
           }
           ++tempLoopID;
         }
         if (targetLoops->size() == 0) {
-          errs()<<"... no loop detected in the target kernel ...\n";
+          // errs()<<"... no loop detected in the target kernel ...\n";
         }
-      errs()<<"... done detected loops.size(): "<<targetLoops->size()<<"\n";
+      // errs()<<"... done detected loops.size(): "<<targetLoops->size()<<"\n";
       return targetLoops;
     }
   };

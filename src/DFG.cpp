@@ -428,11 +428,11 @@ list<DFGNode*>* DFG::getBFSOrderedNodes() {
       }
     }
   }
-  errs()<<"\nordered nodes: \n";
-  for (DFGNode* dfgNode: *m_orderedNodes) {
-    errs()<<dfgNode->getID()<<"  ";
-  }
-  errs()<<"\n";
+  // errs()<<"\nordered nodes: \n";
+  // for (DFGNode* dfgNode: *m_orderedNodes) {
+  //   errs()<<dfgNode->getID()<<"  ";
+  // }
+  // errs()<<"\n";
   assert(m_orderedNodes->size() == nodes.size());
   return m_orderedNodes;
 }
@@ -454,9 +454,9 @@ void DFG::construct(Function *t_F) {
   for (Function::iterator BB=t_F->begin(), BEnd=t_F->end();
       BB!=BEnd; ++BB) {
     BasicBlock *curBB = &*BB;
-    errs()<<"*** current basic block: "<<*curBB->begin()<<"\n";
+    // errs()<<"*** current basic block: "<<*curBB->begin()<<"\n";
     for (BasicBlock* sucBB : successors(curBB)) {
-      errs()<<"   ****** succ bb: "<<*sucBB->begin()<<"\n";
+      // errs()<<"   ****** succ bb: "<<*sucBB->begin()<<"\n";
     }
 
      // Construct DFG nodes.
@@ -466,12 +466,12 @@ void DFG::construct(Function *t_F) {
 
       // Ignore this IR if it is out of the scope.
       if (shouldIgnore(curII)) {
-        errs()<<*curII<<" *** ignored by pass due to that the BB is out "<<
-            "of the scope (target loop)\n";
+        // errs()<<*curII<<" *** ignored by pass due to that the BB is out "<<
+            // "of the scope (target loop)\n";
         continue;
       }
-	  errs() << "Loading node " << curII << "\n";
-      errs()<<*curII << "\n";
+	  // errs() << "Loading node " << curII << "\n";
+      // errs()<<*curII << "\n";
       DFGNode* dfgNode;
       if (hasNode(curII)) {
         dfgNode = getNode(curII);
@@ -488,7 +488,7 @@ void DFG::construct(Function *t_F) {
 		for (int i = 0; i < numOperands; i ++) {
 			Value *op = curII->getOperand(i);
 			if (isa<Constant>(op)) {
-				errs() << "Loaded a constant argument\n";
+				// errs() << "Loaded a constant argument\n";
         DFGNode *cnode;
         bool already_set = false;
 
@@ -524,12 +524,12 @@ void DFG::construct(Function *t_F) {
     nodes.reverse();
 
       }
-	  errs() << "Got DFGNode " << dfgNode->asString() << "\n";
-      errs()<<" (ID: "<<dfgNode->getID()<<")\n";
+	  // errs() << "Got DFGNode " << dfgNode->asString() << "\n";
+    //   errs()<<" (ID: "<<dfgNode->getID()<<")\n";
     }
-	errs() << "Getting terminator\n";
+	// errs() << "Getting terminator\n";
     Instruction* terminator = curBB->getTerminator();
-	errs() << "Terminator is " << terminator << "\n";
+	// errs() << "Terminator is " << terminator << "\n";
 
     if (shouldIgnore(terminator))
       continue;
@@ -545,7 +545,7 @@ void DFG::construct(Function *t_F) {
           continue;
 
         if (isLiveInInst(sucBB, inst)) {
-          errs()<<" check inst: "<<*inst<<"\n";
+          // errs()<<" check inst: "<<*inst<<"\n";
 
           DFGNode* dfgNode;
           if (hasNode(inst)) {
@@ -561,20 +561,20 @@ void DFG::construct(Function *t_F) {
     //        continue;
     //      }
     
-          errs()<<"!!!!!!! construct ctrl flow: "<<*terminator<<"->"<<*inst<<"\n";
+          // errs()<<"!!!!!!! construct ctrl flow: "<<*terminator<<"->"<<*inst<<"\n";
     
           // Construct contrl flow edges.
           DFGEdge* ctrlEdge;
           if (hasCtrlEdge(getNode(terminator), dfgNode)) {
-			  errs() << "Built edge for node " << dfgNode->asString() << "\n";
+			  // errs() << "Built edge for node " << dfgNode->asString() << "\n";
             ctrlEdge = getCtrlEdge(getNode(terminator), dfgNode);
           }
           else {
             ctrlEdge = new DFGEdge(ctrlEdgeID++, getNode(terminator), dfgNode, true);
-			  errs() << "Built and added edge for node " << dfgNode->asString() << "\n";
+			  // errs() << "Built and added edge for node " << dfgNode->asString() << "\n";
             m_ctrlEdges.push_back(ctrlEdge);
           }
-		  errs() << "Created edge " << ctrlEdge->asString() << "\n";
+		  // errs() << "Created edge " << ctrlEdge->asString() << "\n";
 
         }
       }
@@ -767,7 +767,7 @@ void DFG::construct(Function *t_F) {
 	  } else {
 		  // Node is a constant node
 		  // what to do?
-		  errs() << "Constant node";
+		  // errs() << "Constant node";
 	  }
   }
   connectDFGNodes();
@@ -850,10 +850,10 @@ void DFG::reorderInLongest() {
   }
 
   nodes.clear();
-  errs()<<"[reorder DFG along with the longest path]\n";
+  // errs()<<"[reorder DFG along with the longest path]\n";
   for (DFGNode* node: tempNodes) {
     nodes.push_back(node);
-    errs()<<"("<<node->getID()<<") "<<(node->asString())<<", level: "<<node->getLevel()<<"\n";
+    // errs()<<"("<<node->getID()<<") "<<(node->asString())<<", level: "<<node->getLevel()<<"\n";
   }
 
 }
@@ -930,13 +930,13 @@ void DFG::initPipelinedOpt(list<string>* t_pipelinedOpt) {
 
 bool DFG::isLiveInInst(BasicBlock* t_bb, Instruction* t_inst) {
   if (t_inst == &(t_bb->front())) {
-    errs()<<"ctrl to: "<<*t_inst<<"; front: "<<(t_bb->front())<<"; ";
+    // errs()<<"ctrl to: "<<*t_inst<<"; front: "<<(t_bb->front())<<"; ";
     return true;
   }
   for (Instruction::op_iterator op = t_inst->op_begin(), opEnd = t_inst->op_end(); op != opEnd; ++op) {
     Instruction* tempInst = dyn_cast<Instruction>(*op);
     if (tempInst and !containsInst(t_bb, tempInst)) {
-      errs()<<"ctrl to: "<<*t_inst<<"; containsInst(t_bb, tempInst): "<<containsInst(t_bb, tempInst)<<"; ";
+      // errs()<<"ctrl to: "<<*t_inst<<"; containsInst(t_bb, tempInst): "<<containsInst(t_bb, tempInst)<<"; ";
       return true;
     }
   }
@@ -949,7 +949,7 @@ bool DFG::isLiveInInst(BasicBlock* t_bb, Instruction* t_inst) {
     }
   }
 
-  errs()<<"ctrl to: "<<*t_inst<<"; ";
+  // errs()<<"ctrl to: "<<*t_inst<<"; ";
   return true;
 }
 
@@ -1146,13 +1146,13 @@ void DFG::DFS_on_DFG(DFGNode* t_head, DFGNode* t_current,
 
 //      errs() << ".. add current cycle edge: {" << *edge->getSrc()->getInst() << "  } -> {"<< *edge->getDst()->getInst() << "  } ("<<edge->getSrc()->getID()<<" -> "<<edge->getDst()->getID()<<")\n";
       if (edge->getDst() == t_head) {
-        errs() << "==================================\n";
-        errs() << "[detected one cycle] head: "<<*(t_head->getInst())<<"\n";
+        // errs() << "==================================\n";
+        // errs() << "[detected one cycle] head: "<<*(t_head->getInst())<<"\n";
         list<DFGEdge*>* temp_cycle = new list<DFGEdge*>();
         for (DFGEdge* currentEdge: *t_currentCycle) {
           temp_cycle->push_back(currentEdge);
           // break the cycle to avoid future repeated detection
-          errs() << "cycle edge: {" << *(currentEdge)->getSrc()->getInst() << "  } -> {"<< *(currentEdge)->getDst()->getInst() << "  } ("<<currentEdge->getSrc()->getID()<<" -> "<<currentEdge->getDst()->getID()<<")\n";
+          // errs() << "cycle edge: {" << *(currentEdge)->getSrc()->getInst() << "  } -> {"<< *(currentEdge)->getDst()->getInst() << "  } ("<<currentEdge->getSrc()->getID()<<" -> "<<currentEdge->getDst()->getID()<<")\n";
         }
         t_erasedEdges->push_back(edge);
         t_cycles->push_back(temp_cycle);
@@ -1214,9 +1214,9 @@ void DFG::showOpcodeDistribution() {
   }
   for (map<string, int>::iterator opcodeItr=opcodeMap.begin();
       opcodeItr!=opcodeMap.end(); ++opcodeItr) {
-    errs() << (*opcodeItr).first << " : " << (*opcodeItr).second << "\n";
+    // errs() << (*opcodeItr).first << " : " << (*opcodeItr).second << "\n";
   }
-  errs() << "DFG node count: "<<nodes.size()<<"; DFG edge count: "<<m_DFGEdges.size()<<"\n";
+  // errs() << "DFG node count: "<<nodes.size()<<"; DFG edge count: "<<m_DFGEdges.size()<<"\n";
 }
 
 int DFG::getID(DFGNode* t_node) {
@@ -1279,7 +1279,7 @@ DFGEdge* DFG::getDFGEdge(DFGNode* t_src, DFGNode* t_dst) {
 void DFG::replaceDFGEdge(DFGNode* t_old_src, DFGNode* t_old_dst,
                          DFGNode* t_new_src, DFGNode* t_new_dst) {
   DFGEdge* target = NULL;
-  errs()<<"replace edge: [delete] "<<t_old_src->getID()<<"->"<<t_old_dst->getID()<<" [new] "<<t_new_src->getID()<<"->"<<t_new_dst->getID()<<"\n";
+  // errs()<<"replace edge: [delete] "<<t_old_src->getID()<<"->"<<t_old_dst->getID()<<" [new] "<<t_new_src->getID()<<"->"<<t_new_dst->getID()<<"\n";
   for (DFGEdge* edge: m_DFGEdges) {
     if (edge->getSrc() == t_old_src and
         edge->getDst() == t_old_dst) {
@@ -1372,7 +1372,7 @@ void DFG::tuneForBitcast() {
 
 // Note that this is not a member function of the class, but just a helper (static) function.
 void splitEdge(DFGEdge *r, int *nodeCounter, list<DFGNode*> *nodesToAdd, list<DFGEdge *> *edgesToAdd) {
-	errs() << "Splitting over edge " << r->asString() << "\n";
+	// errs() << "Splitting over edge " << r->asString() << "\n";
 	// Add in the replacement edge --- need a pair of un-connected dummy nodes.
 	int joinName = *nodeCounter;
 	DFGNode *tempSource = new DFGNode(*nodeCounter, false, nullptr, "DummySource" + std::to_string(joinName), "");
@@ -1380,7 +1380,7 @@ void splitEdge(DFGEdge *r, int *nodeCounter, list<DFGNode*> *nodesToAdd, list<DF
 	DFGNode *tempTarget = new DFGNode(*nodeCounter, false, nullptr, "DummyTarget" + std::to_string(joinName), "");
 	(*nodeCounter) ++;
 
-	errs() << "Created nodes " << *nodeCounter << "\n";
+	// errs() << "Created nodes " << *nodeCounter << "\n";
 
 	// Now, create the edges
 	// I don't think these have to have unique IDs --- we need
@@ -1389,24 +1389,24 @@ void splitEdge(DFGEdge *r, int *nodeCounter, list<DFGNode*> *nodesToAdd, list<DF
 	DFGEdge *first_edge = new DFGEdge(1, tempSource, r->getDst());
 	DFGEdge *other_edge = new DFGEdge(1, r->getSrc(), tempTarget);
 
-	errs() << "Created edges \n";
-	errs() << "Edges are " << first_edge->asString();
-	errs() << " And " << other_edge->asString();
-	errs() << "\n";
+	// errs() << "Created edges \n";
+	// errs() << "Edges are " << first_edge->asString();
+	// errs() << " And " << other_edge->asString();
+	// errs() << "\n";
 
 	// I think these are the right way around --- need to keep
 	// the edges in the right order.
 	r->getDst()->getInEdges()->push_back(first_edge);
 	tempSource->getOutEdges()->push_back(first_edge);
 
-	errs() << "Set edges source\n";
-	errs() << "Before, have " << r->getSrc()->getOutEdges()->size() << " edges\n";
+	// errs() << "Set edges source\n";
+	// errs() << "Before, have " << r->getSrc()->getOutEdges()->size() << " edges\n";
 
 	r->getSrc()->getOutEdges()->push_back(other_edge);
 	tempTarget->getInEdges()->push_back(other_edge);
 
-	errs() << "After, have " << r->getSrc()->getOutEdges()->size() << " edges\n";
-	errs() << "Set edges target\n";
+	// errs() << "After, have " << r->getSrc()->getOutEdges()->size() << " edges\n";
+	// errs() << "Set edges target\n";
 
 	edgesToAdd->push_back(first_edge);
 	edgesToAdd->push_back(other_edge);
@@ -1414,7 +1414,7 @@ void splitEdge(DFGEdge *r, int *nodeCounter, list<DFGNode*> *nodesToAdd, list<DF
 	nodesToAdd->push_back(tempSource);
 	nodesToAdd->push_back(tempTarget);
 
-	errs() << "setup the to add stacks";
+	// errs() << "setup the to add stacks";
 }
 
 int DFG::getMaxNodeNumber() {
@@ -1441,10 +1441,10 @@ void DFG::rejoinCycles() {
 	// easily.
 	map<int, DFGNode*> targetNodes;
 
-	errs() << "Starting to join cycles in the graph.\n";
+	// errs() << "Starting to join cycles in the graph.\n";
 	for (DFGNode *node : nodes) {
 		//
-		errs() << "Node: " << node->asString() << "\n";
+		// errs() << "Node: " << node->asString() << "\n";
 		// Check the node operation name:
 		std::string opname = node->getOpcodeName();
 
@@ -1883,7 +1883,7 @@ json DFG::computeDistances() {
   for (DFGNode* dfgNode: nodes) {
     // Get the operation of this node:
     std::string node_op = dfgNode->getOpcodeName();
-    errs() << "node_op: " << node_op << "\n";
+    // errs() << "node_op: " << node_op << "\n";
     if (!result.contains(node_op)) {
       json sub_dict = json::object();
       result[node_op] = sub_dict;
@@ -1899,18 +1899,18 @@ json DFG::computeDistances() {
       int pathDistance = getShortestPath(dfgNode, otherNode);
       std::string otherName = otherNode->getOpcodeName();
       if (!result[node_op].contains(otherName)) {
-        errs() << "otherName: " << otherName << "\n";
-        errs() << "Json is " << result[node_op].dump() << "\n";
+        // errs() << "otherName: " << otherName << "\n";
+        // errs() << "Json is " << result[node_op].dump() << "\n";
         result[node_op][otherName] = json::array();
-        errs() << "Json (after set) is " << result[node_op].dump() << "\n";
+        // errs() << "Json (after set) is " << result[node_op].dump() << "\n";
       }
 
-      errs() << "Json is " << result[node_op].dump() << " for name " << node_op << " and name " << otherName << "\n";
+      // errs() << "Json is " << result[node_op].dump() << " for name " << node_op << " and name " << otherName << "\n";
       if (pathDistance < 1000000000) {
         // If there was no path, don't add.
         result[node_op][otherName].push_back(pathDistance);
       }
-      errs() << "Json is " << result[node_op].dump() << "\n";
+      // errs() << "Json is " << result[node_op].dump() << "\n";
     }
   }
 

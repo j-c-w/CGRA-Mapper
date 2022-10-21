@@ -235,7 +235,7 @@ void CGRALink::occupy(DFGNode* t_srcDFGNode, int t_cycle, int duration,
 
   ++m_currentCtrlMemItems;
 
-  cout<<"[CHENG] occupy link["<<m_src->getID()<<"]-->["<<m_dst->getID()<<"] (bypass:"<<t_isBypass<<") dfgNode: "<<t_srcDFGNode->getID()<<" at cycle "<<t_cycle<<"\n";
+  // cout<<"[CHENG] occupy link["<<m_src->getID()<<"]-->["<<m_dst->getID()<<"] (bypass:"<<t_isBypass<<") dfgNode: "<<t_srcDFGNode->getID()<<" at cycle "<<t_cycle<<"\n";
 }
 
 DFGNode* CGRALink::getMappedDFGNode(int t_cycle) {
