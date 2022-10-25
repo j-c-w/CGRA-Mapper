@@ -1,0 +1,4 @@
+*/*.bc
+benchmark_data
+*/*.s
+*/param.json
