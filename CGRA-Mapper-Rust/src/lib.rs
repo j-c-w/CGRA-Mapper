@@ -235,7 +235,7 @@ pub extern "C" fn optimize_with_egraphs(dfg: CppDFG, rulesets: Rulesets, cgra_pa
 										c_char, print_used_rules: bool,
 										cost_mode: *const c_char) -> CppDFGs {
 	println!("entering Rust");
-    env_logger::init();
+    // env_logger::init();
 
 	let rules = load_rulesets(rulesets);
 
@@ -245,7 +245,7 @@ pub extern "C" fn optimize_with_egraphs(dfg: CppDFG, rulesets: Rulesets, cgra_pa
 
 	let runner =
 		Runner::default()
-			.with_iter_limit(10)
+			.with_iter_limit(15)
 			.with_node_limit(100_000)
 			.with_time_limit(std::time::Duration::from_secs(20))
 			.with_egraph(egraph)

@@ -21,6 +21,7 @@ fn get_available_operations(path: &str) -> HashMap<String, Option<u16>> {
     // (or just proxies for load/store --- ideally the procies
     // for load/store will be fixed elsewhere).
     operations.insert("getelementptr".to_string(), None);
+    operations.insert("shufflevector".into(), None);
     operations.insert("insertelement".into(), None);
     operations.insert("extractelement".into(), None);
     operations.insert("ret".into(), None);
@@ -29,12 +30,14 @@ fn get_available_operations(path: &str) -> HashMap<String, Option<u16>> {
     operations.insert("trunc".into(), None);
 	operations.insert("fptosi".into(), None);
 	operations.insert("sitofp".into(), None);
+    operations.insert("select".into(), None);
 
     // Various constants: we don't do a super efficient
     // job of managing these, but do assume that they can be
     // programmed into any PE in teh compiler.
     operations.insert("const_-1".into(), None);
     operations.insert("Constant".into(), None);
+	operations.insert("const_fp".into(), None);
     operations.insert("const_2".into(), None);
     operations.insert("const_32".into(), None);
     operations.insert("const_1".into(), None);
@@ -124,7 +127,7 @@ fn ban_cost(available: &HashSet<Symbol>, symbol: &Symbol) -> f64 {
         // println!("Found find symbol");
         1.0
     } else {
-        // println!("Didn't find symbol");
+        // println!("Didn't find symbol {}", symbol.as_str());
         10_000.0 // does not seem to like f64::INFINITY
     }
 }

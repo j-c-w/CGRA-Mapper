@@ -87,6 +87,7 @@ pub(crate) fn fp_rules() -> Vec<Rewrite<SymbolLang, ()>> {
 		// Line 539:
 		rewrite!("fneg-to-fdiv"; "(fneg ?x)" => "(fdiv ?x (const_-1))"),
 		rewrite!("fdiv-to-fneg"; "(fdiv ?x (const_-1))" => "(fneg ?x)"),
+		rewrite!("fdiv-to-fmul"; "(fdiv ?x const_fp)" => "(fmul ?x const_fp)"), // obviously a different const
 		// Line 544:
 		rewrite!("fmul-to-fdiv"; "(fdiv ?a (fmul ?b ?c))" => "(fdiv (fdiv ?a ?b) ?c)"), // Other
 		rewrite!("fmul-to-fdiv-2"; "(fmul ?a ?b)" => "(fdiv ?a (fdiv const_1 ?b))"),
@@ -118,9 +119,17 @@ pub(crate) fn rules() -> Vec<Rewrite<SymbolLang, ()>> {
 		// First constant is Int Max, second is 32
         rewrite!("shl-to-lshr-mul"; "(shl ?x ?y)" => "(mul ?x (lshr Constant (sub Constant ?y)))"),
         rewrite!("shl-to-ashr-mul"; "(shl ?x ?y)" => "(mul ?x (ashr Constant (sub Constant ?y)))"),
+		// todo support larger consts for this
+		rewrite!("shl-or-to-add"; "(or (shl ?x const_1) const_1)" => "(add (shl ?x const_1) const_1)"), //
+		rewrite!("shl-or-to-add"; "(or (shl ?x const_1 ?z) const_1)" => "(add (shl ?x const_1 ?z) const_1)"), //
+		rewrite!("shl-add-to-or"; "(add (shl ?x const_1) const_1)" => "(or (shl ?x const_1)
+			const_1)"), //
 		// This is also in the GCC rules --- note we should obviously handle this
 		// better -- just do the obvious cases.
 		rewrite!("shl-const-to-mul"; "(shl ?x const_1)" => "(mul ?x const_2)"),
+		// Have some bugs with some odd edges needing to be preseverd -- need to deal
+		// with properly.
+		rewrite!("shl-const-to-mul"; "(shl ?x const_1 ?z)" => "(mul ?x const_2 ?z)"),
 		rewrite!("ashr-const-to-div"; "(ashr ?x const_1)" => "(sdiv ?x const_2)"),
 		rewrite!("lshr-const-to-div"; "(lshr ?x const_1)" => "(sdiv ?x const_2)"),
 		rewrite!("shl-const-to-mul-2"; "(shl ?x const_2)" => "(mul ?x Constant)"),
@@ -309,6 +318,9 @@ pub(crate) fn rules() -> Vec<Rewrite<SymbolLang, ()>> {
 
 		rewrite!("commute-add"; "(add ?x ?y)" => "(add ?y ?x)"),
 		rewrite!("commute-mul"; "(mul ?x ?y)" => "(mul ?y ?x)"),
+		// rewrite!("commute-and"; "(and ?x ?y)" => "(and ?y ?x)"),
+		// rewrite!("commute-or"; "(or ?x ?y)" => "(or ?y ?x)"),
+		// rewrite!("commute-xor"; "(xor ?x ?y)" => "(xor ?y ?x)"),
 
 		rewrite!("add-0"; "(add ?x 0)" => "?x"),
 		rewrite!("mul-0"; "(mul ?x 0)" => "0"),
