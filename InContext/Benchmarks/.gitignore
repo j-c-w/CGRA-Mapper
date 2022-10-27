@@ -2,3 +2,4 @@
 benchmark_data
 */*.s
 */param.json
+*/config.json

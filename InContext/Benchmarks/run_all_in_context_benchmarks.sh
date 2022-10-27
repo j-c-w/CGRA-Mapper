@@ -22,4 +22,4 @@ if [[ ${#plot_only[@]} -eq 0 ]]; then
 	done
 fi
 
-# TOTO -- plot
+python3.9 plot.py $output_folder A5_data

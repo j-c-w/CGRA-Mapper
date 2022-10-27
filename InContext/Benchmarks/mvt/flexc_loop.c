@@ -16,10 +16,10 @@ void kernel_mvt(int n,
   int i, j;
 
 #pragma scop
-  #pragma clang loop unroll_count(1)
+  // #pragma clang loop unroll_count(1)
   for (j = 0; j < N; j++) {
     // #pragma clang loop unroll_count(1) vectorize(disable)
-    #pragma clang loop unroll_count(1) vectorize_width(4)
+    // #pragma clang loop unroll_count(1) vectorize_width(4)
     for (i = 0; i < N; i++) {
       x1[i] = x1[i] + A[i][j] * y_1[j];
       x2[i] = x2[i] + A[j][i] * y_2[j];
