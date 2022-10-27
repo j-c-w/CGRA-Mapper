@@ -259,6 +259,7 @@ if __name__ == "__main__":
     # speedups is arch -> mode -> benchmark -> time
     for mode in modes:
         plt.clf()
+        plt.figure(figsize=(5, 3))
         for i in range(len(architectures)):
             arch = architectures[i]
             width = 1.0 / (len(architectures) + 1)
@@ -278,6 +279,6 @@ if __name__ == "__main__":
         plt.ylabel("Speedup")
         plt.tight_layout()
 
-        plt.legend()
+        plt.legend(ncol=2)
         plt.savefig(mode + '_in_context_speedups.png')
         plt.savefig(mode + '_in_context_speedups.eps')
