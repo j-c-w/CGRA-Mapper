@@ -1,0 +1,4730 @@
+Benchmark Start livermorec
+Starting livermorec1
+livermorec1, 1001, 0.000310826000
+Starting livermorec2
+livermorec2, 50, 0.000017782000
+Starting livermorec2
+livermorec2, 25, 0.000008316000
+Starting livermorec2
+livermorec2, 12, 0.000003338000
+Starting livermorec2
+livermorec2, 6, 0.000002062000
+Starting livermorec2
+livermorec2, 3, 0.000001330000
+Starting livermorec2
+livermorec2, 1, 0.000000428000
+Starting livermorec2
+livermorec2, 0, 0.000000090000
+Starting livermorec3
+livermorec3, 1001, 0.000157470000
+Starting livermorec4
+livermorec4, 200, 0.000031622000
+Starting livermorec4
+livermorec4, 200, 0.000028698000
+Starting livermorec4
+livermorec4, 200, 0.000028358000
+Starting livermorec5
+livermorec5, 1000, 0.000169904000
+Starting livermorec6
+livermorec6, 1, 0.000000954000
+Starting livermorec6
+livermorec6, 2, 0.000000698000
+Starting livermorec6
+livermorec6, 3, 0.000000880000
+Starting livermorec6
+livermorec6, 4, 0.000001458000
+Starting livermorec6
+livermorec6, 5, 0.000001252000
+Starting livermorec6
+livermorec6, 6, 0.000001376000
+Starting livermorec6
+livermorec6, 7, 0.000001610000
+Starting livermorec6
+livermorec6, 8, 0.000002846000
+Starting livermorec6
+livermorec6, 9, 0.000001972000
+Starting livermorec6
+livermorec6, 10, 0.000002154000
+Starting livermorec6
+livermorec6, 11, 0.000002276000
+Starting livermorec6
+livermorec6, 12, 0.000004072000
+Starting livermorec6
+livermorec6, 13, 0.000002704000
+Starting livermorec6
+livermorec6, 14, 0.000002884000
+Starting livermorec6
+livermorec6, 15, 0.000003008000
+Starting livermorec6
+livermorec6, 16, 0.000005448000
+Starting livermorec6
+livermorec6, 17, 0.000003404000
+Starting livermorec6
+livermorec6, 18, 0.000003584000
+Starting livermorec6
+livermorec6, 19, 0.000003756000
+Starting livermorec6
+livermorec6, 20, 0.000006676000
+Starting livermorec6
+livermorec6, 21, 0.000004118000
+Starting livermorec6
+livermorec6, 22, 0.000004276000
+Starting livermorec6
+livermorec6, 23, 0.000004496000
+Starting livermorec6
+livermorec6, 24, 0.000007928000
+Starting livermorec6
+livermorec6, 25, 0.000004912000
+Starting livermorec6
+livermorec6, 26, 0.000004994000
+Starting livermorec6
+livermorec6, 27, 0.000005304000
+Starting livermorec6
+livermorec6, 28, 0.000009192000
+Starting livermorec6
+livermorec6, 29, 0.000005592000
+Starting livermorec6
+livermorec6, 30, 0.000005706000
+Starting livermorec6
+livermorec6, 31, 0.000005936000
+Starting livermorec6
+livermorec6, 32, 0.000010472000
+Starting livermorec6
+livermorec6, 33, 0.000006382000
+Starting livermorec6
+livermorec6, 34, 0.000006488000
+Starting livermorec6
+livermorec6, 35, 0.000006692000
+Starting livermorec6
+livermorec6, 36, 0.000011886000
+Starting livermorec6
+livermorec6, 37, 0.000007076000
+Starting livermorec6
+livermorec6, 38, 0.000007382000
+Starting livermorec6
+livermorec6, 39, 0.000007534000
+Starting livermorec6
+livermorec6, 40, 0.000013096000
+Starting livermorec6
+livermorec6, 41, 0.000007824000
+Starting livermorec6
+livermorec6, 42, 0.000007898000
+Starting livermorec6
+livermorec6, 43, 0.000008070000
+Starting livermorec6
+livermorec6, 44, 0.000014388000
+Starting livermorec6
+livermorec6, 45, 0.000008740000
+Starting livermorec6
+livermorec6, 46, 0.000008660000
+Starting livermorec6
+livermorec6, 47, 0.000008752000
+Starting livermorec6
+livermorec6, 48, 0.000015588000
+Starting livermorec6
+livermorec6, 49, 0.000009352000
+Starting livermorec6
+livermorec6, 50, 0.000009524000
+Starting livermorec6
+livermorec6, 51, 0.000009588000
+Starting livermorec6
+livermorec6, 52, 0.000017022000
+Starting livermorec6
+livermorec6, 53, 0.000010318000
+Starting livermorec6
+livermorec6, 54, 0.000010260000
+Starting livermorec6
+livermorec6, 55, 0.000010422000
+Starting livermorec6
+livermorec6, 56, 0.000018236000
+Starting livermorec6
+livermorec6, 57, 0.000011262000
+Starting livermorec6
+livermorec6, 58, 0.000010912000
+Starting livermorec6
+livermorec6, 59, 0.000011150000
+Starting livermorec6
+livermorec6, 60, 0.000019588000
+Starting livermorec6
+livermorec6, 61, 0.000011940000
+Starting livermorec6
+livermorec6, 62, 0.000011520000
+Starting livermorec6
+livermorec6, 63, 0.000011806000
+Starting livermorec7
+livermorec7, 995, 0.000569276000
+Starting livermorec8
+livermorec8, 99, 0.000241136000
+Starting livermorec8
+livermorec8, 99, 0.000180968000
+Starting livermorec9
+livermorec9, 101, 0.000086196000
+Starting livermorec10
+livermorec10, 101, 0.000092290000
+Starting livermorec11
+livermorec11, 1000, 0.000149546000
+Starting livermorec12
+livermorec12, 1000, 0.000138888000
+Starting livermorec13
+livermorec13, 64, 0.000079180000
+Starting livermorec14
+livermorec14, 1001, 0.000500618000
+Starting livermorec15
+livermorec15, 1001, 0.000608044000
+Starting livermorec16
+livermorec16, 1001, 0.000248032000
+Starting livermorec17
+livermorec17, 99, 0.000114844000
+Starting livermorec17
+livermorec17, 99, 0.000097500000
+Starting livermorec17
+livermorec17, 99, 0.000096612000
+Starting livermorec17
+livermorec17, 99, 0.000096532000
+Starting livermorec17
+livermorec17, 99, 0.000096902000
+Starting livermorec18
+livermorec18, 99, 0.000145934000
+Starting livermorec18
+livermorec18, 99, 0.000134954000
+Starting livermorec18
+livermorec18, 99, 0.000135524000
+Starting livermorec18
+livermorec18, 99, 0.000138380000
+Starting livermorec18
+livermorec18, 99, 0.000141704000
+Starting livermorec19
+livermorec19, 99, 0.000033060000
+Starting livermorec19
+livermorec19, 99, 0.000031998000
+Starting livermorec19
+livermorec19, 99, 0.000032108000
+Starting livermorec19
+livermorec19, 99, 0.000032374000
+Starting livermorec19
+livermorec19, 99, 0.000032170000
+Starting livermorec20
+livermorec20, 101, 0.000029264000
+Starting livermorec21
+livermorec21, 101, 0.000023948000
+Starting livermorec22
+livermorec22, 101, 0.000046118000
+Starting livermorec22
+livermorec22, 101, 0.000025646000
+Starting livermorec22
+livermorec22, 101, 0.000025870000
+Starting livermorec22
+livermorec22, 101, 0.000025624000
+Starting livermorec22
+livermorec22, 101, 0.000025974000
+Starting livermorec22
+livermorec22, 101, 0.000025462000
+Starting livermorec22
+livermorec22, 101, 0.000024376000
+Starting livermorec22
+livermorec22, 101, 0.000023788000
+Starting livermorec22
+livermorec22, 101, 0.000024432000
+Starting livermorec22
+livermorec22, 101, 0.000024112000
+Starting livermorec22
+livermorec22, 101, 0.000024040000
+Starting livermorec22
+livermorec22, 101, 0.000024416000
+Starting livermorec22
+livermorec22, 101, 0.000024190000
+Starting livermorec22
+livermorec22, 101, 0.000024728000
+Starting livermorec22
+livermorec22, 101, 0.000024222000
+Starting livermorec22
+livermorec22, 101, 0.000024444000
+Starting livermorec22
+livermorec22, 101, 0.000023710000
+Starting livermorec22
+livermorec22, 101, 0.000023572000
+Starting livermorec22
+livermorec22, 101, 0.000023376000
+Starting livermorec22
+livermorec22, 101, 0.000024242000
+Starting livermorec22
+livermorec22, 101, 0.000024212000
+Starting livermorec22
+livermorec22, 101, 0.000024354000
+Starting livermorec22
+livermorec22, 101, 0.000021760000
+Starting livermorec22
+livermorec22, 101, 0.000021726000
+Starting livermorec22
+livermorec22, 101, 0.000021888000
+Starting livermorec22
+livermorec22, 101, 0.000024728000
+Starting livermorec22
+livermorec22, 101, 0.000022648000
+Starting livermorec22
+livermorec22, 101, 0.000023356000
+Starting livermorec22
+livermorec22, 101, 0.000023524000
+Starting livermorec22
+livermorec22, 101, 0.000023524000
+Starting livermorec22
+livermorec22, 101, 0.000023320000
+Starting livermorec22
+livermorec22, 101, 0.000022580000
+Starting livermorec22
+livermorec22, 101, 0.000021920000
+Starting livermorec22
+livermorec22, 101, 0.000021816000
+Starting livermorec22
+livermorec22, 101, 0.000021642000
+Starting livermorec22
+livermorec22, 101, 0.000021544000
+Starting livermorec22
+livermorec22, 101, 0.000021558000
+Starting livermorec22
+livermorec22, 101, 0.000021728000
+Starting livermorec22
+livermorec22, 101, 0.000021568000
+Starting livermorec22
+livermorec22, 101, 0.000021568000
+Starting livermorec22
+livermorec22, 101, 0.000021540000
+Starting livermorec22
+livermorec22, 101, 0.000021678000
+Starting livermorec22
+livermorec22, 101, 0.000021620000
+Starting livermorec22
+livermorec22, 101, 0.000021564000
+Starting livermorec22
+livermorec22, 101, 0.000021528000
+Starting livermorec22
+livermorec22, 101, 0.000021592000
+Starting livermorec22
+livermorec22, 101, 0.000021648000
+Starting livermorec22
+livermorec22, 101, 0.000021584000
+Starting livermorec22
+livermorec22, 101, 0.000021558000
+Starting livermorec22
+livermorec22, 101, 0.000021732000
+Starting livermorec22
+livermorec22, 101, 0.000024786000
+Starting livermorec22
+livermorec22, 101, 0.000022004000
+Starting livermorec22
+livermorec22, 101, 0.000022376000
+Starting livermorec22
+livermorec22, 101, 0.000022922000
+Starting livermorec22
+livermorec22, 101, 0.000023414000
+Starting livermorec22
+livermorec22, 101, 0.000023076000
+Starting livermorec22
+livermorec22, 101, 0.000023364000
+Starting livermorec22
+livermorec22, 101, 0.000022454000
+Starting livermorec22
+livermorec22, 101, 0.000021920000
+Starting livermorec22
+livermorec22, 101, 0.000021788000
+Starting livermorec22
+livermorec22, 101, 0.000021566000
+Starting livermorec22
+livermorec22, 101, 0.000021692000
+Starting livermorec22
+livermorec22, 101, 0.000021592000
+Starting livermorec22
+livermorec22, 101, 0.000021600000
+Starting livermorec22
+livermorec22, 101, 0.000021620000
+Starting livermorec22
+livermorec22, 101, 0.000021620000
+Starting livermorec22
+livermorec22, 101, 0.000021564000
+Starting livermorec22
+livermorec22, 101, 0.000021564000
+Starting livermorec22
+livermorec22, 101, 0.000021564000
+Starting livermorec22
+livermorec22, 101, 0.000021592000
+Starting livermorec22
+livermorec22, 101, 0.000021564000
+Starting livermorec22
+livermorec22, 101, 0.000021556000
+Starting livermorec22
+livermorec22, 101, 0.000021592000
+Starting livermorec22
+livermorec22, 101, 0.000021628000
+Starting livermorec22
+livermorec22, 101, 0.000021594000
+Starting livermorec22
+livermorec22, 101, 0.000023644000
+Starting livermorec22
+livermorec22, 101, 0.000021788000
+Starting livermorec22
+livermorec22, 101, 0.000021950000
+Starting livermorec22
+livermorec22, 101, 0.000022264000
+Starting livermorec22
+livermorec22, 101, 0.000022574000
+Starting livermorec22
+livermorec22, 101, 0.000023244000
+Starting livermorec22
+livermorec22, 101, 0.000023428000
+Starting livermorec22
+livermorec22, 101, 0.000023272000
+Starting livermorec22
+livermorec22, 101, 0.000022622000
+Starting livermorec22
+livermorec22, 101, 0.000021900000
+Starting livermorec22
+livermorec22, 101, 0.000021706000
+Starting livermorec22
+livermorec22, 101, 0.000021600000
+Starting livermorec22
+livermorec22, 101, 0.000021620000
+Starting livermorec22
+livermorec22, 101, 0.000021620000
+Starting livermorec22
+livermorec22, 101, 0.000021718000
+Starting livermorec22
+livermorec22, 101, 0.000021620000
+Starting livermorec22
+livermorec22, 101, 0.000021564000
+Starting livermorec22
+livermorec22, 101, 0.000021528000
+Starting livermorec22
+livermorec22, 101, 0.000021592000
+Starting livermorec22
+livermorec22, 101, 0.000021564000
+Starting livermorec22
+livermorec22, 101, 0.000021528000
+Starting livermorec22
+livermorec22, 101, 0.000021592000
+Starting livermorec22
+livermorec22, 101, 0.000021700000
+Starting livermorec22
+livermorec22, 101, 0.000021600000
+Starting livermorec22
+livermorec22, 101, 0.000021628000
+Starting livermorec22
+livermorec22, 101, 0.000023872000
+Starting livermorec22
+livermorec22, 101, 0.000021778000
+Starting livermorec22
+livermorec22, 101, 0.000021768000
+Starting livermorec22
+livermorec22, 101, 0.000022020000
+Starting livermorec22
+livermorec22, 101, 0.000022266000
+Starting livermorec22
+livermorec22, 101, 0.000022930000
+Starting livermorec22
+livermorec22, 101, 0.000022900000
+Starting livermorec22
+livermorec22, 101, 0.000023524000
+Starting livermorec22
+livermorec22, 101, 0.000023320000
+Starting livermorec22
+livermorec22, 101, 0.000022490000
+Starting livermorec22
+livermorec22, 101, 0.000022068000
+Starting livermorec22
+livermorec22, 101, 0.000021708000
+Starting livermorec22
+livermorec22, 101, 0.000021622000
+Starting livermorec22
+livermorec22, 101, 0.000021650000
+Starting livermorec22
+livermorec22, 101, 0.000021620000
+Starting livermorec22
+livermorec22, 101, 0.000021564000
+Starting livermorec22
+livermorec22, 101, 0.000021556000
+Starting livermorec22
+livermorec22, 101, 0.000021700000
+Starting livermorec22
+livermorec22, 101, 0.000021620000
+Starting livermorec22
+livermorec22, 101, 0.000021592000
+Starting livermorec22
+livermorec22, 101, 0.000021564000
+Starting livermorec22
+livermorec22, 101, 0.000021556000
+Starting livermorec22
+livermorec22, 101, 0.000021648000
+Starting livermorec22
+livermorec22, 101, 0.000021600000
+Starting livermorec22
+livermorec22, 101, 0.000021584000
+Starting livermorec22
+livermorec22, 101, 0.000025374000
+Starting livermorec22
+livermorec22, 101, 0.000021732000
+Starting livermorec22
+livermorec22, 101, 0.000021612000
+Starting livermorec22
+livermorec22, 101, 0.000021732000
+Starting livermorec22
+livermorec22, 101, 0.000021948000
+Starting livermorec22
+livermorec22, 101, 0.000022348000
+Starting livermorec22
+livermorec22, 101, 0.000022574000
+Starting livermorec22
+livermorec22, 101, 0.000023160000
+Starting livermorec22
+livermorec22, 101, 0.000023470000
+Starting livermorec22
+livermorec22, 101, 0.000023274000
+Starting livermorec22
+livermorec22, 101, 0.000022656000
+Starting livermorec22
+livermorec22, 101, 0.000022048000
+Starting livermorec22
+livermorec22, 101, 0.000021774000
+Starting livermorec22
+livermorec22, 101, 0.000021656000
+Starting livermorec22
+livermorec22, 101, 0.000021614000
+Starting livermorec22
+livermorec22, 101, 0.000021572000
+Starting livermorec22
+livermorec22, 101, 0.000021648000
+Starting livermorec22
+livermorec22, 101, 0.000021512000
+Starting livermorec22
+livermorec22, 101, 0.000021512000
+Starting livermorec22
+livermorec22, 101, 0.000021564000
+Starting livermorec22
+livermorec22, 101, 0.000021620000
+Starting livermorec22
+livermorec22, 101, 0.000021620000
+Starting livermorec22
+livermorec22, 101, 0.000021528000
+Starting livermorec22
+livermorec22, 101, 0.000021556000
+Starting livermorec22
+livermorec22, 101, 0.000021620000
+Starting livermorec22
+livermorec22, 101, 0.000025652000
+Starting livermorec22
+livermorec22, 101, 0.000021670000
+Starting livermorec22
+livermorec22, 101, 0.000021592000
+Starting livermorec22
+livermorec22, 101, 0.000021728000
+Starting livermorec22
+livermorec22, 101, 0.000021600000
+Starting livermorec22
+livermorec22, 101, 0.000021788000
+Starting livermorec22
+livermorec22, 101, 0.000022294000
+Starting livermorec22
+livermorec22, 101, 0.000022958000
+Starting livermorec22
+livermorec22, 101, 0.000023656000
+Starting livermorec22
+livermorec22, 101, 0.000023684000
+Starting livermorec22
+livermorec22, 101, 0.000023160000
+Starting livermorec22
+livermorec22, 101, 0.000022714000
+Starting livermorec22
+livermorec22, 101, 0.000022180000
+Starting livermorec22
+livermorec22, 101, 0.000021816000
+Starting livermorec22
+livermorec22, 101, 0.000021734000
+Starting livermorec22
+livermorec22, 101, 0.000021760000
+Starting livermorec22
+livermorec22, 101, 0.000021678000
+Starting livermorec22
+livermorec22, 101, 0.000021592000
+Starting livermorec22
+livermorec22, 101, 0.000021540000
+Starting livermorec22
+livermorec22, 101, 0.000021700000
+Starting livermorec22
+livermorec22, 101, 0.000021564000
+Starting livermorec22
+livermorec22, 101, 0.000021580000
+Starting livermorec22
+livermorec22, 101, 0.000021726000
+Starting livermorec22
+livermorec22, 101, 0.000021728000
+Starting livermorec22
+livermorec22, 101, 0.000021592000
+Starting livermorec22
+livermorec22, 101, 0.000025254000
+Starting livermorec22
+livermorec22, 101, 0.000021732000
+Starting livermorec22
+livermorec22, 101, 0.000021720000
+Starting livermorec22
+livermorec22, 101, 0.000021566000
+Starting livermorec22
+livermorec22, 101, 0.000021564000
+Starting livermorec22
+livermorec22, 101, 0.000021760000
+Starting livermorec22
+livermorec22, 101, 0.000022036000
+Starting livermorec22
+livermorec22, 101, 0.000022320000
+Starting livermorec22
+livermorec22, 101, 0.000022762000
+Starting livermorec22
+livermorec22, 101, 0.000023326000
+Starting livermorec22
+livermorec22, 101, 0.000023484000
+Starting livermorec22
+livermorec22, 101, 0.000023280000
+Starting livermorec22
+livermorec22, 101, 0.000022768000
+Starting livermorec22
+livermorec22, 101, 0.000022068000
+Starting livermorec22
+livermorec22, 101, 0.000021812000
+Starting livermorec22
+livermorec22, 101, 0.000021572000
+Starting livermorec22
+livermorec22, 101, 0.000021528000
+Starting livermorec22
+livermorec22, 101, 0.000021544000
+Starting livermorec22
+livermorec22, 101, 0.000021700000
+Starting livermorec22
+livermorec22, 101, 0.000021544000
+Starting livermorec22
+livermorec22, 101, 0.000021574000
+Starting livermorec22
+livermorec22, 101, 0.000021608000
+Starting livermorec22
+livermorec22, 101, 0.000021680000
+Starting livermorec22
+livermorec22, 101, 0.000021622000
+Starting livermorec22
+livermorec22, 101, 0.000021558000
+Starting livermorec22
+livermorec22, 101, 0.000025470000
+Starting livermorec22
+livermorec22, 101, 0.000021848000
+Starting livermorec22
+livermorec22, 101, 0.000021528000
+Starting livermorec22
+livermorec22, 101, 0.000021564000
+Starting livermorec22
+livermorec22, 101, 0.000021564000
+Starting livermorec22
+livermorec22, 101, 0.000021664000
+Starting livermorec22
+livermorec22, 101, 0.000021704000
+Starting livermorec22
+livermorec22, 101, 0.000021976000
+Starting livermorec22
+livermorec22, 101, 0.000022352000
+Starting livermorec22
+livermorec22, 101, 0.000022910000
+Starting livermorec22
+livermorec22, 101, 0.000023436000
+Starting livermorec22
+livermorec22, 101, 0.000023406000
+Starting livermorec22
+livermorec22, 101, 0.000023252000
+Starting livermorec22
+livermorec22, 101, 0.000022568000
+Starting livermorec22
+livermorec22, 101, 0.000022256000
+Starting livermorec22
+livermorec22, 101, 0.000021628000
+Starting livermorec22
+livermorec22, 101, 0.000021566000
+Starting livermorec22
+livermorec22, 101, 0.000021728000
+Starting livermorec22
+livermorec22, 101, 0.000021592000
+Starting livermorec22
+livermorec22, 101, 0.000021512000
+Starting livermorec22
+livermorec22, 101, 0.000021544000
+Starting livermorec22
+livermorec22, 101, 0.000021692000
+Starting livermorec22
+livermorec22, 101, 0.000021592000
+Starting livermorec22
+livermorec22, 101, 0.000021568000
+Starting livermorec22
+livermorec22, 101, 0.000021628000
+Starting livermorec22
+livermorec22, 101, 0.000025506000
+Starting livermorec22
+livermorec22, 101, 0.000021744000
+Starting livermorec22
+livermorec22, 101, 0.000021620000
+Starting livermorec22
+livermorec22, 101, 0.000021528000
+Starting livermorec22
+livermorec22, 101, 0.000021700000
+Starting livermorec22
+livermorec22, 101, 0.000021620000
+Starting livermorec22
+livermorec22, 101, 0.000021556000
+Starting livermorec22
+livermorec22, 101, 0.000021760000
+Starting livermorec22
+livermorec22, 101, 0.000022140000
+Starting livermorec22
+livermorec22, 101, 0.000022368000
+Starting livermorec22
+livermorec22, 101, 0.000022796000
+Starting livermorec22
+livermorec22, 101, 0.000023230000
+Starting livermorec22
+livermorec22, 101, 0.000023874000
+Starting livermorec22
+livermorec22, 101, 0.000023350000
+Starting livermorec22
+livermorec22, 101, 0.000022768000
+Starting livermorec22
+livermorec22, 101, 0.000022068000
+Starting livermorec22
+livermorec22, 101, 0.000021980000
+Starting livermorec22
+livermorec22, 101, 0.000021650000
+Starting livermorec22
+livermorec22, 101, 0.000021564000
+Starting livermorec22
+livermorec22, 101, 0.000021564000
+Starting livermorec22
+livermorec22, 101, 0.000021700000
+Starting livermorec22
+livermorec22, 101, 0.000021556000
+Starting livermorec22
+livermorec22, 101, 0.000021580000
+Starting livermorec22
+livermorec22, 101, 0.000021540000
+Starting livermorec22
+livermorec22, 101, 0.000021728000
+Starting livermorec22
+livermorec22, 101, 0.000025894000
+Starting livermorec22
+livermorec22, 101, 0.000021816000
+Starting livermorec22
+livermorec22, 101, 0.000021586000
+Starting livermorec22
+livermorec22, 101, 0.000021680000
+Starting livermorec22
+livermorec22, 101, 0.000021594000
+Starting livermorec22
+livermorec22, 101, 0.000021564000
+Starting livermorec22
+livermorec22, 101, 0.000021564000
+Starting livermorec22
+livermorec22, 101, 0.000021700000
+Starting livermorec22
+livermorec22, 101, 0.000021696000
+Starting livermorec22
+livermorec22, 101, 0.000021918000
+Starting livermorec22
+livermorec22, 101, 0.000022470000
+Starting livermorec22
+livermorec22, 101, 0.000022824000
+Starting livermorec22
+livermorec22, 101, 0.000023350000
+Starting livermorec22
+livermorec22, 101, 0.000023524000
+Starting livermorec22
+livermorec22, 101, 0.000023106000
+Starting livermorec22
+livermorec22, 101, 0.000022596000
+Starting livermorec22
+livermorec22, 101, 0.000021836000
+Starting livermorec22
+livermorec22, 101, 0.000021676000
+Starting livermorec22
+livermorec22, 101, 0.000021652000
+Starting livermorec22
+livermorec22, 101, 0.000021754000
+Starting livermorec22
+livermorec22, 101, 0.000021586000
+Starting livermorec22
+livermorec22, 101, 0.000021564000
+Starting livermorec22
+livermorec22, 101, 0.000021600000
+Starting livermorec22
+livermorec22, 101, 0.000021690000
+Starting livermorec22
+livermorec22, 101, 0.000021592000
+Starting livermorec22
+livermorec22, 101, 0.000025304000
+Starting livermorec22
+livermorec22, 101, 0.000021612000
+Starting livermorec22
+livermorec22, 101, 0.000021726000
+Starting livermorec22
+livermorec22, 101, 0.000021558000
+Starting livermorec22
+livermorec22, 101, 0.000021584000
+Starting livermorec22
+livermorec22, 101, 0.000021678000
+Starting livermorec22
+livermorec22, 101, 0.000021692000
+Starting livermorec22
+livermorec22, 101, 0.000021592000
+Starting livermorec22
+livermorec22, 101, 0.000021656000
+Starting livermorec22
+livermorec22, 101, 0.000021734000
+Starting livermorec22
+livermorec22, 101, 0.000022202000
+Starting livermorec22
+livermorec22, 101, 0.000022574000
+Starting livermorec22
+livermorec22, 101, 0.000022918000
+Starting livermorec22
+livermorec22, 101, 0.000023210000
+Starting livermorec22
+livermorec22, 101, 0.000023826000
+Starting livermorec22
+livermorec22, 101, 0.000023328000
+Starting livermorec22
+livermorec22, 101, 0.000022620000
+Starting livermorec22
+livermorec22, 101, 0.000022040000
+Starting livermorec22
+livermorec22, 101, 0.000021922000
+Starting livermorec22
+livermorec22, 101, 0.000021648000
+Starting livermorec22
+livermorec22, 101, 0.000021568000
+Starting livermorec22
+livermorec22, 101, 0.000021620000
+Starting livermorec22
+livermorec22, 101, 0.000021782000
+Starting livermorec22
+livermorec22, 101, 0.000021614000
+Starting livermorec22
+livermorec22, 101, 0.000021628000
+Starting livermorec22
+livermorec22, 101, 0.000025600000
+Starting livermorec22
+livermorec22, 101, 0.000021894000
+Starting livermorec22
+livermorec22, 101, 0.000021592000
+Starting livermorec22
+livermorec22, 101, 0.000021592000
+Starting livermorec22
+livermorec22, 101, 0.000021612000
+Starting livermorec22
+livermorec22, 101, 0.000021754000
+Starting livermorec22
+livermorec22, 101, 0.000021558000
+Starting livermorec22
+livermorec22, 101, 0.000021556000
+Starting livermorec22
+livermorec22, 101, 0.000021612000
+Starting livermorec22
+livermorec22, 101, 0.000021754000
+Starting livermorec22
+livermorec22, 101, 0.000021782000
+Starting livermorec22
+livermorec22, 101, 0.000022014000
+Starting livermorec22
+livermorec22, 101, 0.000022488000
+Starting livermorec22
+livermorec22, 101, 0.000022980000
+Starting livermorec22
+livermorec22, 101, 0.000023268000
+Starting livermorec22
+livermorec22, 101, 0.000023468000
+Starting livermorec22
+livermorec22, 101, 0.000023300000
+Starting livermorec22
+livermorec22, 101, 0.000022566000
+Starting livermorec22
+livermorec22, 101, 0.000022104000
+Starting livermorec22
+livermorec22, 101, 0.000021650000
+Starting livermorec22
+livermorec22, 101, 0.000021620000
+Starting livermorec22
+livermorec22, 101, 0.000021754000
+Starting livermorec22
+livermorec22, 101, 0.000021558000
+Starting livermorec22
+livermorec22, 101, 0.000021648000
+Starting livermorec22
+livermorec22, 101, 0.000021568000
+Starting livermorec22
+livermorec22, 101, 0.000025526000
+Starting livermorec22
+livermorec22, 101, 0.000021620000
+Starting livermorec22
+livermorec22, 101, 0.000021620000
+Starting livermorec22
+livermorec22, 101, 0.000021584000
+Starting livermorec22
+livermorec22, 101, 0.000021748000
+Starting livermorec22
+livermorec22, 101, 0.000021594000
+Starting livermorec22
+livermorec22, 101, 0.000021564000
+Starting livermorec22
+livermorec22, 101, 0.000021544000
+Starting livermorec22
+livermorec22, 101, 0.000021700000
+Starting livermorec22
+livermorec22, 101, 0.000021544000
+Starting livermorec22
+livermorec22, 101, 0.000021602000
+Starting livermorec22
+livermorec22, 101, 0.000021628000
+Starting livermorec22
+livermorec22, 101, 0.000022108000
+Starting livermorec22
+livermorec22, 101, 0.000022476000
+Starting livermorec22
+livermorec22, 101, 0.000022664000
+Starting livermorec22
+livermorec22, 101, 0.000024010000
+Starting livermorec22
+livermorec22, 101, 0.000023422000
+Starting livermorec22
+livermorec22, 101, 0.000023040000
+Starting livermorec22
+livermorec22, 101, 0.000022630000
+Starting livermorec22
+livermorec22, 101, 0.000021920000
+Starting livermorec22
+livermorec22, 101, 0.000021734000
+Starting livermorec22
+livermorec22, 101, 0.000021600000
+Starting livermorec22
+livermorec22, 101, 0.000021564000
+Starting livermorec22
+livermorec22, 101, 0.000021620000
+Starting livermorec22
+livermorec22, 101, 0.000021754000
+Starting livermorec22
+livermorec22, 101, 0.000025588000
+Starting livermorec22
+livermorec22, 101, 0.000021732000
+Starting livermorec22
+livermorec22, 101, 0.000021668000
+Starting livermorec22
+livermorec22, 101, 0.000021756000
+Starting livermorec22
+livermorec22, 101, 0.000021564000
+Starting livermorec22
+livermorec22, 101, 0.000021564000
+Starting livermorec22
+livermorec22, 101, 0.000021564000
+Starting livermorec22
+livermorec22, 101, 0.000021700000
+Starting livermorec22
+livermorec22, 101, 0.000021564000
+Starting livermorec22
+livermorec22, 101, 0.000021608000
+Starting livermorec22
+livermorec22, 101, 0.000021544000
+Starting livermorec22
+livermorec22, 101, 0.000021748000
+Starting livermorec22
+livermorec22, 101, 0.000021798000
+Starting livermorec22
+livermorec22, 101, 0.000022056000
+Starting livermorec22
+livermorec22, 101, 0.000022580000
+Starting livermorec22
+livermorec22, 101, 0.000023314000
+Starting livermorec22
+livermorec22, 101, 0.000023624000
+Starting livermorec22
+livermorec22, 101, 0.000023580000
+Starting livermorec22
+livermorec22, 101, 0.000023260000
+Starting livermorec22
+livermorec22, 101, 0.000022790000
+Starting livermorec22
+livermorec22, 101, 0.000021922000
+Starting livermorec22
+livermorec22, 101, 0.000021872000
+Starting livermorec22
+livermorec22, 101, 0.000021594000
+Starting livermorec22
+livermorec22, 101, 0.000021728000
+Starting livermorec22
+livermorec22, 101, 0.000021572000
+Starting livermorec22
+livermorec22, 101, 0.000025370000
+Starting livermorec22
+livermorec22, 101, 0.000021594000
+Starting livermorec22
+livermorec22, 101, 0.000021784000
+Starting livermorec22
+livermorec22, 101, 0.000021592000
+Starting livermorec22
+livermorec22, 101, 0.000021612000
+Starting livermorec22
+livermorec22, 101, 0.000021564000
+Starting livermorec22
+livermorec22, 101, 0.000021678000
+Starting livermorec22
+livermorec22, 101, 0.000021528000
+Starting livermorec22
+livermorec22, 101, 0.000021544000
+Starting livermorec22
+livermorec22, 101, 0.000021594000
+Starting livermorec22
+livermorec22, 101, 0.000021700000
+Starting livermorec22
+livermorec22, 101, 0.000021564000
+Starting livermorec22
+livermorec22, 101, 0.000021692000
+Starting livermorec22
+livermorec22, 101, 0.000021960000
+Starting livermorec22
+livermorec22, 101, 0.000022080000
+Starting livermorec22
+livermorec22, 101, 0.000022236000
+Starting livermorec22
+livermorec22, 101, 0.000022798000
+Starting livermorec22
+livermorec22, 101, 0.000023406000
+Starting livermorec22
+livermorec22, 101, 0.000023604000
+Starting livermorec22
+livermorec22, 101, 0.000022956000
+Starting livermorec22
+livermorec22, 101, 0.000022510000
+Starting livermorec22
+livermorec22, 101, 0.000021920000
+Starting livermorec22
+livermorec22, 101, 0.000021840000
+Starting livermorec22
+livermorec22, 101, 0.000021704000
+Starting livermorec22
+livermorec22, 101, 0.000021568000
+Starting livermorec22
+livermorec22, 101, 0.000025454000
+Starting livermorec22
+livermorec22, 101, 0.000021916000
+Starting livermorec22
+livermorec22, 101, 0.000021648000
+Starting livermorec22
+livermorec22, 101, 0.000021620000
+Starting livermorec22
+livermorec22, 101, 0.000021612000
+Starting livermorec22
+livermorec22, 101, 0.000021698000
+Starting livermorec22
+livermorec22, 101, 0.000021564000
+Starting livermorec22
+livermorec22, 101, 0.000021544000
+Starting livermorec22
+livermorec22, 101, 0.000021594000
+Starting livermorec22
+livermorec22, 101, 0.000021700000
+Starting livermorec22
+livermorec22, 101, 0.000021564000
+Starting livermorec22
+livermorec22, 101, 0.000021608000
+Starting livermorec22
+livermorec22, 101, 0.000021572000
+Starting livermorec22
+livermorec22, 101, 0.000021782000
+Starting livermorec22
+livermorec22, 101, 0.000021722000
+Starting livermorec22
+livermorec22, 101, 0.000022140000
+Starting livermorec22
+livermorec22, 101, 0.000022256000
+Starting livermorec22
+livermorec22, 101, 0.000023016000
+Starting livermorec22
+livermorec22, 101, 0.000023154000
+Starting livermorec22
+livermorec22, 101, 0.000023490000
+Starting livermorec22
+livermorec22, 101, 0.000023068000
+Starting livermorec22
+livermorec22, 101, 0.000022882000
+Starting livermorec22
+livermorec22, 101, 0.000022258000
+Starting livermorec22
+livermorec22, 101, 0.000021788000
+Starting livermorec22
+livermorec22, 101, 0.000021622000
+Starting livermorec22
+livermorec22, 101, 0.000025470000
+Starting livermorec22
+livermorec22, 101, 0.000021788000
+Starting livermorec22
+livermorec22, 101, 0.000021734000
+Starting livermorec22
+livermorec22, 101, 0.000021684000
+Starting livermorec22
+livermorec22, 101, 0.000021726000
+Starting livermorec22
+livermorec22, 101, 0.000021558000
+Starting livermorec22
+livermorec22, 101, 0.000021612000
+Starting livermorec22
+livermorec22, 101, 0.000021592000
+Starting livermorec22
+livermorec22, 101, 0.000021678000
+Starting livermorec22
+livermorec22, 101, 0.000021564000
+Starting livermorec22
+livermorec22, 101, 0.000021600000
+Starting livermorec22
+livermorec22, 101, 0.000021556000
+Starting livermorec22
+livermorec22, 101, 0.000021700000
+Starting livermorec22
+livermorec22, 101, 0.000021568000
+Starting livermorec22
+livermorec22, 101, 0.000021664000
+Starting livermorec22
+livermorec22, 101, 0.000021600000
+Starting livermorec22
+livermorec22, 101, 0.000021986000
+Starting livermorec22
+livermorec22, 101, 0.000022366000
+Starting livermorec22
+livermorec22, 101, 0.000022842000
+Starting livermorec22
+livermorec22, 101, 0.000023450000
+Starting livermorec22
+livermorec22, 101, 0.000023880000
+Starting livermorec22
+livermorec22, 101, 0.000023106000
+Starting livermorec22
+livermorec22, 101, 0.000022480000
+Starting livermorec22
+livermorec22, 101, 0.000022172000
+Starting livermorec22
+livermorec22, 101, 0.000022034000
+Starting livermorec22
+livermorec22, 101, 0.000025634000
+Starting livermorec22
+livermorec22, 101, 0.000021596000
+Starting livermorec22
+livermorec22, 101, 0.000021640000
+Starting livermorec22
+livermorec22, 101, 0.000021754000
+Starting livermorec22
+livermorec22, 101, 0.000021586000
+Starting livermorec22
+livermorec22, 101, 0.000021592000
+Starting livermorec22
+livermorec22, 101, 0.000021612000
+Starting livermorec22
+livermorec22, 101, 0.000021726000
+Starting livermorec22
+livermorec22, 101, 0.000021558000
+Starting livermorec22
+livermorec22, 101, 0.000021640000
+Starting livermorec22
+livermorec22, 101, 0.000021648000
+Starting livermorec22
+livermorec22, 101, 0.000021756000
+Starting livermorec22
+livermorec22, 101, 0.000021556000
+Starting livermorec22
+livermorec22, 101, 0.000021628000
+Starting livermorec22
+livermorec22, 101, 0.000021614000
+Starting livermorec22
+livermorec22, 101, 0.000021764000
+Starting livermorec22
+livermorec22, 101, 0.000021704000
+Starting livermorec22
+livermorec22, 101, 0.000022040000
+Starting livermorec22
+livermorec22, 101, 0.000022464000
+Starting livermorec22
+livermorec22, 101, 0.000022980000
+Starting livermorec22
+livermorec22, 101, 0.000023412000
+Starting livermorec22
+livermorec22, 101, 0.000023384000
+Starting livermorec22
+livermorec22, 101, 0.000023356000
+Starting livermorec22
+livermorec22, 101, 0.000022796000
+Starting livermorec22
+livermorec22, 101, 0.000021978000
+Starting livermorec22
+livermorec22, 101, 0.000025416000
+Starting livermorec22
+livermorec22, 101, 0.000021810000
+Starting livermorec22
+livermorec22, 101, 0.000021840000
+Starting livermorec22
+livermorec22, 101, 0.000021592000
+Starting livermorec22
+livermorec22, 101, 0.000021620000
+Starting livermorec22
+livermorec22, 101, 0.000021556000
+Starting livermorec22
+livermorec22, 101, 0.000021720000
+Starting livermorec22
+livermorec22, 101, 0.000021594000
+Starting livermorec22
+livermorec22, 101, 0.000021620000
+Starting livermorec22
+livermorec22, 101, 0.000021676000
+Starting livermorec22
+livermorec22, 101, 0.000021728000
+Starting livermorec22
+livermorec22, 101, 0.000021620000
+Starting livermorec22
+livermorec22, 101, 0.000021648000
+Starting livermorec22
+livermorec22, 101, 0.000021746000
+Starting livermorec22
+livermorec22, 101, 0.000021810000
+Starting livermorec22
+livermorec22, 101, 0.000021556000
+Starting livermorec22
+livermorec22, 101, 0.000021628000
+Starting livermorec22
+livermorec22, 101, 0.000021670000
+Starting livermorec22
+livermorec22, 101, 0.000022202000
+Starting livermorec22
+livermorec22, 101, 0.000022490000
+Starting livermorec22
+livermorec22, 101, 0.000022880000
+Starting livermorec22
+livermorec22, 101, 0.000023686000
+Starting livermorec22
+livermorec22, 101, 0.000023878000
+Starting livermorec22
+livermorec22, 101, 0.000023054000
+Starting livermorec22
+livermorec22, 101, 0.000022580000
+Starting livermorec22
+livermorec22, 101, 0.000026432000
+Starting livermorec22
+livermorec22, 101, 0.000022644000
+Starting livermorec22
+livermorec22, 101, 0.000021790000
+Starting livermorec22
+livermorec22, 101, 0.000021620000
+Starting livermorec22
+livermorec22, 101, 0.000021620000
+Starting livermorec22
+livermorec22, 101, 0.000021726000
+Starting livermorec22
+livermorec22, 101, 0.000021530000
+Starting livermorec22
+livermorec22, 101, 0.000021544000
+Starting livermorec22
+livermorec22, 101, 0.000021566000
+Starting livermorec22
+livermorec22, 101, 0.000021700000
+Starting livermorec22
+livermorec22, 101, 0.000021572000
+Starting livermorec22
+livermorec22, 101, 0.000021628000
+Starting livermorec22
+livermorec22, 101, 0.000021610000
+Starting livermorec22
+livermorec22, 101, 0.000021744000
+Starting livermorec22
+livermorec22, 101, 0.000021676000
+Starting livermorec22
+livermorec22, 101, 0.000021572000
+Starting livermorec22
+livermorec22, 101, 0.000021600000
+Starting livermorec22
+livermorec22, 101, 0.000021690000
+Starting livermorec22
+livermorec22, 101, 0.000021724000
+Starting livermorec22
+livermorec22, 101, 0.000021992000
+Starting livermorec22
+livermorec22, 101, 0.000022526000
+Starting livermorec22
+livermorec22, 101, 0.000023022000
+Starting livermorec22
+livermorec22, 101, 0.000023260000
+Starting livermorec22
+livermorec22, 101, 0.000023384000
+Starting livermorec22
+livermorec22, 101, 0.000023000000
+Starting livermorec22
+livermorec22, 101, 0.000026498000
+Starting livermorec22
+livermorec22, 101, 0.000023030000
+Starting livermorec22
+livermorec22, 101, 0.000022004000
+Starting livermorec22
+livermorec22, 101, 0.000021640000
+Starting livermorec22
+livermorec22, 101, 0.000021810000
+Starting livermorec22
+livermorec22, 101, 0.000021592000
+Starting livermorec22
+livermorec22, 101, 0.000021564000
+Starting livermorec22
+livermorec22, 101, 0.000021544000
+Starting livermorec22
+livermorec22, 101, 0.000021700000
+Starting livermorec22
+livermorec22, 101, 0.000021592000
+Starting livermorec22
+livermorec22, 101, 0.000021608000
+Starting livermorec22
+livermorec22, 101, 0.000021564000
+Starting livermorec22
+livermorec22, 101, 0.000021710000
+Starting livermorec22
+livermorec22, 101, 0.000021600000
+Starting livermorec22
+livermorec22, 101, 0.000021608000
+Starting livermorec22
+livermorec22, 101, 0.000021564000
+Starting livermorec22
+livermorec22, 101, 0.000021646000
+Starting livermorec22
+livermorec22, 101, 0.000021564000
+Starting livermorec22
+livermorec22, 101, 0.000021656000
+Starting livermorec22
+livermorec22, 101, 0.000021714000
+Starting livermorec22
+livermorec22, 101, 0.000022128000
+Starting livermorec22
+livermorec22, 101, 0.000022272000
+Starting livermorec22
+livermorec22, 101, 0.000022812000
+Starting livermorec22
+livermorec22, 101, 0.000023000000
+Starting livermorec22
+livermorec22, 101, 0.000023568000
+Starting livermorec22
+livermorec22, 101, 0.000024538000
+Starting livermorec22
+livermorec22, 101, 0.000023272000
+Starting livermorec22
+livermorec22, 101, 0.000022626000
+Starting livermorec22
+livermorec22, 101, 0.000022080000
+Starting livermorec22
+livermorec22, 101, 0.000021592000
+Starting livermorec22
+livermorec22, 101, 0.000021540000
+Starting livermorec22
+livermorec22, 101, 0.000021592000
+Starting livermorec22
+livermorec22, 101, 0.000021834000
+Starting livermorec22
+livermorec22, 101, 0.000021544000
+Starting livermorec22
+livermorec22, 101, 0.000021594000
+Starting livermorec22
+livermorec22, 101, 0.000021592000
+Starting livermorec22
+livermorec22, 101, 0.000021784000
+Starting livermorec22
+livermorec22, 101, 0.000021556000
+Starting livermorec22
+livermorec22, 101, 0.000021620000
+Starting livermorec22
+livermorec22, 101, 0.000021620000
+Starting livermorec22
+livermorec22, 101, 0.000021946000
+Starting livermorec22
+livermorec22, 101, 0.000021530000
+Starting livermorec22
+livermorec22, 101, 0.000021544000
+Starting livermorec22
+livermorec22, 101, 0.000021566000
+Starting livermorec22
+livermorec22, 101, 0.000021728000
+Starting livermorec22
+livermorec22, 101, 0.000021704000
+Starting livermorec22
+livermorec22, 101, 0.000021928000
+Starting livermorec22
+livermorec22, 101, 0.000022340000
+Starting livermorec22
+livermorec22, 101, 0.000023038000
+Starting livermorec22
+livermorec22, 101, 0.000023444000
+Starting livermorec22
+livermorec22, 101, 0.000024584000
+Starting livermorec22
+livermorec22, 101, 0.000023524000
+Starting livermorec22
+livermorec22, 101, 0.000023266000
+Starting livermorec22
+livermorec22, 101, 0.000022620000
+Starting livermorec22
+livermorec22, 101, 0.000022068000
+Starting livermorec22
+livermorec22, 101, 0.000021708000
+Starting livermorec22
+livermorec22, 101, 0.000021840000
+Starting livermorec22
+livermorec22, 101, 0.000021596000
+Starting livermorec22
+livermorec22, 101, 0.000021620000
+Starting livermorec22
+livermorec22, 101, 0.000021640000
+Starting livermorec22
+livermorec22, 101, 0.000021754000
+Starting livermorec22
+livermorec22, 101, 0.000021594000
+Starting livermorec22
+livermorec22, 101, 0.000021648000
+Starting livermorec22
+livermorec22, 101, 0.000021676000
+Starting livermorec22
+livermorec22, 101, 0.000021786000
+Starting livermorec22
+livermorec22, 101, 0.000021676000
+Starting livermorec22
+livermorec22, 101, 0.000021628000
+Starting livermorec22
+livermorec22, 101, 0.000021622000
+Starting livermorec22
+livermorec22, 101, 0.000021756000
+Starting livermorec22
+livermorec22, 101, 0.000021584000
+Starting livermorec22
+livermorec22, 101, 0.000021706000
+Starting livermorec22
+livermorec22, 101, 0.000021668000
+Starting livermorec22
+livermorec22, 101, 0.000022204000
+Starting livermorec22
+livermorec22, 101, 0.000022292000
+Starting livermorec22
+livermorec22, 101, 0.000022760000
+Starting livermorec22
+livermorec22, 101, 0.000024196000
+Starting livermorec22
+livermorec22, 101, 0.000023520000
+Starting livermorec22
+livermorec22, 101, 0.000023780000
+Starting livermorec22
+livermorec22, 101, 0.000023392000
+Starting livermorec22
+livermorec22, 101, 0.000022714000
+Starting livermorec22
+livermorec22, 101, 0.000022258000
+Starting livermorec22
+livermorec22, 101, 0.000021732000
+Starting livermorec22
+livermorec22, 101, 0.000021704000
+Starting livermorec22
+livermorec22, 101, 0.000021648000
+Starting livermorec22
+livermorec22, 101, 0.000021818000
+Starting livermorec22
+livermorec22, 101, 0.000021676000
+Starting livermorec22
+livermorec22, 101, 0.000021704000
+Starting livermorec22
+livermorec22, 101, 0.000021668000
+Starting livermorec22
+livermorec22, 101, 0.000021776000
+Starting livermorec22
+livermorec22, 101, 0.000021706000
+Starting livermorec22
+livermorec22, 101, 0.000021704000
+Starting livermorec22
+livermorec22, 101, 0.000021540000
+Starting livermorec22
+livermorec22, 101, 0.000021756000
+Starting livermorec22
+livermorec22, 101, 0.000021620000
+Starting livermorec22
+livermorec22, 101, 0.000021676000
+Starting livermorec22
+livermorec22, 101, 0.000021584000
+Starting livermorec22
+livermorec22, 101, 0.000021692000
+Starting livermorec22
+livermorec22, 101, 0.000021816000
+Starting livermorec22
+livermorec22, 101, 0.000021866000
+Starting livermorec22
+livermorec22, 101, 0.000022266000
+Starting livermorec23
+livermorec23, 99, 0.000074444000
+Starting livermorec23
+livermorec23, 99, 0.000066224000
+Starting livermorec23
+livermorec23, 99, 0.000066394000
+Starting livermorec23
+livermorec23, 99, 0.000066258000
+Starting livermorec23
+livermorec23, 99, 0.000072488000
+Finished livermorec, 0.000000000000
+Benchmark Start bicg
+Starting bicg
+bicg, 116, 0.000030054000
+Starting bicg
+bicg, 116, 0.000027968000
+Starting bicg
+bicg, 116, 0.000027624000
+Starting bicg
+bicg, 116, 0.000027800000
+Starting bicg
+bicg, 116, 0.000027764000
+Starting bicg
+bicg, 116, 0.000027690000
+Starting bicg
+bicg, 116, 0.000027698000
+Starting bicg
+bicg, 116, 0.000027720000
+Starting bicg
+bicg, 116, 0.000027692000
+Starting bicg
+bicg, 116, 0.000027608000
+Starting bicg
+bicg, 116, 0.000027636000
+Starting bicg
+bicg, 116, 0.000027580000
+Starting bicg
+bicg, 116, 0.000028346000
+Starting bicg
+bicg, 116, 0.000027726000
+Starting bicg
+bicg, 116, 0.000027756000
+Starting bicg
+bicg, 116, 0.000027684000
+Starting bicg
+bicg, 116, 0.000027692000
+Starting bicg
+bicg, 116, 0.000027664000
+Starting bicg
+bicg, 116, 0.000027868000
+Starting bicg
+bicg, 116, 0.000027692000
+Starting bicg
+bicg, 116, 0.000027786000
+Starting bicg
+bicg, 116, 0.000027814000
+Starting bicg
+bicg, 116, 0.000027716000
+Starting bicg
+bicg, 116, 0.000027724000
+Starting bicg
+bicg, 116, 0.000027728000
+Starting bicg
+bicg, 116, 0.000027694000
+Starting bicg
+bicg, 116, 0.000027722000
+Starting bicg
+bicg, 116, 0.000027684000
+Starting bicg
+bicg, 116, 0.000027748000
+Starting bicg
+bicg, 116, 0.000027664000
+Starting bicg
+bicg, 116, 0.000027656000
+Starting bicg
+bicg, 116, 0.000027760000
+Starting bicg
+bicg, 116, 0.000027706000
+Starting bicg
+bicg, 116, 0.000027720000
+Starting bicg
+bicg, 116, 0.000027724000
+Starting bicg
+bicg, 116, 0.000027722000
+Starting bicg
+bicg, 116, 0.000028024000
+Starting bicg
+bicg, 116, 0.000027690000
+Starting bicg
+bicg, 116, 0.000028060000
+Starting bicg
+bicg, 116, 0.000027686000
+Starting bicg
+bicg, 116, 0.000027864000
+Starting bicg
+bicg, 116, 0.000027776000
+Starting bicg
+bicg, 116, 0.000027740000
+Starting bicg
+bicg, 116, 0.000027720000
+Starting bicg
+bicg, 116, 0.000028436000
+Starting bicg
+bicg, 116, 0.000027924000
+Starting bicg
+bicg, 116, 0.000027660000
+Starting bicg
+bicg, 116, 0.000027728000
+Starting bicg
+bicg, 116, 0.000027694000
+Starting bicg
+bicg, 116, 0.000027700000
+Starting bicg
+bicg, 116, 0.000027802000
+Starting bicg
+bicg, 116, 0.000027712000
+Starting bicg
+bicg, 116, 0.000028426000
+Starting bicg
+bicg, 116, 0.000027998000
+Starting bicg
+bicg, 116, 0.000028026000
+Starting bicg
+bicg, 116, 0.000027726000
+Starting bicg
+bicg, 116, 0.000027890000
+Starting bicg
+bicg, 116, 0.000027756000
+Starting bicg
+bicg, 116, 0.000027784000
+Starting bicg
+bicg, 116, 0.000027696000
+Starting bicg
+bicg, 116, 0.000027778000
+Starting bicg
+bicg, 116, 0.000027748000
+Starting bicg
+bicg, 116, 0.000027832000
+Starting bicg
+bicg, 116, 0.000027722000
+Starting bicg
+bicg, 116, 0.000027712000
+Starting bicg
+bicg, 116, 0.000027702000
+Starting bicg
+bicg, 116, 0.000027808000
+Starting bicg
+bicg, 116, 0.000027832000
+Starting bicg
+bicg, 116, 0.000027748000
+Starting bicg
+bicg, 116, 0.000027696000
+Starting bicg
+bicg, 116, 0.000027860000
+Starting bicg
+bicg, 116, 0.000027824000
+Starting bicg
+bicg, 116, 0.000027714000
+Starting bicg
+bicg, 116, 0.000027856000
+Starting bicg
+bicg, 116, 0.000027852000
+Starting bicg
+bicg, 116, 0.000027718000
+Starting bicg
+bicg, 116, 0.000027840000
+Starting bicg
+bicg, 116, 0.000027784000
+Starting bicg
+bicg, 116, 0.000027860000
+Starting bicg
+bicg, 116, 0.000027776000
+Starting bicg
+bicg, 116, 0.000027696000
+Starting bicg
+bicg, 116, 0.000027804000
+Starting bicg
+bicg, 116, 0.000027776000
+Starting bicg
+bicg, 116, 0.000027780000
+Starting bicg
+bicg, 116, 0.000027752000
+Starting bicg
+bicg, 116, 0.000027776000
+Starting bicg
+bicg, 116, 0.000027752000
+Starting bicg
+bicg, 116, 0.000027780000
+Starting bicg
+bicg, 116, 0.000027776000
+Starting bicg
+bicg, 116, 0.000027866000
+Starting bicg
+bicg, 116, 0.000027860000
+Starting bicg
+bicg, 116, 0.000027770000
+Starting bicg
+bicg, 116, 0.000027806000
+Starting bicg
+bicg, 116, 0.000027808000
+Starting bicg
+bicg, 116, 0.000027730000
+Starting bicg
+bicg, 116, 0.000027726000
+Starting bicg
+bicg, 116, 0.000027720000
+Starting bicg
+bicg, 116, 0.000027726000
+Starting bicg
+bicg, 116, 0.000027748000
+Starting bicg
+bicg, 116, 0.000027696000
+Starting bicg
+bicg, 116, 0.000027780000
+Starting bicg
+bicg, 116, 0.000027696000
+Starting bicg
+bicg, 116, 0.000027782000
+Starting bicg
+bicg, 116, 0.000027726000
+Starting bicg
+bicg, 116, 0.000027700000
+Starting bicg
+bicg, 116, 0.000027742000
+Starting bicg
+bicg, 116, 0.000027728000
+Starting bicg
+bicg, 116, 0.000027946000
+Starting bicg
+bicg, 116, 0.000027860000
+Starting bicg
+bicg, 116, 0.000027996000
+Starting bicg
+bicg, 116, 0.000027750000
+Starting bicg
+bicg, 116, 0.000027752000
+Starting bicg
+bicg, 116, 0.000027798000
+Starting bicg
+bicg, 116, 0.000027700000
+Starting bicg
+bicg, 116, 0.000027850000
+Starting bicg
+bicg, 116, 0.000027796000
+Starting bicg
+bicg, 116, 0.000027768000
+Starting bicg
+bicg, 116, 0.000027776000
+Starting bicg
+bicg, 116, 0.000027776000
+Starting bicg
+bicg, 116, 0.000027832000
+Starting bicg
+bicg, 116, 0.000027744000
+Starting bicg
+bicg, 116, 0.000027772000
+Starting bicg
+bicg, 116, 0.000027710000
+Starting bicg
+bicg, 116, 0.000027736000
+Finished bicg, 0.000000000000
+Benchmark Start blowfish
+Starting blowfish
+blowfish, 20, 0.000011180000
+Finished blowfish, 0.000000000000
+Benchmark Start conv
+Starting conv
+conv, 4200, 0.000749794000
+Finished conv, 0.000000000000
+Benchmark Start dtw
+Starting dtw
+dtw, 512, 0.000199070000
+Starting dtw
+dtw, 512, 0.000192794000
+Starting dtw
+dtw, 512, 0.000195168000
+Starting dtw
+dtw, 512, 0.000191866000
+Starting dtw
+dtw, 512, 0.000195500000
+Starting dtw
+dtw, 512, 0.000192258000
+Starting dtw
+dtw, 512, 0.000194938000
+Starting dtw
+dtw, 512, 0.000192066000
+Starting dtw
+dtw, 512, 0.000196110000
+Starting dtw
+dtw, 512, 0.000192910000
+Starting dtw
+dtw, 512, 0.000195148000
+Starting dtw
+dtw, 512, 0.000192188000
+Starting dtw
+dtw, 512, 0.000195546000
+Starting dtw
+dtw, 512, 0.000192254000
+Starting dtw
+dtw, 512, 0.000194948000
+Starting dtw
+dtw, 512, 0.000192204000
+Starting dtw
+dtw, 512, 0.000196156000
+Starting dtw
+dtw, 512, 0.000192628000
+Starting dtw
+dtw, 512, 0.000195012000
+Starting dtw
+dtw, 512, 0.000192218000
+Starting dtw
+dtw, 512, 0.000195848000
+Starting dtw
+dtw, 512, 0.000192590000
+Starting dtw
+dtw, 512, 0.000195028000
+Starting dtw
+dtw, 512, 0.000192214000
+Starting dtw
+dtw, 512, 0.000195806000
+Starting dtw
+dtw, 512, 0.000192544000
+Starting dtw
+dtw, 512, 0.000194856000
+Starting dtw
+dtw, 512, 0.000192138000
+Starting dtw
+dtw, 512, 0.000195572000
+Starting dtw
+dtw, 512, 0.000192704000
+Starting dtw
+dtw, 512, 0.000194702000
+Starting dtw
+dtw, 512, 0.000192172000
+Starting dtw
+dtw, 512, 0.000195710000
+Starting dtw
+dtw, 512, 0.000192632000
+Starting dtw
+dtw, 512, 0.000194728000
+Starting dtw
+dtw, 512, 0.000192130000
+Starting dtw
+dtw, 512, 0.000195004000
+Starting dtw
+dtw, 512, 0.000192420000
+Starting dtw
+dtw, 512, 0.000194574000
+Starting dtw
+dtw, 512, 0.000192160000
+Starting dtw
+dtw, 512, 0.000195558000
+Starting dtw
+dtw, 512, 0.000192558000
+Starting dtw
+dtw, 512, 0.000194530000
+Starting dtw
+dtw, 512, 0.000192212000
+Starting dtw
+dtw, 512, 0.000195306000
+Starting dtw
+dtw, 512, 0.000193064000
+Starting dtw
+dtw, 512, 0.000194686000
+Starting dtw
+dtw, 512, 0.000192190000
+Starting dtw
+dtw, 512, 0.000195510000
+Starting dtw
+dtw, 512, 0.000192794000
+Starting dtw
+dtw, 512, 0.000194538000
+Starting dtw
+dtw, 512, 0.000192206000
+Starting dtw
+dtw, 512, 0.000195528000
+Starting dtw
+dtw, 512, 0.000192396000
+Starting dtw
+dtw, 512, 0.000194444000
+Starting dtw
+dtw, 512, 0.000192148000
+Starting dtw
+dtw, 512, 0.000195086000
+Starting dtw
+dtw, 512, 0.000192660000
+Starting dtw
+dtw, 512, 0.000194326000
+Starting dtw
+dtw, 512, 0.000192308000
+Starting dtw
+dtw, 512, 0.000195684000
+Starting dtw
+dtw, 512, 0.000192584000
+Starting dtw
+dtw, 512, 0.000194440000
+Starting dtw
+dtw, 512, 0.000192246000
+Starting dtw
+dtw, 512, 0.000194936000
+Starting dtw
+dtw, 512, 0.000192536000
+Starting dtw
+dtw, 512, 0.000194162000
+Starting dtw
+dtw, 512, 0.000192166000
+Starting dtw
+dtw, 512, 0.000194760000
+Starting dtw
+dtw, 512, 0.000192366000
+Starting dtw
+dtw, 512, 0.000194138000
+Starting dtw
+dtw, 512, 0.000192248000
+Starting dtw
+dtw, 512, 0.000194744000
+Starting dtw
+dtw, 512, 0.000192546000
+Starting dtw
+dtw, 512, 0.000194048000
+Starting dtw
+dtw, 512, 0.000192150000
+Starting dtw
+dtw, 512, 0.000195278000
+Starting dtw
+dtw, 512, 0.000192484000
+Starting dtw
+dtw, 512, 0.000193992000
+Starting dtw
+dtw, 512, 0.000192250000
+Starting dtw
+dtw, 512, 0.000194804000
+Starting dtw
+dtw, 512, 0.000192562000
+Starting dtw
+dtw, 512, 0.000193930000
+Starting dtw
+dtw, 512, 0.000192336000
+Starting dtw
+dtw, 512, 0.000194404000
+Starting dtw
+dtw, 512, 0.000192206000
+Starting dtw
+dtw, 512, 0.000193866000
+Starting dtw
+dtw, 512, 0.000192162000
+Starting dtw
+dtw, 512, 0.000194496000
+Starting dtw
+dtw, 512, 0.000192436000
+Starting dtw
+dtw, 512, 0.000193774000
+Starting dtw
+dtw, 512, 0.000192232000
+Starting dtw
+dtw, 512, 0.000194370000
+Starting dtw
+dtw, 512, 0.000192502000
+Starting dtw
+dtw, 512, 0.000193804000
+Starting dtw
+dtw, 512, 0.000192226000
+Starting dtw
+dtw, 512, 0.000195006000
+Starting dtw
+dtw, 512, 0.000192706000
+Starting dtw
+dtw, 512, 0.000193772000
+Starting dtw
+dtw, 512, 0.000192278000
+Starting dtw
+dtw, 512, 0.000194670000
+Starting dtw
+dtw, 512, 0.000192408000
+Starting dtw
+dtw, 512, 0.000193664000
+Starting dtw
+dtw, 512, 0.000192182000
+Starting dtw
+dtw, 512, 0.000194256000
+Starting dtw
+dtw, 512, 0.000192536000
+Starting dtw
+dtw, 512, 0.000193542000
+Starting dtw
+dtw, 512, 0.000192312000
+Starting dtw
+dtw, 512, 0.000194718000
+Starting dtw
+dtw, 512, 0.000192678000
+Starting dtw
+dtw, 512, 0.000193578000
+Starting dtw
+dtw, 512, 0.000192368000
+Starting dtw
+dtw, 512, 0.000194882000
+Starting dtw
+dtw, 512, 0.000192638000
+Starting dtw
+dtw, 512, 0.000193670000
+Starting dtw
+dtw, 512, 0.000192472000
+Starting dtw
+dtw, 512, 0.000194258000
+Starting dtw
+dtw, 512, 0.000192360000
+Starting dtw
+dtw, 512, 0.000193448000
+Starting dtw
+dtw, 512, 0.000192258000
+Starting dtw
+dtw, 512, 0.000194070000
+Starting dtw
+dtw, 512, 0.000192520000
+Starting dtw
+dtw, 512, 0.000193436000
+Starting dtw
+dtw, 512, 0.000192284000
+Starting dtw
+dtw, 512, 0.000193808000
+Starting dtw
+dtw, 512, 0.000192468000
+Starting dtw
+dtw, 512, 0.000193224000
+Starting dtw
+dtw, 512, 0.000192306000
+Starting dtw
+dtw, 512, 0.000194386000
+Starting dtw
+dtw, 512, 0.000192558000
+Starting dtw
+dtw, 512, 0.000193272000
+Starting dtw
+dtw, 512, 0.000192264000
+Starting dtw
+dtw, 512, 0.000193910000
+Starting dtw
+dtw, 512, 0.000192554000
+Starting dtw
+dtw, 512, 0.000193160000
+Starting dtw
+dtw, 512, 0.000192332000
+Starting dtw
+dtw, 512, 0.000194370000
+Starting dtw
+dtw, 512, 0.000192582000
+Starting dtw
+dtw, 512, 0.000193084000
+Starting dtw
+dtw, 512, 0.000192280000
+Starting dtw
+dtw, 512, 0.000194302000
+Starting dtw
+dtw, 512, 0.000192364000
+Starting dtw
+dtw, 512, 0.000192976000
+Starting dtw
+dtw, 512, 0.000192360000
+Starting dtw
+dtw, 512, 0.000193836000
+Starting dtw
+dtw, 512, 0.000192474000
+Starting dtw
+dtw, 512, 0.000193014000
+Starting dtw
+dtw, 512, 0.000192374000
+Starting dtw
+dtw, 512, 0.000193944000
+Starting dtw
+dtw, 512, 0.000192332000
+Starting dtw
+dtw, 512, 0.000192850000
+Starting dtw
+dtw, 512, 0.000192336000
+Starting dtw
+dtw, 512, 0.000193460000
+Starting dtw
+dtw, 512, 0.000192586000
+Starting dtw
+dtw, 512, 0.000192788000
+Starting dtw
+dtw, 512, 0.000192298000
+Starting dtw
+dtw, 512, 0.000193560000
+Starting dtw
+dtw, 512, 0.000192260000
+Starting dtw
+dtw, 512, 0.000192772000
+Starting dtw
+dtw, 512, 0.000192290000
+Starting dtw
+dtw, 512, 0.000193416000
+Starting dtw
+dtw, 512, 0.000192406000
+Starting dtw
+dtw, 512, 0.000192714000
+Starting dtw
+dtw, 512, 0.000192350000
+Starting dtw
+dtw, 512, 0.000193778000
+Starting dtw
+dtw, 512, 0.000192404000
+Starting dtw
+dtw, 512, 0.000192684000
+Starting dtw
+dtw, 512, 0.000192334000
+Starting dtw
+dtw, 512, 0.000193242000
+Starting dtw
+dtw, 512, 0.000192342000
+Starting dtw
+dtw, 512, 0.000192584000
+Starting dtw
+dtw, 512, 0.000192218000
+Starting dtw
+dtw, 512, 0.000193314000
+Starting dtw
+dtw, 512, 0.000192408000
+Starting dtw
+dtw, 512, 0.000192588000
+Starting dtw
+dtw, 512, 0.000192416000
+Starting dtw
+dtw, 512, 0.000193584000
+Starting dtw
+dtw, 512, 0.000192500000
+Starting dtw
+dtw, 512, 0.000192476000
+Starting dtw
+dtw, 512, 0.000192212000
+Starting dtw
+dtw, 512, 0.000193780000
+Starting dtw
+dtw, 512, 0.000192786000
+Starting dtw
+dtw, 512, 0.000192444000
+Starting dtw
+dtw, 512, 0.000192288000
+Starting dtw
+dtw, 512, 0.000193356000
+Starting dtw
+dtw, 512, 0.000192572000
+Starting dtw
+dtw, 512, 0.000192448000
+Starting dtw
+dtw, 512, 0.000192312000
+Starting dtw
+dtw, 512, 0.000194020000
+Starting dtw
+dtw, 512, 0.000192416000
+Starting dtw
+dtw, 512, 0.000192284000
+Starting dtw
+dtw, 512, 0.000192352000
+Starting dtw
+dtw, 512, 0.000192876000
+Starting dtw
+dtw, 512, 0.000192406000
+Starting dtw
+dtw, 512, 0.000192230000
+Starting dtw
+dtw, 512, 0.000192274000
+Starting dtw
+dtw, 512, 0.000193010000
+Starting dtw
+dtw, 512, 0.000192346000
+Starting dtw
+dtw, 512, 0.000192168000
+Starting dtw
+dtw, 512, 0.000192274000
+Starting dtw
+dtw, 512, 0.000193256000
+Starting dtw
+dtw, 512, 0.000192852000
+Starting dtw
+dtw, 512, 0.000192146000
+Starting dtw
+dtw, 512, 0.000192260000
+Starting dtw
+dtw, 512, 0.000192878000
+Starting dtw
+dtw, 512, 0.000192246000
+Starting dtw
+dtw, 512, 0.000192054000
+Starting dtw
+dtw, 512, 0.000192150000
+Starting dtw
+dtw, 512, 0.000192792000
+Starting dtw
+dtw, 512, 0.000192406000
+Starting dtw
+dtw, 512, 0.000192062000
+Starting dtw
+dtw, 512, 0.000192184000
+Starting dtw
+dtw, 512, 0.000192622000
+Starting dtw
+dtw, 512, 0.000192078000
+Starting dtw
+dtw, 512, 0.000191930000
+Starting dtw
+dtw, 512, 0.000192278000
+Starting dtw
+dtw, 512, 0.000192792000
+Starting dtw
+dtw, 512, 0.000192336000
+Starting dtw
+dtw, 512, 0.000191876000
+Starting dtw
+dtw, 512, 0.000192028000
+Starting dtw
+dtw, 512, 0.000192610000
+Starting dtw
+dtw, 512, 0.000192070000
+Starting dtw
+dtw, 512, 0.000191782000
+Starting dtw
+dtw, 512, 0.000192018000
+Starting dtw
+dtw, 512, 0.000192666000
+Starting dtw
+dtw, 512, 0.000192012000
+Starting dtw
+dtw, 512, 0.000191712000
+Starting dtw
+dtw, 512, 0.000191924000
+Starting dtw
+dtw, 512, 0.000192266000
+Starting dtw
+dtw, 512, 0.000191818000
+Starting dtw
+dtw, 512, 0.000191616000
+Starting dtw
+dtw, 512, 0.000191898000
+Starting dtw
+dtw, 512, 0.000192374000
+Starting dtw
+dtw, 512, 0.000191918000
+Starting dtw
+dtw, 512, 0.000191674000
+Starting dtw
+dtw, 512, 0.000191610000
+Starting dtw
+dtw, 512, 0.000192612000
+Starting dtw
+dtw, 512, 0.000191788000
+Starting dtw
+dtw, 512, 0.000191538000
+Starting dtw
+dtw, 512, 0.000191694000
+Starting dtw
+dtw, 512, 0.000192266000
+Starting dtw
+dtw, 512, 0.000191754000
+Starting dtw
+dtw, 512, 0.000191476000
+Starting dtw
+dtw, 512, 0.000191770000
+Starting dtw
+dtw, 512, 0.000192118000
+Starting dtw
+dtw, 512, 0.000191580000
+Starting dtw
+dtw, 512, 0.000191480000
+Starting dtw
+dtw, 512, 0.000191580000
+Starting dtw
+dtw, 512, 0.000192144000
+Starting dtw
+dtw, 512, 0.000191732000
+Starting dtw
+dtw, 512, 0.000191386000
+Starting dtw
+dtw, 512, 0.000191896000
+Starting dtw
+dtw, 512, 0.000191450000
+Starting dtw
+dtw, 512, 0.000191492000
+Starting dtw
+dtw, 512, 0.000191230000
+Starting dtw
+dtw, 512, 0.000192260000
+Starting dtw
+dtw, 512, 0.000191584000
+Starting dtw
+dtw, 512, 0.000191446000
+Starting dtw
+dtw, 512, 0.000191236000
+Starting dtw
+dtw, 512, 0.000191852000
+Starting dtw
+dtw, 512, 0.000191448000
+Starting dtw
+dtw, 512, 0.000191294000
+Starting dtw
+dtw, 512, 0.000191154000
+Starting dtw
+dtw, 512, 0.000191958000
+Starting dtw
+dtw, 512, 0.000191426000
+Starting dtw
+dtw, 512, 0.000191352000
+Starting dtw
+dtw, 512, 0.000191118000
+Starting dtw
+dtw, 512, 0.000191706000
+Starting dtw
+dtw, 512, 0.000191362000
+Starting dtw
+dtw, 512, 0.000191256000
+Starting dtw
+dtw, 512, 0.000191096000
+Starting dtw
+dtw, 512, 0.000191760000
+Starting dtw
+dtw, 512, 0.000191318000
+Starting dtw
+dtw, 512, 0.000191252000
+Starting dtw
+dtw, 512, 0.000190958000
+Starting dtw
+dtw, 512, 0.000191870000
+Starting dtw
+dtw, 512, 0.000191300000
+Starting dtw
+dtw, 512, 0.000191078000
+Starting dtw
+dtw, 512, 0.000190938000
+Starting dtw
+dtw, 512, 0.000191690000
+Starting dtw
+dtw, 512, 0.000191132000
+Starting dtw
+dtw, 512, 0.000191126000
+Starting dtw
+dtw, 512, 0.000190912000
+Starting dtw
+dtw, 512, 0.000192216000
+Starting dtw
+dtw, 512, 0.000191172000
+Starting dtw
+dtw, 512, 0.000190916000
+Starting dtw
+dtw, 512, 0.000190774000
+Starting dtw
+dtw, 512, 0.000192244000
+Starting dtw
+dtw, 512, 0.000191136000
+Starting dtw
+dtw, 512, 0.000191008000
+Starting dtw
+dtw, 512, 0.000190726000
+Starting dtw
+dtw, 512, 0.000191362000
+Starting dtw
+dtw, 512, 0.000190998000
+Starting dtw
+dtw, 512, 0.000190736000
+Starting dtw
+dtw, 512, 0.000190666000
+Starting dtw
+dtw, 512, 0.000191620000
+Starting dtw
+dtw, 512, 0.000190880000
+Starting dtw
+dtw, 512, 0.000190878000
+Starting dtw
+dtw, 512, 0.000190736000
+Starting dtw
+dtw, 512, 0.000191632000
+Starting dtw
+dtw, 512, 0.000191054000
+Starting dtw
+dtw, 512, 0.000190804000
+Starting dtw
+dtw, 512, 0.000190596000
+Starting dtw
+dtw, 512, 0.000191002000
+Starting dtw
+dtw, 512, 0.000190840000
+Starting dtw
+dtw, 512, 0.000190710000
+Starting dtw
+dtw, 512, 0.000190534000
+Starting dtw
+dtw, 512, 0.000191366000
+Starting dtw
+dtw, 512, 0.000190726000
+Starting dtw
+dtw, 512, 0.000190566000
+Starting dtw
+dtw, 512, 0.000190500000
+Starting dtw
+dtw, 512, 0.000191096000
+Starting dtw
+dtw, 512, 0.000190692000
+Starting dtw
+dtw, 512, 0.000190734000
+Starting dtw
+dtw, 512, 0.000190484000
+Starting dtw
+dtw, 512, 0.000192068000
+Starting dtw
+dtw, 512, 0.000190760000
+Starting dtw
+dtw, 512, 0.000190458000
+Starting dtw
+dtw, 512, 0.000190338000
+Starting dtw
+dtw, 512, 0.000191276000
+Starting dtw
+dtw, 512, 0.000190634000
+Starting dtw
+dtw, 512, 0.000190442000
+Starting dtw
+dtw, 512, 0.000190278000
+Starting dtw
+dtw, 512, 0.000190642000
+Starting dtw
+dtw, 512, 0.000190638000
+Starting dtw
+dtw, 512, 0.000190344000
+Starting dtw
+dtw, 512, 0.000190238000
+Starting dtw
+dtw, 512, 0.000191374000
+Starting dtw
+dtw, 512, 0.000190614000
+Starting dtw
+dtw, 512, 0.000190344000
+Starting dtw
+dtw, 512, 0.000190252000
+Starting dtw
+dtw, 512, 0.000191048000
+Starting dtw
+dtw, 512, 0.000190536000
+Starting dtw
+dtw, 512, 0.000190368000
+Starting dtw
+dtw, 512, 0.000190136000
+Starting dtw
+dtw, 512, 0.000190772000
+Starting dtw
+dtw, 512, 0.000190378000
+Starting dtw
+dtw, 512, 0.000190198000
+Starting dtw
+dtw, 512, 0.000190102000
+Starting dtw
+dtw, 512, 0.000191126000
+Starting dtw
+dtw, 512, 0.000190282000
+Starting dtw
+dtw, 512, 0.000190076000
+Starting dtw
+dtw, 512, 0.000190010000
+Starting dtw
+dtw, 512, 0.000190606000
+Starting dtw
+dtw, 512, 0.000190144000
+Starting dtw
+dtw, 512, 0.000190240000
+Starting dtw
+dtw, 512, 0.000189942000
+Starting dtw
+dtw, 512, 0.000190824000
+Starting dtw
+dtw, 512, 0.000190220000
+Starting dtw
+dtw, 512, 0.000189958000
+Starting dtw
+dtw, 512, 0.000189848000
+Starting dtw
+dtw, 512, 0.000190422000
+Starting dtw
+dtw, 512, 0.000189988000
+Starting dtw
+dtw, 512, 0.000189962000
+Starting dtw
+dtw, 512, 0.000189822000
+Starting dtw
+dtw, 512, 0.000190670000
+Starting dtw
+dtw, 512, 0.000190044000
+Starting dtw
+dtw, 512, 0.000189782000
+Starting dtw
+dtw, 512, 0.000189818000
+Starting dtw
+dtw, 512, 0.000190948000
+Starting dtw
+dtw, 512, 0.000189792000
+Starting dtw
+dtw, 512, 0.000189890000
+Starting dtw
+dtw, 512, 0.000189754000
+Starting dtw
+dtw, 512, 0.000190376000
+Starting dtw
+dtw, 512, 0.000189766000
+Starting dtw
+dtw, 512, 0.000189718000
+Starting dtw
+dtw, 512, 0.000189728000
+Starting dtw
+dtw, 512, 0.000190000000
+Starting dtw
+dtw, 512, 0.000189826000
+Starting dtw
+dtw, 512, 0.000189720000
+Starting dtw
+dtw, 512, 0.000189664000
+Starting dtw
+dtw, 512, 0.000190366000
+Starting dtw
+dtw, 512, 0.000189642000
+Starting dtw
+dtw, 512, 0.000189504000
+Starting dtw
+dtw, 512, 0.000189626000
+Starting dtw
+dtw, 512, 0.000190604000
+Starting dtw
+dtw, 512, 0.000189880000
+Starting dtw
+dtw, 512, 0.000189644000
+Starting dtw
+dtw, 512, 0.000189512000
+Starting dtw
+dtw, 512, 0.000190940000
+Starting dtw
+dtw, 512, 0.000189728000
+Starting dtw
+dtw, 512, 0.000189422000
+Starting dtw
+dtw, 512, 0.000189696000
+Starting dtw
+dtw, 512, 0.000189980000
+Starting dtw
+dtw, 512, 0.000189556000
+Starting dtw
+dtw, 512, 0.000189482000
+Starting dtw
+dtw, 512, 0.000189534000
+Starting dtw
+dtw, 512, 0.000190212000
+Starting dtw
+dtw, 512, 0.000189436000
+Starting dtw
+dtw, 512, 0.000189282000
+Starting dtw
+dtw, 512, 0.000189304000
+Starting dtw
+dtw, 512, 0.000190384000
+Starting dtw
+dtw, 512, 0.000189374000
+Starting dtw
+dtw, 512, 0.000189458000
+Starting dtw
+dtw, 512, 0.000189470000
+Starting dtw
+dtw, 512, 0.000189790000
+Starting dtw
+dtw, 512, 0.000189418000
+Starting dtw
+dtw, 512, 0.000189210000
+Starting dtw
+dtw, 512, 0.000189298000
+Starting dtw
+dtw, 512, 0.000190322000
+Starting dtw
+dtw, 512, 0.000189562000
+Starting dtw
+dtw, 512, 0.000189290000
+Starting dtw
+dtw, 512, 0.000189250000
+Starting dtw
+dtw, 512, 0.000189684000
+Starting dtw
+dtw, 512, 0.000189292000
+Starting dtw
+dtw, 512, 0.000189038000
+Starting dtw
+dtw, 512, 0.000189144000
+Starting dtw
+dtw, 512, 0.000189792000
+Starting dtw
+dtw, 512, 0.000189250000
+Starting dtw
+dtw, 512, 0.000189110000
+Starting dtw
+dtw, 512, 0.000189008000
+Starting dtw
+dtw, 512, 0.000189488000
+Starting dtw
+dtw, 512, 0.000189112000
+Starting dtw
+dtw, 512, 0.000188974000
+Starting dtw
+dtw, 512, 0.000189126000
+Starting dtw
+dtw, 512, 0.000190092000
+Starting dtw
+dtw, 512, 0.000189188000
+Starting dtw
+dtw, 512, 0.000189012000
+Starting dtw
+dtw, 512, 0.000188962000
+Starting dtw
+dtw, 512, 0.000189658000
+Starting dtw
+dtw, 512, 0.000188962000
+Starting dtw
+dtw, 512, 0.000188742000
+Starting dtw
+dtw, 512, 0.000188898000
+Starting dtw
+dtw, 512, 0.000189638000
+Starting dtw
+dtw, 512, 0.000189130000
+Starting dtw
+dtw, 512, 0.000189074000
+Starting dtw
+dtw, 512, 0.000188942000
+Starting dtw
+dtw, 512, 0.000189624000
+Starting dtw
+dtw, 512, 0.000188846000
+Starting dtw
+dtw, 512, 0.000188782000
+Starting dtw
+dtw, 512, 0.000188694000
+Starting dtw
+dtw, 512, 0.000189504000
+Starting dtw
+dtw, 512, 0.000188930000
+Starting dtw
+dtw, 512, 0.000188868000
+Starting dtw
+dtw, 512, 0.000188824000
+Starting dtw
+dtw, 512, 0.000189688000
+Starting dtw
+dtw, 512, 0.000189132000
+Starting dtw
+dtw, 512, 0.000188586000
+Starting dtw
+dtw, 512, 0.000188780000
+Starting dtw
+dtw, 512, 0.000189450000
+Starting dtw
+dtw, 512, 0.000188804000
+Starting dtw
+dtw, 512, 0.000188774000
+Starting dtw
+dtw, 512, 0.000188574000
+Starting dtw
+dtw, 512, 0.000189184000
+Starting dtw
+dtw, 512, 0.000188604000
+Starting dtw
+dtw, 512, 0.000188418000
+Starting dtw
+dtw, 512, 0.000188542000
+Starting dtw
+dtw, 512, 0.000189038000
+Starting dtw
+dtw, 512, 0.000188494000
+Starting dtw
+dtw, 512, 0.000188518000
+Starting dtw
+dtw, 512, 0.000188488000
+Starting dtw
+dtw, 512, 0.000189626000
+Starting dtw
+dtw, 512, 0.000188480000
+Starting dtw
+dtw, 512, 0.000188352000
+Starting dtw
+dtw, 512, 0.000188486000
+Starting dtw
+dtw, 512, 0.000189048000
+Starting dtw
+dtw, 512, 0.000188432000
+Starting dtw
+dtw, 512, 0.000188422000
+Starting dtw
+dtw, 512, 0.000188506000
+Starting dtw
+dtw, 512, 0.000189442000
+Starting dtw
+dtw, 512, 0.000188474000
+Starting dtw
+dtw, 512, 0.000188166000
+Starting dtw
+dtw, 512, 0.000188264000
+Starting dtw
+dtw, 512, 0.000189454000
+Starting dtw
+dtw, 512, 0.000188362000
+Starting dtw
+dtw, 512, 0.000188250000
+Starting dtw
+dtw, 512, 0.000188432000
+Starting dtw
+dtw, 512, 0.000189554000
+Starting dtw
+dtw, 512, 0.000188250000
+Starting dtw
+dtw, 512, 0.000188144000
+Starting dtw
+dtw, 512, 0.000188286000
+Starting dtw
+dtw, 512, 0.000189292000
+Starting dtw
+dtw, 512, 0.000188290000
+Starting dtw
+dtw, 512, 0.000188294000
+Starting dtw
+dtw, 512, 0.000188134000
+Starting dtw
+dtw, 512, 0.000189104000
+Starting dtw
+dtw, 512, 0.000188256000
+Starting dtw
+dtw, 512, 0.000188128000
+Starting dtw
+dtw, 512, 0.000188074000
+Starting dtw
+dtw, 512, 0.000188990000
+Starting dtw
+dtw, 512, 0.000188384000
+Starting dtw
+dtw, 512, 0.000188076000
+Starting dtw
+dtw, 512, 0.000188054000
+Starting dtw
+dtw, 512, 0.000188656000
+Starting dtw
+dtw, 512, 0.000188028000
+Starting dtw
+dtw, 512, 0.000187874000
+Starting dtw
+dtw, 512, 0.000187928000
+Starting dtw
+dtw, 512, 0.000188854000
+Starting dtw
+dtw, 512, 0.000187934000
+Starting dtw
+dtw, 512, 0.000187998000
+Starting dtw
+dtw, 512, 0.000187944000
+Starting dtw
+dtw, 512, 0.000189544000
+Starting dtw
+dtw, 512, 0.000188024000
+Starting dtw
+dtw, 512, 0.000187708000
+Starting dtw
+dtw, 512, 0.000188068000
+Starting dtw
+dtw, 512, 0.000188700000
+Starting dtw
+dtw, 512, 0.000188160000
+Starting dtw
+dtw, 512, 0.000187922000
+Starting dtw
+dtw, 512, 0.000187770000
+Starting dtw
+dtw, 512, 0.000188828000
+Starting dtw
+dtw, 512, 0.000187918000
+Starting dtw
+dtw, 512, 0.000187764000
+Starting dtw
+dtw, 512, 0.000187912000
+Starting dtw
+dtw, 512, 0.000188596000
+Starting dtw
+dtw, 512, 0.000187704000
+Starting dtw
+dtw, 512, 0.000187738000
+Starting dtw
+dtw, 512, 0.000188862000
+Starting dtw
+dtw, 512, 0.000187810000
+Starting dtw
+dtw, 512, 0.000187696000
+Starting dtw
+dtw, 512, 0.000187614000
+Starting dtw
+dtw, 512, 0.000188326000
+Starting dtw
+dtw, 512, 0.000187570000
+Finished dtw, 0.000000000000
+Benchmark Start fft
+Starting fft
+fft, 128, 0.000077624000
+Starting fft
+fft, 64, 0.000038024000
+Starting fft
+fft, 64, 0.000038094000
+Starting fft
+fft, 32, 0.000019098000
+Starting fft
+fft, 32, 0.000019098000
+Starting fft
+fft, 32, 0.000019098000
+Starting fft
+fft, 32, 0.000019134000
+Starting fft
+fft, 16, 0.000009678000
+Starting fft
+fft, 16, 0.000009662000
+Starting fft
+fft, 16, 0.000009642000
+Starting fft
+fft, 16, 0.000009662000
+Starting fft
+fft, 16, 0.000009662000
+Starting fft
+fft, 16, 0.000009662000
+Starting fft
+fft, 16, 0.000009662000
+Starting fft
+fft, 16, 0.000009654000
+Starting fft
+fft, 8, 0.000004890000
+Starting fft
+fft, 8, 0.000004942000
+Starting fft
+fft, 8, 0.000004922000
+Starting fft
+fft, 8, 0.000004942000
+Starting fft
+fft, 8, 0.000004942000
+Starting fft
+fft, 8, 0.000004906000
+Starting fft
+fft, 8, 0.000004942000
+Starting fft
+fft, 8, 0.000004906000
+Starting fft
+fft, 8, 0.000004942000
+Starting fft
+fft, 8, 0.000004906000
+Starting fft
+fft, 8, 0.000004942000
+Starting fft
+fft, 8, 0.000004906000
+Starting fft
+fft, 8, 0.000004942000
+Starting fft
+fft, 8, 0.000004906000
+Starting fft
+fft, 8, 0.000004934000
+Starting fft
+fft, 8, 0.000004934000
+Starting fft
+fft, 4, 0.000002522000
+Starting fft
+fft, 4, 0.000002574000
+Starting fft
+fft, 4, 0.000002538000
+Starting fft
+fft, 4, 0.000002574000
+Starting fft
+fft, 4, 0.000002574000
+Starting fft
+fft, 4, 0.000002538000
+Starting fft
+fft, 4, 0.000002574000
+Starting fft
+fft, 4, 0.000002538000
+Starting fft
+fft, 4, 0.000002574000
+Starting fft
+fft, 4, 0.000002574000
+Starting fft
+fft, 4, 0.000002538000
+Starting fft
+fft, 4, 0.000002574000
+Starting fft
+fft, 4, 0.000002538000
+Starting fft
+fft, 4, 0.000002574000
+Starting fft
+fft, 4, 0.000002574000
+Starting fft
+fft, 4, 0.000002538000
+Starting fft
+fft, 4, 0.000002574000
+Starting fft
+fft, 4, 0.000002538000
+Starting fft
+fft, 4, 0.000002574000
+Starting fft
+fft, 4, 0.000002574000
+Starting fft
+fft, 4, 0.000002538000
+Starting fft
+fft, 4, 0.000002574000
+Starting fft
+fft, 4, 0.000002538000
+Starting fft
+fft, 4, 0.000002574000
+Starting fft
+fft, 4, 0.000002574000
+Starting fft
+fft, 4, 0.000002538000
+Starting fft
+fft, 4, 0.000002574000
+Starting fft
+fft, 4, 0.000002538000
+Starting fft
+fft, 4, 0.000002566000
+Starting fft
+fft, 4, 0.000002530000
+Starting fft
+fft, 4, 0.000002566000
+Starting fft
+fft, 4, 0.000002530000
+Starting fft
+fft, 2, 0.000001390000
+Starting fft
+fft, 2, 0.000001390000
+Starting fft
+fft, 2, 0.000001390000
+Starting fft
+fft, 2, 0.000001338000
+Starting fft
+fft, 2, 0.000001390000
+Starting fft
+fft, 2, 0.000001338000
+Starting fft
+fft, 2, 0.000001390000
+Starting fft
+fft, 2, 0.000001338000
+Starting fft
+fft, 2, 0.000001390000
+Starting fft
+fft, 2, 0.000001338000
+Starting fft
+fft, 2, 0.000001390000
+Starting fft
+fft, 2, 0.000001338000
+Starting fft
+fft, 2, 0.000001390000
+Starting fft
+fft, 2, 0.000001338000
+Starting fft
+fft, 2, 0.000001390000
+Starting fft
+fft, 2, 0.000001338000
+Starting fft
+fft, 2, 0.000001390000
+Starting fft
+fft, 2, 0.000001338000
+Starting fft
+fft, 2, 0.000001390000
+Starting fft
+fft, 2, 0.000001338000
+Starting fft
+fft, 2, 0.000001390000
+Starting fft
+fft, 2, 0.000001338000
+Starting fft
+fft, 2, 0.000001390000
+Starting fft
+fft, 2, 0.000001338000
+Starting fft
+fft, 2, 0.000001390000
+Starting fft
+fft, 2, 0.000001338000
+Starting fft
+fft, 2, 0.000001390000
+Starting fft
+fft, 2, 0.000001338000
+Starting fft
+fft, 2, 0.000001390000
+Starting fft
+fft, 2, 0.000001338000
+Starting fft
+fft, 2, 0.000001390000
+Starting fft
+fft, 2, 0.000001338000
+Starting fft
+fft, 2, 0.000001390000
+Starting fft
+fft, 2, 0.000001338000
+Starting fft
+fft, 2, 0.000001390000
+Starting fft
+fft, 2, 0.000001338000
+Starting fft
+fft, 2, 0.000001390000
+Starting fft
+fft, 2, 0.000001338000
+Starting fft
+fft, 2, 0.000001390000
+Starting fft
+fft, 2, 0.000001338000
+Starting fft
+fft, 2, 0.000001390000
+Starting fft
+fft, 2, 0.000001338000
+Starting fft
+fft, 2, 0.000001390000
+Starting fft
+fft, 2, 0.000001338000
+Starting fft
+fft, 2, 0.000001390000
+Starting fft
+fft, 2, 0.000001338000
+Starting fft
+fft, 2, 0.000001390000
+Starting fft
+fft, 2, 0.000001338000
+Starting fft
+fft, 2, 0.000001390000
+Starting fft
+fft, 2, 0.000001338000
+Starting fft
+fft, 2, 0.000001390000
+Starting fft
+fft, 2, 0.000001338000
+Starting fft
+fft, 2, 0.000001390000
+Starting fft
+fft, 2, 0.000001338000
+Starting fft
+fft, 2, 0.000001390000
+Starting fft
+fft, 2, 0.000001338000
+Starting fft
+fft, 2, 0.000001382000
+Starting fft
+fft, 2, 0.000001346000
+Starting fft
+fft, 2, 0.000001362000
+Starting fft
+fft, 2, 0.000001346000
+Starting fft
+fft, 2, 0.000001362000
+Starting fft
+fft, 2, 0.000001346000
+Starting fft
+fft, 2, 0.000001362000
+Starting fft
+fft, 2, 0.000001346000
+Starting fft
+fft, 1, 0.000000764000
+Starting fft
+fft, 1, 0.000000764000
+Starting fft
+fft, 1, 0.000000764000
+Starting fft
+fft, 1, 0.000000764000
+Starting fft
+fft, 1, 0.000000764000
+Starting fft
+fft, 1, 0.000000764000
+Starting fft
+fft, 1, 0.000000764000
+Starting fft
+fft, 1, 0.000000764000
+Starting fft
+fft, 1, 0.000000764000
+Starting fft
+fft, 1, 0.000000764000
+Starting fft
+fft, 1, 0.000000764000
+Starting fft
+fft, 1, 0.000000764000
+Starting fft
+fft, 1, 0.000000764000
+Starting fft
+fft, 1, 0.000000764000
+Starting fft
+fft, 1, 0.000000764000
+Starting fft
+fft, 1, 0.000000764000
+Starting fft
+fft, 1, 0.000000764000
+Starting fft
+fft, 1, 0.000000764000
+Starting fft
+fft, 1, 0.000000764000
+Starting fft
+fft, 1, 0.000000764000
+Starting fft
+fft, 1, 0.000000764000
+Starting fft
+fft, 1, 0.000000764000
+Starting fft
+fft, 1, 0.000000764000
+Starting fft
+fft, 1, 0.000000764000
+Starting fft
+fft, 1, 0.000000764000
+Starting fft
+fft, 1, 0.000000764000
+Starting fft
+fft, 1, 0.000000764000
+Starting fft
+fft, 1, 0.000000764000
+Starting fft
+fft, 1, 0.000000764000
+Starting fft
+fft, 1, 0.000000764000
+Starting fft
+fft, 1, 0.000000764000
+Starting fft
+fft, 1, 0.000000764000
+Starting fft
+fft, 1, 0.000000764000
+Starting fft
+fft, 1, 0.000000764000
+Starting fft
+fft, 1, 0.000000764000
+Starting fft
+fft, 1, 0.000000764000
+Starting fft
+fft, 1, 0.000000764000
+Starting fft
+fft, 1, 0.000000764000
+Starting fft
+fft, 1, 0.000000764000
+Starting fft
+fft, 1, 0.000000764000
+Starting fft
+fft, 1, 0.000000764000
+Starting fft
+fft, 1, 0.000000764000
+Starting fft
+fft, 1, 0.000000764000
+Starting fft
+fft, 1, 0.000000764000
+Starting fft
+fft, 1, 0.000000764000
+Starting fft
+fft, 1, 0.000000764000
+Starting fft
+fft, 1, 0.000000764000
+Starting fft
+fft, 1, 0.000000764000
+Starting fft
+fft, 1, 0.000000764000
+Starting fft
+fft, 1, 0.000000764000
+Starting fft
+fft, 1, 0.000000764000
+Starting fft
+fft, 1, 0.000000764000
+Starting fft
+fft, 1, 0.000000764000
+Starting fft
+fft, 1, 0.000000764000
+Starting fft
+fft, 1, 0.000000764000
+Starting fft
+fft, 1, 0.000000764000
+Starting fft
+fft, 1, 0.000000764000
+Starting fft
+fft, 1, 0.000000764000
+Starting fft
+fft, 1, 0.000000764000
+Starting fft
+fft, 1, 0.000000764000
+Starting fft
+fft, 1, 0.000000764000
+Starting fft
+fft, 1, 0.000000764000
+Starting fft
+fft, 1, 0.000000764000
+Starting fft
+fft, 1, 0.000000764000
+Starting fft
+fft, 1, 0.000000764000
+Starting fft
+fft, 1, 0.000000764000
+Starting fft
+fft, 1, 0.000000764000
+Starting fft
+fft, 1, 0.000000764000
+Starting fft
+fft, 1, 0.000000764000
+Starting fft
+fft, 1, 0.000000764000
+Starting fft
+fft, 1, 0.000000764000
+Starting fft
+fft, 1, 0.000000764000
+Starting fft
+fft, 1, 0.000000764000
+Starting fft
+fft, 1, 0.000000764000
+Starting fft
+fft, 1, 0.000000764000
+Starting fft
+fft, 1, 0.000000764000
+Starting fft
+fft, 1, 0.000000764000
+Starting fft
+fft, 1, 0.000000764000
+Starting fft
+fft, 1, 0.000000764000
+Starting fft
+fft, 1, 0.000000764000
+Starting fft
+fft, 1, 0.000000764000
+Starting fft
+fft, 1, 0.000000764000
+Starting fft
+fft, 1, 0.000000764000
+Starting fft
+fft, 1, 0.000000764000
+Starting fft
+fft, 1, 0.000000764000
+Starting fft
+fft, 1, 0.000000764000
+Starting fft
+fft, 1, 0.000000764000
+Starting fft
+fft, 1, 0.000000764000
+Starting fft
+fft, 1, 0.000000764000
+Starting fft
+fft, 1, 0.000000764000
+Starting fft
+fft, 1, 0.000000764000
+Starting fft
+fft, 1, 0.000000764000
+Starting fft
+fft, 1, 0.000000764000
+Starting fft
+fft, 1, 0.000000764000
+Starting fft
+fft, 1, 0.000000764000
+Starting fft
+fft, 1, 0.000000764000
+Starting fft
+fft, 1, 0.000000764000
+Starting fft
+fft, 1, 0.000000764000
+Starting fft
+fft, 1, 0.000000764000
+Starting fft
+fft, 1, 0.000000764000
+Starting fft
+fft, 1, 0.000000764000
+Starting fft
+fft, 1, 0.000000764000
+Starting fft
+fft, 1, 0.000000764000
+Starting fft
+fft, 1, 0.000000764000
+Starting fft
+fft, 1, 0.000000764000
+Starting fft
+fft, 1, 0.000000764000
+Starting fft
+fft, 1, 0.000000764000
+Starting fft
+fft, 1, 0.000000764000
+Starting fft
+fft, 1, 0.000000764000
+Starting fft
+fft, 1, 0.000000764000
+Starting fft
+fft, 1, 0.000000764000
+Starting fft
+fft, 1, 0.000000756000
+Starting fft
+fft, 1, 0.000000720000
+Starting fft
+fft, 1, 0.000000756000
+Starting fft
+fft, 1, 0.000000720000
+Starting fft
+fft, 1, 0.000000756000
+Starting fft
+fft, 1, 0.000000720000
+Starting fft
+fft, 1, 0.000000756000
+Starting fft
+fft, 1, 0.000000720000
+Starting fft
+fft, 1, 0.000000756000
+Starting fft
+fft, 1, 0.000000720000
+Starting fft
+fft, 1, 0.000000756000
+Starting fft
+fft, 1, 0.000000720000
+Starting fft
+fft, 1, 0.000000756000
+Starting fft
+fft, 1, 0.000000720000
+Starting fft
+fft, 1, 0.000000756000
+Starting fft
+fft, 1, 0.000000720000
+Starting fft
+fft, 1, 0.000000756000
+Finished fft, 0.000000000000
+Benchmark Start fir
+Starting fir
+fir, 32, 0.000005624000
+Finished fir, 0.000000000000
+Benchmark Start gemm
+Starting gemm
+gemm, 25, 0.000005414000
+Starting gemm
+gemm, 25, 0.000005058000
+Starting gemm
+gemm, 25, 0.000005058000
+Starting gemm
+gemm, 25, 0.000005086000
+Starting gemm
+gemm, 25, 0.000005022000
+Starting gemm
+gemm, 25, 0.000005086000
+Starting gemm
+gemm, 25, 0.000005058000
+Starting gemm
+gemm, 25, 0.000005106000
+Starting gemm
+gemm, 25, 0.000005094000
+Starting gemm
+gemm, 25, 0.000005086000
+Starting gemm
+gemm, 25, 0.000005022000
+Starting gemm
+gemm, 25, 0.000005086000
+Starting gemm
+gemm, 25, 0.000005058000
+Starting gemm
+gemm, 25, 0.000005022000
+Starting gemm
+gemm, 25, 0.000005066000
+Starting gemm
+gemm, 25, 0.000005066000
+Starting gemm
+gemm, 25, 0.000005058000
+Starting gemm
+gemm, 25, 0.000005050000
+Starting gemm
+gemm, 25, 0.000005058000
+Starting gemm
+gemm, 25, 0.000005034000
+Starting gemm
+gemm, 25, 0.000005006000
+Starting gemm
+gemm, 25, 0.000005006000
+Starting gemm
+gemm, 25, 0.000005006000
+Starting gemm
+gemm, 25, 0.000005034000
+Starting gemm
+gemm, 25, 0.000005006000
+Starting gemm
+gemm, 25, 0.000005006000
+Starting gemm
+gemm, 25, 0.000005006000
+Starting gemm
+gemm, 25, 0.000005034000
+Starting gemm
+gemm, 25, 0.000005006000
+Starting gemm
+gemm, 25, 0.000005014000
+Starting gemm
+gemm, 25, 0.000005022000
+Starting gemm
+gemm, 25, 0.000005066000
+Starting gemm
+gemm, 25, 0.000005038000
+Starting gemm
+gemm, 25, 0.000005058000
+Starting gemm
+gemm, 25, 0.000005058000
+Starting gemm
+gemm, 25, 0.000005086000
+Starting gemm
+gemm, 25, 0.000005022000
+Starting gemm
+gemm, 25, 0.000005066000
+Starting gemm
+gemm, 25, 0.000005066000
+Starting gemm
+gemm, 25, 0.000005034000
+Starting gemm
+gemm, 25, 0.000005006000
+Starting gemm
+gemm, 25, 0.000005006000
+Starting gemm
+gemm, 25, 0.000005006000
+Starting gemm
+gemm, 25, 0.000005034000
+Starting gemm
+gemm, 25, 0.000005006000
+Starting gemm
+gemm, 25, 0.000005006000
+Starting gemm
+gemm, 25, 0.000005006000
+Starting gemm
+gemm, 25, 0.000005062000
+Starting gemm
+gemm, 25, 0.000005058000
+Starting gemm
+gemm, 25, 0.000005006000
+Starting gemm
+gemm, 25, 0.000005022000
+Starting gemm
+gemm, 25, 0.000005086000
+Starting gemm
+gemm, 25, 0.000005058000
+Starting gemm
+gemm, 25, 0.000005022000
+Starting gemm
+gemm, 25, 0.000005022000
+Starting gemm
+gemm, 25, 0.000005050000
+Starting gemm
+gemm, 25, 0.000005022000
+Starting gemm
+gemm, 25, 0.000005022000
+Starting gemm
+gemm, 25, 0.000005022000
+Starting gemm
+gemm, 25, 0.000005094000
+Starting gemm
+gemm, 25, 0.000005058000
+Starting gemm
+gemm, 25, 0.000005006000
+Starting gemm
+gemm, 25, 0.000005006000
+Starting gemm
+gemm, 25, 0.000005034000
+Starting gemm
+gemm, 25, 0.000005006000
+Starting gemm
+gemm, 25, 0.000005006000
+Starting gemm
+gemm, 25, 0.000005006000
+Starting gemm
+gemm, 25, 0.000005062000
+Starting gemm
+gemm, 25, 0.000005066000
+Starting gemm
+gemm, 25, 0.000005022000
+Starting gemm
+gemm, 25, 0.000005058000
+Starting gemm
+gemm, 25, 0.000005086000
+Starting gemm
+gemm, 25, 0.000005058000
+Starting gemm
+gemm, 25, 0.000005058000
+Starting gemm
+gemm, 25, 0.000005058000
+Starting gemm
+gemm, 25, 0.000005050000
+Starting gemm
+gemm, 25, 0.000005058000
+Starting gemm
+gemm, 25, 0.000005058000
+Starting gemm
+gemm, 25, 0.000005050000
+Starting gemm
+gemm, 25, 0.000005114000
+Starting gemm
+gemm, 25, 0.000005086000
+Starting gemm
+gemm, 25, 0.000005050000
+Starting gemm
+gemm, 25, 0.000005058000
+Starting gemm
+gemm, 25, 0.000005086000
+Starting gemm
+gemm, 25, 0.000005058000
+Starting gemm
+gemm, 25, 0.000005022000
+Starting gemm
+gemm, 25, 0.000005038000
+Starting gemm
+gemm, 25, 0.000005086000
+Starting gemm
+gemm, 25, 0.000005058000
+Starting gemm
+gemm, 25, 0.000005030000
+Starting gemm
+gemm, 25, 0.000005022000
+Starting gemm
+gemm, 25, 0.000005034000
+Starting gemm
+gemm, 25, 0.000005022000
+Starting gemm
+gemm, 25, 0.000005058000
+Starting gemm
+gemm, 25, 0.000005022000
+Starting gemm
+gemm, 25, 0.000005050000
+Starting gemm
+gemm, 25, 0.000005022000
+Starting gemm
+gemm, 25, 0.000005058000
+Starting gemm
+gemm, 25, 0.000005066000
+Starting gemm
+gemm, 25, 0.000005050000
+Starting gemm
+gemm, 25, 0.000005058000
+Starting gemm
+gemm, 25, 0.000005058000
+Starting gemm
+gemm, 25, 0.000005058000
+Starting gemm
+gemm, 25, 0.000005086000
+Starting gemm
+gemm, 25, 0.000005058000
+Starting gemm
+gemm, 25, 0.000005058000
+Starting gemm
+gemm, 25, 0.000005058000
+Starting gemm
+gemm, 25, 0.000005086000
+Starting gemm
+gemm, 25, 0.000005058000
+Starting gemm
+gemm, 25, 0.000005058000
+Starting gemm
+gemm, 25, 0.000005058000
+Starting gemm
+gemm, 25, 0.000005142000
+Starting gemm
+gemm, 25, 0.000005022000
+Starting gemm
+gemm, 25, 0.000005058000
+Starting gemm
+gemm, 25, 0.000005022000
+Starting gemm
+gemm, 25, 0.000005050000
+Starting gemm
+gemm, 25, 0.000005022000
+Starting gemm
+gemm, 25, 0.000005022000
+Starting gemm
+gemm, 25, 0.000005058000
+Starting gemm
+gemm, 25, 0.000005094000
+Starting gemm
+gemm, 25, 0.000005058000
+Starting gemm
+gemm, 25, 0.000005022000
+Starting gemm
+gemm, 25, 0.000005058000
+Starting gemm
+gemm, 25, 0.000005086000
+Starting gemm
+gemm, 25, 0.000005058000
+Starting gemm
+gemm, 25, 0.000005058000
+Starting gemm
+gemm, 25, 0.000005058000
+Starting gemm
+gemm, 25, 0.000005086000
+Starting gemm
+gemm, 25, 0.000005066000
+Starting gemm
+gemm, 25, 0.000005022000
+Starting gemm
+gemm, 25, 0.000005022000
+Starting gemm
+gemm, 25, 0.000005086000
+Starting gemm
+gemm, 25, 0.000005058000
+Starting gemm
+gemm, 25, 0.000005058000
+Starting gemm
+gemm, 25, 0.000005058000
+Starting gemm
+gemm, 25, 0.000005086000
+Starting gemm
+gemm, 25, 0.000005058000
+Starting gemm
+gemm, 25, 0.000005058000
+Starting gemm
+gemm, 25, 0.000005058000
+Starting gemm
+gemm, 25, 0.000005086000
+Starting gemm
+gemm, 25, 0.000005058000
+Starting gemm
+gemm, 25, 0.000005114000
+Starting gemm
+gemm, 25, 0.000005022000
+Starting gemm
+gemm, 25, 0.000005086000
+Starting gemm
+gemm, 25, 0.000005058000
+Starting gemm
+gemm, 25, 0.000005058000
+Starting gemm
+gemm, 25, 0.000005058000
+Starting gemm
+gemm, 25, 0.000005086000
+Starting gemm
+gemm, 25, 0.000005058000
+Starting gemm
+gemm, 25, 0.000005066000
+Starting gemm
+gemm, 25, 0.000005058000
+Starting gemm
+gemm, 25, 0.000005050000
+Starting gemm
+gemm, 25, 0.000005058000
+Starting gemm
+gemm, 25, 0.000005058000
+Starting gemm
+gemm, 25, 0.000005058000
+Starting gemm
+gemm, 25, 0.000005086000
+Starting gemm
+gemm, 25, 0.000005022000
+Starting gemm
+gemm, 25, 0.000005022000
+Starting gemm
+gemm, 25, 0.000005066000
+Starting gemm
+gemm, 25, 0.000005086000
+Starting gemm
+gemm, 25, 0.000005022000
+Starting gemm
+gemm, 25, 0.000005022000
+Starting gemm
+gemm, 25, 0.000005022000
+Starting gemm
+gemm, 25, 0.000005086000
+Starting gemm
+gemm, 25, 0.000005058000
+Starting gemm
+gemm, 25, 0.000005058000
+Starting gemm
+gemm, 25, 0.000005058000
+Starting gemm
+gemm, 25, 0.000005086000
+Starting gemm
+gemm, 25, 0.000005058000
+Starting gemm
+gemm, 25, 0.000005058000
+Starting gemm
+gemm, 25, 0.000005058000
+Starting gemm
+gemm, 25, 0.000005086000
+Starting gemm
+gemm, 25, 0.000005086000
+Starting gemm
+gemm, 25, 0.000005022000
+Starting gemm
+gemm, 25, 0.000005022000
+Starting gemm
+gemm, 25, 0.000005086000
+Starting gemm
+gemm, 25, 0.000005058000
+Starting gemm
+gemm, 25, 0.000005058000
+Starting gemm
+gemm, 25, 0.000005058000
+Starting gemm
+gemm, 25, 0.000005094000
+Starting gemm
+gemm, 25, 0.000005022000
+Starting gemm
+gemm, 25, 0.000005006000
+Starting gemm
+gemm, 25, 0.000005022000
+Starting gemm
+gemm, 25, 0.000005086000
+Starting gemm
+gemm, 25, 0.000005058000
+Starting gemm
+gemm, 25, 0.000005022000
+Starting gemm
+gemm, 25, 0.000005022000
+Starting gemm
+gemm, 25, 0.000005050000
+Starting gemm
+gemm, 25, 0.000005030000
+Starting gemm
+gemm, 25, 0.000005058000
+Starting gemm
+gemm, 25, 0.000005022000
+Starting gemm
+gemm, 25, 0.000005050000
+Starting gemm
+gemm, 25, 0.000005058000
+Starting gemm
+gemm, 25, 0.000005058000
+Starting gemm
+gemm, 25, 0.000005058000
+Starting gemm
+gemm, 25, 0.000005086000
+Starting gemm
+gemm, 25, 0.000005058000
+Starting gemm
+gemm, 25, 0.000005058000
+Starting gemm
+gemm, 25, 0.000005058000
+Starting gemm
+gemm, 25, 0.000005086000
+Starting gemm
+gemm, 25, 0.000005058000
+Starting gemm
+gemm, 25, 0.000005058000
+Starting gemm
+gemm, 25, 0.000005058000
+Starting gemm
+gemm, 25, 0.000005086000
+Starting gemm
+gemm, 25, 0.000005114000
+Starting gemm
+gemm, 25, 0.000005022000
+Starting gemm
+gemm, 25, 0.000005058000
+Starting gemm
+gemm, 25, 0.000005086000
+Starting gemm
+gemm, 25, 0.000005058000
+Starting gemm
+gemm, 25, 0.000005066000
+Starting gemm
+gemm, 25, 0.000005022000
+Starting gemm
+gemm, 25, 0.000005086000
+Starting gemm
+gemm, 25, 0.000005022000
+Starting gemm
+gemm, 25, 0.000005058000
+Starting gemm
+gemm, 25, 0.000005058000
+Starting gemm
+gemm, 25, 0.000005086000
+Starting gemm
+gemm, 25, 0.000005058000
+Starting gemm
+gemm, 25, 0.000005058000
+Starting gemm
+gemm, 25, 0.000005066000
+Starting gemm
+gemm, 25, 0.000005050000
+Starting gemm
+gemm, 25, 0.000005058000
+Starting gemm
+gemm, 25, 0.000005058000
+Starting gemm
+gemm, 25, 0.000005058000
+Starting gemm
+gemm, 25, 0.000005086000
+Starting gemm
+gemm, 25, 0.000005022000
+Starting gemm
+gemm, 25, 0.000005022000
+Starting gemm
+gemm, 25, 0.000005058000
+Starting gemm
+gemm, 25, 0.000005086000
+Starting gemm
+gemm, 25, 0.000005058000
+Starting gemm
+gemm, 25, 0.000005058000
+Starting gemm
+gemm, 25, 0.000005058000
+Starting gemm
+gemm, 25, 0.000005086000
+Starting gemm
+gemm, 25, 0.000005058000
+Starting gemm
+gemm, 25, 0.000005058000
+Starting gemm
+gemm, 25, 0.000005058000
+Starting gemm
+gemm, 25, 0.000005114000
+Starting gemm
+gemm, 25, 0.000005050000
+Starting gemm
+gemm, 25, 0.000005022000
+Starting gemm
+gemm, 25, 0.000005022000
+Starting gemm
+gemm, 25, 0.000005094000
+Starting gemm
+gemm, 25, 0.000005022000
+Starting gemm
+gemm, 25, 0.000005006000
+Starting gemm
+gemm, 25, 0.000005022000
+Starting gemm
+gemm, 25, 0.000005086000
+Starting gemm
+gemm, 25, 0.000005058000
+Starting gemm
+gemm, 25, 0.000005022000
+Starting gemm
+gemm, 25, 0.000005022000
+Starting gemm
+gemm, 25, 0.000005050000
+Starting gemm
+gemm, 25, 0.000005030000
+Starting gemm
+gemm, 25, 0.000005058000
+Starting gemm
+gemm, 25, 0.000005022000
+Starting gemm
+gemm, 25, 0.000005050000
+Starting gemm
+gemm, 25, 0.000005058000
+Starting gemm
+gemm, 25, 0.000005058000
+Starting gemm
+gemm, 25, 0.000005058000
+Starting gemm
+gemm, 25, 0.000005086000
+Starting gemm
+gemm, 25, 0.000005058000
+Starting gemm
+gemm, 25, 0.000005058000
+Starting gemm
+gemm, 25, 0.000005058000
+Starting gemm
+gemm, 25, 0.000005086000
+Starting gemm
+gemm, 25, 0.000005058000
+Starting gemm
+gemm, 25, 0.000005058000
+Starting gemm
+gemm, 25, 0.000005058000
+Starting gemm
+gemm, 25, 0.000005086000
+Starting gemm
+gemm, 25, 0.000005058000
+Starting gemm
+gemm, 25, 0.000005058000
+Starting gemm
+gemm, 25, 0.000005086000
+Starting gemm
+gemm, 25, 0.000005078000
+Starting gemm
+gemm, 25, 0.000005058000
+Starting gemm
+gemm, 25, 0.000005030000
+Starting gemm
+gemm, 25, 0.000005086000
+Starting gemm
+gemm, 25, 0.000005086000
+Starting gemm
+gemm, 25, 0.000005058000
+Starting gemm
+gemm, 25, 0.000005022000
+Starting gemm
+gemm, 25, 0.000005022000
+Starting gemm
+gemm, 25, 0.000005050000
+Starting gemm
+gemm, 25, 0.000005022000
+Starting gemm
+gemm, 25, 0.000005022000
+Starting gemm
+gemm, 25, 0.000005066000
+Starting gemm
+gemm, 25, 0.000005086000
+Starting gemm
+gemm, 25, 0.000005022000
+Starting gemm
+gemm, 25, 0.000005022000
+Starting gemm
+gemm, 25, 0.000005022000
+Starting gemm
+gemm, 25, 0.000005086000
+Starting gemm
+gemm, 25, 0.000005058000
+Starting gemm
+gemm, 25, 0.000005058000
+Starting gemm
+gemm, 25, 0.000005058000
+Starting gemm
+gemm, 25, 0.000005086000
+Starting gemm
+gemm, 25, 0.000005058000
+Starting gemm
+gemm, 25, 0.000005058000
+Starting gemm
+gemm, 25, 0.000005058000
+Starting gemm
+gemm, 25, 0.000005086000
+Starting gemm
+gemm, 25, 0.000005058000
+Starting gemm
+gemm, 25, 0.000005058000
+Starting gemm
+gemm, 25, 0.000005058000
+Starting gemm
+gemm, 25, 0.000005086000
+Starting gemm
+gemm, 25, 0.000005058000
+Starting gemm
+gemm, 25, 0.000005086000
+Starting gemm
+gemm, 25, 0.000005106000
+Starting gemm
+gemm, 25, 0.000005058000
+Starting gemm
+gemm, 25, 0.000005050000
+Starting gemm
+gemm, 25, 0.000005022000
+Starting gemm
+gemm, 25, 0.000005058000
+Starting gemm
+gemm, 25, 0.000005086000
+Starting gemm
+gemm, 25, 0.000005058000
+Starting gemm
+gemm, 25, 0.000005058000
+Starting gemm
+gemm, 25, 0.000005058000
+Starting gemm
+gemm, 25, 0.000005142000
+Starting gemm
+gemm, 25, 0.000005058000
+Starting gemm
+gemm, 25, 0.000005050000
+Starting gemm
+gemm, 25, 0.000005086000
+Starting gemm
+gemm, 25, 0.000005114000
+Starting gemm
+gemm, 25, 0.000005022000
+Starting gemm
+gemm, 25, 0.000005058000
+Starting gemm
+gemm, 25, 0.000005058000
+Starting gemm
+gemm, 25, 0.000005194000
+Starting gemm
+gemm, 25, 0.000005058000
+Starting gemm
+gemm, 25, 0.000005058000
+Starting gemm
+gemm, 25, 0.000005058000
+Starting gemm
+gemm, 25, 0.000005086000
+Starting gemm
+gemm, 25, 0.000005022000
+Starting gemm
+gemm, 25, 0.000005022000
+Starting gemm
+gemm, 25, 0.000005058000
+Starting gemm
+gemm, 25, 0.000005086000
+Starting gemm
+gemm, 25, 0.000005022000
+Starting gemm
+gemm, 25, 0.000005058000
+Starting gemm
+gemm, 25, 0.000005058000
+Starting gemm
+gemm, 25, 0.000005058000
+Starting gemm
+gemm, 25, 0.000005058000
+Starting gemm
+gemm, 25, 0.000005122000
+Starting gemm
+gemm, 25, 0.000005078000
+Starting gemm
+gemm, 25, 0.000005042000
+Starting gemm
+gemm, 25, 0.000005050000
+Starting gemm
+gemm, 25, 0.000005014000
+Starting gemm
+gemm, 25, 0.000005050000
+Starting gemm
+gemm, 25, 0.000005014000
+Starting gemm
+gemm, 25, 0.000005014000
+Starting gemm
+gemm, 25, 0.000005042000
+Starting gemm
+gemm, 25, 0.000005114000
+Starting gemm
+gemm, 25, 0.000005058000
+Starting gemm
+gemm, 25, 0.000005022000
+Starting gemm
+gemm, 25, 0.000005022000
+Starting gemm
+gemm, 25, 0.000005022000
+Starting gemm
+gemm, 25, 0.000005058000
+Starting gemm
+gemm, 25, 0.000005058000
+Starting gemm
+gemm, 25, 0.000005058000
+Starting gemm
+gemm, 25, 0.000005058000
+Starting gemm
+gemm, 25, 0.000005058000
+Starting gemm
+gemm, 25, 0.000005058000
+Starting gemm
+gemm, 25, 0.000005058000
+Starting gemm
+gemm, 25, 0.000005058000
+Starting gemm
+gemm, 25, 0.000005058000
+Starting gemm
+gemm, 25, 0.000005058000
+Starting gemm
+gemm, 25, 0.000005058000
+Starting gemm
+gemm, 25, 0.000005058000
+Starting gemm
+gemm, 25, 0.000005058000
+Starting gemm
+gemm, 25, 0.000005058000
+Starting gemm
+gemm, 25, 0.000005058000
+Starting gemm
+gemm, 25, 0.000005058000
+Starting gemm
+gemm, 25, 0.000005066000
+Starting gemm
+gemm, 25, 0.000005058000
+Starting gemm
+gemm, 25, 0.000005022000
+Starting gemm
+gemm, 25, 0.000005038000
+Starting gemm
+gemm, 25, 0.000005058000
+Starting gemm
+gemm, 25, 0.000005058000
+Starting gemm
+gemm, 25, 0.000005058000
+Starting gemm
+gemm, 25, 0.000005058000
+Starting gemm
+gemm, 25, 0.000005086000
+Starting gemm
+gemm, 25, 0.000005066000
+Starting gemm
+gemm, 25, 0.000005030000
+Starting gemm
+gemm, 25, 0.000005066000
+Starting gemm
+gemm, 25, 0.000005066000
+Starting gemm
+gemm, 25, 0.000005066000
+Starting gemm
+gemm, 25, 0.000005066000
+Starting gemm
+gemm, 25, 0.000005066000
+Starting gemm
+gemm, 25, 0.000005066000
+Starting gemm
+gemm, 25, 0.000005066000
+Starting gemm
+gemm, 25, 0.000005066000
+Starting gemm
+gemm, 25, 0.000005066000
+Starting gemm
+gemm, 25, 0.000005066000
+Starting gemm
+gemm, 25, 0.000005066000
+Starting gemm
+gemm, 25, 0.000005066000
+Starting gemm
+gemm, 25, 0.000005066000
+Starting gemm
+gemm, 25, 0.000005066000
+Starting gemm
+gemm, 25, 0.000005066000
+Starting gemm
+gemm, 25, 0.000005066000
+Starting gemm
+gemm, 25, 0.000005066000
+Starting gemm
+gemm, 25, 0.000005066000
+Starting gemm
+gemm, 25, 0.000005066000
+Starting gemm
+gemm, 25, 0.000005074000
+Starting gemm
+gemm, 25, 0.000005022000
+Starting gemm
+gemm, 25, 0.000005058000
+Starting gemm
+gemm, 25, 0.000005022000
+Starting gemm
+gemm, 25, 0.000005022000
+Starting gemm
+gemm, 25, 0.000005058000
+Starting gemm
+gemm, 25, 0.000005058000
+Starting gemm
+gemm, 25, 0.000005058000
+Starting gemm
+gemm, 25, 0.000005086000
+Starting gemm
+gemm, 25, 0.000005030000
+Starting gemm
+gemm, 25, 0.000005046000
+Starting gemm
+gemm, 25, 0.000005030000
+Starting gemm
+gemm, 25, 0.000005030000
+Starting gemm
+gemm, 25, 0.000005066000
+Starting gemm
+gemm, 25, 0.000005066000
+Starting gemm
+gemm, 25, 0.000005066000
+Starting gemm
+gemm, 25, 0.000005066000
+Starting gemm
+gemm, 25, 0.000005066000
+Starting gemm
+gemm, 25, 0.000005066000
+Starting gemm
+gemm, 25, 0.000005066000
+Starting gemm
+gemm, 25, 0.000005066000
+Starting gemm
+gemm, 25, 0.000005066000
+Starting gemm
+gemm, 25, 0.000005066000
+Starting gemm
+gemm, 25, 0.000005066000
+Starting gemm
+gemm, 25, 0.000005066000
+Starting gemm
+gemm, 25, 0.000005066000
+Starting gemm
+gemm, 25, 0.000005066000
+Starting gemm
+gemm, 25, 0.000005066000
+Starting gemm
+gemm, 25, 0.000005066000
+Starting gemm
+gemm, 25, 0.000005066000
+Starting gemm
+gemm, 25, 0.000005074000
+Starting gemm
+gemm, 25, 0.000005022000
+Starting gemm
+gemm, 25, 0.000005058000
+Starting gemm
+gemm, 25, 0.000005022000
+Starting gemm
+gemm, 25, 0.000005022000
+Starting gemm
+gemm, 25, 0.000005058000
+Starting gemm
+gemm, 25, 0.000005058000
+Starting gemm
+gemm, 25, 0.000005058000
+Starting gemm
+gemm, 25, 0.000005086000
+Starting gemm
+gemm, 25, 0.000005030000
+Starting gemm
+gemm, 25, 0.000005046000
+Starting gemm
+gemm, 25, 0.000005030000
+Starting gemm
+gemm, 25, 0.000005030000
+Starting gemm
+gemm, 25, 0.000005066000
+Starting gemm
+gemm, 25, 0.000005066000
+Starting gemm
+gemm, 25, 0.000005066000
+Starting gemm
+gemm, 25, 0.000005066000
+Starting gemm
+gemm, 25, 0.000005066000
+Starting gemm
+gemm, 25, 0.000005066000
+Starting gemm
+gemm, 25, 0.000005066000
+Starting gemm
+gemm, 25, 0.000005066000
+Starting gemm
+gemm, 25, 0.000005066000
+Starting gemm
+gemm, 25, 0.000005066000
+Starting gemm
+gemm, 25, 0.000005066000
+Starting gemm
+gemm, 25, 0.000005066000
+Starting gemm
+gemm, 25, 0.000005066000
+Starting gemm
+gemm, 25, 0.000005066000
+Starting gemm
+gemm, 25, 0.000005066000
+Starting gemm
+gemm, 25, 0.000005066000
+Starting gemm
+gemm, 25, 0.000005066000
+Starting gemm
+gemm, 25, 0.000005074000
+Starting gemm
+gemm, 25, 0.000005022000
+Starting gemm
+gemm, 25, 0.000005058000
+Starting gemm
+gemm, 25, 0.000005022000
+Starting gemm
+gemm, 25, 0.000005022000
+Starting gemm
+gemm, 25, 0.000005058000
+Starting gemm
+gemm, 25, 0.000005058000
+Starting gemm
+gemm, 25, 0.000005058000
+Starting gemm
+gemm, 25, 0.000005086000
+Starting gemm
+gemm, 25, 0.000005030000
+Starting gemm
+gemm, 25, 0.000005046000
+Starting gemm
+gemm, 25, 0.000005030000
+Starting gemm
+gemm, 25, 0.000005066000
+Starting gemm
+gemm, 25, 0.000005066000
+Starting gemm
+gemm, 25, 0.000005066000
+Starting gemm
+gemm, 25, 0.000005066000
+Starting gemm
+gemm, 25, 0.000005066000
+Starting gemm
+gemm, 25, 0.000005066000
+Starting gemm
+gemm, 25, 0.000005066000
+Starting gemm
+gemm, 25, 0.000005066000
+Starting gemm
+gemm, 25, 0.000005066000
+Starting gemm
+gemm, 25, 0.000005066000
+Starting gemm
+gemm, 25, 0.000005066000
+Starting gemm
+gemm, 25, 0.000005066000
+Starting gemm
+gemm, 25, 0.000005066000
+Starting gemm
+gemm, 25, 0.000005066000
+Starting gemm
+gemm, 25, 0.000005066000
+Starting gemm
+gemm, 25, 0.000005066000
+Starting gemm
+gemm, 25, 0.000005066000
+Starting gemm
+gemm, 25, 0.000005066000
+Starting gemm
+gemm, 25, 0.000005074000
+Starting gemm
+gemm, 25, 0.000005022000
+Starting gemm
+gemm, 25, 0.000005058000
+Starting gemm
+gemm, 25, 0.000005022000
+Starting gemm
+gemm, 25, 0.000005022000
+Starting gemm
+gemm, 25, 0.000005058000
+Starting gemm
+gemm, 25, 0.000005058000
+Starting gemm
+gemm, 25, 0.000005058000
+Starting gemm
+gemm, 25, 0.000005058000
+Starting gemm
+gemm, 25, 0.000005066000
+Starting gemm
+gemm, 25, 0.000005066000
+Starting gemm
+gemm, 25, 0.000005030000
+Starting gemm
+gemm, 25, 0.000005066000
+Starting gemm
+gemm, 25, 0.000005066000
+Starting gemm
+gemm, 25, 0.000005066000
+Starting gemm
+gemm, 25, 0.000005066000
+Starting gemm
+gemm, 25, 0.000005066000
+Starting gemm
+gemm, 25, 0.000005066000
+Starting gemm
+gemm, 25, 0.000005066000
+Starting gemm
+gemm, 25, 0.000005066000
+Starting gemm
+gemm, 25, 0.000005066000
+Starting gemm
+gemm, 25, 0.000005066000
+Starting gemm
+gemm, 25, 0.000005066000
+Starting gemm
+gemm, 25, 0.000005066000
+Starting gemm
+gemm, 25, 0.000005066000
+Starting gemm
+gemm, 25, 0.000005066000
+Starting gemm
+gemm, 25, 0.000005066000
+Starting gemm
+gemm, 25, 0.000005066000
+Starting gemm
+gemm, 25, 0.000005066000
+Starting gemm
+gemm, 25, 0.000005066000
+Starting gemm
+gemm, 25, 0.000005074000
+Starting gemm
+gemm, 25, 0.000005050000
+Starting gemm
+gemm, 25, 0.000005058000
+Starting gemm
+gemm, 25, 0.000005022000
+Starting gemm
+gemm, 25, 0.000005022000
+Starting gemm
+gemm, 25, 0.000005022000
+Starting gemm
+gemm, 25, 0.000005058000
+Starting gemm
+gemm, 25, 0.000005058000
+Starting gemm
+gemm, 25, 0.000005058000
+Starting gemm
+gemm, 25, 0.000005066000
+Starting gemm
+gemm, 25, 0.000005066000
+Starting gemm
+gemm, 25, 0.000005066000
+Starting gemm
+gemm, 25, 0.000005030000
+Starting gemm
+gemm, 25, 0.000005066000
+Starting gemm
+gemm, 25, 0.000005066000
+Starting gemm
+gemm, 25, 0.000005094000
+Starting gemm
+gemm, 25, 0.000005058000
+Starting gemm
+gemm, 25, 0.000005030000
+Starting gemm
+gemm, 25, 0.000005066000
+Starting gemm
+gemm, 25, 0.000005066000
+Starting gemm
+gemm, 25, 0.000005066000
+Starting gemm
+gemm, 25, 0.000005066000
+Starting gemm
+gemm, 25, 0.000005066000
+Starting gemm
+gemm, 25, 0.000005066000
+Starting gemm
+gemm, 25, 0.000005066000
+Starting gemm
+gemm, 25, 0.000005066000
+Starting gemm
+gemm, 25, 0.000005066000
+Starting gemm
+gemm, 25, 0.000005066000
+Starting gemm
+gemm, 25, 0.000005066000
+Starting gemm
+gemm, 25, 0.000005066000
+Starting gemm
+gemm, 25, 0.000005074000
+Starting gemm
+gemm, 25, 0.000005050000
+Starting gemm
+gemm, 25, 0.000005058000
+Starting gemm
+gemm, 25, 0.000005022000
+Starting gemm
+gemm, 25, 0.000005022000
+Starting gemm
+gemm, 25, 0.000005022000
+Starting gemm
+gemm, 25, 0.000005058000
+Starting gemm
+gemm, 25, 0.000005058000
+Starting gemm
+gemm, 25, 0.000005058000
+Starting gemm
+gemm, 25, 0.000005066000
+Starting gemm
+gemm, 25, 0.000005066000
+Starting gemm
+gemm, 25, 0.000005066000
+Starting gemm
+gemm, 25, 0.000005058000
+Starting gemm
+gemm, 25, 0.000005030000
+Starting gemm
+gemm, 25, 0.000005046000
+Starting gemm
+gemm, 25, 0.000005030000
+Starting gemm
+gemm, 25, 0.000005066000
+Starting gemm
+gemm, 25, 0.000005066000
+Starting gemm
+gemm, 25, 0.000005066000
+Starting gemm
+gemm, 25, 0.000005066000
+Starting gemm
+gemm, 25, 0.000005066000
+Starting gemm
+gemm, 25, 0.000005066000
+Starting gemm
+gemm, 25, 0.000005066000
+Starting gemm
+gemm, 25, 0.000005066000
+Starting gemm
+gemm, 25, 0.000005066000
+Starting gemm
+gemm, 25, 0.000005066000
+Starting gemm
+gemm, 25, 0.000005066000
+Starting gemm
+gemm, 25, 0.000005066000
+Starting gemm
+gemm, 25, 0.000005066000
+Starting gemm
+gemm, 25, 0.000005066000
+Starting gemm
+gemm, 25, 0.000005074000
+Starting gemm
+gemm, 25, 0.000005022000
+Starting gemm
+gemm, 25, 0.000005058000
+Starting gemm
+gemm, 25, 0.000005022000
+Starting gemm
+gemm, 25, 0.000005022000
+Starting gemm
+gemm, 25, 0.000005058000
+Starting gemm
+gemm, 25, 0.000005058000
+Starting gemm
+gemm, 25, 0.000005058000
+Starting gemm
+gemm, 25, 0.000005058000
+Starting gemm
+gemm, 25, 0.000005066000
+Starting gemm
+gemm, 25, 0.000005066000
+Starting gemm
+gemm, 25, 0.000005030000
+Starting gemm
+gemm, 25, 0.000005066000
+Starting gemm
+gemm, 25, 0.000005066000
+Starting gemm
+gemm, 25, 0.000005066000
+Starting gemm
+gemm, 25, 0.000005066000
+Starting gemm
+gemm, 25, 0.000005066000
+Starting gemm
+gemm, 25, 0.000005066000
+Starting gemm
+gemm, 25, 0.000005066000
+Starting gemm
+gemm, 25, 0.000005066000
+Starting gemm
+gemm, 25, 0.000005066000
+Starting gemm
+gemm, 25, 0.000005066000
+Starting gemm
+gemm, 25, 0.000005066000
+Starting gemm
+gemm, 25, 0.000005066000
+Starting gemm
+gemm, 25, 0.000005066000
+Starting gemm
+gemm, 25, 0.000005066000
+Starting gemm
+gemm, 25, 0.000005066000
+Starting gemm
+gemm, 25, 0.000005066000
+Starting gemm
+gemm, 25, 0.000005066000
+Starting gemm
+gemm, 25, 0.000005066000
+Starting gemm
+gemm, 25, 0.000005074000
+Finished gemm, 0.000000000000
+Benchmark Start histogram
+Starting histogram
+histogram, 20, 0.000005046000
+Finished histogram, 0.000000000000
+Benchmark Start latnrm
+Starting latnrm
+latnrm, 8, 0.000002840000
+Finished latnrm, 0.000000000000
+Benchmark Start mvt
+Starting mvt
+mvt, 120, 0.000040478000
+Starting mvt
+mvt, 120, 0.000035160000
+Starting mvt
+mvt, 120, 0.000036462000
+Starting mvt
+mvt, 120, 0.000033170000
+Starting mvt
+mvt, 120, 0.000038910000
+Starting mvt
+mvt, 120, 0.000034082000
+Starting mvt
+mvt, 120, 0.000033322000
+Starting mvt
+mvt, 120, 0.000033670000
+Starting mvt
+mvt, 120, 0.000039100000
+Starting mvt
+mvt, 120, 0.000033568000
+Starting mvt
+mvt, 120, 0.000032972000
+Starting mvt
+mvt, 120, 0.000034128000
+Starting mvt
+mvt, 120, 0.000038234000
+Starting mvt
+mvt, 120, 0.000033138000
+Starting mvt
+mvt, 120, 0.000033150000
+Starting mvt
+mvt, 120, 0.000032786000
+Starting mvt
+mvt, 120, 0.000038904000
+Starting mvt
+mvt, 120, 0.000032922000
+Starting mvt
+mvt, 120, 0.000034030000
+Starting mvt
+mvt, 120, 0.000033354000
+Starting mvt
+mvt, 120, 0.000037544000
+Starting mvt
+mvt, 120, 0.000033010000
+Starting mvt
+mvt, 120, 0.000032954000
+Starting mvt
+mvt, 120, 0.000032690000
+Starting mvt
+mvt, 120, 0.000038948000
+Starting mvt
+mvt, 120, 0.000033758000
+Starting mvt
+mvt, 120, 0.000032678000
+Starting mvt
+mvt, 120, 0.000033010000
+Starting mvt
+mvt, 120, 0.000037004000
+Starting mvt
+mvt, 120, 0.000032920000
+Starting mvt
+mvt, 120, 0.000032718000
+Starting mvt
+mvt, 120, 0.000032906000
+Starting mvt
+mvt, 120, 0.000038620000
+Starting mvt
+mvt, 120, 0.000033366000
+Starting mvt
+mvt, 120, 0.000033074000
+Starting mvt
+mvt, 120, 0.000032690000
+Starting mvt
+mvt, 120, 0.000037100000
+Starting mvt
+mvt, 120, 0.000033304000
+Starting mvt
+mvt, 120, 0.000032350000
+Starting mvt
+mvt, 120, 0.000032516000
+Starting mvt
+mvt, 120, 0.000037502000
+Starting mvt
+mvt, 120, 0.000033068000
+Starting mvt
+mvt, 120, 0.000033184000
+Starting mvt
+mvt, 120, 0.000032506000
+Starting mvt
+mvt, 120, 0.000037062000
+Starting mvt
+mvt, 120, 0.000033072000
+Starting mvt
+mvt, 120, 0.000032840000
+Starting mvt
+mvt, 120, 0.000033366000
+Starting mvt
+mvt, 120, 0.000038096000
+Starting mvt
+mvt, 120, 0.000033010000
+Starting mvt
+mvt, 120, 0.000033200000
+Starting mvt
+mvt, 120, 0.000032464000
+Starting mvt
+mvt, 120, 0.000037262000
+Starting mvt
+mvt, 120, 0.000033510000
+Starting mvt
+mvt, 120, 0.000032546000
+Starting mvt
+mvt, 120, 0.000032718000
+Starting mvt
+mvt, 120, 0.000036502000
+Starting mvt
+mvt, 120, 0.000032680000
+Starting mvt
+mvt, 120, 0.000032722000
+Starting mvt
+mvt, 120, 0.000032584000
+Starting mvt
+mvt, 120, 0.000036456000
+Starting mvt
+mvt, 120, 0.000033258000
+Starting mvt
+mvt, 120, 0.000033026000
+Starting mvt
+mvt, 120, 0.000033160000
+Starting mvt
+mvt, 120, 0.000036856000
+Starting mvt
+mvt, 120, 0.000032974000
+Starting mvt
+mvt, 120, 0.000033376000
+Starting mvt
+mvt, 120, 0.000032492000
+Starting mvt
+mvt, 120, 0.000036278000
+Starting mvt
+mvt, 120, 0.000032920000
+Starting mvt
+mvt, 120, 0.000032856000
+Starting mvt
+mvt, 120, 0.000032906000
+Starting mvt
+mvt, 120, 0.000036496000
+Starting mvt
+mvt, 120, 0.000032964000
+Starting mvt
+mvt, 120, 0.000032688000
+Starting mvt
+mvt, 120, 0.000032542000
+Starting mvt
+mvt, 120, 0.000036780000
+Starting mvt
+mvt, 120, 0.000032884000
+Starting mvt
+mvt, 120, 0.000032914000
+Starting mvt
+mvt, 120, 0.000032944000
+Starting mvt
+mvt, 120, 0.000036428000
+Starting mvt
+mvt, 120, 0.000033010000
+Starting mvt
+mvt, 120, 0.000032576000
+Starting mvt
+mvt, 120, 0.000032526000
+Starting mvt
+mvt, 120, 0.000036172000
+Starting mvt
+mvt, 120, 0.000032736000
+Starting mvt
+mvt, 120, 0.000032808000
+Starting mvt
+mvt, 120, 0.000033002000
+Starting mvt
+mvt, 120, 0.000035972000
+Starting mvt
+mvt, 120, 0.000033074000
+Starting mvt
+mvt, 120, 0.000032758000
+Starting mvt
+mvt, 120, 0.000032394000
+Starting mvt
+mvt, 120, 0.000035740000
+Starting mvt
+mvt, 120, 0.000032826000
+Starting mvt
+mvt, 120, 0.000032638000
+Starting mvt
+mvt, 120, 0.000032780000
+Starting mvt
+mvt, 120, 0.000036178000
+Starting mvt
+mvt, 120, 0.000032868000
+Starting mvt
+mvt, 120, 0.000032442000
+Starting mvt
+mvt, 120, 0.000032386000
+Starting mvt
+mvt, 120, 0.000036512000
+Starting mvt
+mvt, 120, 0.000032782000
+Starting mvt
+mvt, 120, 0.000032442000
+Starting mvt
+mvt, 120, 0.000032812000
+Starting mvt
+mvt, 120, 0.000036934000
+Starting mvt
+mvt, 120, 0.000033316000
+Starting mvt
+mvt, 120, 0.000032446000
+Starting mvt
+mvt, 120, 0.000032526000
+Starting mvt
+mvt, 120, 0.000036162000
+Starting mvt
+mvt, 120, 0.000032900000
+Starting mvt
+mvt, 120, 0.000032644000
+Starting mvt
+mvt, 120, 0.000032366000
+Starting mvt
+mvt, 120, 0.000036524000
+Starting mvt
+mvt, 120, 0.000033060000
+Starting mvt
+mvt, 120, 0.000032582000
+Starting mvt
+mvt, 120, 0.000032450000
+Starting mvt
+mvt, 120, 0.000036362000
+Starting mvt
+mvt, 120, 0.000032758000
+Starting mvt
+mvt, 120, 0.000032486000
+Starting mvt
+mvt, 120, 0.000032640000
+Finished mvt, 0.000000000000
+Benchmark Start relu
+Starting relu
+relu, 4200, 0.000799776000
+Finished relu, 0.000000000000
+Benchmark Start spmv
+Starting spmv
+spmv, 100, 0.000025126000
+Finished spmv, 0.000000000000

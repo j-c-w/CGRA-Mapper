@@ -1,0 +1,4730 @@
+Benchmark Start livermorec
+Starting livermorec1
+livermorec1, 0, 0.000272208000
+Starting livermorec2
+livermorec2, 0, 0.000014872000
+Starting livermorec2
+livermorec2, 0, 0.000006978000
+Starting livermorec2
+livermorec2, 0, 0.000003388000
+Starting livermorec2
+livermorec2, 0, 0.000001798000
+Starting livermorec2
+livermorec2, 0, 0.000001078000
+Starting livermorec2
+livermorec2, 0, 0.000000364000
+Starting livermorec2
+livermorec2, 0, 0.000000162000
+Starting livermorec3
+livermorec3, 0, 0.000116790000
+Starting livermorec4
+livermorec4, 0, 0.000024000000
+Starting livermorec4
+livermorec4, 0, 0.000020852000
+Starting livermorec4
+livermorec4, 0, 0.000020714000
+Starting livermorec5
+livermorec5, 0, 0.000130236000
+Starting livermorec6
+livermorec6, 0, 0.000000844000
+Starting livermorec6
+livermorec6, 0, 0.000000644000
+Starting livermorec6
+livermorec6, 0, 0.000000722000
+Starting livermorec6
+livermorec6, 0, 0.000001304000
+Starting livermorec6
+livermorec6, 0, 0.000000988000
+Starting livermorec6
+livermorec6, 0, 0.000001098000
+Starting livermorec6
+livermorec6, 0, 0.000001278000
+Starting livermorec6
+livermorec6, 0, 0.000002336000
+Starting livermorec6
+livermorec6, 0, 0.000001570000
+Starting livermorec6
+livermorec6, 0, 0.000001672000
+Starting livermorec6
+livermorec6, 0, 0.000001800000
+Starting livermorec6
+livermorec6, 0, 0.000003590000
+Starting livermorec6
+livermorec6, 0, 0.000002110000
+Starting livermorec6
+livermorec6, 0, 0.000002252000
+Starting livermorec6
+livermorec6, 0, 0.000002386000
+Starting livermorec6
+livermorec6, 0, 0.000004682000
+Starting livermorec6
+livermorec6, 0, 0.000002726000
+Starting livermorec6
+livermorec6, 0, 0.000002842000
+Starting livermorec6
+livermorec6, 0, 0.000002970000
+Starting livermorec6
+livermorec6, 0, 0.000005774000
+Starting livermorec6
+livermorec6, 0, 0.000003260000
+Starting livermorec6
+livermorec6, 0, 0.000003352000
+Starting livermorec6
+livermorec6, 0, 0.000003524000
+Starting livermorec6
+livermorec6, 0, 0.000006856000
+Starting livermorec6
+livermorec6, 0, 0.000003806000
+Starting livermorec6
+livermorec6, 0, 0.000003944000
+Starting livermorec6
+livermorec6, 0, 0.000004090000
+Starting livermorec6
+livermorec6, 0, 0.000008000000
+Starting livermorec6
+livermorec6, 0, 0.000004332000
+Starting livermorec6
+livermorec6, 0, 0.000004468000
+Starting livermorec6
+livermorec6, 0, 0.000004616000
+Starting livermorec6
+livermorec6, 0, 0.000009124000
+Starting livermorec6
+livermorec6, 0, 0.000004902000
+Starting livermorec6
+livermorec6, 0, 0.000005054000
+Starting livermorec6
+livermorec6, 0, 0.000005174000
+Starting livermorec6
+livermorec6, 0, 0.000010382000
+Starting livermorec6
+livermorec6, 0, 0.000005564000
+Starting livermorec6
+livermorec6, 0, 0.000005578000
+Starting livermorec6
+livermorec6, 0, 0.000005726000
+Starting livermorec6
+livermorec6, 0, 0.000011456000
+Starting livermorec6
+livermorec6, 0, 0.000006118000
+Starting livermorec6
+livermorec6, 0, 0.000006250000
+Starting livermorec6
+livermorec6, 0, 0.000006264000
+Starting livermorec6
+livermorec6, 0, 0.000012520000
+Starting livermorec6
+livermorec6, 0, 0.000006708000
+Starting livermorec6
+livermorec6, 0, 0.000006760000
+Starting livermorec6
+livermorec6, 0, 0.000006928000
+Starting livermorec6
+livermorec6, 0, 0.000013648000
+Starting livermorec6
+livermorec6, 0, 0.000007184000
+Starting livermorec6
+livermorec6, 0, 0.000007292000
+Starting livermorec6
+livermorec6, 0, 0.000007462000
+Starting livermorec6
+livermorec6, 0, 0.000014954000
+Starting livermorec6
+livermorec6, 0, 0.000008634000
+Starting livermorec6
+livermorec6, 0, 0.000008178000
+Starting livermorec6
+livermorec6, 0, 0.000008152000
+Starting livermorec6
+livermorec6, 0, 0.000016106000
+Starting livermorec6
+livermorec6, 0, 0.000008502000
+Starting livermorec6
+livermorec6, 0, 0.000008632000
+Starting livermorec6
+livermorec6, 0, 0.000008742000
+Starting livermorec6
+livermorec6, 0, 0.000017086000
+Starting livermorec6
+livermorec6, 0, 0.000009638000
+Starting livermorec6
+livermorec6, 0, 0.000009402000
+Starting livermorec6
+livermorec6, 0, 0.000009192000
+Starting livermorec7
+livermorec7, 0, 0.000530310000
+Starting livermorec8
+livermorec8, 0, 0.000237118000
+Starting livermorec8
+livermorec8, 0, 0.000173744000
+Starting livermorec9
+livermorec9, 0, 0.000081430000
+Starting livermorec10
+livermorec10, 0, 0.000088634000
+Starting livermorec11
+livermorec11, 0, 0.000106252000
+Starting livermorec12
+livermorec12, 0, 0.000096342000
+Starting livermorec13
+livermorec13, 0, 0.000073954000
+Starting livermorec14
+livermorec14, 0, 0.000451514000
+Starting livermorec15
+livermorec15, 0, 0.000529358000
+Starting livermorec16
+livermorec16, 0, 0.000208302000
+Starting livermorec17
+livermorec17, 0, 0.000108274000
+Starting livermorec17
+livermorec17, 0, 0.000093720000
+Starting livermorec17
+livermorec17, 0, 0.000091948000
+Starting livermorec17
+livermorec17, 0, 0.000091638000
+Starting livermorec17
+livermorec17, 0, 0.000092800000
+Starting livermorec18
+livermorec18, 0, 0.000141418000
+Starting livermorec18
+livermorec18, 0, 0.000131194000
+Starting livermorec18
+livermorec18, 0, 0.000131864000
+Starting livermorec18
+livermorec18, 0, 0.000131392000
+Starting livermorec18
+livermorec18, 0, 0.000136402000
+Starting livermorec19
+livermorec19, 0, 0.000029122000
+Starting livermorec19
+livermorec19, 0, 0.000028234000
+Starting livermorec19
+livermorec19, 0, 0.000028416000
+Starting livermorec19
+livermorec19, 0, 0.000028264000
+Starting livermorec19
+livermorec19, 0, 0.000028042000
+Starting livermorec20
+livermorec20, 0, 0.000024992000
+Starting livermorec21
+livermorec21, 0, 0.000019614000
+Starting livermorec22
+livermorec22, 0, 0.000043080000
+Starting livermorec22
+livermorec22, 0, 0.000021272000
+Starting livermorec22
+livermorec22, 0, 0.000021880000
+Starting livermorec22
+livermorec22, 0, 0.000022490000
+Starting livermorec22
+livermorec22, 0, 0.000021570000
+Starting livermorec22
+livermorec22, 0, 0.000021052000
+Starting livermorec22
+livermorec22, 0, 0.000020350000
+Starting livermorec22
+livermorec22, 0, 0.000019990000
+Starting livermorec22
+livermorec22, 0, 0.000020222000
+Starting livermorec22
+livermorec22, 0, 0.000020308000
+Starting livermorec22
+livermorec22, 0, 0.000020024000
+Starting livermorec22
+livermorec22, 0, 0.000019970000
+Starting livermorec22
+livermorec22, 0, 0.000020472000
+Starting livermorec22
+livermorec22, 0, 0.000020040000
+Starting livermorec22
+livermorec22, 0, 0.000020014000
+Starting livermorec22
+livermorec22, 0, 0.000020382000
+Starting livermorec22
+livermorec22, 0, 0.000020140000
+Starting livermorec22
+livermorec22, 0, 0.000020114000
+Starting livermorec22
+livermorec22, 0, 0.000020074000
+Starting livermorec22
+livermorec22, 0, 0.000019804000
+Starting livermorec22
+livermorec22, 0, 0.000020044000
+Starting livermorec22
+livermorec22, 0, 0.000020322000
+Starting livermorec22
+livermorec22, 0, 0.000017828000
+Starting livermorec22
+livermorec22, 0, 0.000017882000
+Starting livermorec22
+livermorec22, 0, 0.000017850000
+Starting livermorec22
+livermorec22, 0, 0.000020300000
+Starting livermorec22
+livermorec22, 0, 0.000018528000
+Starting livermorec22
+livermorec22, 0, 0.000019142000
+Starting livermorec22
+livermorec22, 0, 0.000019536000
+Starting livermorec22
+livermorec22, 0, 0.000019528000
+Starting livermorec22
+livermorec22, 0, 0.000019172000
+Starting livermorec22
+livermorec22, 0, 0.000018554000
+Starting livermorec22
+livermorec22, 0, 0.000017878000
+Starting livermorec22
+livermorec22, 0, 0.000017686000
+Starting livermorec22
+livermorec22, 0, 0.000017604000
+Starting livermorec22
+livermorec22, 0, 0.000017574000
+Starting livermorec22
+livermorec22, 0, 0.000017576000
+Starting livermorec22
+livermorec22, 0, 0.000017546000
+Starting livermorec22
+livermorec22, 0, 0.000017542000
+Starting livermorec22
+livermorec22, 0, 0.000017484000
+Starting livermorec22
+livermorec22, 0, 0.000017520000
+Starting livermorec22
+livermorec22, 0, 0.000017626000
+Starting livermorec22
+livermorec22, 0, 0.000017520000
+Starting livermorec22
+livermorec22, 0, 0.000017490000
+Starting livermorec22
+livermorec22, 0, 0.000017520000
+Starting livermorec22
+livermorec22, 0, 0.000017518000
+Starting livermorec22
+livermorec22, 0, 0.000017576000
+Starting livermorec22
+livermorec22, 0, 0.000017518000
+Starting livermorec22
+livermorec22, 0, 0.000017520000
+Starting livermorec22
+livermorec22, 0, 0.000017630000
+Starting livermorec22
+livermorec22, 0, 0.000020216000
+Starting livermorec22
+livermorec22, 0, 0.000018078000
+Starting livermorec22
+livermorec22, 0, 0.000018640000
+Starting livermorec22
+livermorec22, 0, 0.000018862000
+Starting livermorec22
+livermorec22, 0, 0.000019284000
+Starting livermorec22
+livermorec22, 0, 0.000019366000
+Starting livermorec22
+livermorec22, 0, 0.000019004000
+Starting livermorec22
+livermorec22, 0, 0.000018828000
+Starting livermorec22
+livermorec22, 0, 0.000017800000
+Starting livermorec22
+livermorec22, 0, 0.000017658000
+Starting livermorec22
+livermorec22, 0, 0.000017548000
+Starting livermorec22
+livermorec22, 0, 0.000017574000
+Starting livermorec22
+livermorec22, 0, 0.000017548000
+Starting livermorec22
+livermorec22, 0, 0.000017602000
+Starting livermorec22
+livermorec22, 0, 0.000017542000
+Starting livermorec22
+livermorec22, 0, 0.000017574000
+Starting livermorec22
+livermorec22, 0, 0.000017520000
+Starting livermorec22
+livermorec22, 0, 0.000017518000
+Starting livermorec22
+livermorec22, 0, 0.000017520000
+Starting livermorec22
+livermorec22, 0, 0.000017546000
+Starting livermorec22
+livermorec22, 0, 0.000017520000
+Starting livermorec22
+livermorec22, 0, 0.000017546000
+Starting livermorec22
+livermorec22, 0, 0.000017520000
+Starting livermorec22
+livermorec22, 0, 0.000017682000
+Starting livermorec22
+livermorec22, 0, 0.000017576000
+Starting livermorec22
+livermorec22, 0, 0.000020548000
+Starting livermorec22
+livermorec22, 0, 0.000017968000
+Starting livermorec22
+livermorec22, 0, 0.000018184000
+Starting livermorec22
+livermorec22, 0, 0.000018416000
+Starting livermorec22
+livermorec22, 0, 0.000019002000
+Starting livermorec22
+livermorec22, 0, 0.000019280000
+Starting livermorec22
+livermorec22, 0, 0.000019754000
+Starting livermorec22
+livermorec22, 0, 0.000019340000
+Starting livermorec22
+livermorec22, 0, 0.000018442000
+Starting livermorec22
+livermorec22, 0, 0.000017912000
+Starting livermorec22
+livermorec22, 0, 0.000017766000
+Starting livermorec22
+livermorec22, 0, 0.000017548000
+Starting livermorec22
+livermorec22, 0, 0.000017574000
+Starting livermorec22
+livermorec22, 0, 0.000017604000
+Starting livermorec22
+livermorec22, 0, 0.000017630000
+Starting livermorec22
+livermorec22, 0, 0.000017486000
+Starting livermorec22
+livermorec22, 0, 0.000017546000
+Starting livermorec22
+livermorec22, 0, 0.000017548000
+Starting livermorec22
+livermorec22, 0, 0.000017602000
+Starting livermorec22
+livermorec22, 0, 0.000017520000
+Starting livermorec22
+livermorec22, 0, 0.000017546000
+Starting livermorec22
+livermorec22, 0, 0.000017520000
+Starting livermorec22
+livermorec22, 0, 0.000017546000
+Starting livermorec22
+livermorec22, 0, 0.000017520000
+Starting livermorec22
+livermorec22, 0, 0.000017574000
+Starting livermorec22
+livermorec22, 0, 0.000020396000
+Starting livermorec22
+livermorec22, 0, 0.000017906000
+Starting livermorec22
+livermorec22, 0, 0.000017716000
+Starting livermorec22
+livermorec22, 0, 0.000018134000
+Starting livermorec22
+livermorec22, 0, 0.000018500000
+Starting livermorec22
+livermorec22, 0, 0.000018890000
+Starting livermorec22
+livermorec22, 0, 0.000019116000
+Starting livermorec22
+livermorec22, 0, 0.000019080000
+Starting livermorec22
+livermorec22, 0, 0.000019256000
+Starting livermorec22
+livermorec22, 0, 0.000018554000
+Starting livermorec22
+livermorec22, 0, 0.000017940000
+Starting livermorec22
+livermorec22, 0, 0.000017764000
+Starting livermorec22
+livermorec22, 0, 0.000017604000
+Starting livermorec22
+livermorec22, 0, 0.000017630000
+Starting livermorec22
+livermorec22, 0, 0.000017514000
+Starting livermorec22
+livermorec22, 0, 0.000017546000
+Starting livermorec22
+livermorec22, 0, 0.000017520000
+Starting livermorec22
+livermorec22, 0, 0.000017620000
+Starting livermorec22
+livermorec22, 0, 0.000017492000
+Starting livermorec22
+livermorec22, 0, 0.000017490000
+Starting livermorec22
+livermorec22, 0, 0.000017520000
+Starting livermorec22
+livermorec22, 0, 0.000017592000
+Starting livermorec22
+livermorec22, 0, 0.000017520000
+Starting livermorec22
+livermorec22, 0, 0.000017456000
+Starting livermorec22
+livermorec22, 0, 0.000017520000
+Starting livermorec22
+livermorec22, 0, 0.000021278000
+Starting livermorec22
+livermorec22, 0, 0.000017688000
+Starting livermorec22
+livermorec22, 0, 0.000017630000
+Starting livermorec22
+livermorec22, 0, 0.000017682000
+Starting livermorec22
+livermorec22, 0, 0.000018074000
+Starting livermorec22
+livermorec22, 0, 0.000018388000
+Starting livermorec22
+livermorec22, 0, 0.000018890000
+Starting livermorec22
+livermorec22, 0, 0.000018976000
+Starting livermorec22
+livermorec22, 0, 0.000019612000
+Starting livermorec22
+livermorec22, 0, 0.000018948000
+Starting livermorec22
+livermorec22, 0, 0.000018442000
+Starting livermorec22
+livermorec22, 0, 0.000018080000
+Starting livermorec22
+livermorec22, 0, 0.000017630000
+Starting livermorec22
+livermorec22, 0, 0.000017514000
+Starting livermorec22
+livermorec22, 0, 0.000017546000
+Starting livermorec22
+livermorec22, 0, 0.000017548000
+Starting livermorec22
+livermorec22, 0, 0.000017518000
+Starting livermorec22
+livermorec22, 0, 0.000017520000
+Starting livermorec22
+livermorec22, 0, 0.000017456000
+Starting livermorec22
+livermorec22, 0, 0.000017492000
+Starting livermorec22
+livermorec22, 0, 0.000017518000
+Starting livermorec22
+livermorec22, 0, 0.000017492000
+Starting livermorec22
+livermorec22, 0, 0.000017518000
+Starting livermorec22
+livermorec22, 0, 0.000017492000
+Starting livermorec22
+livermorec22, 0, 0.000017518000
+Starting livermorec22
+livermorec22, 0, 0.000021486000
+Starting livermorec22
+livermorec22, 0, 0.000017658000
+Starting livermorec22
+livermorec22, 0, 0.000017632000
+Starting livermorec22
+livermorec22, 0, 0.000017574000
+Starting livermorec22
+livermorec22, 0, 0.000017800000
+Starting livermorec22
+livermorec22, 0, 0.000017994000
+Starting livermorec22
+livermorec22, 0, 0.000018304000
+Starting livermorec22
+livermorec22, 0, 0.000018800000
+Starting livermorec22
+livermorec22, 0, 0.000019306000
+Starting livermorec22
+livermorec22, 0, 0.000019254000
+Starting livermorec22
+livermorec22, 0, 0.000018696000
+Starting livermorec22
+livermorec22, 0, 0.000018296000
+Starting livermorec22
+livermorec22, 0, 0.000017878000
+Starting livermorec22
+livermorec22, 0, 0.000017602000
+Starting livermorec22
+livermorec22, 0, 0.000017632000
+Starting livermorec22
+livermorec22, 0, 0.000017574000
+Starting livermorec22
+livermorec22, 0, 0.000017576000
+Starting livermorec22
+livermorec22, 0, 0.000017518000
+Starting livermorec22
+livermorec22, 0, 0.000017520000
+Starting livermorec22
+livermorec22, 0, 0.000017546000
+Starting livermorec22
+livermorec22, 0, 0.000017548000
+Starting livermorec22
+livermorec22, 0, 0.000017574000
+Starting livermorec22
+livermorec22, 0, 0.000017548000
+Starting livermorec22
+livermorec22, 0, 0.000017574000
+Starting livermorec22
+livermorec22, 0, 0.000017520000
+Starting livermorec22
+livermorec22, 0, 0.000021074000
+Starting livermorec22
+livermorec22, 0, 0.000017604000
+Starting livermorec22
+livermorec22, 0, 0.000017648000
+Starting livermorec22
+livermorec22, 0, 0.000017548000
+Starting livermorec22
+livermorec22, 0, 0.000017602000
+Starting livermorec22
+livermorec22, 0, 0.000017688000
+Starting livermorec22
+livermorec22, 0, 0.000018016000
+Starting livermorec22
+livermorec22, 0, 0.000018388000
+Starting livermorec22
+livermorec22, 0, 0.000018666000
+Starting livermorec22
+livermorec22, 0, 0.000019256000
+Starting livermorec22
+livermorec22, 0, 0.000019726000
+Starting livermorec22
+livermorec22, 0, 0.000019368000
+Starting livermorec22
+livermorec22, 0, 0.000018396000
+Starting livermorec22
+livermorec22, 0, 0.000017884000
+Starting livermorec22
+livermorec22, 0, 0.000017766000
+Starting livermorec22
+livermorec22, 0, 0.000017548000
+Starting livermorec22
+livermorec22, 0, 0.000017574000
+Starting livermorec22
+livermorec22, 0, 0.000017576000
+Starting livermorec22
+livermorec22, 0, 0.000017654000
+Starting livermorec22
+livermorec22, 0, 0.000017520000
+Starting livermorec22
+livermorec22, 0, 0.000017518000
+Starting livermorec22
+livermorec22, 0, 0.000017576000
+Starting livermorec22
+livermorec22, 0, 0.000017654000
+Starting livermorec22
+livermorec22, 0, 0.000017520000
+Starting livermorec22
+livermorec22, 0, 0.000017546000
+Starting livermorec22
+livermorec22, 0, 0.000021436000
+Starting livermorec22
+livermorec22, 0, 0.000017822000
+Starting livermorec22
+livermorec22, 0, 0.000017520000
+Starting livermorec22
+livermorec22, 0, 0.000017490000
+Starting livermorec22
+livermorec22, 0, 0.000017548000
+Starting livermorec22
+livermorec22, 0, 0.000017654000
+Starting livermorec22
+livermorec22, 0, 0.000017598000
+Starting livermorec22
+livermorec22, 0, 0.000017820000
+Starting livermorec22
+livermorec22, 0, 0.000018416000
+Starting livermorec22
+livermorec22, 0, 0.000018852000
+Starting livermorec22
+livermorec22, 0, 0.000019088000
+Starting livermorec22
+livermorec22, 0, 0.000019506000
+Starting livermorec22
+livermorec22, 0, 0.000019004000
+Starting livermorec22
+livermorec22, 0, 0.000018688000
+Starting livermorec22
+livermorec22, 0, 0.000018186000
+Starting livermorec22
+livermorec22, 0, 0.000017942000
+Starting livermorec22
+livermorec22, 0, 0.000017660000
+Starting livermorec22
+livermorec22, 0, 0.000017682000
+Starting livermorec22
+livermorec22, 0, 0.000017576000
+Starting livermorec22
+livermorec22, 0, 0.000017546000
+Starting livermorec22
+livermorec22, 0, 0.000017492000
+Starting livermorec22
+livermorec22, 0, 0.000017624000
+Starting livermorec22
+livermorec22, 0, 0.000017486000
+Starting livermorec22
+livermorec22, 0, 0.000017490000
+Starting livermorec22
+livermorec22, 0, 0.000017520000
+Starting livermorec22
+livermorec22, 0, 0.000021410000
+Starting livermorec22
+livermorec22, 0, 0.000017604000
+Starting livermorec22
+livermorec22, 0, 0.000017518000
+Starting livermorec22
+livermorec22, 0, 0.000017520000
+Starting livermorec22
+livermorec22, 0, 0.000017626000
+Starting livermorec22
+livermorec22, 0, 0.000017492000
+Starting livermorec22
+livermorec22, 0, 0.000017490000
+Starting livermorec22
+livermorec22, 0, 0.000017604000
+Starting livermorec22
+livermorec22, 0, 0.000017988000
+Starting livermorec22
+livermorec22, 0, 0.000018248000
+Starting livermorec22
+livermorec22, 0, 0.000018632000
+Starting livermorec22
+livermorec22, 0, 0.000019288000
+Starting livermorec22
+livermorec22, 0, 0.000019612000
+Starting livermorec22
+livermorec22, 0, 0.000018902000
+Starting livermorec22
+livermorec22, 0, 0.000018424000
+Starting livermorec22
+livermorec22, 0, 0.000017800000
+Starting livermorec22
+livermorec22, 0, 0.000017708000
+Starting livermorec22
+livermorec22, 0, 0.000017492000
+Starting livermorec22
+livermorec22, 0, 0.000017490000
+Starting livermorec22
+livermorec22, 0, 0.000017492000
+Starting livermorec22
+livermorec22, 0, 0.000017626000
+Starting livermorec22
+livermorec22, 0, 0.000017492000
+Starting livermorec22
+livermorec22, 0, 0.000017490000
+Starting livermorec22
+livermorec22, 0, 0.000017492000
+Starting livermorec22
+livermorec22, 0, 0.000017710000
+Starting livermorec22
+livermorec22, 0, 0.000021578000
+Starting livermorec22
+livermorec22, 0, 0.000017602000
+Starting livermorec22
+livermorec22, 0, 0.000017486000
+Starting livermorec22
+livermorec22, 0, 0.000017776000
+Starting livermorec22
+livermorec22, 0, 0.000017520000
+Starting livermorec22
+livermorec22, 0, 0.000017518000
+Starting livermorec22
+livermorec22, 0, 0.000017514000
+Starting livermorec22
+livermorec22, 0, 0.000017676000
+Starting livermorec22
+livermorec22, 0, 0.000017688000
+Starting livermorec22
+livermorec22, 0, 0.000017882000
+Starting livermorec22
+livermorec22, 0, 0.000018388000
+Starting livermorec22
+livermorec22, 0, 0.000018940000
+Starting livermorec22
+livermorec22, 0, 0.000019126000
+Starting livermorec22
+livermorec22, 0, 0.000019488000
+Starting livermorec22
+livermorec22, 0, 0.000019238000
+Starting livermorec22
+livermorec22, 0, 0.000018632000
+Starting livermorec22
+livermorec22, 0, 0.000017968000
+Starting livermorec22
+livermorec22, 0, 0.000017518000
+Starting livermorec22
+livermorec22, 0, 0.000017520000
+Starting livermorec22
+livermorec22, 0, 0.000017652000
+Starting livermorec22
+livermorec22, 0, 0.000017576000
+Starting livermorec22
+livermorec22, 0, 0.000017518000
+Starting livermorec22
+livermorec22, 0, 0.000017656000
+Starting livermorec22
+livermorec22, 0, 0.000017680000
+Starting livermorec22
+livermorec22, 0, 0.000017576000
+Starting livermorec22
+livermorec22, 0, 0.000021552000
+Starting livermorec22
+livermorec22, 0, 0.000017822000
+Starting livermorec22
+livermorec22, 0, 0.000017850000
+Starting livermorec22
+livermorec22, 0, 0.000017576000
+Starting livermorec22
+livermorec22, 0, 0.000017602000
+Starting livermorec22
+livermorec22, 0, 0.000017548000
+Starting livermorec22
+livermorec22, 0, 0.000017736000
+Starting livermorec22
+livermorec22, 0, 0.000017486000
+Starting livermorec22
+livermorec22, 0, 0.000017630000
+Starting livermorec22
+livermorec22, 0, 0.000017772000
+Starting livermorec22
+livermorec22, 0, 0.000018184000
+Starting livermorec22
+livermorec22, 0, 0.000018276000
+Starting livermorec22
+livermorec22, 0, 0.000018816000
+Starting livermorec22
+livermorec22, 0, 0.000019256000
+Starting livermorec22
+livermorec22, 0, 0.000019334000
+Starting livermorec22
+livermorec22, 0, 0.000019144000
+Starting livermorec22
+livermorec22, 0, 0.000018632000
+Starting livermorec22
+livermorec22, 0, 0.000018164000
+Starting livermorec22
+livermorec22, 0, 0.000017848000
+Starting livermorec22
+livermorec22, 0, 0.000017604000
+Starting livermorec22
+livermorec22, 0, 0.000017574000
+Starting livermorec22
+livermorec22, 0, 0.000017576000
+Starting livermorec22
+livermorec22, 0, 0.000017652000
+Starting livermorec22
+livermorec22, 0, 0.000017520000
+Starting livermorec22
+livermorec22, 0, 0.000017546000
+Starting livermorec22
+livermorec22, 0, 0.000021366000
+Starting livermorec22
+livermorec22, 0, 0.000017766000
+Starting livermorec22
+livermorec22, 0, 0.000017576000
+Starting livermorec22
+livermorec22, 0, 0.000017518000
+Starting livermorec22
+livermorec22, 0, 0.000017492000
+Starting livermorec22
+livermorec22, 0, 0.000017736000
+Starting livermorec22
+livermorec22, 0, 0.000017458000
+Starting livermorec22
+livermorec22, 0, 0.000017456000
+Starting livermorec22
+livermorec22, 0, 0.000017520000
+Starting livermorec22
+livermorec22, 0, 0.000017620000
+Starting livermorec22
+livermorec22, 0, 0.000017688000
+Starting livermorec22
+livermorec22, 0, 0.000017826000
+Starting livermorec22
+livermorec22, 0, 0.000018528000
+Starting livermorec22
+livermorec22, 0, 0.000018914000
+Starting livermorec22
+livermorec22, 0, 0.000019684000
+Starting livermorec22
+livermorec22, 0, 0.000019394000
+Starting livermorec22
+livermorec22, 0, 0.000019088000
+Starting livermorec22
+livermorec22, 0, 0.000018466000
+Starting livermorec22
+livermorec22, 0, 0.000018136000
+Starting livermorec22
+livermorec22, 0, 0.000017630000
+Starting livermorec22
+livermorec22, 0, 0.000017514000
+Starting livermorec22
+livermorec22, 0, 0.000017652000
+Starting livermorec22
+livermorec22, 0, 0.000017492000
+Starting livermorec22
+livermorec22, 0, 0.000017490000
+Starting livermorec22
+livermorec22, 0, 0.000017520000
+Starting livermorec22
+livermorec22, 0, 0.000021376000
+Starting livermorec22
+livermorec22, 0, 0.000017576000
+Starting livermorec22
+livermorec22, 0, 0.000017546000
+Starting livermorec22
+livermorec22, 0, 0.000017576000
+Starting livermorec22
+livermorec22, 0, 0.000017652000
+Starting livermorec22
+livermorec22, 0, 0.000017548000
+Starting livermorec22
+livermorec22, 0, 0.000017490000
+Starting livermorec22
+livermorec22, 0, 0.000017492000
+Starting livermorec22
+livermorec22, 0, 0.000017652000
+Starting livermorec22
+livermorec22, 0, 0.000017520000
+Starting livermorec22
+livermorec22, 0, 0.000017456000
+Starting livermorec22
+livermorec22, 0, 0.000017660000
+Starting livermorec22
+livermorec22, 0, 0.000017962000
+Starting livermorec22
+livermorec22, 0, 0.000018388000
+Starting livermorec22
+livermorec22, 0, 0.000018890000
+Starting livermorec22
+livermorec22, 0, 0.000019354000
+Starting livermorec22
+livermorec22, 0, 0.000019782000
+Starting livermorec22
+livermorec22, 0, 0.000019138000
+Starting livermorec22
+livermorec22, 0, 0.000018582000
+Starting livermorec22
+livermorec22, 0, 0.000017940000
+Starting livermorec22
+livermorec22, 0, 0.000017738000
+Starting livermorec22
+livermorec22, 0, 0.000017576000
+Starting livermorec22
+livermorec22, 0, 0.000017518000
+Starting livermorec22
+livermorec22, 0, 0.000017492000
+Starting livermorec22
+livermorec22, 0, 0.000017652000
+Starting livermorec22
+livermorec22, 0, 0.000021490000
+Starting livermorec22
+livermorec22, 0, 0.000017630000
+Starting livermorec22
+livermorec22, 0, 0.000017604000
+Starting livermorec22
+livermorec22, 0, 0.000017654000
+Starting livermorec22
+livermorec22, 0, 0.000017520000
+Starting livermorec22
+livermorec22, 0, 0.000017518000
+Starting livermorec22
+livermorec22, 0, 0.000017520000
+Starting livermorec22
+livermorec22, 0, 0.000017626000
+Starting livermorec22
+livermorec22, 0, 0.000017492000
+Starting livermorec22
+livermorec22, 0, 0.000017490000
+Starting livermorec22
+livermorec22, 0, 0.000017492000
+Starting livermorec22
+livermorec22, 0, 0.000017680000
+Starting livermorec22
+livermorec22, 0, 0.000017598000
+Starting livermorec22
+livermorec22, 0, 0.000017964000
+Starting livermorec22
+livermorec22, 0, 0.000018600000
+Starting livermorec22
+livermorec22, 0, 0.000018914000
+Starting livermorec22
+livermorec22, 0, 0.000019312000
+Starting livermorec22
+livermorec22, 0, 0.000019500000
+Starting livermorec22
+livermorec22, 0, 0.000019396000
+Starting livermorec22
+livermorec22, 0, 0.000018770000
+Starting livermorec22
+livermorec22, 0, 0.000017968000
+Starting livermorec22
+livermorec22, 0, 0.000017602000
+Starting livermorec22
+livermorec22, 0, 0.000017576000
+Starting livermorec22
+livermorec22, 0, 0.000017832000
+Starting livermorec22
+livermorec22, 0, 0.000017576000
+Starting livermorec22
+livermorec22, 0, 0.000021390000
+Starting livermorec22
+livermorec22, 0, 0.000017716000
+Starting livermorec22
+livermorec22, 0, 0.000017944000
+Starting livermorec22
+livermorec22, 0, 0.000017604000
+Starting livermorec22
+livermorec22, 0, 0.000017546000
+Starting livermorec22
+livermorec22, 0, 0.000017656000
+Starting livermorec22
+livermorec22, 0, 0.000017680000
+Starting livermorec22
+livermorec22, 0, 0.000017520000
+Starting livermorec22
+livermorec22, 0, 0.000017518000
+Starting livermorec22
+livermorec22, 0, 0.000017492000
+Starting livermorec22
+livermorec22, 0, 0.000017626000
+Starting livermorec22
+livermorec22, 0, 0.000017520000
+Starting livermorec22
+livermorec22, 0, 0.000017540000
+Starting livermorec22
+livermorec22, 0, 0.000017632000
+Starting livermorec22
+livermorec22, 0, 0.000018046000
+Starting livermorec22
+livermorec22, 0, 0.000018472000
+Starting livermorec22
+livermorec22, 0, 0.000018694000
+Starting livermorec22
+livermorec22, 0, 0.000018914000
+Starting livermorec22
+livermorec22, 0, 0.000019304000
+Starting livermorec22
+livermorec22, 0, 0.000019116000
+Starting livermorec22
+livermorec22, 0, 0.000018582000
+Starting livermorec22
+livermorec22, 0, 0.000017850000
+Starting livermorec22
+livermorec22, 0, 0.000017788000
+Starting livermorec22
+livermorec22, 0, 0.000017548000
+Starting livermorec22
+livermorec22, 0, 0.000017574000
+Starting livermorec22
+livermorec22, 0, 0.000021438000
+Starting livermorec22
+livermorec22, 0, 0.000017960000
+Starting livermorec22
+livermorec22, 0, 0.000017660000
+Starting livermorec22
+livermorec22, 0, 0.000017546000
+Starting livermorec22
+livermorec22, 0, 0.000017492000
+Starting livermorec22
+livermorec22, 0, 0.000017624000
+Starting livermorec22
+livermorec22, 0, 0.000017486000
+Starting livermorec22
+livermorec22, 0, 0.000017490000
+Starting livermorec22
+livermorec22, 0, 0.000017520000
+Starting livermorec22
+livermorec22, 0, 0.000017654000
+Starting livermorec22
+livermorec22, 0, 0.000017492000
+Starting livermorec22
+livermorec22, 0, 0.000017490000
+Starting livermorec22
+livermorec22, 0, 0.000017548000
+Starting livermorec22
+livermorec22, 0, 0.000017680000
+Starting livermorec22
+livermorec22, 0, 0.000017738000
+Starting livermorec22
+livermorec22, 0, 0.000017910000
+Starting livermorec22
+livermorec22, 0, 0.000018332000
+Starting livermorec22
+livermorec22, 0, 0.000018942000
+Starting livermorec22
+livermorec22, 0, 0.000019368000
+Starting livermorec22
+livermorec22, 0, 0.000019500000
+Starting livermorec22
+livermorec22, 0, 0.000019396000
+Starting livermorec22
+livermorec22, 0, 0.000018774000
+Starting livermorec22
+livermorec22, 0, 0.000018046000
+Starting livermorec22
+livermorec22, 0, 0.000017686000
+Starting livermorec22
+livermorec22, 0, 0.000017570000
+Starting livermorec22
+livermorec22, 0, 0.000021514000
+Starting livermorec22
+livermorec22, 0, 0.000017548000
+Starting livermorec22
+livermorec22, 0, 0.000017630000
+Starting livermorec22
+livermorec22, 0, 0.000017514000
+Starting livermorec22
+livermorec22, 0, 0.000017624000
+Starting livermorec22
+livermorec22, 0, 0.000017486000
+Starting livermorec22
+livermorec22, 0, 0.000017490000
+Starting livermorec22
+livermorec22, 0, 0.000017492000
+Starting livermorec22
+livermorec22, 0, 0.000017626000
+Starting livermorec22
+livermorec22, 0, 0.000017492000
+Starting livermorec22
+livermorec22, 0, 0.000017546000
+Starting livermorec22
+livermorec22, 0, 0.000017520000
+Starting livermorec22
+livermorec22, 0, 0.000017654000
+Starting livermorec22
+livermorec22, 0, 0.000017520000
+Starting livermorec22
+livermorec22, 0, 0.000017540000
+Starting livermorec22
+livermorec22, 0, 0.000017660000
+Starting livermorec22
+livermorec22, 0, 0.000018074000
+Starting livermorec22
+livermorec22, 0, 0.000018304000
+Starting livermorec22
+livermorec22, 0, 0.000019024000
+Starting livermorec22
+livermorec22, 0, 0.000019572000
+Starting livermorec22
+livermorec22, 0, 0.000019686000
+Starting livermorec22
+livermorec22, 0, 0.000019116000
+Starting livermorec22
+livermorec22, 0, 0.000018442000
+Starting livermorec22
+livermorec22, 0, 0.000017800000
+Starting livermorec22
+livermorec22, 0, 0.000017710000
+Starting livermorec22
+livermorec22, 0, 0.000021622000
+Starting livermorec22
+livermorec22, 0, 0.000017574000
+Starting livermorec22
+livermorec22, 0, 0.000017570000
+Starting livermorec22
+livermorec22, 0, 0.000017682000
+Starting livermorec22
+livermorec22, 0, 0.000017520000
+Starting livermorec22
+livermorec22, 0, 0.000017484000
+Starting livermorec22
+livermorec22, 0, 0.000017520000
+Starting livermorec22
+livermorec22, 0, 0.000017620000
+Starting livermorec22
+livermorec22, 0, 0.000017520000
+Starting livermorec22
+livermorec22, 0, 0.000017456000
+Starting livermorec22
+livermorec22, 0, 0.000017492000
+Starting livermorec22
+livermorec22, 0, 0.000017652000
+Starting livermorec22
+livermorec22, 0, 0.000017492000
+Starting livermorec22
+livermorec22, 0, 0.000017574000
+Starting livermorec22
+livermorec22, 0, 0.000017520000
+Starting livermorec22
+livermorec22, 0, 0.000017704000
+Starting livermorec22
+livermorec22, 0, 0.000017570000
+Starting livermorec22
+livermorec22, 0, 0.000018018000
+Starting livermorec22
+livermorec22, 0, 0.000018472000
+Starting livermorec22
+livermorec22, 0, 0.000019108000
+Starting livermorec22
+livermorec22, 0, 0.000019054000
+Starting livermorec22
+livermorec22, 0, 0.000019534000
+Starting livermorec22
+livermorec22, 0, 0.000019418000
+Starting livermorec22
+livermorec22, 0, 0.000018492000
+Starting livermorec22
+livermorec22, 0, 0.000017744000
+Starting livermorec22
+livermorec22, 0, 0.000021516000
+Starting livermorec22
+livermorec22, 0, 0.000017688000
+Starting livermorec22
+livermorec22, 0, 0.000017708000
+Starting livermorec22
+livermorec22, 0, 0.000017548000
+Starting livermorec22
+livermorec22, 0, 0.000017546000
+Starting livermorec22
+livermorec22, 0, 0.000017548000
+Starting livermorec22
+livermorec22, 0, 0.000017736000
+Starting livermorec22
+livermorec22, 0, 0.000017604000
+Starting livermorec22
+livermorec22, 0, 0.000017518000
+Starting livermorec22
+livermorec22, 0, 0.000017548000
+Starting livermorec22
+livermorec22, 0, 0.000017796000
+Starting livermorec22
+livermorec22, 0, 0.000017548000
+Starting livermorec22
+livermorec22, 0, 0.000017546000
+Starting livermorec22
+livermorec22, 0, 0.000017632000
+Starting livermorec22
+livermorec22, 0, 0.000017738000
+Starting livermorec22
+livermorec22, 0, 0.000017604000
+Starting livermorec22
+livermorec22, 0, 0.000017518000
+Starting livermorec22
+livermorec22, 0, 0.000017716000
+Starting livermorec22
+livermorec22, 0, 0.000018018000
+Starting livermorec22
+livermorec22, 0, 0.000018528000
+Starting livermorec22
+livermorec22, 0, 0.000018834000
+Starting livermorec22
+livermorec22, 0, 0.000019550000
+Starting livermorec22
+livermorec22, 0, 0.000019444000
+Starting livermorec22
+livermorec22, 0, 0.000019284000
+Starting livermorec22
+livermorec22, 0, 0.000018470000
+Starting livermorec22
+livermorec22, 0, 0.000022198000
+Starting livermorec22
+livermorec22, 0, 0.000018364000
+Starting livermorec22
+livermorec22, 0, 0.000017772000
+Starting livermorec22
+livermorec22, 0, 0.000017540000
+Starting livermorec22
+livermorec22, 0, 0.000017548000
+Starting livermorec22
+livermorec22, 0, 0.000017708000
+Starting livermorec22
+livermorec22, 0, 0.000017520000
+Starting livermorec22
+livermorec22, 0, 0.000017518000
+Starting livermorec22
+livermorec22, 0, 0.000017520000
+Starting livermorec22
+livermorec22, 0, 0.000017710000
+Starting livermorec22
+livermorec22, 0, 0.000017520000
+Starting livermorec22
+livermorec22, 0, 0.000017540000
+Starting livermorec22
+livermorec22, 0, 0.000017548000
+Starting livermorec22
+livermorec22, 0, 0.000017680000
+Starting livermorec22
+livermorec22, 0, 0.000017542000
+Starting livermorec22
+livermorec22, 0, 0.000017546000
+Starting livermorec22
+livermorec22, 0, 0.000017520000
+Starting livermorec22
+livermorec22, 0, 0.000017676000
+Starting livermorec22
+livermorec22, 0, 0.000017716000
+Starting livermorec22
+livermorec22, 0, 0.000017826000
+Starting livermorec22
+livermorec22, 0, 0.000018332000
+Starting livermorec22
+livermorec22, 0, 0.000019026000
+Starting livermorec22
+livermorec22, 0, 0.000019284000
+Starting livermorec22
+livermorec22, 0, 0.000019170000
+Starting livermorec22
+livermorec22, 0, 0.000019138000
+Starting livermorec22
+livermorec22, 0, 0.000022768000
+Starting livermorec22
+livermorec22, 0, 0.000018724000
+Starting livermorec22
+livermorec22, 0, 0.000018022000
+Starting livermorec22
+livermorec22, 0, 0.000017744000
+Starting livermorec22
+livermorec22, 0, 0.000017682000
+Starting livermorec22
+livermorec22, 0, 0.000017548000
+Starting livermorec22
+livermorec22, 0, 0.000017490000
+Starting livermorec22
+livermorec22, 0, 0.000017492000
+Starting livermorec22
+livermorec22, 0, 0.000017624000
+Starting livermorec22
+livermorec22, 0, 0.000017514000
+Starting livermorec22
+livermorec22, 0, 0.000017490000
+Starting livermorec22
+livermorec22, 0, 0.000017520000
+Starting livermorec22
+livermorec22, 0, 0.000017592000
+Starting livermorec22
+livermorec22, 0, 0.000017520000
+Starting livermorec22
+livermorec22, 0, 0.000017484000
+Starting livermorec22
+livermorec22, 0, 0.000017492000
+Starting livermorec22
+livermorec22, 0, 0.000017624000
+Starting livermorec22
+livermorec22, 0, 0.000017458000
+Starting livermorec22
+livermorec22, 0, 0.000017490000
+Starting livermorec22
+livermorec22, 0, 0.000017660000
+Starting livermorec22
+livermorec22, 0, 0.000018074000
+Starting livermorec22
+livermorec22, 0, 0.000018416000
+Starting livermorec22
+livermorec22, 0, 0.000018744000
+Starting livermorec22
+livermorec22, 0, 0.000019060000
+Starting livermorec22
+livermorec22, 0, 0.000019250000
+Starting livermorec22
+livermorec22, 0, 0.000020566000
+Starting livermorec22
+livermorec22, 0, 0.000019478000
+Starting livermorec22
+livermorec22, 0, 0.000018774000
+Starting livermorec22
+livermorec22, 0, 0.000018158000
+Starting livermorec22
+livermorec22, 0, 0.000017688000
+Starting livermorec22
+livermorec22, 0, 0.000017574000
+Starting livermorec22
+livermorec22, 0, 0.000017520000
+Starting livermorec22
+livermorec22, 0, 0.000017654000
+Starting livermorec22
+livermorec22, 0, 0.000017520000
+Starting livermorec22
+livermorec22, 0, 0.000017484000
+Starting livermorec22
+livermorec22, 0, 0.000017520000
+Starting livermorec22
+livermorec22, 0, 0.000017648000
+Starting livermorec22
+livermorec22, 0, 0.000017548000
+Starting livermorec22
+livermorec22, 0, 0.000017574000
+Starting livermorec22
+livermorec22, 0, 0.000017548000
+Starting livermorec22
+livermorec22, 0, 0.000017680000
+Starting livermorec22
+livermorec22, 0, 0.000017486000
+Starting livermorec22
+livermorec22, 0, 0.000017490000
+Starting livermorec22
+livermorec22, 0, 0.000017520000
+Starting livermorec22
+livermorec22, 0, 0.000017648000
+Starting livermorec22
+livermorec22, 0, 0.000017632000
+Starting livermorec22
+livermorec22, 0, 0.000017854000
+Starting livermorec22
+livermorec22, 0, 0.000018220000
+Starting livermorec22
+livermorec22, 0, 0.000018830000
+Starting livermorec22
+livermorec22, 0, 0.000019418000
+Starting livermorec22
+livermorec22, 0, 0.000020130000
+Starting livermorec22
+livermorec22, 0, 0.000019530000
+Starting livermorec22
+livermorec22, 0, 0.000019472000
+Starting livermorec22
+livermorec22, 0, 0.000018556000
+Starting livermorec22
+livermorec22, 0, 0.000017938000
+Starting livermorec22
+livermorec22, 0, 0.000017800000
+Starting livermorec22
+livermorec22, 0, 0.000017794000
+Starting livermorec22
+livermorec22, 0, 0.000017576000
+Starting livermorec22
+livermorec22, 0, 0.000017574000
+Starting livermorec22
+livermorec22, 0, 0.000017604000
+Starting livermorec22
+livermorec22, 0, 0.000017682000
+Starting livermorec22
+livermorec22, 0, 0.000017576000
+Starting livermorec22
+livermorec22, 0, 0.000017630000
+Starting livermorec22
+livermorec22, 0, 0.000017570000
+Starting livermorec22
+livermorec22, 0, 0.000017736000
+Starting livermorec22
+livermorec22, 0, 0.000017626000
+Starting livermorec22
+livermorec22, 0, 0.000017574000
+Starting livermorec22
+livermorec22, 0, 0.000017548000
+Starting livermorec22
+livermorec22, 0, 0.000017708000
+Starting livermorec22
+livermorec22, 0, 0.000017604000
+Starting livermorec22
+livermorec22, 0, 0.000017602000
+Starting livermorec22
+livermorec22, 0, 0.000017632000
+Starting livermorec22
+livermorec22, 0, 0.000018154000
+Starting livermorec22
+livermorec22, 0, 0.000018500000
+Starting livermorec22
+livermorec22, 0, 0.000018890000
+Starting livermorec22
+livermorec22, 0, 0.000020048000
+Starting livermorec22
+livermorec22, 0, 0.000019804000
+Starting livermorec22
+livermorec22, 0, 0.000019816000
+Starting livermorec22
+livermorec22, 0, 0.000019590000
+Starting livermorec22
+livermorec22, 0, 0.000018690000
+Starting livermorec22
+livermorec22, 0, 0.000018298000
+Starting livermorec22
+livermorec22, 0, 0.000017850000
+Starting livermorec22
+livermorec22, 0, 0.000017658000
+Starting livermorec22
+livermorec22, 0, 0.000017632000
+Starting livermorec22
+livermorec22, 0, 0.000017736000
+Starting livermorec22
+livermorec22, 0, 0.000017576000
+Starting livermorec22
+livermorec22, 0, 0.000017630000
+Starting livermorec22
+livermorec22, 0, 0.000017598000
+Starting livermorec22
+livermorec22, 0, 0.000017822000
+Starting livermorec22
+livermorec22, 0, 0.000017604000
+Starting livermorec22
+livermorec22, 0, 0.000017658000
+Starting livermorec22
+livermorec22, 0, 0.000017604000
+Starting livermorec22
+livermorec22, 0, 0.000017820000
+Starting livermorec22
+livermorec22, 0, 0.000017632000
+Starting livermorec22
+livermorec22, 0, 0.000017602000
+Starting livermorec22
+livermorec22, 0, 0.000017604000
+Starting livermorec22
+livermorec22, 0, 0.000017736000
+Starting livermorec22
+livermorec22, 0, 0.000017654000
+Starting livermorec22
+livermorec22, 0, 0.000017882000
+Starting livermorec22
+livermorec22, 0, 0.000018052000
+Starting livermorec23
+livermorec23, 0, 0.000068456000
+Starting livermorec23
+livermorec23, 0, 0.000062614000
+Starting livermorec23
+livermorec23, 0, 0.000061820000
+Starting livermorec23
+livermorec23, 0, 0.000061782000
+Starting livermorec23
+livermorec23, 0, 0.000062696000
+Finished livermorec, 0.000000000000
+Benchmark Start bicg
+Starting bicg
+bicg, 0, 0.000023840000
+Starting bicg
+bicg, 0, 0.000022982000
+Starting bicg
+bicg, 0, 0.000022820000
+Starting bicg
+bicg, 0, 0.000022900000
+Starting bicg
+bicg, 0, 0.000022828000
+Starting bicg
+bicg, 0, 0.000022790000
+Starting bicg
+bicg, 0, 0.000022650000
+Starting bicg
+bicg, 0, 0.000022706000
+Starting bicg
+bicg, 0, 0.000022678000
+Starting bicg
+bicg, 0, 0.000022762000
+Starting bicg
+bicg, 0, 0.000022818000
+Starting bicg
+bicg, 0, 0.000022762000
+Starting bicg
+bicg, 0, 0.000022846000
+Starting bicg
+bicg, 0, 0.000022706000
+Starting bicg
+bicg, 0, 0.000022678000
+Starting bicg
+bicg, 0, 0.000022650000
+Starting bicg
+bicg, 0, 0.000022650000
+Starting bicg
+bicg, 0, 0.000022706000
+Starting bicg
+bicg, 0, 0.000022762000
+Starting bicg
+bicg, 0, 0.000022846000
+Starting bicg
+bicg, 0, 0.000022934000
+Starting bicg
+bicg, 0, 0.000023042000
+Starting bicg
+bicg, 0, 0.000022936000
+Starting bicg
+bicg, 0, 0.000022794000
+Starting bicg
+bicg, 0, 0.000022762000
+Starting bicg
+bicg, 0, 0.000022706000
+Starting bicg
+bicg, 0, 0.000022764000
+Starting bicg
+bicg, 0, 0.000022898000
+Starting bicg
+bicg, 0, 0.000022818000
+Starting bicg
+bicg, 0, 0.000022994000
+Starting bicg
+bicg, 0, 0.000023318000
+Starting bicg
+bicg, 0, 0.000023448000
+Starting bicg
+bicg, 0, 0.000023224000
+Starting bicg
+bicg, 0, 0.000022650000
+Starting bicg
+bicg, 0, 0.000023182000
+Starting bicg
+bicg, 0, 0.000022994000
+Starting bicg
+bicg, 0, 0.000023044000
+Starting bicg
+bicg, 0, 0.000022794000
+Starting bicg
+bicg, 0, 0.000022848000
+Starting bicg
+bicg, 0, 0.000023334000
+Starting bicg
+bicg, 0, 0.000023438000
+Starting bicg
+bicg, 0, 0.000022792000
+Starting bicg
+bicg, 0, 0.000022792000
+Starting bicg
+bicg, 0, 0.000022790000
+Starting bicg
+bicg, 0, 0.000022734000
+Starting bicg
+bicg, 0, 0.000022820000
+Starting bicg
+bicg, 0, 0.000022846000
+Starting bicg
+bicg, 0, 0.000022874000
+Starting bicg
+bicg, 0, 0.000022874000
+Starting bicg
+bicg, 0, 0.000022826000
+Starting bicg
+bicg, 0, 0.000022818000
+Starting bicg
+bicg, 0, 0.000022796000
+Starting bicg
+bicg, 0, 0.000022734000
+Starting bicg
+bicg, 0, 0.000022822000
+Starting bicg
+bicg, 0, 0.000022960000
+Starting bicg
+bicg, 0, 0.000022930000
+Starting bicg
+bicg, 0, 0.000022976000
+Starting bicg
+bicg, 0, 0.000022796000
+Starting bicg
+bicg, 0, 0.000022738000
+Starting bicg
+bicg, 0, 0.000022846000
+Starting bicg
+bicg, 0, 0.000022850000
+Starting bicg
+bicg, 0, 0.000022790000
+Starting bicg
+bicg, 0, 0.000022790000
+Starting bicg
+bicg, 0, 0.000022762000
+Starting bicg
+bicg, 0, 0.000022848000
+Starting bicg
+bicg, 0, 0.000022818000
+Starting bicg
+bicg, 0, 0.000022822000
+Starting bicg
+bicg, 0, 0.000022874000
+Starting bicg
+bicg, 0, 0.000022852000
+Starting bicg
+bicg, 0, 0.000022798000
+Starting bicg
+bicg, 0, 0.000022794000
+Starting bicg
+bicg, 0, 0.000022878000
+Starting bicg
+bicg, 0, 0.000022794000
+Starting bicg
+bicg, 0, 0.000022848000
+Starting bicg
+bicg, 0, 0.000022958000
+Starting bicg
+bicg, 0, 0.000022978000
+Starting bicg
+bicg, 0, 0.000022818000
+Starting bicg
+bicg, 0, 0.000022818000
+Starting bicg
+bicg, 0, 0.000022902000
+Starting bicg
+bicg, 0, 0.000022874000
+Starting bicg
+bicg, 0, 0.000022902000
+Starting bicg
+bicg, 0, 0.000022846000
+Starting bicg
+bicg, 0, 0.000022846000
+Starting bicg
+bicg, 0, 0.000022846000
+Starting bicg
+bicg, 0, 0.000022822000
+Starting bicg
+bicg, 0, 0.000022846000
+Starting bicg
+bicg, 0, 0.000022846000
+Starting bicg
+bicg, 0, 0.000022874000
+Starting bicg
+bicg, 0, 0.000022850000
+Starting bicg
+bicg, 0, 0.000022902000
+Starting bicg
+bicg, 0, 0.000022876000
+Starting bicg
+bicg, 0, 0.000022930000
+Starting bicg
+bicg, 0, 0.000022866000
+Starting bicg
+bicg, 0, 0.000022892000
+Starting bicg
+bicg, 0, 0.000022796000
+Starting bicg
+bicg, 0, 0.000022764000
+Starting bicg
+bicg, 0, 0.000022824000
+Starting bicg
+bicg, 0, 0.000022792000
+Starting bicg
+bicg, 0, 0.000022820000
+Starting bicg
+bicg, 0, 0.000022906000
+Starting bicg
+bicg, 0, 0.000022824000
+Starting bicg
+bicg, 0, 0.000022770000
+Starting bicg
+bicg, 0, 0.000022858000
+Starting bicg
+bicg, 0, 0.000022790000
+Starting bicg
+bicg, 0, 0.000022794000
+Starting bicg
+bicg, 0, 0.000022792000
+Starting bicg
+bicg, 0, 0.000022874000
+Starting bicg
+bicg, 0, 0.000022930000
+Starting bicg
+bicg, 0, 0.000022922000
+Starting bicg
+bicg, 0, 0.000023126000
+Starting bicg
+bicg, 0, 0.000022792000
+Starting bicg
+bicg, 0, 0.000022906000
+Starting bicg
+bicg, 0, 0.000022846000
+Starting bicg
+bicg, 0, 0.000022902000
+Starting bicg
+bicg, 0, 0.000022818000
+Starting bicg
+bicg, 0, 0.000022874000
+Starting bicg
+bicg, 0, 0.000022874000
+Starting bicg
+bicg, 0, 0.000022846000
+Starting bicg
+bicg, 0, 0.000022902000
+Starting bicg
+bicg, 0, 0.000022846000
+Starting bicg
+bicg, 0, 0.000022844000
+Starting bicg
+bicg, 0, 0.000022870000
+Starting bicg
+bicg, 0, 0.000022814000
+Starting bicg
+bicg, 0, 0.000022870000
+Finished bicg, 0.000000000000
+Benchmark Start blowfish
+Starting blowfish
+blowfish, 0, 0.000008344000
+Finished blowfish, 0.000000000000
+Benchmark Start conv
+Starting conv
+conv, 0, 0.000573210000
+Finished conv, 0.000000000000
+Benchmark Start dtw
+Starting dtw
+dtw, 0, 0.000178942000
+Starting dtw
+dtw, 0, 0.000172628000
+Starting dtw
+dtw, 0, 0.000174498000
+Starting dtw
+dtw, 0, 0.000171258000
+Starting dtw
+dtw, 0, 0.000175188000
+Starting dtw
+dtw, 0, 0.000171824000
+Starting dtw
+dtw, 0, 0.000174424000
+Starting dtw
+dtw, 0, 0.000171474000
+Starting dtw
+dtw, 0, 0.000175224000
+Starting dtw
+dtw, 0, 0.000171890000
+Starting dtw
+dtw, 0, 0.000174518000
+Starting dtw
+dtw, 0, 0.000171606000
+Starting dtw
+dtw, 0, 0.000175572000
+Starting dtw
+dtw, 0, 0.000171928000
+Starting dtw
+dtw, 0, 0.000174530000
+Starting dtw
+dtw, 0, 0.000171624000
+Starting dtw
+dtw, 0, 0.000175572000
+Starting dtw
+dtw, 0, 0.000172048000
+Starting dtw
+dtw, 0, 0.000174420000
+Starting dtw
+dtw, 0, 0.000171676000
+Starting dtw
+dtw, 0, 0.000174916000
+Starting dtw
+dtw, 0, 0.000171980000
+Starting dtw
+dtw, 0, 0.000174400000
+Starting dtw
+dtw, 0, 0.000171576000
+Starting dtw
+dtw, 0, 0.000174848000
+Starting dtw
+dtw, 0, 0.000172050000
+Starting dtw
+dtw, 0, 0.000174364000
+Starting dtw
+dtw, 0, 0.000171570000
+Starting dtw
+dtw, 0, 0.000174684000
+Starting dtw
+dtw, 0, 0.000172254000
+Starting dtw
+dtw, 0, 0.000174400000
+Starting dtw
+dtw, 0, 0.000171586000
+Starting dtw
+dtw, 0, 0.000175488000
+Starting dtw
+dtw, 0, 0.000172094000
+Starting dtw
+dtw, 0, 0.000174296000
+Starting dtw
+dtw, 0, 0.000171654000
+Starting dtw
+dtw, 0, 0.000174916000
+Starting dtw
+dtw, 0, 0.000171998000
+Starting dtw
+dtw, 0, 0.000174040000
+Starting dtw
+dtw, 0, 0.000171594000
+Starting dtw
+dtw, 0, 0.000174794000
+Starting dtw
+dtw, 0, 0.000172234000
+Starting dtw
+dtw, 0, 0.000174088000
+Starting dtw
+dtw, 0, 0.000171686000
+Starting dtw
+dtw, 0, 0.000174984000
+Starting dtw
+dtw, 0, 0.000171856000
+Starting dtw
+dtw, 0, 0.000173990000
+Starting dtw
+dtw, 0, 0.000171672000
+Starting dtw
+dtw, 0, 0.000174552000
+Starting dtw
+dtw, 0, 0.000171986000
+Starting dtw
+dtw, 0, 0.000173884000
+Starting dtw
+dtw, 0, 0.000171516000
+Starting dtw
+dtw, 0, 0.000174864000
+Starting dtw
+dtw, 0, 0.000171808000
+Starting dtw
+dtw, 0, 0.000173832000
+Starting dtw
+dtw, 0, 0.000171700000
+Starting dtw
+dtw, 0, 0.000174240000
+Starting dtw
+dtw, 0, 0.000172042000
+Starting dtw
+dtw, 0, 0.000173794000
+Starting dtw
+dtw, 0, 0.000171656000
+Starting dtw
+dtw, 0, 0.000174770000
+Starting dtw
+dtw, 0, 0.000172262000
+Starting dtw
+dtw, 0, 0.000173762000
+Starting dtw
+dtw, 0, 0.000171612000
+Starting dtw
+dtw, 0, 0.000174432000
+Starting dtw
+dtw, 0, 0.000172038000
+Starting dtw
+dtw, 0, 0.000173588000
+Starting dtw
+dtw, 0, 0.000171568000
+Starting dtw
+dtw, 0, 0.000174468000
+Starting dtw
+dtw, 0, 0.000171670000
+Starting dtw
+dtw, 0, 0.000173606000
+Starting dtw
+dtw, 0, 0.000171612000
+Starting dtw
+dtw, 0, 0.000175030000
+Starting dtw
+dtw, 0, 0.000172398000
+Starting dtw
+dtw, 0, 0.000173512000
+Starting dtw
+dtw, 0, 0.000171572000
+Starting dtw
+dtw, 0, 0.000174572000
+Starting dtw
+dtw, 0, 0.000171956000
+Starting dtw
+dtw, 0, 0.000173556000
+Starting dtw
+dtw, 0, 0.000171644000
+Starting dtw
+dtw, 0, 0.000174442000
+Starting dtw
+dtw, 0, 0.000171856000
+Starting dtw
+dtw, 0, 0.000173362000
+Starting dtw
+dtw, 0, 0.000171558000
+Starting dtw
+dtw, 0, 0.000174216000
+Starting dtw
+dtw, 0, 0.000171880000
+Starting dtw
+dtw, 0, 0.000173306000
+Starting dtw
+dtw, 0, 0.000171602000
+Starting dtw
+dtw, 0, 0.000174216000
+Starting dtw
+dtw, 0, 0.000171864000
+Starting dtw
+dtw, 0, 0.000173192000
+Starting dtw
+dtw, 0, 0.000171524000
+Starting dtw
+dtw, 0, 0.000174724000
+Starting dtw
+dtw, 0, 0.000171920000
+Starting dtw
+dtw, 0, 0.000173306000
+Starting dtw
+dtw, 0, 0.000171698000
+Starting dtw
+dtw, 0, 0.000174246000
+Starting dtw
+dtw, 0, 0.000171968000
+Starting dtw
+dtw, 0, 0.000173244000
+Starting dtw
+dtw, 0, 0.000171686000
+Starting dtw
+dtw, 0, 0.000173556000
+Starting dtw
+dtw, 0, 0.000171932000
+Starting dtw
+dtw, 0, 0.000173100000
+Starting dtw
+dtw, 0, 0.000171838000
+Starting dtw
+dtw, 0, 0.000174000000
+Starting dtw
+dtw, 0, 0.000171928000
+Starting dtw
+dtw, 0, 0.000172952000
+Starting dtw
+dtw, 0, 0.000171658000
+Starting dtw
+dtw, 0, 0.000174060000
+Starting dtw
+dtw, 0, 0.000171962000
+Starting dtw
+dtw, 0, 0.000172950000
+Starting dtw
+dtw, 0, 0.000171766000
+Starting dtw
+dtw, 0, 0.000174426000
+Starting dtw
+dtw, 0, 0.000171878000
+Starting dtw
+dtw, 0, 0.000172882000
+Starting dtw
+dtw, 0, 0.000171712000
+Starting dtw
+dtw, 0, 0.000173606000
+Starting dtw
+dtw, 0, 0.000171988000
+Starting dtw
+dtw, 0, 0.000172880000
+Starting dtw
+dtw, 0, 0.000171686000
+Starting dtw
+dtw, 0, 0.000173566000
+Starting dtw
+dtw, 0, 0.000171980000
+Starting dtw
+dtw, 0, 0.000172832000
+Starting dtw
+dtw, 0, 0.000171700000
+Starting dtw
+dtw, 0, 0.000174588000
+Starting dtw
+dtw, 0, 0.000172120000
+Starting dtw
+dtw, 0, 0.000172818000
+Starting dtw
+dtw, 0, 0.000171754000
+Starting dtw
+dtw, 0, 0.000173536000
+Starting dtw
+dtw, 0, 0.000172024000
+Starting dtw
+dtw, 0, 0.000172686000
+Starting dtw
+dtw, 0, 0.000171670000
+Starting dtw
+dtw, 0, 0.000173758000
+Starting dtw
+dtw, 0, 0.000172030000
+Starting dtw
+dtw, 0, 0.000172650000
+Starting dtw
+dtw, 0, 0.000171762000
+Starting dtw
+dtw, 0, 0.000173502000
+Starting dtw
+dtw, 0, 0.000171810000
+Starting dtw
+dtw, 0, 0.000172530000
+Starting dtw
+dtw, 0, 0.000171778000
+Starting dtw
+dtw, 0, 0.000173780000
+Starting dtw
+dtw, 0, 0.000171892000
+Starting dtw
+dtw, 0, 0.000172476000
+Starting dtw
+dtw, 0, 0.000171714000
+Starting dtw
+dtw, 0, 0.000173768000
+Starting dtw
+dtw, 0, 0.000172150000
+Starting dtw
+dtw, 0, 0.000172438000
+Starting dtw
+dtw, 0, 0.000171796000
+Starting dtw
+dtw, 0, 0.000173248000
+Starting dtw
+dtw, 0, 0.000171954000
+Starting dtw
+dtw, 0, 0.000172360000
+Starting dtw
+dtw, 0, 0.000171702000
+Starting dtw
+dtw, 0, 0.000172976000
+Starting dtw
+dtw, 0, 0.000171964000
+Starting dtw
+dtw, 0, 0.000172324000
+Starting dtw
+dtw, 0, 0.000171686000
+Starting dtw
+dtw, 0, 0.000173506000
+Starting dtw
+dtw, 0, 0.000171774000
+Starting dtw
+dtw, 0, 0.000172204000
+Starting dtw
+dtw, 0, 0.000171772000
+Starting dtw
+dtw, 0, 0.000173898000
+Starting dtw
+dtw, 0, 0.000172046000
+Starting dtw
+dtw, 0, 0.000172148000
+Starting dtw
+dtw, 0, 0.000171786000
+Starting dtw
+dtw, 0, 0.000172644000
+Starting dtw
+dtw, 0, 0.000171836000
+Starting dtw
+dtw, 0, 0.000172084000
+Starting dtw
+dtw, 0, 0.000171656000
+Starting dtw
+dtw, 0, 0.000173468000
+Starting dtw
+dtw, 0, 0.000171938000
+Starting dtw
+dtw, 0, 0.000172080000
+Starting dtw
+dtw, 0, 0.000171772000
+Starting dtw
+dtw, 0, 0.000173176000
+Starting dtw
+dtw, 0, 0.000171734000
+Starting dtw
+dtw, 0, 0.000172080000
+Starting dtw
+dtw, 0, 0.000171752000
+Starting dtw
+dtw, 0, 0.000172982000
+Starting dtw
+dtw, 0, 0.000171992000
+Starting dtw
+dtw, 0, 0.000172076000
+Starting dtw
+dtw, 0, 0.000171732000
+Starting dtw
+dtw, 0, 0.000172716000
+Starting dtw
+dtw, 0, 0.000171876000
+Starting dtw
+dtw, 0, 0.000171868000
+Starting dtw
+dtw, 0, 0.000171656000
+Starting dtw
+dtw, 0, 0.000172776000
+Starting dtw
+dtw, 0, 0.000171912000
+Starting dtw
+dtw, 0, 0.000171828000
+Starting dtw
+dtw, 0, 0.000171762000
+Starting dtw
+dtw, 0, 0.000172856000
+Starting dtw
+dtw, 0, 0.000171874000
+Starting dtw
+dtw, 0, 0.000171758000
+Starting dtw
+dtw, 0, 0.000171748000
+Starting dtw
+dtw, 0, 0.000172900000
+Starting dtw
+dtw, 0, 0.000171926000
+Starting dtw
+dtw, 0, 0.000171708000
+Starting dtw
+dtw, 0, 0.000171888000
+Starting dtw
+dtw, 0, 0.000172586000
+Starting dtw
+dtw, 0, 0.000171818000
+Starting dtw
+dtw, 0, 0.000171714000
+Starting dtw
+dtw, 0, 0.000171728000
+Starting dtw
+dtw, 0, 0.000172496000
+Starting dtw
+dtw, 0, 0.000171912000
+Starting dtw
+dtw, 0, 0.000171580000
+Starting dtw
+dtw, 0, 0.000171658000
+Starting dtw
+dtw, 0, 0.000172304000
+Starting dtw
+dtw, 0, 0.000171606000
+Starting dtw
+dtw, 0, 0.000171682000
+Starting dtw
+dtw, 0, 0.000171784000
+Starting dtw
+dtw, 0, 0.000172712000
+Starting dtw
+dtw, 0, 0.000171816000
+Starting dtw
+dtw, 0, 0.000171522000
+Starting dtw
+dtw, 0, 0.000171672000
+Starting dtw
+dtw, 0, 0.000172528000
+Starting dtw
+dtw, 0, 0.000171886000
+Starting dtw
+dtw, 0, 0.000171474000
+Starting dtw
+dtw, 0, 0.000171496000
+Starting dtw
+dtw, 0, 0.000172198000
+Starting dtw
+dtw, 0, 0.000171626000
+Starting dtw
+dtw, 0, 0.000171396000
+Starting dtw
+dtw, 0, 0.000171578000
+Starting dtw
+dtw, 0, 0.000172542000
+Starting dtw
+dtw, 0, 0.000171360000
+Starting dtw
+dtw, 0, 0.000171280000
+Starting dtw
+dtw, 0, 0.000171386000
+Starting dtw
+dtw, 0, 0.000172160000
+Starting dtw
+dtw, 0, 0.000171482000
+Starting dtw
+dtw, 0, 0.000171242000
+Starting dtw
+dtw, 0, 0.000171416000
+Starting dtw
+dtw, 0, 0.000172364000
+Starting dtw
+dtw, 0, 0.000171400000
+Starting dtw
+dtw, 0, 0.000171158000
+Starting dtw
+dtw, 0, 0.000171374000
+Starting dtw
+dtw, 0, 0.000171752000
+Starting dtw
+dtw, 0, 0.000171448000
+Starting dtw
+dtw, 0, 0.000171024000
+Starting dtw
+dtw, 0, 0.000171422000
+Starting dtw
+dtw, 0, 0.000171952000
+Starting dtw
+dtw, 0, 0.000171060000
+Starting dtw
+dtw, 0, 0.000171034000
+Starting dtw
+dtw, 0, 0.000171086000
+Starting dtw
+dtw, 0, 0.000171842000
+Starting dtw
+dtw, 0, 0.000171242000
+Starting dtw
+dtw, 0, 0.000170942000
+Starting dtw
+dtw, 0, 0.000170966000
+Starting dtw
+dtw, 0, 0.000171740000
+Starting dtw
+dtw, 0, 0.000170996000
+Starting dtw
+dtw, 0, 0.000170830000
+Starting dtw
+dtw, 0, 0.000171090000
+Starting dtw
+dtw, 0, 0.000172048000
+Starting dtw
+dtw, 0, 0.000171098000
+Starting dtw
+dtw, 0, 0.000170782000
+Starting dtw
+dtw, 0, 0.000171502000
+Starting dtw
+dtw, 0, 0.000171022000
+Starting dtw
+dtw, 0, 0.000170882000
+Starting dtw
+dtw, 0, 0.000170882000
+Starting dtw
+dtw, 0, 0.000171710000
+Starting dtw
+dtw, 0, 0.000171002000
+Starting dtw
+dtw, 0, 0.000171018000
+Starting dtw
+dtw, 0, 0.000170890000
+Starting dtw
+dtw, 0, 0.000171418000
+Starting dtw
+dtw, 0, 0.000171106000
+Starting dtw
+dtw, 0, 0.000170818000
+Starting dtw
+dtw, 0, 0.000170648000
+Starting dtw
+dtw, 0, 0.000171622000
+Starting dtw
+dtw, 0, 0.000170794000
+Starting dtw
+dtw, 0, 0.000170840000
+Starting dtw
+dtw, 0, 0.000170692000
+Starting dtw
+dtw, 0, 0.000171462000
+Starting dtw
+dtw, 0, 0.000171402000
+Starting dtw
+dtw, 0, 0.000170750000
+Starting dtw
+dtw, 0, 0.000170536000
+Starting dtw
+dtw, 0, 0.000171304000
+Starting dtw
+dtw, 0, 0.000170808000
+Starting dtw
+dtw, 0, 0.000170888000
+Starting dtw
+dtw, 0, 0.000170442000
+Starting dtw
+dtw, 0, 0.000170952000
+Starting dtw
+dtw, 0, 0.000170950000
+Starting dtw
+dtw, 0, 0.000170536000
+Starting dtw
+dtw, 0, 0.000170418000
+Starting dtw
+dtw, 0, 0.000171580000
+Starting dtw
+dtw, 0, 0.000170936000
+Starting dtw
+dtw, 0, 0.000170708000
+Starting dtw
+dtw, 0, 0.000170346000
+Starting dtw
+dtw, 0, 0.000171064000
+Starting dtw
+dtw, 0, 0.000170774000
+Starting dtw
+dtw, 0, 0.000170542000
+Starting dtw
+dtw, 0, 0.000170324000
+Starting dtw
+dtw, 0, 0.000171356000
+Starting dtw
+dtw, 0, 0.000170902000
+Starting dtw
+dtw, 0, 0.000170476000
+Starting dtw
+dtw, 0, 0.000170286000
+Starting dtw
+dtw, 0, 0.000171144000
+Starting dtw
+dtw, 0, 0.000170720000
+Starting dtw
+dtw, 0, 0.000170300000
+Starting dtw
+dtw, 0, 0.000170174000
+Starting dtw
+dtw, 0, 0.000171024000
+Starting dtw
+dtw, 0, 0.000170326000
+Starting dtw
+dtw, 0, 0.000170344000
+Starting dtw
+dtw, 0, 0.000170156000
+Starting dtw
+dtw, 0, 0.000170778000
+Starting dtw
+dtw, 0, 0.000170674000
+Starting dtw
+dtw, 0, 0.000170340000
+Starting dtw
+dtw, 0, 0.000170060000
+Starting dtw
+dtw, 0, 0.000170824000
+Starting dtw
+dtw, 0, 0.000170546000
+Starting dtw
+dtw, 0, 0.000170252000
+Starting dtw
+dtw, 0, 0.000169970000
+Starting dtw
+dtw, 0, 0.000170604000
+Starting dtw
+dtw, 0, 0.000170282000
+Starting dtw
+dtw, 0, 0.000170130000
+Starting dtw
+dtw, 0, 0.000169970000
+Starting dtw
+dtw, 0, 0.000170532000
+Starting dtw
+dtw, 0, 0.000170180000
+Starting dtw
+dtw, 0, 0.000170128000
+Starting dtw
+dtw, 0, 0.000169862000
+Starting dtw
+dtw, 0, 0.000170558000
+Starting dtw
+dtw, 0, 0.000170220000
+Starting dtw
+dtw, 0, 0.000170070000
+Starting dtw
+dtw, 0, 0.000169882000
+Starting dtw
+dtw, 0, 0.000170386000
+Starting dtw
+dtw, 0, 0.000169974000
+Starting dtw
+dtw, 0, 0.000170036000
+Starting dtw
+dtw, 0, 0.000169760000
+Starting dtw
+dtw, 0, 0.000170508000
+Starting dtw
+dtw, 0, 0.000170254000
+Starting dtw
+dtw, 0, 0.000169924000
+Starting dtw
+dtw, 0, 0.000169764000
+Starting dtw
+dtw, 0, 0.000170398000
+Starting dtw
+dtw, 0, 0.000169960000
+Starting dtw
+dtw, 0, 0.000169930000
+Starting dtw
+dtw, 0, 0.000169648000
+Starting dtw
+dtw, 0, 0.000170712000
+Starting dtw
+dtw, 0, 0.000170264000
+Starting dtw
+dtw, 0, 0.000169644000
+Starting dtw
+dtw, 0, 0.000169580000
+Starting dtw
+dtw, 0, 0.000170446000
+Starting dtw
+dtw, 0, 0.000169782000
+Starting dtw
+dtw, 0, 0.000169632000
+Starting dtw
+dtw, 0, 0.000169578000
+Starting dtw
+dtw, 0, 0.000170550000
+Starting dtw
+dtw, 0, 0.000169956000
+Starting dtw
+dtw, 0, 0.000169516000
+Starting dtw
+dtw, 0, 0.000169472000
+Starting dtw
+dtw, 0, 0.000170588000
+Starting dtw
+dtw, 0, 0.000169832000
+Starting dtw
+dtw, 0, 0.000169652000
+Starting dtw
+dtw, 0, 0.000169570000
+Starting dtw
+dtw, 0, 0.000170480000
+Starting dtw
+dtw, 0, 0.000169652000
+Starting dtw
+dtw, 0, 0.000169342000
+Starting dtw
+dtw, 0, 0.000169290000
+Starting dtw
+dtw, 0, 0.000169970000
+Starting dtw
+dtw, 0, 0.000169414000
+Starting dtw
+dtw, 0, 0.000169448000
+Starting dtw
+dtw, 0, 0.000169324000
+Starting dtw
+dtw, 0, 0.000169818000
+Starting dtw
+dtw, 0, 0.000169354000
+Starting dtw
+dtw, 0, 0.000169190000
+Starting dtw
+dtw, 0, 0.000169430000
+Starting dtw
+dtw, 0, 0.000170340000
+Starting dtw
+dtw, 0, 0.000169544000
+Starting dtw
+dtw, 0, 0.000169444000
+Starting dtw
+dtw, 0, 0.000169204000
+Starting dtw
+dtw, 0, 0.000170276000
+Starting dtw
+dtw, 0, 0.000169474000
+Starting dtw
+dtw, 0, 0.000169254000
+Starting dtw
+dtw, 0, 0.000169302000
+Starting dtw
+dtw, 0, 0.000170310000
+Starting dtw
+dtw, 0, 0.000169400000
+Starting dtw
+dtw, 0, 0.000169402000
+Starting dtw
+dtw, 0, 0.000169182000
+Starting dtw
+dtw, 0, 0.000170042000
+Starting dtw
+dtw, 0, 0.000169306000
+Starting dtw
+dtw, 0, 0.000169034000
+Starting dtw
+dtw, 0, 0.000169208000
+Starting dtw
+dtw, 0, 0.000169898000
+Starting dtw
+dtw, 0, 0.000169086000
+Starting dtw
+dtw, 0, 0.000169110000
+Starting dtw
+dtw, 0, 0.000169152000
+Starting dtw
+dtw, 0, 0.000169888000
+Starting dtw
+dtw, 0, 0.000169308000
+Starting dtw
+dtw, 0, 0.000168970000
+Starting dtw
+dtw, 0, 0.000169102000
+Starting dtw
+dtw, 0, 0.000170048000
+Starting dtw
+dtw, 0, 0.000169054000
+Starting dtw
+dtw, 0, 0.000168970000
+Starting dtw
+dtw, 0, 0.000169004000
+Starting dtw
+dtw, 0, 0.000169516000
+Starting dtw
+dtw, 0, 0.000168990000
+Starting dtw
+dtw, 0, 0.000168800000
+Starting dtw
+dtw, 0, 0.000168882000
+Starting dtw
+dtw, 0, 0.000169764000
+Starting dtw
+dtw, 0, 0.000169100000
+Starting dtw
+dtw, 0, 0.000168936000
+Starting dtw
+dtw, 0, 0.000168878000
+Starting dtw
+dtw, 0, 0.000169584000
+Starting dtw
+dtw, 0, 0.000169078000
+Starting dtw
+dtw, 0, 0.000168738000
+Starting dtw
+dtw, 0, 0.000168754000
+Starting dtw
+dtw, 0, 0.000169066000
+Starting dtw
+dtw, 0, 0.000168856000
+Starting dtw
+dtw, 0, 0.000168790000
+Starting dtw
+dtw, 0, 0.000168628000
+Starting dtw
+dtw, 0, 0.000169504000
+Starting dtw
+dtw, 0, 0.000168868000
+Starting dtw
+dtw, 0, 0.000168606000
+Starting dtw
+dtw, 0, 0.000168598000
+Starting dtw
+dtw, 0, 0.000169588000
+Starting dtw
+dtw, 0, 0.000168760000
+Starting dtw
+dtw, 0, 0.000168736000
+Starting dtw
+dtw, 0, 0.000168612000
+Starting dtw
+dtw, 0, 0.000169228000
+Starting dtw
+dtw, 0, 0.000168582000
+Starting dtw
+dtw, 0, 0.000168410000
+Starting dtw
+dtw, 0, 0.000168612000
+Starting dtw
+dtw, 0, 0.000169292000
+Starting dtw
+dtw, 0, 0.000168546000
+Starting dtw
+dtw, 0, 0.000168456000
+Starting dtw
+dtw, 0, 0.000168408000
+Starting dtw
+dtw, 0, 0.000169006000
+Starting dtw
+dtw, 0, 0.000168582000
+Starting dtw
+dtw, 0, 0.000168302000
+Starting dtw
+dtw, 0, 0.000168384000
+Starting dtw
+dtw, 0, 0.000169340000
+Starting dtw
+dtw, 0, 0.000168606000
+Starting dtw
+dtw, 0, 0.000168384000
+Starting dtw
+dtw, 0, 0.000168432000
+Starting dtw
+dtw, 0, 0.000169432000
+Starting dtw
+dtw, 0, 0.000168510000
+Starting dtw
+dtw, 0, 0.000168262000
+Starting dtw
+dtw, 0, 0.000168216000
+Starting dtw
+dtw, 0, 0.000169082000
+Starting dtw
+dtw, 0, 0.000168244000
+Starting dtw
+dtw, 0, 0.000168252000
+Starting dtw
+dtw, 0, 0.000168306000
+Starting dtw
+dtw, 0, 0.000168942000
+Starting dtw
+dtw, 0, 0.000168180000
+Starting dtw
+dtw, 0, 0.000168112000
+Starting dtw
+dtw, 0, 0.000168236000
+Starting dtw
+dtw, 0, 0.000168888000
+Starting dtw
+dtw, 0, 0.000168340000
+Starting dtw
+dtw, 0, 0.000168188000
+Starting dtw
+dtw, 0, 0.000168048000
+Starting dtw
+dtw, 0, 0.000168840000
+Starting dtw
+dtw, 0, 0.000168196000
+Starting dtw
+dtw, 0, 0.000167908000
+Starting dtw
+dtw, 0, 0.000168176000
+Starting dtw
+dtw, 0, 0.000168580000
+Starting dtw
+dtw, 0, 0.000168142000
+Starting dtw
+dtw, 0, 0.000167990000
+Starting dtw
+dtw, 0, 0.000167962000
+Starting dtw
+dtw, 0, 0.000169238000
+Starting dtw
+dtw, 0, 0.000167968000
+Starting dtw
+dtw, 0, 0.000167846000
+Starting dtw
+dtw, 0, 0.000167864000
+Starting dtw
+dtw, 0, 0.000168460000
+Starting dtw
+dtw, 0, 0.000168026000
+Starting dtw
+dtw, 0, 0.000167884000
+Starting dtw
+dtw, 0, 0.000167856000
+Starting dtw
+dtw, 0, 0.000168518000
+Starting dtw
+dtw, 0, 0.000167930000
+Starting dtw
+dtw, 0, 0.000167768000
+Starting dtw
+dtw, 0, 0.000167832000
+Starting dtw
+dtw, 0, 0.000168502000
+Starting dtw
+dtw, 0, 0.000168048000
+Starting dtw
+dtw, 0, 0.000167840000
+Starting dtw
+dtw, 0, 0.000167696000
+Starting dtw
+dtw, 0, 0.000168174000
+Starting dtw
+dtw, 0, 0.000167634000
+Starting dtw
+dtw, 0, 0.000167580000
+Starting dtw
+dtw, 0, 0.000167662000
+Starting dtw
+dtw, 0, 0.000168060000
+Starting dtw
+dtw, 0, 0.000167666000
+Starting dtw
+dtw, 0, 0.000167764000
+Starting dtw
+dtw, 0, 0.000167650000
+Starting dtw
+dtw, 0, 0.000168086000
+Starting dtw
+dtw, 0, 0.000167746000
+Starting dtw
+dtw, 0, 0.000167440000
+Starting dtw
+dtw, 0, 0.000167642000
+Starting dtw
+dtw, 0, 0.000168812000
+Starting dtw
+dtw, 0, 0.000167602000
+Starting dtw
+dtw, 0, 0.000167542000
+Starting dtw
+dtw, 0, 0.000167648000
+Starting dtw
+dtw, 0, 0.000168410000
+Starting dtw
+dtw, 0, 0.000167580000
+Starting dtw
+dtw, 0, 0.000167512000
+Starting dtw
+dtw, 0, 0.000167528000
+Starting dtw
+dtw, 0, 0.000168110000
+Starting dtw
+dtw, 0, 0.000167512000
+Starting dtw
+dtw, 0, 0.000167422000
+Starting dtw
+dtw, 0, 0.000167524000
+Starting dtw
+dtw, 0, 0.000168698000
+Starting dtw
+dtw, 0, 0.000167676000
+Starting dtw
+dtw, 0, 0.000167326000
+Starting dtw
+dtw, 0, 0.000167446000
+Starting dtw
+dtw, 0, 0.000168008000
+Starting dtw
+dtw, 0, 0.000167310000
+Starting dtw
+dtw, 0, 0.000167312000
+Starting dtw
+dtw, 0, 0.000167360000
+Starting dtw
+dtw, 0, 0.000168322000
+Starting dtw
+dtw, 0, 0.000167364000
+Starting dtw
+dtw, 0, 0.000167254000
+Starting dtw
+dtw, 0, 0.000167290000
+Starting dtw
+dtw, 0, 0.000168446000
+Starting dtw
+dtw, 0, 0.000167242000
+Starting dtw
+dtw, 0, 0.000167098000
+Starting dtw
+dtw, 0, 0.000168348000
+Starting dtw
+dtw, 0, 0.000167236000
+Starting dtw
+dtw, 0, 0.000167012000
+Starting dtw
+dtw, 0, 0.000167018000
+Starting dtw
+dtw, 0, 0.000167990000
+Starting dtw
+dtw, 0, 0.000167392000
+Finished dtw, 0.000000000000
+Benchmark Start fft
+Starting fft
+fft, 0, 0.000072034000
+Starting fft
+fft, 0, 0.000035334000
+Starting fft
+fft, 0, 0.000035348000
+Starting fft
+fft, 0, 0.000017748000
+Starting fft
+fft, 0, 0.000017732000
+Starting fft
+fft, 0, 0.000017732000
+Starting fft
+fft, 0, 0.000017732000
+Starting fft
+fft, 0, 0.000008948000
+Starting fft
+fft, 0, 0.000008932000
+Starting fft
+fft, 0, 0.000008932000
+Starting fft
+fft, 0, 0.000008932000
+Starting fft
+fft, 0, 0.000008932000
+Starting fft
+fft, 0, 0.000008932000
+Starting fft
+fft, 0, 0.000008932000
+Starting fft
+fft, 0, 0.000008924000
+Starting fft
+fft, 0, 0.000004548000
+Starting fft
+fft, 0, 0.000004548000
+Starting fft
+fft, 0, 0.000004548000
+Starting fft
+fft, 0, 0.000004548000
+Starting fft
+fft, 0, 0.000004548000
+Starting fft
+fft, 0, 0.000004548000
+Starting fft
+fft, 0, 0.000004548000
+Starting fft
+fft, 0, 0.000004548000
+Starting fft
+fft, 0, 0.000004548000
+Starting fft
+fft, 0, 0.000004548000
+Starting fft
+fft, 0, 0.000004548000
+Starting fft
+fft, 0, 0.000004548000
+Starting fft
+fft, 0, 0.000004548000
+Starting fft
+fft, 0, 0.000004548000
+Starting fft
+fft, 0, 0.000004540000
+Starting fft
+fft, 0, 0.000004540000
+Starting fft
+fft, 0, 0.000002348000
+Starting fft
+fft, 0, 0.000002348000
+Starting fft
+fft, 0, 0.000002348000
+Starting fft
+fft, 0, 0.000002348000
+Starting fft
+fft, 0, 0.000002348000
+Starting fft
+fft, 0, 0.000002348000
+Starting fft
+fft, 0, 0.000002348000
+Starting fft
+fft, 0, 0.000002348000
+Starting fft
+fft, 0, 0.000002348000
+Starting fft
+fft, 0, 0.000002348000
+Starting fft
+fft, 0, 0.000002348000
+Starting fft
+fft, 0, 0.000002348000
+Starting fft
+fft, 0, 0.000002348000
+Starting fft
+fft, 0, 0.000002348000
+Starting fft
+fft, 0, 0.000002348000
+Starting fft
+fft, 0, 0.000002348000
+Starting fft
+fft, 0, 0.000002348000
+Starting fft
+fft, 0, 0.000002348000
+Starting fft
+fft, 0, 0.000002348000
+Starting fft
+fft, 0, 0.000002348000
+Starting fft
+fft, 0, 0.000002348000
+Starting fft
+fft, 0, 0.000002348000
+Starting fft
+fft, 0, 0.000002348000
+Starting fft
+fft, 0, 0.000002348000
+Starting fft
+fft, 0, 0.000002348000
+Starting fft
+fft, 0, 0.000002348000
+Starting fft
+fft, 0, 0.000002348000
+Starting fft
+fft, 0, 0.000002348000
+Starting fft
+fft, 0, 0.000002340000
+Starting fft
+fft, 0, 0.000002340000
+Starting fft
+fft, 0, 0.000002340000
+Starting fft
+fft, 0, 0.000002340000
+Starting fft
+fft, 0, 0.000001248000
+Starting fft
+fft, 0, 0.000001248000
+Starting fft
+fft, 0, 0.000001248000
+Starting fft
+fft, 0, 0.000001248000
+Starting fft
+fft, 0, 0.000001248000
+Starting fft
+fft, 0, 0.000001248000
+Starting fft
+fft, 0, 0.000001248000
+Starting fft
+fft, 0, 0.000001248000
+Starting fft
+fft, 0, 0.000001248000
+Starting fft
+fft, 0, 0.000001248000
+Starting fft
+fft, 0, 0.000001248000
+Starting fft
+fft, 0, 0.000001248000
+Starting fft
+fft, 0, 0.000001248000
+Starting fft
+fft, 0, 0.000001248000
+Starting fft
+fft, 0, 0.000001248000
+Starting fft
+fft, 0, 0.000001248000
+Starting fft
+fft, 0, 0.000001248000
+Starting fft
+fft, 0, 0.000001248000
+Starting fft
+fft, 0, 0.000001248000
+Starting fft
+fft, 0, 0.000001248000
+Starting fft
+fft, 0, 0.000001248000
+Starting fft
+fft, 0, 0.000001248000
+Starting fft
+fft, 0, 0.000001248000
+Starting fft
+fft, 0, 0.000001248000
+Starting fft
+fft, 0, 0.000001248000
+Starting fft
+fft, 0, 0.000001248000
+Starting fft
+fft, 0, 0.000001248000
+Starting fft
+fft, 0, 0.000001248000
+Starting fft
+fft, 0, 0.000001248000
+Starting fft
+fft, 0, 0.000001248000
+Starting fft
+fft, 0, 0.000001248000
+Starting fft
+fft, 0, 0.000001248000
+Starting fft
+fft, 0, 0.000001248000
+Starting fft
+fft, 0, 0.000001248000
+Starting fft
+fft, 0, 0.000001248000
+Starting fft
+fft, 0, 0.000001248000
+Starting fft
+fft, 0, 0.000001248000
+Starting fft
+fft, 0, 0.000001248000
+Starting fft
+fft, 0, 0.000001248000
+Starting fft
+fft, 0, 0.000001248000
+Starting fft
+fft, 0, 0.000001248000
+Starting fft
+fft, 0, 0.000001248000
+Starting fft
+fft, 0, 0.000001248000
+Starting fft
+fft, 0, 0.000001248000
+Starting fft
+fft, 0, 0.000001248000
+Starting fft
+fft, 0, 0.000001248000
+Starting fft
+fft, 0, 0.000001248000
+Starting fft
+fft, 0, 0.000001248000
+Starting fft
+fft, 0, 0.000001248000
+Starting fft
+fft, 0, 0.000001248000
+Starting fft
+fft, 0, 0.000001248000
+Starting fft
+fft, 0, 0.000001248000
+Starting fft
+fft, 0, 0.000001248000
+Starting fft
+fft, 0, 0.000001248000
+Starting fft
+fft, 0, 0.000001248000
+Starting fft
+fft, 0, 0.000001248000
+Starting fft
+fft, 0, 0.000001240000
+Starting fft
+fft, 0, 0.000001240000
+Starting fft
+fft, 0, 0.000001240000
+Starting fft
+fft, 0, 0.000001240000
+Starting fft
+fft, 0, 0.000001240000
+Starting fft
+fft, 0, 0.000001240000
+Starting fft
+fft, 0, 0.000001240000
+Starting fft
+fft, 0, 0.000001240000
+Starting fft
+fft, 0, 0.000000668000
+Starting fft
+fft, 0, 0.000000668000
+Starting fft
+fft, 0, 0.000000668000
+Starting fft
+fft, 0, 0.000000668000
+Starting fft
+fft, 0, 0.000000668000
+Starting fft
+fft, 0, 0.000000668000
+Starting fft
+fft, 0, 0.000000668000
+Starting fft
+fft, 0, 0.000000668000
+Starting fft
+fft, 0, 0.000000668000
+Starting fft
+fft, 0, 0.000000668000
+Starting fft
+fft, 0, 0.000000668000
+Starting fft
+fft, 0, 0.000000668000
+Starting fft
+fft, 0, 0.000000668000
+Starting fft
+fft, 0, 0.000000668000
+Starting fft
+fft, 0, 0.000000668000
+Starting fft
+fft, 0, 0.000000668000
+Starting fft
+fft, 0, 0.000000668000
+Starting fft
+fft, 0, 0.000000668000
+Starting fft
+fft, 0, 0.000000668000
+Starting fft
+fft, 0, 0.000000668000
+Starting fft
+fft, 0, 0.000000668000
+Starting fft
+fft, 0, 0.000000668000
+Starting fft
+fft, 0, 0.000000668000
+Starting fft
+fft, 0, 0.000000668000
+Starting fft
+fft, 0, 0.000000668000
+Starting fft
+fft, 0, 0.000000668000
+Starting fft
+fft, 0, 0.000000668000
+Starting fft
+fft, 0, 0.000000668000
+Starting fft
+fft, 0, 0.000000668000
+Starting fft
+fft, 0, 0.000000668000
+Starting fft
+fft, 0, 0.000000668000
+Starting fft
+fft, 0, 0.000000668000
+Starting fft
+fft, 0, 0.000000668000
+Starting fft
+fft, 0, 0.000000668000
+Starting fft
+fft, 0, 0.000000668000
+Starting fft
+fft, 0, 0.000000668000
+Starting fft
+fft, 0, 0.000000668000
+Starting fft
+fft, 0, 0.000000668000
+Starting fft
+fft, 0, 0.000000668000
+Starting fft
+fft, 0, 0.000000668000
+Starting fft
+fft, 0, 0.000000668000
+Starting fft
+fft, 0, 0.000000668000
+Starting fft
+fft, 0, 0.000000668000
+Starting fft
+fft, 0, 0.000000668000
+Starting fft
+fft, 0, 0.000000668000
+Starting fft
+fft, 0, 0.000000668000
+Starting fft
+fft, 0, 0.000000668000
+Starting fft
+fft, 0, 0.000000668000
+Starting fft
+fft, 0, 0.000000668000
+Starting fft
+fft, 0, 0.000000668000
+Starting fft
+fft, 0, 0.000000668000
+Starting fft
+fft, 0, 0.000000668000
+Starting fft
+fft, 0, 0.000000668000
+Starting fft
+fft, 0, 0.000000668000
+Starting fft
+fft, 0, 0.000000668000
+Starting fft
+fft, 0, 0.000000668000
+Starting fft
+fft, 0, 0.000000668000
+Starting fft
+fft, 0, 0.000000668000
+Starting fft
+fft, 0, 0.000000668000
+Starting fft
+fft, 0, 0.000000668000
+Starting fft
+fft, 0, 0.000000668000
+Starting fft
+fft, 0, 0.000000668000
+Starting fft
+fft, 0, 0.000000668000
+Starting fft
+fft, 0, 0.000000668000
+Starting fft
+fft, 0, 0.000000668000
+Starting fft
+fft, 0, 0.000000668000
+Starting fft
+fft, 0, 0.000000668000
+Starting fft
+fft, 0, 0.000000668000
+Starting fft
+fft, 0, 0.000000668000
+Starting fft
+fft, 0, 0.000000668000
+Starting fft
+fft, 0, 0.000000668000
+Starting fft
+fft, 0, 0.000000668000
+Starting fft
+fft, 0, 0.000000668000
+Starting fft
+fft, 0, 0.000000668000
+Starting fft
+fft, 0, 0.000000668000
+Starting fft
+fft, 0, 0.000000668000
+Starting fft
+fft, 0, 0.000000668000
+Starting fft
+fft, 0, 0.000000668000
+Starting fft
+fft, 0, 0.000000668000
+Starting fft
+fft, 0, 0.000000668000
+Starting fft
+fft, 0, 0.000000668000
+Starting fft
+fft, 0, 0.000000668000
+Starting fft
+fft, 0, 0.000000668000
+Starting fft
+fft, 0, 0.000000668000
+Starting fft
+fft, 0, 0.000000668000
+Starting fft
+fft, 0, 0.000000668000
+Starting fft
+fft, 0, 0.000000668000
+Starting fft
+fft, 0, 0.000000668000
+Starting fft
+fft, 0, 0.000000668000
+Starting fft
+fft, 0, 0.000000668000
+Starting fft
+fft, 0, 0.000000668000
+Starting fft
+fft, 0, 0.000000668000
+Starting fft
+fft, 0, 0.000000668000
+Starting fft
+fft, 0, 0.000000668000
+Starting fft
+fft, 0, 0.000000668000
+Starting fft
+fft, 0, 0.000000668000
+Starting fft
+fft, 0, 0.000000668000
+Starting fft
+fft, 0, 0.000000668000
+Starting fft
+fft, 0, 0.000000668000
+Starting fft
+fft, 0, 0.000000668000
+Starting fft
+fft, 0, 0.000000668000
+Starting fft
+fft, 0, 0.000000668000
+Starting fft
+fft, 0, 0.000000668000
+Starting fft
+fft, 0, 0.000000668000
+Starting fft
+fft, 0, 0.000000668000
+Starting fft
+fft, 0, 0.000000668000
+Starting fft
+fft, 0, 0.000000668000
+Starting fft
+fft, 0, 0.000000668000
+Starting fft
+fft, 0, 0.000000668000
+Starting fft
+fft, 0, 0.000000668000
+Starting fft
+fft, 0, 0.000000668000
+Starting fft
+fft, 0, 0.000000660000
+Starting fft
+fft, 0, 0.000000660000
+Starting fft
+fft, 0, 0.000000660000
+Starting fft
+fft, 0, 0.000000660000
+Starting fft
+fft, 0, 0.000000660000
+Starting fft
+fft, 0, 0.000000660000
+Starting fft
+fft, 0, 0.000000660000
+Starting fft
+fft, 0, 0.000000660000
+Starting fft
+fft, 0, 0.000000660000
+Starting fft
+fft, 0, 0.000000660000
+Starting fft
+fft, 0, 0.000000660000
+Starting fft
+fft, 0, 0.000000660000
+Starting fft
+fft, 0, 0.000000660000
+Starting fft
+fft, 0, 0.000000660000
+Starting fft
+fft, 0, 0.000000660000
+Starting fft
+fft, 0, 0.000000660000
+Starting fft
+fft, 0, 0.000000660000
+Finished fft, 0.000000000000
+Benchmark Start fir
+Starting fir
+fir, 0, 0.000004144000
+Finished fir, 0.000000000000
+Benchmark Start gemm
+Starting gemm
+gemm, 0, 0.000004364000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003974000
+Starting gemm
+gemm, 0, 0.000003974000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000004002000
+Starting gemm
+gemm, 0, 0.000003954000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003974000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003974000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003954000
+Starting gemm
+gemm, 0, 0.000003974000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003954000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003954000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003954000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003954000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003954000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003954000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003954000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003954000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003954000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003954000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003954000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003954000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003954000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003954000
+Starting gemm
+gemm, 0, 0.000003974000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003954000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003954000
+Starting gemm
+gemm, 0, 0.000004030000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000004002000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003954000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003954000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003974000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003954000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003954000
+Starting gemm
+gemm, 0, 0.000003994000
+Starting gemm
+gemm, 0, 0.000003938000
+Starting gemm
+gemm, 0, 0.000003938000
+Starting gemm
+gemm, 0, 0.000003938000
+Starting gemm
+gemm, 0, 0.000003938000
+Starting gemm
+gemm, 0, 0.000003938000
+Starting gemm
+gemm, 0, 0.000003938000
+Starting gemm
+gemm, 0, 0.000003938000
+Starting gemm
+gemm, 0, 0.000003974000
+Starting gemm
+gemm, 0, 0.000003974000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003954000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003954000
+Starting gemm
+gemm, 0, 0.000003954000
+Starting gemm
+gemm, 0, 0.000003954000
+Starting gemm
+gemm, 0, 0.000003954000
+Starting gemm
+gemm, 0, 0.000003954000
+Starting gemm
+gemm, 0, 0.000003954000
+Starting gemm
+gemm, 0, 0.000003954000
+Starting gemm
+gemm, 0, 0.000003954000
+Starting gemm
+gemm, 0, 0.000003954000
+Starting gemm
+gemm, 0, 0.000003954000
+Starting gemm
+gemm, 0, 0.000003954000
+Starting gemm
+gemm, 0, 0.000003954000
+Starting gemm
+gemm, 0, 0.000003954000
+Starting gemm
+gemm, 0, 0.000003954000
+Starting gemm
+gemm, 0, 0.000003954000
+Starting gemm
+gemm, 0, 0.000003954000
+Starting gemm
+gemm, 0, 0.000003954000
+Starting gemm
+gemm, 0, 0.000003954000
+Starting gemm
+gemm, 0, 0.000003954000
+Starting gemm
+gemm, 0, 0.000003954000
+Starting gemm
+gemm, 0, 0.000003954000
+Starting gemm
+gemm, 0, 0.000003962000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003954000
+Starting gemm
+gemm, 0, 0.000003954000
+Starting gemm
+gemm, 0, 0.000003954000
+Starting gemm
+gemm, 0, 0.000003954000
+Starting gemm
+gemm, 0, 0.000003954000
+Starting gemm
+gemm, 0, 0.000003954000
+Starting gemm
+gemm, 0, 0.000003954000
+Starting gemm
+gemm, 0, 0.000003954000
+Starting gemm
+gemm, 0, 0.000003954000
+Starting gemm
+gemm, 0, 0.000003954000
+Starting gemm
+gemm, 0, 0.000003954000
+Starting gemm
+gemm, 0, 0.000003954000
+Starting gemm
+gemm, 0, 0.000003954000
+Starting gemm
+gemm, 0, 0.000003954000
+Starting gemm
+gemm, 0, 0.000003954000
+Starting gemm
+gemm, 0, 0.000003954000
+Starting gemm
+gemm, 0, 0.000003954000
+Starting gemm
+gemm, 0, 0.000003954000
+Starting gemm
+gemm, 0, 0.000003954000
+Starting gemm
+gemm, 0, 0.000003954000
+Starting gemm
+gemm, 0, 0.000003954000
+Starting gemm
+gemm, 0, 0.000003962000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003954000
+Starting gemm
+gemm, 0, 0.000003954000
+Starting gemm
+gemm, 0, 0.000003954000
+Starting gemm
+gemm, 0, 0.000003954000
+Starting gemm
+gemm, 0, 0.000003954000
+Starting gemm
+gemm, 0, 0.000003954000
+Starting gemm
+gemm, 0, 0.000003954000
+Starting gemm
+gemm, 0, 0.000003954000
+Starting gemm
+gemm, 0, 0.000003954000
+Starting gemm
+gemm, 0, 0.000003954000
+Starting gemm
+gemm, 0, 0.000003954000
+Starting gemm
+gemm, 0, 0.000003954000
+Starting gemm
+gemm, 0, 0.000003954000
+Starting gemm
+gemm, 0, 0.000003954000
+Starting gemm
+gemm, 0, 0.000003954000
+Starting gemm
+gemm, 0, 0.000003954000
+Starting gemm
+gemm, 0, 0.000003954000
+Starting gemm
+gemm, 0, 0.000003954000
+Starting gemm
+gemm, 0, 0.000003954000
+Starting gemm
+gemm, 0, 0.000003954000
+Starting gemm
+gemm, 0, 0.000003954000
+Starting gemm
+gemm, 0, 0.000003962000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003954000
+Starting gemm
+gemm, 0, 0.000003954000
+Starting gemm
+gemm, 0, 0.000003954000
+Starting gemm
+gemm, 0, 0.000003954000
+Starting gemm
+gemm, 0, 0.000003954000
+Starting gemm
+gemm, 0, 0.000003954000
+Starting gemm
+gemm, 0, 0.000003954000
+Starting gemm
+gemm, 0, 0.000003954000
+Starting gemm
+gemm, 0, 0.000003954000
+Starting gemm
+gemm, 0, 0.000003954000
+Starting gemm
+gemm, 0, 0.000003954000
+Starting gemm
+gemm, 0, 0.000003954000
+Starting gemm
+gemm, 0, 0.000003954000
+Starting gemm
+gemm, 0, 0.000003954000
+Starting gemm
+gemm, 0, 0.000003954000
+Starting gemm
+gemm, 0, 0.000003954000
+Starting gemm
+gemm, 0, 0.000003954000
+Starting gemm
+gemm, 0, 0.000003954000
+Starting gemm
+gemm, 0, 0.000003954000
+Starting gemm
+gemm, 0, 0.000003954000
+Starting gemm
+gemm, 0, 0.000003954000
+Starting gemm
+gemm, 0, 0.000003962000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003954000
+Starting gemm
+gemm, 0, 0.000003954000
+Starting gemm
+gemm, 0, 0.000003954000
+Starting gemm
+gemm, 0, 0.000003954000
+Starting gemm
+gemm, 0, 0.000003954000
+Starting gemm
+gemm, 0, 0.000003954000
+Starting gemm
+gemm, 0, 0.000003954000
+Starting gemm
+gemm, 0, 0.000003954000
+Starting gemm
+gemm, 0, 0.000003954000
+Starting gemm
+gemm, 0, 0.000003954000
+Starting gemm
+gemm, 0, 0.000003954000
+Starting gemm
+gemm, 0, 0.000003954000
+Starting gemm
+gemm, 0, 0.000003954000
+Starting gemm
+gemm, 0, 0.000003954000
+Starting gemm
+gemm, 0, 0.000003954000
+Starting gemm
+gemm, 0, 0.000003954000
+Starting gemm
+gemm, 0, 0.000003954000
+Starting gemm
+gemm, 0, 0.000003954000
+Starting gemm
+gemm, 0, 0.000003954000
+Starting gemm
+gemm, 0, 0.000003954000
+Starting gemm
+gemm, 0, 0.000003954000
+Starting gemm
+gemm, 0, 0.000003962000
+Starting gemm
+gemm, 0, 0.000003974000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003954000
+Starting gemm
+gemm, 0, 0.000003954000
+Starting gemm
+gemm, 0, 0.000003954000
+Starting gemm
+gemm, 0, 0.000003954000
+Starting gemm
+gemm, 0, 0.000003954000
+Starting gemm
+gemm, 0, 0.000003954000
+Starting gemm
+gemm, 0, 0.000003954000
+Starting gemm
+gemm, 0, 0.000003954000
+Starting gemm
+gemm, 0, 0.000003954000
+Starting gemm
+gemm, 0, 0.000003954000
+Starting gemm
+gemm, 0, 0.000003954000
+Starting gemm
+gemm, 0, 0.000003954000
+Starting gemm
+gemm, 0, 0.000003954000
+Starting gemm
+gemm, 0, 0.000003954000
+Starting gemm
+gemm, 0, 0.000003954000
+Starting gemm
+gemm, 0, 0.000003954000
+Starting gemm
+gemm, 0, 0.000003954000
+Starting gemm
+gemm, 0, 0.000003954000
+Starting gemm
+gemm, 0, 0.000003954000
+Starting gemm
+gemm, 0, 0.000003954000
+Starting gemm
+gemm, 0, 0.000003954000
+Starting gemm
+gemm, 0, 0.000003962000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003954000
+Starting gemm
+gemm, 0, 0.000003954000
+Starting gemm
+gemm, 0, 0.000003954000
+Starting gemm
+gemm, 0, 0.000003954000
+Starting gemm
+gemm, 0, 0.000003954000
+Starting gemm
+gemm, 0, 0.000003954000
+Starting gemm
+gemm, 0, 0.000003954000
+Starting gemm
+gemm, 0, 0.000003982000
+Starting gemm
+gemm, 0, 0.000003954000
+Starting gemm
+gemm, 0, 0.000003954000
+Starting gemm
+gemm, 0, 0.000003954000
+Starting gemm
+gemm, 0, 0.000003982000
+Starting gemm
+gemm, 0, 0.000003954000
+Starting gemm
+gemm, 0, 0.000003954000
+Starting gemm
+gemm, 0, 0.000003954000
+Starting gemm
+gemm, 0, 0.000003954000
+Starting gemm
+gemm, 0, 0.000003954000
+Starting gemm
+gemm, 0, 0.000003954000
+Starting gemm
+gemm, 0, 0.000003954000
+Starting gemm
+gemm, 0, 0.000003954000
+Starting gemm
+gemm, 0, 0.000003954000
+Starting gemm
+gemm, 0, 0.000003962000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003946000
+Starting gemm
+gemm, 0, 0.000003954000
+Starting gemm
+gemm, 0, 0.000003954000
+Starting gemm
+gemm, 0, 0.000003954000
+Starting gemm
+gemm, 0, 0.000003954000
+Starting gemm
+gemm, 0, 0.000003954000
+Starting gemm
+gemm, 0, 0.000003954000
+Starting gemm
+gemm, 0, 0.000003954000
+Starting gemm
+gemm, 0, 0.000003954000
+Starting gemm
+gemm, 0, 0.000003954000
+Starting gemm
+gemm, 0, 0.000003954000
+Starting gemm
+gemm, 0, 0.000003954000
+Starting gemm
+gemm, 0, 0.000003954000
+Starting gemm
+gemm, 0, 0.000003954000
+Starting gemm
+gemm, 0, 0.000003954000
+Starting gemm
+gemm, 0, 0.000003954000
+Starting gemm
+gemm, 0, 0.000003954000
+Starting gemm
+gemm, 0, 0.000003954000
+Starting gemm
+gemm, 0, 0.000003954000
+Starting gemm
+gemm, 0, 0.000003954000
+Starting gemm
+gemm, 0, 0.000003954000
+Starting gemm
+gemm, 0, 0.000003954000
+Starting gemm
+gemm, 0, 0.000003962000
+Finished gemm, 0.000000000000
+Benchmark Start histogram
+Starting histogram
+histogram, 0, 0.000003902000
+Finished histogram, 0.000000000000
+Benchmark Start latnrm
+Starting latnrm
+latnrm, 0, 0.000002564000
+Finished latnrm, 0.000000000000
+Benchmark Start mvt
+Starting mvt
+mvt, 0, 0.000035584000
+Starting mvt
+mvt, 0, 0.000029166000
+Starting mvt
+mvt, 0, 0.000028610000
+Starting mvt
+mvt, 0, 0.000027374000
+Starting mvt
+mvt, 0, 0.000033354000
+Starting mvt
+mvt, 0, 0.000027854000
+Starting mvt
+mvt, 0, 0.000027686000
+Starting mvt
+mvt, 0, 0.000027818000
+Starting mvt
+mvt, 0, 0.000033908000
+Starting mvt
+mvt, 0, 0.000028708000
+Starting mvt
+mvt, 0, 0.000027800000
+Starting mvt
+mvt, 0, 0.000028522000
+Starting mvt
+mvt, 0, 0.000032504000
+Starting mvt
+mvt, 0, 0.000027892000
+Starting mvt
+mvt, 0, 0.000027292000
+Starting mvt
+mvt, 0, 0.000028336000
+Starting mvt
+mvt, 0, 0.000031836000
+Starting mvt
+mvt, 0, 0.000027910000
+Starting mvt
+mvt, 0, 0.000028162000
+Starting mvt
+mvt, 0, 0.000028314000
+Starting mvt
+mvt, 0, 0.000032096000
+Starting mvt
+mvt, 0, 0.000027814000
+Starting mvt
+mvt, 0, 0.000027942000
+Starting mvt
+mvt, 0, 0.000027990000
+Starting mvt
+mvt, 0, 0.000031900000
+Starting mvt
+mvt, 0, 0.000027558000
+Starting mvt
+mvt, 0, 0.000027430000
+Starting mvt
+mvt, 0, 0.000027760000
+Starting mvt
+mvt, 0, 0.000033488000
+Starting mvt
+mvt, 0, 0.000028062000
+Starting mvt
+mvt, 0, 0.000027262000
+Starting mvt
+mvt, 0, 0.000027624000
+Starting mvt
+mvt, 0, 0.000032812000
+Starting mvt
+mvt, 0, 0.000028040000
+Starting mvt
+mvt, 0, 0.000027544000
+Starting mvt
+mvt, 0, 0.000027646000
+Starting mvt
+mvt, 0, 0.000032614000
+Starting mvt
+mvt, 0, 0.000027600000
+Starting mvt
+mvt, 0, 0.000027374000
+Starting mvt
+mvt, 0, 0.000027322000
+Starting mvt
+mvt, 0, 0.000031048000
+Starting mvt
+mvt, 0, 0.000027654000
+Starting mvt
+mvt, 0, 0.000027676000
+Starting mvt
+mvt, 0, 0.000027552000
+Starting mvt
+mvt, 0, 0.000032094000
+Starting mvt
+mvt, 0, 0.000028858000
+Starting mvt
+mvt, 0, 0.000027922000
+Starting mvt
+mvt, 0, 0.000027536000
+Starting mvt
+mvt, 0, 0.000031628000
+Starting mvt
+mvt, 0, 0.000027430000
+Starting mvt
+mvt, 0, 0.000027346000
+Starting mvt
+mvt, 0, 0.000027422000
+Starting mvt
+mvt, 0, 0.000032116000
+Starting mvt
+mvt, 0, 0.000028302000
+Starting mvt
+mvt, 0, 0.000027560000
+Starting mvt
+mvt, 0, 0.000027348000
+Starting mvt
+mvt, 0, 0.000031176000
+Starting mvt
+mvt, 0, 0.000027692000
+Starting mvt
+mvt, 0, 0.000027454000
+Starting mvt
+mvt, 0, 0.000027182000
+Starting mvt
+mvt, 0, 0.000030770000
+Starting mvt
+mvt, 0, 0.000028020000
+Starting mvt
+mvt, 0, 0.000027904000
+Starting mvt
+mvt, 0, 0.000027678000
+Starting mvt
+mvt, 0, 0.000031530000
+Starting mvt
+mvt, 0, 0.000027570000
+Starting mvt
+mvt, 0, 0.000027460000
+Starting mvt
+mvt, 0, 0.000027454000
+Starting mvt
+mvt, 0, 0.000031264000
+Starting mvt
+mvt, 0, 0.000028328000
+Starting mvt
+mvt, 0, 0.000028122000
+Starting mvt
+mvt, 0, 0.000027492000
+Starting mvt
+mvt, 0, 0.000030816000
+Starting mvt
+mvt, 0, 0.000027628000
+Starting mvt
+mvt, 0, 0.000027348000
+Starting mvt
+mvt, 0, 0.000027192000
+Starting mvt
+mvt, 0, 0.000031112000
+Starting mvt
+mvt, 0, 0.000027648000
+Starting mvt
+mvt, 0, 0.000027822000
+Starting mvt
+mvt, 0, 0.000027690000
+Starting mvt
+mvt, 0, 0.000031040000
+Starting mvt
+mvt, 0, 0.000027602000
+Starting mvt
+mvt, 0, 0.000027374000
+Starting mvt
+mvt, 0, 0.000027234000
+Starting mvt
+mvt, 0, 0.000030848000
+Starting mvt
+mvt, 0, 0.000027570000
+Starting mvt
+mvt, 0, 0.000028064000
+Starting mvt
+mvt, 0, 0.000027774000
+Starting mvt
+mvt, 0, 0.000030922000
+Starting mvt
+mvt, 0, 0.000027628000
+Starting mvt
+mvt, 0, 0.000027516000
+Starting mvt
+mvt, 0, 0.000027292000
+Starting mvt
+mvt, 0, 0.000031086000
+Starting mvt
+mvt, 0, 0.000027684000
+Starting mvt
+mvt, 0, 0.000027684000
+Starting mvt
+mvt, 0, 0.000027492000
+Starting mvt
+mvt, 0, 0.000031142000
+Starting mvt
+mvt, 0, 0.000027684000
+Starting mvt
+mvt, 0, 0.000027592000
+Starting mvt
+mvt, 0, 0.000027210000
+Starting mvt
+mvt, 0, 0.000030728000
+Starting mvt
+mvt, 0, 0.000027378000
+Starting mvt
+mvt, 0, 0.000027510000
+Starting mvt
+mvt, 0, 0.000027820000
+Starting mvt
+mvt, 0, 0.000030676000
+Starting mvt
+mvt, 0, 0.000027710000
+Starting mvt
+mvt, 0, 0.000027458000
+Starting mvt
+mvt, 0, 0.000027262000
+Starting mvt
+mvt, 0, 0.000030798000
+Starting mvt
+mvt, 0, 0.000027718000
+Starting mvt
+mvt, 0, 0.000027404000
+Starting mvt
+mvt, 0, 0.000027208000
+Starting mvt
+mvt, 0, 0.000031040000
+Starting mvt
+mvt, 0, 0.000028378000
+Starting mvt
+mvt, 0, 0.000027464000
+Starting mvt
+mvt, 0, 0.000027238000
+Starting mvt
+mvt, 0, 0.000031014000
+Starting mvt
+mvt, 0, 0.000027962000
+Starting mvt
+mvt, 0, 0.000027262000
+Starting mvt
+mvt, 0, 0.000027206000
+Finished mvt, 0.000000000000
+Benchmark Start relu
+Starting relu
+relu, 0, 0.000623906000
+Finished relu, 0.000000000000
+Benchmark Start spmv
+Starting spmv
+spmv, 0, 0.000020740000
+Finished spmv, 0.000000000000
