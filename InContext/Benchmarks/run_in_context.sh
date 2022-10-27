@@ -1,5 +1,6 @@
 #!/bin/zsh
 
+max_time=600
 
 # This benchmarks a single benchmark against all the 
 # different compiler options.
@@ -12,18 +13,20 @@ archfile=$PWD/$1
 outfile=$PWD/$2
 bfolder=$3
 
+mkdir -p $outfile
+
 pushd $bfolder
 ## Do the non-LLVM ones first.
 ../compile.sh flexc_loop.c
 echo "Starting OpenCGRA"
-../run.sh ../../../build/src/libmapperPass.so flexc_loop.c.bc --params-file $archfile &> $outfile/opencgra.stdout
+timeout $max_time ../run.sh ../../../build/src/libmapperPass.so flexc_loop.c.bc --params-file $archfile &> $outfile/opencgra.stdout
 echo "Starting Greedy"
-../run.sh ../../../build/src/libmapperPass.so flexc_loop.c.bc --params-file $archfile --use-greedy &> $outfile/greedy.stdout
+timeout $max_time ../run.sh ../../../build/src/libmapperPass.so flexc_loop.c.bc --params-file $archfile --use-greedy &> $outfile/greedy.stdout
 echo "Starting FlexC"
-../run.sh ../../../build/src/libmapperPass.so flexc_loop.c.bc --params-file $archfile --use-rewriter &> $outfile/flexc.stdout
+timeout $max_time ../run.sh ../../../build/src/libmapperPass.so flexc_loop.c.bc --params-file $archfile --use-rewriter &> $outfile/flexc.stdout
 echo "Starting LLVM"
 ../compile.sh flexc_loop.c --use-llvm-cannonicalizer
-../run.sh ../../../build/src/libmapperPass.so flexc_loop.c.bc --params-file $archfile &> $outfile/llvm.stdout
+timeout $max_time ../run.sh ../../../build/src/libmapperPass.so flexc_loop.c.bc --params-file $archfile &> $outfile/llvm.stdout
 
 # Go through and get the results from each.
 get_results() {

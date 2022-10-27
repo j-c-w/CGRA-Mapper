@@ -18,12 +18,7 @@ architectures=( ../../benchmark_scripts/architectures/cca.json ../../benchmark_s
 if [[ ${#plot_only[@]} -eq 0 ]]; then
 	for arch in ${architectures[@]}; do
 		archname=$(basename $arch)
-		for bench_folder in $(cat Working); do
-			echo "Starting run of $bench_folder"
-			this_output_folder=$output_folder/${archname}_${bench_folder}
-			mkdir -p $this_output_folder
-			./run_in_context.sh $arch $this_output_folder $bench_folder > $this_output_folder/stdout
-		done
+		parallel ./run_in_context.sh $arch $output_folder/${archname}_{} {} ::: $(cat Working) > $output_folder/${archname}.stdout
 	done
 fi
 
