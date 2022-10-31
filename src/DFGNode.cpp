@@ -185,11 +185,15 @@ bool DFGNode::isConst() {
 // Not all nodes actually require any compute resources.
 bool DFGNode::isTransparentOp() {
 	if (m_opcodeName.compare("sitofp") == 0
+			// These are transparent becuase they are rare/llvm-specific
+			// and not discussed in the architecture-style papers.
 			|| m_opcodeName.compare("fptosi") == 0
 			|| m_opcodeName.compare("ret") == 0
 			|| m_opcodeName.compare("phi") == 0
 			|| m_opcodeName.compare("bitcast") == 0
 			|| m_opcodeName.compare("trunc") == 0
+			|| m_opcodeName.compare("select") == 0
+			|| m_opcodeName.compare("const_fp") == 0
 			|| m_opcodeName.compare("Constant") == 0
 			// These ones are not so much 'transparent'
 			// as "I'm not 100% sure that they
@@ -199,6 +203,7 @@ bool DFGNode::isTransparentOp() {
 			// so I guess the point is to ignore the llvm-specific
 			// ops because they aren't representative.
 			|| m_opcodeName.compare("getelementptr") == 0
+			|| m_opcodeName.compare("shufflevector") == 0
 			|| m_opcodeName.compare("extractelement") == 0
 			|| m_opcodeName.compare("insertelement") == 0
 			// I don't understand why CGRA-mapper would ever

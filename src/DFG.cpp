@@ -505,7 +505,11 @@ void DFG::construct(Function *t_F) {
           } else {
             // cout << "Value " << op->getName().bytes_begin() << " was too big\n";
           }
-        }  else {
+        }  else if (isa<ConstantFP>(op)) {
+			cnode = new DFGNode(nodeID ++, m_precisionAware, op, "const_fp", "const_fp");
+			already_set = true;
+			// cout << "Extracted constant FP " << std::endl;
+		} else {
           // cout << "Value is not an int ";
         }
         
@@ -1214,9 +1218,9 @@ void DFG::showOpcodeDistribution() {
   }
   for (map<string, int>::iterator opcodeItr=opcodeMap.begin();
       opcodeItr!=opcodeMap.end(); ++opcodeItr) {
-    // errs() << (*opcodeItr).first << " : " << (*opcodeItr).second << "\n";
+    errs() << (*opcodeItr).first << " : " << (*opcodeItr).second << "\n";
   }
-  // errs() << "DFG node count: "<<nodes.size()<<"; DFG edge count: "<<m_DFGEdges.size()<<"\n";
+  errs() << "DFG node count: "<<nodes.size()<<"; DFG edge count: "<<m_DFGEdges.size()<<"\n";
 }
 
 int DFG::getID(DFGNode* t_node) {

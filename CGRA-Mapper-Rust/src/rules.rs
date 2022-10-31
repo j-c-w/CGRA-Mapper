@@ -512,6 +512,8 @@ pub(crate) fn gcc_style_rules() -> Vec<Rewrite<SymbolLang, ()>> {
 		// probably skp this rule?)
 		rewrite!("ashr-to-lsl-div"; "(sdiv ?a (shl const_1 ?b))" => "(ashr ?a ?b)"),
 		rewrite!("lshr-to-lsl-div"; "(sdiv ?a (shl const_1 ?b))" => "(lshr ?a ?b)"),
+		rewrite!("lsh-to-lookup"; "(lsh const_1 ?a)" => "(load ?a)"), // turn left shift into
+		// indexed load into lookup
 		// Line 401:
 		rewrite!("neg-to-div"; "(sdiv ?x (const_-1))" => "(neg ?x)"),
 		// rewrite!("div-to-neg"; "(sdiv ?x (const_-1))" => "(neg ?x)"),

@@ -21,6 +21,10 @@ MapResult *doMap(Options *options, Parameters *params, CGRA *cgra, Mapper *mappe
         // time if we didn't use egraphs.
         // anyway, suspect it's negligable.
         dfg->rejoinCycles();
+		if (options->DebugMappingLoop) {
+			cout << "Opcode distribtuion after rejoining cycles is \n";
+			dfg->showOpcodeDistribution();
+		}
 
         MapResult *res = mapper->heuristicMap(params, options, cgra, dfg, II);
 
@@ -76,6 +80,11 @@ void runMapping(CGRA *cgra, DFG *dfg, Parameters *params, Options *options) {
     MapResult *mapResult;
     cout << "Options settings are " << options->UseRewriter << "\n";
     bool greedy_success = false;
+
+	if (options->DebugMappingLoop) {
+		cout << "Before rewriting, operation distribution is \n ";
+		dfg->showOpcodeDistribution();
+	}
 
     list<DFG *> *generated_dfgs;
     if (options->UseGreedy)

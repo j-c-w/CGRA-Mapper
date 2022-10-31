@@ -250,6 +250,7 @@ list<DFG*> *rewrite_with_egraphs(Options *opts, CGRA *cgra, DFG *dfg) {
 	if (opts->DebugRustConversion) {
 		errs() << "Returning " << rust_results.num_dfgs << " graphs from the Rust wrapper\n";
 		errs() << "First result is " << dfg_results->front()->asString();
+		dfg_results->front()->showOpcodeDistribution();
 	}
 	return dfg_results;
 }
