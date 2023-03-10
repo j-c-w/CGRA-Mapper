@@ -548,11 +548,9 @@ void Mapper::showSchedule(CGRA* t_cgra, DFG* t_dfg, MapResult *res,
   }
   // cout << "Looking at DFG with show cycle boundary " << showCycleBoundary << "\n";
   while (cycle <= showCycleBoundary) {
-    // errs()<<"--------------------------- cycle:"<<cycle<<" ---------------------------\n";
     for (int i=0; i<t_cgra->getRows(); ++i) {
       for (int j=0; j<t_cgra->getColumns(); ++j) {
 
-        // Display the CGRA node occupancy.
         bool fu_occupied = false;
         DFGNode* dfgNode;
         for (DFGNode* currentDFGNode: t_dfg->nodes) {
@@ -586,12 +584,6 @@ void Mapper::showSchedule(CGRA* t_cgra, DFG* t_dfg, MapResult *res,
         }
         display[i*2][j*2] = str_fu;
 
-        // FIXME: some arrows are not display correctly (e.g., 7).
-        // Display the CGRA link occupancy.
-        // \u2190: left; \u2191: up; \u2192: right; \u2193: down;
-        // \u21c4: left&right; \u21c5: up&down.
-        // TODO: [dashed for bypass]
-        // \u21e0: left; \u21e1: up; \u21e2: right; \u21e3: down;
         if (i < t_cgra->getRows() - 1) {
           string str_link = "";
           CGRALink* lu = t_cgra->getLink(t_cgra->nodes[i][j], t_cgra->nodes[i+1][j]);
@@ -640,7 +632,6 @@ void Mapper::showSchedule(CGRA* t_cgra, DFG* t_dfg, MapResult *res,
     }
 
     // Display mapping and routing cycle by cycle.
-//    for (int i=0; i<displayRows; ++i) {
     for (int i=displayRows-1; i>=0; --i) {
       for (int j=0; j<displayColumns; ++j) {
         // errs()<<display[i][j];
