@@ -68,8 +68,8 @@ done
 echo "Before reducing, have ${#files[@]}"
 # Do this in python, because it is a bit easier to manage the
 # dict of arrays in python.
-files=( $(python $original_folder/reducer.py --rate $reduction_rate ${files[@]}) )
-echo "Running over files ${#files[@]}"
+files=( $(python3 $original_folder/reducer.py --rate $reduction_rate ${files[@]}) )
+echo "Running over files ${files[@]}"
 
 extra_flags=""
 extra_compile_flags=""
@@ -119,7 +119,7 @@ parallel "(
 		# flex, but it means the same thing happening here :)
 		echo 'Rewriter timed out, running without rewriter.'
 		# Put a tmeout on this also to avoid infinit e hanging.
-		timeout 50 $original_folder/run.sh $original_folder/$lmapper kernel_{/.}.bc --use-rewriter --params-file $PWD/param.json
+		timeout 90 $original_folder/run.sh $original_folder/$lmapper kernel_{/.}.bc --use-rewriter --params-file $PWD/param.json
 		if [[ \$? == 124 ]]; then
 			echo 'Subrewriter timed out'
 		fi
