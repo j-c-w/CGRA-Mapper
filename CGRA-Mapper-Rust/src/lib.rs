@@ -247,7 +247,7 @@ pub extern "C" fn optimize_with_egraphs(dfg: CppDFG, rulesets: Rulesets, cgra_pa
 		Runner::default()
 			.with_iter_limit(15)
 			.with_node_limit(100_000)
-			.with_time_limit(std::time::Duration::from_secs(20))
+			.with_time_limit(std::time::Duration::from_secs(40))
 			.with_egraph(egraph)
 			// .with_explanations_enabled()
 			.with_scheduler(SimpleScheduler);
