@@ -270,7 +270,10 @@ pub extern "C" fn optimize_with_egraphs(dfg: CppDFG, rulesets: Rulesets, cgra_pa
 	} else {
 		println!("Running egraphs with ban cost");
 		let cost = BanCost::from_operations_file(cgrafilename);
-		LpExtractor::new(&runner.egraph, cost).solve_multiple(&roots[..])
+		let mut extractor = LpExtractor::new(&runner.egraph, cost);
+		extractor.timeout(30.0);
+		let (exp, ids) = extractor.solve_multiple(&roots[..]);
+		(exp, ids)
 	};
     let extraction_time = start_extraction.elapsed();
     println!("extraction took {:?}", extraction_time);
