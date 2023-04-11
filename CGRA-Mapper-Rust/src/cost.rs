@@ -132,6 +132,14 @@ fn ban_cost(available: &HashSet<Symbol>, symbol: &Symbol) -> f64 {
     }
 }
 
+impl DagCostFunction<SymbolLang> for BanCost {
+    type Cost = f64;
+    fn zero(&mut self) -> f64 { 0.0 }
+    fn node_cost(&mut self, enode: &SymbolLang) -> f64 {
+        ban_cost(&self.available, &enode.op)
+    }
+}
+
 impl LpCostFunction<SymbolLang, ()> for BanCost {
     fn node_cost(&mut self, _egraph: &EGraph<SymbolLang, ()>, _eclass: Id, enode: &SymbolLang) -> f64 {
         ban_cost(&self.available, &enode.op)
@@ -172,6 +180,14 @@ fn lookup_cost(costs: &HashMap<Symbol, f64>, default: f64, symbol: &Symbol) -> f
         0.0
     } else {
         costs.get(symbol).cloned().unwrap_or(default)
+    }
+}
+
+impl DagCostFunction<SymbolLang> for LookupCost {
+    type Cost = f64;
+    fn zero(&mut self) -> f64 { 0.0 }
+    fn node_cost(&mut self, enode: &SymbolLang) -> f64 {
+        lookup_cost(&self.costs, self.default_cost, &enode.op)
     }
 }
 
