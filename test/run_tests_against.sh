@@ -45,12 +45,12 @@ if [[ $2 == *.cpp ]] || [[ $2 == *.c ]]; then
 		# Use the latencies for the A5 processor (modified to account for pipelining, which obviosuly doens't exist on CGRA ---taken from gcc scheduler for a5.)
 		$original_folder/build_param.sh $original_folder/param_skeleton_a5_latencies operations.json param.json
 	fi
-	timeout=300 # Use 300s timeout --- as we are using small CGRAs for this.
+	timeout=30 # Use 300s timeout --- as we are using small CGRAs for this.
 elif [[ "$2" == *.json ]]; then
 	echo "Using a pre-specified CGRA"
 	# This is a pre-specified architecture --- load the JSON file into here:
 	cp $original_folder/$2 param.json
-	timeout=600 # Use large timeout because these architectures are much larger, so OpenCGRA is much slower (there's also fewer
+	timeout=60 # Use large timeout because these architectures are much larger, so OpenCGRA is much slower (there's also fewer
 	# fewer results to get, so we can use a longer timeout :)
 else
 	echo "Input file $2 was neither CPP nor a JSON file --- not sure how to create an architecture spec from this"
@@ -107,7 +107,7 @@ if [[ ${#print_used_rules} -gt 0 ]]; then
 	extra_flags="$extra_flags --print-used-rules"
 fi
 
-parallel "(
+parallel -j 1 "(
 	echo 'Starting {}'
 	cp {} kernel_{/.}.cpp
 	$original_folder/compile.sh $extra_compile_flags kernel_{/.}.cpp
@@ -119,7 +119,7 @@ parallel "(
 		# flex, but it means the same thing happening here :)
 		echo 'Rewriter timed out, running without rewriter.'
 		# Put a tmeout on this also to avoid infinit e hanging.
-		timeout 90 $original_folder/run.sh $original_folder/$lmapper kernel_{/.}.bc --use-rewriter --params-file $PWD/param.json
+		# timeout 90 $original_folder/run.sh $original_folder/$lmapper kernel_{/.}.bc --use-rewriter --params-file $PWD/param.json
 		if [[ \$? == 124 ]]; then
 			echo 'Subrewriter timed out'
 		fi

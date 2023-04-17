@@ -241,7 +241,9 @@ pub extern "C" fn optimize_with_egraphs(dfg: CppDFG, rulesets: Rulesets, cgra_pa
 
 	let (egraph, mut roots) = dfg_to_egraph(&dfg);
     println!("identified {} roots", roots.len());
-	// egraph.dot().to_svg("/tmp/initial.svg").unwrap();
+	egraph.dot().to_svg("/tmp/initial.svg").unwrap();
+
+    panic!("ABORT");
 
 	let runner =
 		Runner::default()
@@ -269,6 +271,7 @@ pub extern "C" fn optimize_with_egraphs(dfg: CppDFG, rulesets: Rulesets, cgra_pa
         // TODO: add flag to pick this?
 		// LpExtractor::new(&runner.egraph, cost).solve_multiple(&roots[..])
         let (c, e, r) = DagExtractor::new(&runner.egraph, cost).find_best(&roots[..]);
+        println!("extracted cost: {}", c);
         (e, r)
 	} else {
 		println!("Running egraphs with ban cost");
@@ -279,6 +282,7 @@ pub extern "C" fn optimize_with_egraphs(dfg: CppDFG, rulesets: Rulesets, cgra_pa
 		// let (exp, ids) = extractor.solve_multiple(&roots[..]);
 		// (exp, ids)
         let (c, e, r) = DagExtractor::new(&runner.egraph, cost).find_best(&roots[..]);
+        println!("extracted cost: {}", c);
         (e, r)
 	};
     let extraction_time = start_extraction.elapsed();
@@ -312,7 +316,7 @@ pub extern "C" fn optimize_with_graphs(dfg: CppDFG, rulesets: Rulesets, cgra_par
     let mut graph = dfg_to_graph(dfg);
     // TODO:
     // println!("identified {} roots", graph.roots.len());
-	// graph.to_svg("/tmp/initial.svg").unwrap();
+	graph.to_svg("/tmp/initial.svg").unwrap();
 
     let cgrafilename = unsafe { std::ffi::CStr::from_ptr(cgra_params) }.to_str().unwrap();
 	let (freq_cost, ban_cost);
@@ -359,7 +363,7 @@ pub extern "C" fn optimize_with_graphs(dfg: CppDFG, rulesets: Rulesets, cgra_par
     }
 
     let rewriting_time = start_rewriting.elapsed();
-	// graph.to_svg("/tmp/final.svg").unwrap();
+	graph.to_svg("/tmp/final.svg").unwrap();
     println!("applied {} rules in {:?}:", applied.len(), rewriting_time);
 	println!("  {:?}", applied);
 
