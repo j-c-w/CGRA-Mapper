@@ -58,10 +58,11 @@ checksum = "4902c2c164ed74da85aa8472c4a754de1d8164c1fd16d672ec0faf22da482fa9"
 
 [[package]]
 name = "egg"
-version = "0.8.1"
-source = "git+https://github.com/Bastacyclop/egg/?rev=aeff2a06e6eb9ee51a8541630845d42de369c885#aeff2a06e6eb9ee51a8541630845d42de369c885"
+version = "0.9.4"
+source = "git+https://github.com/Bastacyclop/egg/?rev=1c5cb2b2e8910ca715dc18f5e1e09a4e8048d258#1c5cb2b2e8910ca715dc18f5e1e09a4e8048d258"
 dependencies = [
  "coin_cbc",
+ "env_logger",
  "fxhash",
  "hashbrown",
  "indexmap",
@@ -71,6 +72,15 @@ dependencies = [
  "symbol_table",
  "symbolic_expressions",
  "thiserror",
+]
+
+[[package]]
+name = "env_logger"
+version = "0.9.3"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "a12e6657c4c97ebab115a42dcee77225f7f482cdd841cf7088c657a42e9e00e7"
+dependencies = [
+ "log",
 ]
 
 [[package]]
@@ -174,10 +184,11 @@ checksum = "cc88c725d61fc6c3132893370cac4a0200e3fedf5da8331c570664b1987f5ca2"
 
 [[package]]
 name = "symbol_table"
-version = "0.1.0"
+version = "0.2.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "9a870ced3953e40e68e922897faf8e43b4c507065c236e4d921b8c0aa0c67d68"
+checksum = "32bf088d1d7df2b2b6711b06da3471bc86677383c57b27251e18c56df8deac14"
 dependencies = [
+ "ahash",
  "hashbrown",
 ]
 

@@ -92,13 +92,14 @@ fn get_available_operations(path: &str) -> HashMap<String, Option<u16>> {
 	operations
 }
 
-pub(crate) struct BanCost {
+#[derive(Clone)]
+pub struct BanCost {
     // could also have cost: HashMap<Symbol, f64>
     available: HashSet<Symbol>
 }
 
 impl BanCost {
-    pub(crate) fn from_operations_file<P>(path: P) -> Self
+    pub fn from_operations_file<P>(path: P) -> Self
         where P: AsRef<str>
     {
         let operations = get_available_operations(path.as_ref());

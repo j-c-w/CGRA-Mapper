@@ -7,10 +7,15 @@ edition = "2021"
 
 [lib]
 name = "EggLib"
-crate-type = ["dylib"]
+crate-type = ["dylib", "rlib"]
+
+#[profile.release]
+#debug = true
+#[profile.bench]
+#debug = true
 
 [dependencies]
-#egg = "0.7.1"
-egg = { git = "https://github.com/Bastacyclop/egg/", rev ="aeff2a06e6eb9ee51a8541630845d42de369c885", features = ["lp"] }
+egg = { git = "https://github.com/Bastacyclop/egg/", rev ="1c5cb2b2e8910ca715dc18f5e1e09a4e8048d258", features = ["lp"] }
+#egg = { path = "../../egg", features = ["lp"] }
 libc = "0.2"
 tinyjson = "2"

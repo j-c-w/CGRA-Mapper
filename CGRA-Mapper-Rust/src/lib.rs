@@ -5,7 +5,7 @@ use std::collections::{HashSet, HashMap};
 use cost::*;
 use rules::*;
 
-mod cost;
+pub mod cost;
 mod rules;
 
 #[repr(C)]
@@ -125,7 +125,7 @@ fn load_rulesets(rsets: Rulesets) -> Vec<Rewrite<SymbolLang, ()>> {
 	result
 }
 
-fn load_ruleset(nm: &str) -> Vec<Rewrite<SymbolLang, ()>> {
+pub fn load_ruleset(nm: &str) -> Vec<Rewrite<SymbolLang, ()>> {
 	match nm {
 		"int" => rules(), // These are the 'normal' rewrite rules
 		"fp" => fp_rules(), // These are rewrite rules for -ffast-math style rewrites
@@ -231,9 +231,10 @@ fn explanation_statistics(e: &Explanation<SymbolLang>) {
 }
 
 #[no_mangle]
-pub extern "C" fn optimize_with_egraphs(dfg: CppDFG, rulesets: Rulesets, cgra_params: *const
-										c_char, print_used_rules: bool,
-										cost_mode: *const c_char) -> CppDFGs {
+pub extern "C" fn optimize_with_egraphs(
+    dfg: CppDFG, rulesets: Rulesets, cgra_params: *const c_char,
+    print_used_rules: bool,	cost_mode: *const c_char
+) -> CppDFGs {
 	println!("entering Rust");
     // env_logger::init();
 
@@ -275,6 +276,7 @@ pub extern "C" fn optimize_with_egraphs(dfg: CppDFG, rulesets: Rulesets, cgra_pa
         (e, r)
 	} else {
 		println!("Running egraphs with ban cost");
+		println!("cgrafilename: {}", cgrafilename);
 		let cost = BanCost::from_operations_file(cgrafilename);
         // TODO: add flag to pick this?
 		// let mut extractor = LpExtractor::new(&runner.egraph, cost);
@@ -326,6 +328,7 @@ pub extern "C" fn optimize_with_graphs(dfg: CppDFG, rulesets: Rulesets, cgra_par
 		Box::new(|g| g.cost(&freq_cost))
 	} else {
 		println!("Running with ban cost");
+		println!("cgrafilename: {}", cgrafilename);
 		ban_cost = BanCost::from_operations_file(cgrafilename);
 		Box::new(|g| g.cost(&ban_cost))
 	};
