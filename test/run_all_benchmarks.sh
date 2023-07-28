@@ -46,16 +46,16 @@ if [[ ${#plot_only} -eq 0 ]]; then
 
 		echo "Starting benchmark $file"
 		bfile=$(basename $file)
-		# ./run_tests_against.sh $reduction_rate $file $folder $temp_folder &> run_all_benchmarks_outputs/stdout/${bfile}.no_rules
+		./run_tests_against.sh $reduction_rate $file $folder $temp_folder &> run_all_benchmarks_outputs/stdout/${bfile}.no_rules
 		mv $temp_folder/run_output.old run_all_benchmarks_outputs/stdout/${bfile}.no_rules.output
 		echo "Starting with greedy $file"
-		# ./run_tests_against.sh $reduction_rate $file $folder $temp_folder --use-greedy &> run_all_benchmarks_outputs/stdout/${bfile}.greedy
+		./run_tests_against.sh $reduction_rate $file $folder $temp_folder --use-greedy &> run_all_benchmarks_outputs/stdout/${bfile}.greedy
 		mv $temp_folder/run_output.old run_all_benchmarks_outputs/stdout/${bfile}.greedy.output
 		echo "Starting with rewriter $file"
 		./run_tests_against.sh $reduction_rate $file $folder $temp_folder --use-rewriter &> run_all_benchmarks_outputs/stdout/${bfile}.rewriter
 		mv $temp_folder/run_output.old run_all_benchmarks_outputs/stdout/${bfile}.rewriter.output
 		echo "Staring with LLVM rewriter $file"
-		# ./run_tests_against.sh $reduction_rate $file $folder $temp_folder --use-llvm &> run_all_benchmarks_outputs/stdout/${bfile}.llvm
+		./run_tests_against.sh $reduction_rate $file $folder $temp_folder --use-llvm &> run_all_benchmarks_outputs/stdout/${bfile}.llvm
 		mv $temp_folder/run_output.old run_all_benchmarks_outputs/stdout/${bfile}.llvm.output
 
 		# Run the rewriter with just the boolean ruleset enabled.
@@ -143,10 +143,10 @@ if [[ ${#gather_only} -eq 0 ]]; then
 		fi
 	done
 
-	python plot_successes.py run_all_benchmarks_outputs/graph.png run_all_benchmarks_outputs/no_rules_data run_all_benchmarks_outputs/llvm_data run_all_benchmarks_outputs/greedy_data run_all_benchmarks_outputs/rewriter_data
-	python plot_successes_by_benchmark.py run_all_benchmarks_outputs/graph_by_benchmark.png run_all_benchmarks_outputs/no_rules_data_by_benchmark run_all_benchmarks_outputs/llvm_data_by_benchmark  run_all_benchmarks_outputs/greedy_data_by_benchmark run_all_benchmarks_outputs/rewriter_data_by_benchmark
+	python3 plot_successes.py run_all_benchmarks_outputs/graph.png run_all_benchmarks_outputs/no_rules_data run_all_benchmarks_outputs/llvm_data run_all_benchmarks_outputs/greedy_data run_all_benchmarks_outputs/rewriter_data
+	python3 plot_successes_by_benchmark.py run_all_benchmarks_outputs/graph_by_benchmark.png run_all_benchmarks_outputs/no_rules_data_by_benchmark run_all_benchmarks_outputs/llvm_data_by_benchmark  run_all_benchmarks_outputs/greedy_data_by_benchmark run_all_benchmarks_outputs/rewriter_data_by_benchmark
 
 	if [[ ${#run_individual_rulesets} -gt 0 ]]; then
-		python plot_successes.py ruleset_successes.png run_all_benchmarks_outputs/int_rules_data run_all_benchmarks_outputs/fp_rules_data run_all_benchmarks_outputs/logic_as_bool_data run_all_benchmarks_outputs/all_rules_data --rulesets
+		python3 plot_successes.py ruleset_successes.png run_all_benchmarks_outputs/int_rules_data run_all_benchmarks_outputs/fp_rules_data run_all_benchmarks_outputs/logic_as_bool_data run_all_benchmarks_outputs/all_rules_data --rulesets
 	fi
 fi

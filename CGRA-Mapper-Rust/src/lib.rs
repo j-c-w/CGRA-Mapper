@@ -244,7 +244,7 @@ pub extern "C" fn optimize_with_egraphs(
     println!("identified {} roots", roots.len());
 	egraph.dot().to_svg("/tmp/initial.svg").unwrap();
 
-    panic!("ABORT");
+    // panic!("ABORT");
 
 	let runner =
 		Runner::default()
@@ -270,22 +270,22 @@ pub extern "C" fn optimize_with_egraphs(
 		println!("Running egraphs with frequency cost");
 		let cost = LookupCost::from_operations_frequencies(cgrafilename);
         // TODO: add flag to pick this?
-		// LpExtractor::new(&runner.egraph, cost).solve_multiple(&roots[..])
-        let (c, e, r) = DagExtractor::new(&runner.egraph, cost).find_best(&roots[..]);
-        println!("extracted cost: {}", c);
-        (e, r)
+		LpExtractor2::new(&runner.egraph, cost).solve_multiple(&roots[..])
+        // let (c, e, r) = DagExtractor::new(&runner.egraph, cost).find_best(&roots[..]);
+        // println!("extracted cost: {}", c);
+        // (e, r)
 	} else {
 		println!("Running egraphs with ban cost");
 		println!("cgrafilename: {}", cgrafilename);
 		let cost = BanCost::from_operations_file(cgrafilename);
         // TODO: add flag to pick this?
-		// let mut extractor = LpExtractor::new(&runner.egraph, cost);
-		// extractor.timeout(30.0);
-		// let (exp, ids) = extractor.solve_multiple(&roots[..]);
-		// (exp, ids)
-        let (c, e, r) = DagExtractor::new(&runner.egraph, cost).find_best(&roots[..]);
-        println!("extracted cost: {}", c);
-        (e, r)
+		let mut extractor = LpExtractor2::new(&runner.egraph, cost);
+		extractor.timeout(30.0);
+		let (exp, ids) = extractor.solve_multiple(&roots[..]);
+		(exp, ids)
+        // let (c, e, r) = DagExtractor::new(&runner.egraph, cost).find_best(&roots[..]);
+        // println!("extracted cost: {}", c);
+        // (e, r)
 	};
     let extraction_time = start_extraction.elapsed();
     println!("extraction took {:?}", extraction_time);

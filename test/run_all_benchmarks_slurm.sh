@@ -13,7 +13,7 @@ fraction_to_run=$3
 for file in $(find $benchmark_folder -name "loop*.c" -print0 | sort -z); do
 	files+=($file)
 done
-files=( $(python reducer.py --number $num_to_use ${files[@]}) )
+files=( $(python3 reducer.py --number $num_to_use ${files[@]}) )
 number=0
 
 for loop in ${files[@]}; do
