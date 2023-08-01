@@ -7,6 +7,7 @@ use rules::*;
 
 pub mod cost;
 mod rules;
+pub mod serialize;
 
 #[repr(C)]
 pub struct CppNode {

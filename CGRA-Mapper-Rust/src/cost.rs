@@ -118,6 +118,8 @@ impl BanCost {
     }
 }
 
+pub const USE_INFINITY: bool = true;
+
 fn ban_cost(available: &HashSet<Symbol>, symbol: &Symbol) -> f64 {
     // println!("Looking up {}", symbol);
     if symbol.as_str().starts_with("Dummy") || symbol.as_str().starts_with("const") {
@@ -129,7 +131,7 @@ fn ban_cost(available: &HashSet<Symbol>, symbol: &Symbol) -> f64 {
         1.0
     } else {
         // println!("Didn't find symbol {}", symbol.as_str());
-        10_000.0 // does not seem to like f64::INFINITY
+        if USE_INFINITY { std::f64::INFINITY } else { 10_000.0 }
     }
 }
 
@@ -172,7 +174,8 @@ impl LookupCost {
         }).collect::<HashMap<Symbol, f64>>();
         println!("costs are {:?}", costs);
 
-        LookupCost { costs, default_cost: 1_000_000.0 }
+        let default_cost = if USE_INFINITY { std::f64::INFINITY } else { 1_000_000.0 };
+        LookupCost { costs, default_cost }
     }
 }
 
