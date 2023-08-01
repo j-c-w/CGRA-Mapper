@@ -262,6 +262,7 @@ pub extern "C" fn optimize_with_egraphs(
     for r in &mut roots[..] {
         *r = runner.egraph.find(*r);
     }
+    // dump result egraphs
 
     let cgrafilename = unsafe { std::ffi::CStr::from_ptr(cgra_params) }.to_str().unwrap();
     let cost_mode_string = unsafe { std::ffi::CStr::from_ptr(cost_mode) }.to_str().unwrap();
@@ -269,19 +270,26 @@ pub extern "C" fn optimize_with_egraphs(
 	let (best, best_roots) = if cost_mode_string == "frequency" {
 		println!("Running egraphs with frequency cost");
 		let cost = LookupCost::from_operations_frequencies(cgrafilename);
+        let start = std::time::Instant::now();
         // TODO: add flag to pick this?
-		LpExtractor2::new(&runner.egraph, cost).solve_multiple(&roots[..])
+		let (e, r) = LpExtractor2::new(&runner.egraph, cost.clone()).solve_multiple(&roots[..]);
+        println!("lp extraction time (2): {:?}", start.elapsed());
+        println!("lp cost (2): {}", egg::Graph::from_dfg(&e, r.clone()).cost(&cost));
+
         // let (c, e, r) = DagExtractor::new(&runner.egraph, cost).find_best(&roots[..]);
         // println!("extracted cost: {}", c);
-        // (e, r)
+        (e, r)
 	} else {
 		println!("Running egraphs with ban cost");
 		println!("cgrafilename: {}", cgrafilename);
 		let cost = BanCost::from_operations_file(cgrafilename);
+        let start = std::time::Instant::now();
         // TODO: add flag to pick this?
-		let mut extractor = LpExtractor2::new(&runner.egraph, cost);
+		let mut extractor = LpExtractor2::new(&runner.egraph, cost.clone());
 		extractor.timeout(30.0);
 		let (exp, ids) = extractor.solve_multiple(&roots[..]);
+        println!("lp extraction time (2): {:?}", start.elapsed());
+        println!("lp cost (2): {}", egg::Graph::from_dfg(&exp, ids.clone()).cost(&cost));
 		(exp, ids)
         // let (c, e, r) = DagExtractor::new(&runner.egraph, cost).find_best(&roots[..]);
         // println!("extracted cost: {}", c);

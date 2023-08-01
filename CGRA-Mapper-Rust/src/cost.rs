@@ -153,6 +153,7 @@ impl GraphCostFunction<SymbolLang> for &BanCost {
     }
 }
 
+#[derive(Clone)]
 pub(crate) struct LookupCost {
     costs: HashMap<Symbol, f64>,
     default_cost: f64,
