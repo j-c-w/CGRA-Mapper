@@ -22,6 +22,7 @@ fn optimize(egraph: EGraph, mut roots: Vec<Id>) {
   }
 
   let cost = BanCost::from_operations_file("../test/param.json");
+  EggLib::serialize::to_file(&runner.egraph, &roots[..], cost.clone(), "/tmp/example2.json");
 
   /* {
     let start = std::time::Instant::now();
@@ -30,8 +31,8 @@ fn optimize(egraph: EGraph, mut roots: Vec<Id>) {
     println!("dag cost: {}", c);
     assert_eq!(c, egg::Graph::from_dfg(&e, r).cost(&cost));
   } */
-
-  {
+// BROKEN BY INFINITY
+  if !EggLib::cost::USE_INFINITY {
     let start = std::time::Instant::now();
     let (e, r) = LpExtractor::new(&runner.egraph, cost.clone())
       .timeout(10.0)
@@ -39,7 +40,6 @@ fn optimize(egraph: EGraph, mut roots: Vec<Id>) {
     println!("lp extraction time: {:?}", start.elapsed());
     println!("lp cost: {}", egg::Graph::from_dfg(&e, r).cost(&cost));
   }
-
   {
     let start = std::time::Instant::now();
     let (e, r) = LpExtractor2::new(&runner.egraph, cost.clone())
@@ -73,8 +73,10 @@ fn main() {
   let fmul = egraph.add(SymbolLang::new("fmul", vec![load_g_load, fsub]));
   let store_fmul = egraph.add(SymbolLang::new("store", vec![fmul, getelementptr_load]));
   let br_alone = egraph.add(SymbolLang::leaf("br"));
-
+  
+  let roots = vec![store_fmul, store_add, dummy_target, br, br_alone];
   egraph.dot().to_svg("/tmp/example.svg").unwrap();
+  EggLib::serialize::to_file(&egraph, &roots[..], AstSize, "/tmp/example.json");
 
-  optimize(egraph, vec![store_fmul, store_add, dummy_target, br, br_alone]);
+  optimize(egraph, roots);
 }

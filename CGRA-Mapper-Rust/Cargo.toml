@@ -19,3 +19,7 @@ egg = { git = "https://github.com/Bastacyclop/egg/", rev ="1c5cb2b2e8910ca715dc1
 #egg = { path = "../../egg", features = ["lp"] }
 libc = "0.2"
 tinyjson = "2"
+
+[dependencies.egraph-serialize]
+git = "https://github.com/egraphs-good/egraph-serialize"
+rev = "951b829a434f4008c7b45ba4ac0da1037d2da90"
