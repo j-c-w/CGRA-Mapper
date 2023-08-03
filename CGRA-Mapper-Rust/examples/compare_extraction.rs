@@ -21,6 +21,7 @@ fn optimize(egraph: EGraph, mut roots: Vec<Id>) {
       *r = runner.egraph.find(*r);
   }
 
+  // FIXME: changing this JSON changes benchmark result
   let cost = BanCost::from_operations_file("../test/param.json");
   EggLib::serialize::to_file(&runner.egraph, &roots[..], cost.clone(), "/tmp/example2.json");
 
@@ -31,8 +32,8 @@ fn optimize(egraph: EGraph, mut roots: Vec<Id>) {
     println!("dag cost: {}", c);
     assert_eq!(c, egg::Graph::from_dfg(&e, r).cost(&cost));
   } */
-// BROKEN BY INFINITY
-  if !EggLib::cost::USE_INFINITY {
+  if !EggLib::USE_LPEXTRACTOR2 {
+    // BROKEN BY INFINITY
     let start = std::time::Instant::now();
     let (e, r) = LpExtractor::new(&runner.egraph, cost.clone())
       .timeout(10.0)

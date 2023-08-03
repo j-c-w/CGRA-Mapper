@@ -32,6 +32,8 @@ where
 
     for class in egraph.classes() {
         for (i, node) in class.nodes.iter().enumerate() {
+            let cost = cost_function.node_cost(egraph, class.id, node);
+            let cost = if cost == std::f64::INFINITY { std::f64::MAX } else { cost };
             out.add_node(
                 format!("{}.{}", class.id, i),
                 Node {
@@ -42,7 +44,7 @@ where
                         .map(|id| NodeId::from(format!("{}.0", id)))
                         .collect(),
                     eclass: ClassId::from(format!("{}", class.id)),
-                    cost: Cost::new(cost_function.node_cost(egraph, class.id, node)).unwrap(),
+                    cost: Cost::new(cost).unwrap(),
                 },
             )
         }

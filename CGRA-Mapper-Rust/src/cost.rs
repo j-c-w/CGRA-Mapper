@@ -1,5 +1,6 @@
 use std::collections::{HashSet, HashMap};
 use egg::*;
+use crate::USE_LPEXTRACTOR2;
 
 // This thing loads the operations in from a JSON file,
 // returning all the available operations and their count.
@@ -118,9 +119,8 @@ impl BanCost {
     }
 }
 
-pub const USE_INFINITY: bool = true;
 
-fn ban_cost(available: &HashSet<Symbol>, symbol: &Symbol) -> f64 {
+fn ban_cost(available: &HashSet<Symbol>, symbol: &Symbol, ban_value: f64) -> f64 {
     // println!("Looking up {}", symbol);
     if symbol.as_str().starts_with("Dummy") || symbol.as_str().starts_with("const") {
         // println!("Was a dummy node!");
@@ -131,7 +131,7 @@ fn ban_cost(available: &HashSet<Symbol>, symbol: &Symbol) -> f64 {
         1.0
     } else {
         // println!("Didn't find symbol {}", symbol.as_str());
-        if USE_INFINITY { std::f64::INFINITY } else { 10_000.0 }
+        ban_value
     }
 }
 
@@ -139,26 +139,28 @@ impl DagCostFunction<SymbolLang> for BanCost {
     type Cost = f64;
     fn zero(&mut self) -> f64 { 0.0 }
     fn node_cost(&mut self, enode: &SymbolLang) -> f64 {
-        ban_cost(&self.available, &enode.op)
+        let ban_value = 10_000.0;
+        ban_cost(&self.available, &enode.op, ban_value)
     }
 }
 
 impl LpCostFunction<SymbolLang, ()> for BanCost {
     fn node_cost(&mut self, _egraph: &EGraph<SymbolLang, ()>, _eclass: Id, enode: &SymbolLang) -> f64 {
-        ban_cost(&self.available, &enode.op)
+        let ban_value = if USE_LPEXTRACTOR2 { std::f64::INFINITY } else { 10_000.0 };
+        ban_cost(&self.available, &enode.op, ban_value)
     }
 }
 
 impl GraphCostFunction<SymbolLang> for &BanCost {
     fn node_cost(&mut self, enode: &SymbolLang) -> f64 {
-        ban_cost(&self.available, &enode.op)
+        let ban_value = 10_000.0;
+        ban_cost(&self.available, &enode.op, ban_value)
     }
 }
 
 #[derive(Clone)]
 pub(crate) struct LookupCost {
     costs: HashMap<Symbol, f64>,
-    default_cost: f64,
 }
 
 impl LookupCost {
@@ -175,8 +177,7 @@ impl LookupCost {
         }).collect::<HashMap<Symbol, f64>>();
         println!("costs are {:?}", costs);
 
-        let default_cost = if USE_INFINITY { std::f64::INFINITY } else { 1_000_000.0 };
-        LookupCost { costs, default_cost }
+        LookupCost { costs }
     }
 }
 
@@ -192,18 +193,21 @@ impl DagCostFunction<SymbolLang> for LookupCost {
     type Cost = f64;
     fn zero(&mut self) -> f64 { 0.0 }
     fn node_cost(&mut self, enode: &SymbolLang) -> f64 {
-        lookup_cost(&self.costs, self.default_cost, &enode.op)
+        let default_cost = 1_000_000.0;
+        lookup_cost(&self.costs, default_cost, &enode.op)
     }
 }
 
 impl LpCostFunction<SymbolLang, ()> for LookupCost {
     fn node_cost(&mut self, _egraph: &EGraph<SymbolLang, ()>, _eclass: Id, enode: &SymbolLang) -> f64 {
-        lookup_cost(&self.costs, self.default_cost, &enode.op)
+        let default_cost = if USE_LPEXTRACTOR2 { std::f64::INFINITY } else { 1_000_000.0 };
+        lookup_cost(&self.costs, default_cost, &enode.op)
     }
 }
 
 impl GraphCostFunction<SymbolLang> for &LookupCost {
     fn node_cost(&mut self, enode: &SymbolLang) -> f64 {
-        lookup_cost(&self.costs, self.default_cost, &enode.op)
+        let default_cost = 1_000_000.0;
+        lookup_cost(&self.costs, default_cost, &enode.op)
     }
 }
