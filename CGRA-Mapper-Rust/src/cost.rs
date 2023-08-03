@@ -119,7 +119,6 @@ impl BanCost {
     }
 }
 
-
 fn ban_cost(available: &HashSet<Symbol>, symbol: &Symbol, ban_value: f64) -> f64 {
     // println!("Looking up {}", symbol);
     if symbol.as_str().starts_with("Dummy") || symbol.as_str().starts_with("const") {

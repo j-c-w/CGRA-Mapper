@@ -4,10 +4,10 @@
 #include <stdio.h>
 
 
-typedef __uint16_t uint16_t;
-
 int
-fn (int cf, int symbol, const uint16_t * counts)
+fn (int cf, int symbol, uint16_t * counts)
 {
-  for (symbol = 0; counts[symbol + 1] <= cf; symbol++);
+	for (int i = 0; i < cf; i ++) {
+		counts[i] = counts[i] + 10;
+	}
 }

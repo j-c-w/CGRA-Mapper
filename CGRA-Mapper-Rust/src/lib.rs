@@ -1,4 +1,5 @@
 use egg::*;
+use uuid::Uuid;
 use std::os::raw::c_char;
 use std::mem::size_of;
 use std::collections::{HashSet, HashMap};
@@ -286,7 +287,13 @@ pub extern "C" fn optimize_with_egraphs(
 		println!("Running egraphs with ban cost");
 		println!("cgrafilename: {}", cgrafilename);
 		let cost = BanCost::from_operations_file(cgrafilename);
-    let (e, r) = if USE_LPEXTRACTOR2 {
+
+        let uuid = Uuid::new_v4();
+        serialize::to_file(&runner.egraph, &roots[..], cost.clone(), format!("{}{}{}", "extract/",
+                uuid, ".original"));
+        let start = std::time::Instant::now();
+
+        let (e, r) = if USE_LPEXTRACTOR2 {
 			let mut extractor = LpExtractor2::new(&runner.egraph, cost.clone());
 			extractor.timeout(30.0);
 			extractor.solve_multiple(&roots[..])
@@ -295,9 +302,14 @@ pub extern "C" fn optimize_with_egraphs(
 			extractor.timeout(30.0);
 			extractor.solve_multiple(&roots[..])
 		};
-		println!("best cost found: {}", egg::Graph::from_dfg(&e, r.clone()).cost(&cost));
+        println!("lp extraction time (2): {:?}", start.elapsed());
+        println!("lp cost (2): {}", egg::Graph::from_dfg(&e, r.clone()).cost(&cost));
+        serialize::to_file(&runner.egraph, &roots[..], cost.clone(), format!("{}{}{}", "extract/", uuid, ".final"));
+        println!("Placed extracted files in extract/{}.original and extract/{}.final", uuid, uuid);
 		(e, r)
-		// let (c, e, r) = DagExtractor::new(&runner.egraph, cost).find_best(&roots[..]);
+        // let (c, e, r) = DagExtractor::new(&runner.egraph, cost).find_best(&roots[..]);
+        // println!("extracted cost: {}", c);
+        // (e, r)
 	};
 
 	let extraction_time = start_extraction.elapsed();

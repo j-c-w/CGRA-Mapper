@@ -12,7 +12,7 @@ mkShell {
 	zsh parallel 
 	# python39 python39Packages.apsw python39Packages.numpy python39Packages.matplotlib
 	# TOols to make developement within this shell bearable
-	git vim
+	git
 
 	# Requirements for RL
 	conda
