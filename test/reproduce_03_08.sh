@@ -93,4 +93,5 @@ fn (int cf, int symbol, uint16_t * counts)
 }
 EOF
 
+./compile.sh kernel.cpp
 ./run.sh ../build/src/libmapperPass.so kernel.bc --use-egraphs --params-file param.json
