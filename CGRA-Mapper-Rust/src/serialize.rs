@@ -5,7 +5,7 @@ use egg::*;
 pub fn to_file<L, A, CF>(
     egraph: &EGraph<L, A>,
     roots: &[Id],
-    mut cost_function: CF,
+    cost_function: CF,
     path: impl AsRef<std::path::Path>,
 )
 where
@@ -13,6 +13,7 @@ where
     A: Analysis<L>,
     CF: LpCostFunction<L, A>
 {
+    println!("serializing: {}", path.as_ref().display());
     let seg = egg_to_serialized_egraph(egraph, roots, cost_function);
     seg.to_json_file(path).unwrap();
 }

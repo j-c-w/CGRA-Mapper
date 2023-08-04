@@ -240,15 +240,31 @@ pub extern "C" fn optimize_with_egraphs(
     print_used_rules: bool,	cost_mode: *const c_char
 ) -> CppDFGs {
 	println!("entering Rust");
-    // env_logger::init();
+  // env_logger::init();
 
 	let rules = load_rulesets(rulesets);
 
 	let (egraph, mut roots) = dfg_to_egraph(&dfg);
     println!("identified {} roots", roots.len());
-	egraph.dot().to_svg("/tmp/initial.svg").unwrap();
 
-    // panic!("ABORT");
+	let cgrafilename = unsafe { std::ffi::CStr::from_ptr(cgra_params) }.to_str().unwrap();
+	let cost_mode_string = unsafe { std::ffi::CStr::from_ptr(cost_mode) }.to_str().unwrap();
+	let mut cost: Box<dyn Fn() -> Box<dyn MultiCostFunction>> =
+		if cost_mode_string == "frequency" {
+			println!("Running egraphs with frequency cost");
+			let c = LookupCost::from_operations_frequencies(cgrafilename);
+			Box::new(move || Box::new(c.clone()))
+		} else {
+			println!("Running egraphs with ban cost");
+			println!("cgrafilename: {}", cgrafilename);
+			let c = BanCost::from_operations_file(cgrafilename);
+			Box::new(move || Box::new(c.clone()))
+		};
+		
+	// egraph.dot().to_svg("/tmp/initial.svg").unwrap();
+	let uuid = Uuid::new_v4();
+	serialize::to_file(&egraph, &roots[..], cost(),
+	   format!("{}{}{}", "extract/", uuid, ".initial.json"));
 
 	let runner =
 		Runner::default()
@@ -261,59 +277,38 @@ pub extern "C" fn optimize_with_egraphs(
 	let runner = if print_used_rules { runner.with_explanations_enabled() } else { runner };
 	let mut runner = runner.run(&rules);
 	runner.print_report();
-    // runner.egraph.dot().to_svg("/tmp/egraph.svg").unwrap();
 
 	for r in &mut roots[..] {
 			*r = runner.egraph.find(*r);
 	}
-	// dump result egraphs
 
-	let cgrafilename = unsafe { std::ffi::CStr::from_ptr(cgra_params) }.to_str().unwrap();
-	let cost_mode_string = unsafe { std::ffi::CStr::from_ptr(cost_mode) }.to_str().unwrap();
+	// runner.egraph.dot().to_svg("/tmp/egraph.svg").unwrap();
+	serialize::to_file(&runner.egraph, &roots[..], cost(),
+	  format!("{}{}{}", "extract/", uuid, ".final.json"));
+
 	let start_extraction = std::time::Instant::now();
-	let (best, best_roots) = if cost_mode_string == "frequency" {
-		println!("Running egraphs with frequency cost");
-		let cost = LookupCost::from_operations_frequencies(cgrafilename);
-        // TODO: add flag to pick this?
-				let (e, r) = if USE_LPEXTRACTOR2 {
-					LpExtractor2::new(&runner.egraph, cost.clone()).solve_multiple(&roots[..])
-				} else {
-					LpExtractor::new(&runner.egraph, cost.clone()).solve_multiple(&roots[..])
-				};
-        // let (c, e, r) = DagExtractor::new(&runner.egraph, cost).find_best(&roots[..]);
-				println!("best cost found: {}", egg::Graph::from_dfg(&e, r.clone()).cost(&cost));
-        (e, r)
-	} else {
-		println!("Running egraphs with ban cost");
-		println!("cgrafilename: {}", cgrafilename);
-		let cost = BanCost::from_operations_file(cgrafilename);
-
-        let uuid = Uuid::new_v4();
-        serialize::to_file(&runner.egraph, &roots[..], cost.clone(), format!("{}{}{}", "extract/",
-                uuid, ".original"));
-        let start = std::time::Instant::now();
-
-        let (e, r) = if USE_LPEXTRACTOR2 {
-			let mut extractor = LpExtractor2::new(&runner.egraph, cost.clone());
+	let (best, best_roots) = 
+		if USE_LPEXTRACTOR2 {
+			let mut extractor = LpExtractor2::new(&runner.egraph, cost());
 			extractor.timeout(30.0);
 			extractor.solve_multiple(&roots[..])
 		} else {
-			let mut extractor = LpExtractor::new(&runner.egraph, cost.clone());
+			let mut extractor = LpExtractor::new(&runner.egraph, cost());
 			extractor.timeout(30.0);
 			extractor.solve_multiple(&roots[..])
 		};
-        println!("lp extraction time (2): {:?}", start.elapsed());
-        println!("lp cost (2): {}", egg::Graph::from_dfg(&e, r.clone()).cost(&cost));
-        serialize::to_file(&runner.egraph, &roots[..], cost.clone(), format!("{}{}{}", "extract/", uuid, ".final"));
-        println!("Placed extracted files in extract/{}.original and extract/{}.final", uuid, uuid);
-		(e, r)
-        // let (c, e, r) = DagExtractor::new(&runner.egraph, cost).find_best(&roots[..]);
-        // println!("extracted cost: {}", c);
-        // (e, r)
-	};
-
+		// let (c, e, r) = DagExtractor::new(&runner.egraph, cost).find_best(&roots[..]);
+	
 	let extraction_time = start_extraction.elapsed();
 	println!("extraction took {:?}", extraction_time);
+	println!("best cost found: {}", egg::Graph::from_dfg(&best, best_roots.clone()).cost(cost()));
+	{ // serialize best DAG as egraph
+		let mut g: EGraph<SymbolLang, ()> = Default::default();
+		g.add_expr(&best);
+		// g.dot().to_svg("/tmp/final.svg").unwrap();
+		serialize::to_file(&runner.egraph, &roots[..], cost(),
+			format!("{}{}{}", "extract/", uuid, ".extracted.json"));
+	}
 
 	println!("Explanation required: {:?}", print_used_rules);
 	if print_used_rules {
@@ -321,12 +316,6 @@ pub extern "C" fn optimize_with_egraphs(
 			&dfg_to_rooted_expr(&dfg),
 			&rooted_expr(&best, best_roots)));
 	};
-
-	/* {
-		let mut g: EGraph<SymbolLang, ()> = Default::default();
-		g.add_expr(&best);
-		g.dot().to_svg("/tmp/final.svg").unwrap();
-	} */
 
 	let dfgs_ptr = unsafe { libc::malloc(size_of::<CppDFG>()) } as *mut CppDFG;
 	assert!(dfgs_ptr != std::ptr::null_mut());

@@ -2,6 +2,21 @@ use std::collections::{HashSet, HashMap};
 use egg::*;
 use crate::USE_LPEXTRACTOR2;
 
+// DagCostFunction<SymbolLang>
+pub trait MultiCostFunction: LpCostFunction<SymbolLang, ()> +  GraphCostFunction<SymbolLang> {}
+
+impl LpCostFunction<SymbolLang, ()> for Box<dyn MultiCostFunction> {
+    fn node_cost(&mut self, egraph: &EGraph<SymbolLang, ()>, eclass: Id, enode: &SymbolLang) -> f64 {
+        LpCostFunction::node_cost(self.as_mut(), egraph, eclass, enode)
+    }
+}
+
+impl GraphCostFunction<SymbolLang> for Box<dyn MultiCostFunction> {
+    fn node_cost(&mut self, enode: &SymbolLang) -> f64 {
+        GraphCostFunction::node_cost(self.as_mut(), enode)
+    }
+}
+
 // This thing loads the operations in from a JSON file,
 // returning all the available operations and their count.
 // i.e. the things that rewriting should target.
@@ -157,6 +172,16 @@ impl GraphCostFunction<SymbolLang> for &BanCost {
     }
 }
 
+// TODO: to this for generic &T / T ?
+impl GraphCostFunction<SymbolLang> for BanCost {
+    fn node_cost(&mut self, enode: &SymbolLang) -> f64 {
+        (self as &BanCost).node_cost(enode)
+    }
+}
+
+// TODO: to this for generic &T / T ?
+impl MultiCostFunction for BanCost {}
+
 #[derive(Clone)]
 pub(crate) struct LookupCost {
     costs: HashMap<Symbol, f64>,
@@ -210,3 +235,13 @@ impl GraphCostFunction<SymbolLang> for &LookupCost {
         lookup_cost(&self.costs, default_cost, &enode.op)
     }
 }
+
+// TODO: to this for generic &T / T ?
+impl GraphCostFunction<SymbolLang> for LookupCost {
+    fn node_cost(&mut self, enode: &SymbolLang) -> f64 {
+        (self as &LookupCost).node_cost(enode)
+    }
+}
+
+// TODO: to this for generic &T / T ?
+impl MultiCostFunction for LookupCost {}
