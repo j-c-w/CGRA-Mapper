@@ -16,3 +16,5 @@ successes.png_lines.png
 temp*
 *_output
 .nfs*
+rulecache.json
+extract

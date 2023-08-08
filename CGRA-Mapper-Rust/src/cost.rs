@@ -160,7 +160,7 @@ impl DagCostFunction<SymbolLang> for BanCost {
 
 impl LpCostFunction<SymbolLang, ()> for BanCost {
     fn node_cost(&mut self, _egraph: &EGraph<SymbolLang, ()>, _eclass: Id, enode: &SymbolLang) -> f64 {
-        let ban_value = if USE_LPEXTRACTOR2 { std::f64::INFINITY } else { 10_000.0 };
+        let ban_value = if false { std::f64::INFINITY } else { 10_000.0 };
         ban_cost(&self.available, &enode.op, ban_value)
     }
 }

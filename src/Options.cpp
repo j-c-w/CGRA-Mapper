@@ -30,6 +30,9 @@ cl::opt<bool> DumpDFG("dump-dfg", cl::desc("Dump the DFG to a file (DFG.json) fo
 cl::opt<bool> SkipBuild("skip-build", cl::desc("Skip building for the CGRA. (for use with dumping functions) "));
 cl::opt<std::string> DumpFeatures("features", cl::desc("Dump the of the DFG to a file (specified as arg to flag) for use with other tools. "));
 cl::opt<std::string> DumpFrequencies("frequencies", cl::desc("Dump the operation frequencies into a file (specified as arg to flag) for use with other tools."));
+cl::opt<bool> DumpEGraphs("dump-egraph", cl::desc("Dump the egraph before and after rewriting"));
+cl::opt<std::string> Rulecache("rulecache", cl::desc("Rulecache file"));
+
 
 // op mode flags.
 cl::opt<bool> UseRewriter("use-rewriter", cl::desc("Use the simple rewriter"));
@@ -72,6 +75,10 @@ TCLAP::CmdLine cmd("Tool to schedule a DFG Json file onto a CGRA");
   TCLAP::SwitchArg use_egraphs("e", "use-egraphs", "Use the egraph rewriter", cmd, false);
   TCLAP::SwitchArg use_rewriter("r", "use-rewriter", "Use the standard rewriter", cmd, false);
   TCLAP::SwitchArg use_greedy("g", "use-greedy", "Use the greedy rewriter", cmd, false);
+  TCLAP::SwitchArg dump_egraph("d", "dump-egraph", "Dump the egraph before and after rewriting", cmd, false);
+
+  // TCLAP optional string flag
+  TCLAP::ValueArg<std::string> Rulecache("", "rulecache", "Rulecache file", false, "", "", cmd);
 
   TCLAP::SwitchArg debug_mapping_loop("", "debug-mapping-loop", "Debug the mapping loop", cmd, false);
   TCLAP::SwitchArg print_mapping_failures("", "print-mapping-failures", "Debugg mapping failures", cmd, false);
@@ -93,10 +100,13 @@ TCLAP::CmdLine cmd("Tool to schedule a DFG Json file onto a CGRA");
   opt->SkipBuild = skip_build;
   opt->DumpFeatures = "";
   opt->DumpFrequencies = "";
+  opt->DumpEGraphs = dump_egraph;
 
   opt->UseEGraphs = use_egraphs;
   opt->UseRewriter = use_rewriter;
   opt->UseGreedy = use_greedy;
+
+  opt->Rulecache = Rulecache;
 
   // TODO --- Support this.
   opt->DebugMappingLoop = debug_mapping_loop;
@@ -168,10 +178,13 @@ Options *setupOptions() {
   opt->SkipBuild = SkipBuild;
   opt->DumpFeatures = DumpFeatures;
   opt->DumpFrequencies = DumpFrequencies;
+  opt->DumpEGraphs = DumpEGraphs;
 
 	opt->UseRewriter = UseRewriter;
 	opt->UseEGraphs = UseEGraphs;
   opt->UseGreedy = UseGreedy;
+
+  opt->Rulecache = Rulecache;
 
 	opt->DebugOperationMap = LLVMDebugOperationMap;
 	opt->DebugRustConversion = DebugRustConversion;

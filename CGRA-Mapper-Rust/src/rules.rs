@@ -72,7 +72,7 @@ pub(crate) fn fp_rules() -> Vec<Rewrite<SymbolLang, ()>> {
         rewrite!("fp-sub-to-add-neg"; "(fsub ?x ?y)" => "(fadd ?x (fmul const_-1 ?y))"),
         rewrite!("fp-add-to-sub"; "(fadd ?x ?y)" => "(fsub ?x (fmul const_-1 ?y))"),
         // Copy with Control-flow-edge options
-        rewrite!("fp-add-to-sub"; "(fadd ?x ?y ?z)" => "(fsub ?x (fmul const_-1 ?y) ?z)"),
+        rewrite!("fp-add-to-sub-2"; "(fadd ?x ?y ?z)" => "(fsub ?x (fmul const_-1 ?y) ?z)"),
         rewrite!("fp-add-to-neg"; "(fadd ?x ?y)" => "(fsub ?x (fneg ?y))"),
         rewrite!("fp-mul-to-neg"; "(fmul const_-1 ?y)" => "(fneg ?y)"),
         // I think this might even infringe GCC's limits for ffast-math...
@@ -93,7 +93,7 @@ pub(crate) fn fp_rules() -> Vec<Rewrite<SymbolLang, ()>> {
 		rewrite!("fmul-to-fdiv-2"; "(fmul ?a ?b)" => "(fdiv ?a (fdiv const_1 ?b))"),
 		// driection of that may be useful?
 		// Line 558:
-		rewrite!("fmul-to-fdiv-2"; "(fmul (fdiv ?a ?b) ?c)" => "(fdiv ?a (fdiv ?b ?c))"),
+		rewrite!("fmul-to-fdiv-3"; "(fmul (fdiv ?a ?b) ?c)" => "(fdiv ?a (fdiv ?b ?c))"),
 		// Various FP math.h function rules from line 5965
 
 
@@ -121,7 +121,7 @@ pub(crate) fn rules() -> Vec<Rewrite<SymbolLang, ()>> {
         rewrite!("shl-to-ashr-mul"; "(shl ?x ?y)" => "(mul ?x (ashr Constant (sub Constant ?y)))"),
 		// todo support larger consts for this
 		rewrite!("shl-or-to-add"; "(or (shl ?x const_1) const_1)" => "(add (shl ?x const_1) const_1)"), //
-		rewrite!("shl-or-to-add"; "(or (shl ?x const_1 ?z) const_1)" => "(add (shl ?x const_1 ?z) const_1)"), //
+		rewrite!("shl-or-to-add-2"; "(or (shl ?x const_1 ?z) const_1)" => "(add (shl ?x const_1 ?z) const_1)"), //
 		rewrite!("shl-add-to-or"; "(add (shl ?x const_1) const_1)" => "(or (shl ?x const_1)
 			const_1)"), //
 		// This is also in the GCC rules --- note we should obviously handle this
@@ -322,9 +322,9 @@ pub(crate) fn rules() -> Vec<Rewrite<SymbolLang, ()>> {
 		// rewrite!("commute-or"; "(or ?x ?y)" => "(or ?y ?x)"),
 		// rewrite!("commute-xor"; "(xor ?x ?y)" => "(xor ?y ?x)"),
 
-		rewrite!("add-0"; "(add ?x 0)" => "?x"),
-		rewrite!("mul-0"; "(mul ?x 0)" => "0"),
-		rewrite!("mul-1"; "(mul ?x 1)" => "?x"),
+		rewrite!("add-0-ident"; "(add ?x 0)" => "?x"),
+		rewrite!("mul-0-ident"; "(mul ?x 0)" => "0"),
+		rewrite!("mul-1-ident"; "(mul ?x 1)" => "?x"),
 	]
 }
 
@@ -441,7 +441,7 @@ pub(crate) fn gcc_style_rules() -> Vec<Rewrite<SymbolLang, ()>> {
 		// This one is a logical not.
 		rewrite!("not-to-xor"; "(xor ?x const_0)" => "(not ?x)"),
 		// Similar rules from GCC's rewrite rules. (line 1790)
-		rewrite!("neg-to-sub"; "(not (sub ?a const_-1))" => "(neg ?a)"),
+		rewrite!("not-to-neg"; "(not (sub ?a const_-1))" => "(neg ?a)"),
 		rewrite!("not-to-sub"; "(neg (add ?a const_1))" => "(not ?a)"),
 		// Line 1810:
 		rewrite!("neg-to-add"; "(not (add ?a const_-1))" => "(neg ?a)"),
@@ -525,8 +525,8 @@ pub(crate) fn gcc_style_rules() -> Vec<Rewrite<SymbolLang, ()>> {
 		rewrite!("ashr-to-logical-and"; "(sdiv (and ?x (neg (shl const_2 ?a))) (shl const_2 ?a))" => "(ashr ?x ?a)"),
 		rewrite!("lshr-to-logical-and"; "(sdiv (and ?x (neg (shl const_2 ?a))) (shl const_2 ?a))" => "(lshr ?x ?a)"),
 		// Line 685
-		rewrite!("mod-to-neg-div-times"; "(sub ?x (mul (sdiv ?x ?y) ?y))" => "(srem ?x ?y)"), // TODO
-		rewrite!("mod-to-neg-div-times"; "(sub ?x (mul (udiv ?x ?y) ?y))" => "(urem ?x ?y)"), // TODO
+		rewrite!("mod-to-neg-sdiv-times"; "(sub ?x (mul (sdiv ?x ?y) ?y))" => "(srem ?x ?y)"), // TODO
+		rewrite!("mod-to-neg-udiv-times"; "(sub ?x (mul (udiv ?x ?y) ?y))" => "(urem ?x ?y)"), // TODO
 		// -- maybe that backwards? (jcw)
 
 		// Line 1019

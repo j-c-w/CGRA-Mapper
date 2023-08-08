@@ -25,10 +25,13 @@ class Options {
 		bool SkipBuild;
 		std::string DumpFeatures;
 		std::string DumpFrequencies;
+		bool DumpEGraphs;
 
 		bool UseRewriter;
 		bool UseEGraphs;
 		bool UseGreedy;
+
+		std::string Rulecache;
 
 		bool DebugOperationMap;
 		bool DebugRustConversion;

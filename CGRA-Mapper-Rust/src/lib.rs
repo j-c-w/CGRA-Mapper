@@ -6,6 +6,7 @@ use std::collections::{HashSet, HashMap};
 use cost::*;
 use rules::*;
 
+
 pub mod cost;
 mod rules;
 pub mod serialize;
@@ -115,27 +116,35 @@ fn dfg_to_graph(dfg: CppDFG) -> Graph<SymbolLang> {
 	graph
 }
 
-fn load_rulesets(rsets: Rulesets) -> Vec<Rewrite<SymbolLang, ()>> {
+fn load_rulesets(rsets: Rulesets, rulecache: &Option<HashSet<String>>) -> Vec<Rewrite<SymbolLang, ()>> {
 	let mut result = vec![];
     let names = unsafe { std::slice::from_raw_parts(rsets.names, rsets.num_rulesets as usize) };
 	for name in names {
 		let rset_name = unsafe { std::ffi::CStr::from_ptr(*name) }.to_str().unwrap();
 		println!("Loading ruleset {}", rset_name);
-		result.extend(load_ruleset(rset_name).clone());
+		result.extend(load_ruleset(rset_name, rulecache).clone());
 	}
 
 	result
 }
 
-pub fn load_ruleset(nm: &str) -> Vec<Rewrite<SymbolLang, ()>> {
-	match nm {
+pub fn load_ruleset(nm: &str, rulecache: &Option<HashSet<String>>) -> Vec<Rewrite<SymbolLang, ()>> {
+	let rules = match nm {
 		"int" => rules(), // These are the 'normal' rewrite rules
 		"fp" => fp_rules(), // These are rewrite rules for -ffast-math style rewrites
 		"boolean" => boolean_logic(), // These are rewrite rules that assume ^&| are boolean rather than logical
 		"stochastic" => stochastic(),
 		// "cannonicalization" => gcc_style_rules(),  // Load rules as they are used in LLVM or GCC: to cannonicalize and simplify.
 		_ => panic!("unknown ruleset")
-	}
+	};
+
+    match rulecache {
+        Some(cache) => {
+            // only use the rules in the rulecache 
+            rules.into_iter().filter(|rule| cache.contains(rule.name.as_str())).collect()
+        },
+        None => rules
+    }
 }
 
 fn add_dfg<L: Language, N: Analysis<L>>(dfg: &RecExpr<L>, egraph: &mut EGraph<L, N>) -> Vec<Id> {
@@ -202,7 +211,7 @@ fn rooted_expr(e: &RecExpr<SymbolLang>, roots: Vec<Id>) -> RecExpr<SymbolLang> {
 	rooted
 }
 
-fn explanation_statistics(e: &Explanation<SymbolLang>) {
+fn get_applied_rules(e: &Explanation<SymbolLang>) -> HashMap<Symbol, u16> {
 	fn rec(t: &TreeExplanation<SymbolLang>,
 		   visited: &mut HashSet<*const TreeTerm<SymbolLang>>,
 		   applied_rules: &mut HashMap<Symbol, u16>) {
@@ -228,6 +237,39 @@ fn explanation_statistics(e: &Explanation<SymbolLang>) {
 
 	let mut applied_rules = HashMap::new();
 	rec(&e.explanation_trees, &mut HashSet::new(), &mut applied_rules);
+    return applied_rules;
+}
+
+fn write_rulecache(rulecache_file: &str, e: &Explanation<SymbolLang>) {
+    let applied_rules = get_applied_rules(e);
+    // convert the applied_rules hashmap into a hashset.
+    let applied_rules_set: HashSet<String> = applied_rules.keys().map(|x| format!("{}", x)).collect();
+    // load a hashset from the ruleset cache file, which is a JSON
+    // file, with open entry for each rule applied.
+    let mut rulecache_set: HashSet<String> = HashSet::new();
+    if std::path::Path::new(rulecache_file).exists() {
+        let rulecache_json = std::fs::read_to_string(rulecache_file).unwrap();
+        let rulecache_map: HashMap<&str, bool> = serde_json::from_str(rulecache_json.as_str()).unwrap();
+        for (rule_name, _) in rulecache_map {
+            rulecache_set.insert(rule_name.into());
+        }
+    }
+    // add the new rules to the rulecache_set
+    for rule_name in applied_rules_set {
+        rulecache_set.insert(rule_name);
+    }
+    // write the rulecache out into rulecache_file
+    let mut rulecache_map: HashMap<String, bool> = HashMap::new();
+    for rule_name in rulecache_set {
+        rulecache_map.insert(rule_name.to_string(), true);
+    }
+    let rulecache_json = serde_json::to_string(&rulecache_map).unwrap();
+    println!("Writing rulecache into {}", rulecache_file);
+    std::fs::write(rulecache_file, rulecache_json).unwrap();
+}
+
+fn explanation_statistics(e: &Explanation<SymbolLang>) {
+    let applied_rules = get_applied_rules(e);
 	println!("applied {} rules: {:?}", applied_rules.len(), applied_rules);
 	println!("done listing rules");
 }
@@ -237,15 +279,20 @@ pub const USE_LPEXTRACTOR2: bool = true;
 #[no_mangle]
 pub extern "C" fn optimize_with_egraphs(
     dfg: CppDFG, rulesets: Rulesets, cgra_params: *const c_char,
-    print_used_rules: bool,	cost_mode: *const c_char
+    print_used_rules: bool,	cost_mode: *const c_char,
+    dump_egraphs: bool, rulecache_file: *const c_char
 ) -> CppDFGs {
 	println!("entering Rust");
   // env_logger::init();
 
-	let rules = load_rulesets(rulesets);
+    // we don't use the rule cache when using egraphs --- only build it.
+	let rules = load_rulesets(rulesets, &None);
 
 	let (egraph, mut roots) = dfg_to_egraph(&dfg);
     println!("identified {} roots", roots.len());
+    if dump_egraphs {
+        egraph.dot().to_svg("/tmp/initial.svg").unwrap();
+    }
 
 	let cgrafilename = unsafe { std::ffi::CStr::from_ptr(cgra_params) }.to_str().unwrap();
 	let cost_mode_string = unsafe { std::ffi::CStr::from_ptr(cost_mode) }.to_str().unwrap();
@@ -287,18 +334,52 @@ pub extern "C" fn optimize_with_egraphs(
 	  format!("{}{}{}", "extract/", uuid, ".final.json"));
 
 	let start_extraction = std::time::Instant::now();
-	let (best, best_roots) = 
-		if USE_LPEXTRACTOR2 {
-			let mut extractor = LpExtractor2::new(&runner.egraph, cost());
+	let (best, best_roots) = if cost_mode_string == "frequency" {
+		println!("Running egraphs with frequency cost");
+		let cost = LookupCost::from_operations_frequencies(cgrafilename);
+        // TODO: add flag to pick this?
+				let (e, r) = if USE_LPEXTRACTOR2 {
+					LpExtractor2::new(&runner.egraph, cost.clone()).solve_multiple(&roots[..])
+				} else {
+					LpExtractor::new(&runner.egraph, cost.clone()).solve_multiple(&roots[..])
+				};
+        // let (c, e, r) = DagExtractor::new(&runner.egraph, cost).find_best(&roots[..]);
+				println!("best cost found: {}", egg::Graph::from_dfg(&e, r.clone()).cost(&cost));
+        (e, r)
+	} else {
+		println!("Running egraphs with ban cost");
+		println!("cgrafilename: {}", cgrafilename);
+		let cost = BanCost::from_operations_file(cgrafilename);
+
+        let uuid = Uuid::new_v4();
+        if dump_egraphs {
+            std::fs::create_dir("extract");
+            serialize::to_file(&runner.egraph, &roots[..], cost.clone(), format!("{}{}{}", "extract/",
+                    uuid, ".original"));
+        }
+        let start = std::time::Instant::now();
+
+        let (e, r) = if USE_LPEXTRACTOR2 {
+			let mut extractor = LpExtractor2::new(&runner.egraph, cost.clone());
 			extractor.timeout(30.0);
 			extractor.solve_multiple(&roots[..])
 		} else {
-			let mut extractor = LpExtractor::new(&runner.egraph, cost());
+			let mut extractor = LpExtractor::new(&runner.egraph, cost.clone());
 			extractor.timeout(30.0);
 			extractor.solve_multiple(&roots[..])
 		};
-		// let (c, e, r) = DagExtractor::new(&runner.egraph, cost).find_best(&roots[..]);
-	
+        println!("lp extraction time (2): {:?}", start.elapsed());
+        println!("lp cost (2): {}", egg::Graph::from_dfg(&e, r.clone()).cost(&cost));
+        if dump_egraphs {
+            serialize::to_file(&runner.egraph, &roots[..], cost.clone(), format!("{}{}{}", "extract/", uuid, ".final"));
+            println!("Placed extracted files in extract/{}.original and extract/{}.final", uuid, uuid);
+        }
+		(e, r)
+        // let (c, e, r) = DagExtractor::new(&runner.egraph, cost).find_best(&roots[..]);
+        // println!("extracted cost: {}", c);
+        // (e, r)
+	};
+
 	let extraction_time = start_extraction.elapsed();
 	println!("extraction took {:?}", extraction_time);
 	println!("best cost found: {}", egg::Graph::from_dfg(&best, best_roots.clone()).cost(cost()));
@@ -314,8 +395,31 @@ pub extern "C" fn optimize_with_egraphs(
 	if print_used_rules {
 		explanation_statistics(&runner.explain_equivalence(
 			&dfg_to_rooted_expr(&dfg),
-			&rooted_expr(&best, best_roots)));
+			&rooted_expr(&best, best_roots.clone())));
 	};
+
+    // if using the rulecache, fill it
+    let (using_rulecache, rulecache) = match unsafe { std::ffi::CStr::from_ptr(rulecache_file) }.to_str() {
+        Ok(r) =>
+            if r.len() > 0 {
+                (true, Some(r))
+            } else {
+                (false, None)
+            },
+        Err(_) => (false, None)// rulecache is not required.
+    };
+
+    if using_rulecache {
+        write_rulecache(rulecache.unwrap(), &runner.explain_equivalence(
+			&dfg_to_rooted_expr(&dfg),
+			&rooted_expr(&best, best_roots.clone())));
+    }
+
+	/* {
+		let mut g: EGraph<SymbolLang, ()> = Default::default();
+		g.add_expr(&best);
+		g.dot().to_svg("/tmp/final.svg").unwrap();
+	} */
 
 	let dfgs_ptr = unsafe { libc::malloc(size_of::<CppDFG>()) } as *mut CppDFG;
 	assert!(dfgs_ptr != std::ptr::null_mut());
@@ -325,10 +429,22 @@ pub extern "C" fn optimize_with_egraphs(
 }
 
 #[no_mangle]
-pub extern "C" fn optimize_with_graphs(dfg: CppDFG, rulesets: Rulesets, cgra_params: *const c_char, frequency_cost: bool, print_used_rules: bool) -> CppDFGs {
+pub extern "C" fn optimize_with_graphs(dfg: CppDFG, rulesets: Rulesets, cgra_params: *const c_char, frequency_cost: bool, print_used_rules: bool, rule_cache: *const c_char) -> CppDFGs {
     println!("entering Rust, using standard rewriting");
+    let (using_rulecache, rulecache) = match unsafe { std::ffi::CStr::from_ptr(rule_cache) }.to_str() {
+        Ok(r) => {
+            // load a hashset from r -- a json file
+            if r.len() > 0 {
+                let rulecache = serde_json::from_str::<HashSet<String>>(r).unwrap();
+                (true, Some(rulecache))
+            } else {
+                (false, None) // empty string typically used for this.
+            }
+        },
+        Err(_) => (false, None)// rulecache is not required.
+    };
 
-	let rules = load_rulesets(rulesets);
+	let rules = load_rulesets(rulesets, &rulecache);
     let mut graph = dfg_to_graph(dfg);
     // TODO:
     // println!("identified {} roots", graph.roots.len());
