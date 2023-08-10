@@ -289,13 +289,14 @@ pub extern "C" fn optimize_with_egraphs(
 	let start_extraction = std::time::Instant::now();
 	let (best, best_roots) = 
 		if USE_LPEXTRACTOR2 {
-			let mut extractor = LpExtractor2::new(&runner.egraph, cost());
-			extractor.timeout(30.0);
-			extractor.solve_multiple(&roots[..])
+			LpExtractor2::new(&runner.egraph, cost())
+				.timeout(30.0)
+				.solve_multiple(&roots[..])
+				.expect("no solution was found")
 		} else {
-			let mut extractor = LpExtractor::new(&runner.egraph, cost());
-			extractor.timeout(30.0);
-			extractor.solve_multiple(&roots[..])
+			LpExtractor::new(&runner.egraph, cost())
+				.timeout(30.0)
+				.solve_multiple(&roots[..])
 		};
 		// let (c, e, r) = DagExtractor::new(&runner.egraph, cost).find_best(&roots[..]);
 	

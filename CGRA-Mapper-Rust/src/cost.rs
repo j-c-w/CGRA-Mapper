@@ -125,7 +125,7 @@ impl BanCost {
         ban_cost
     }
 
-    pub(crate) fn from_available<I>(available: I) -> Self
+    pub fn from_available<I>(available: I) -> Self
         where I: IntoIterator, I::Item: AsRef<str>
     {
         BanCost {

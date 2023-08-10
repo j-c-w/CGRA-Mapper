@@ -64,7 +64,7 @@ dependencies = [
 [[package]]
 name = "egg"
 version = "0.9.4"
-source = "git+https://github.com/Bastacyclop/egg/?rev=1c5cb2b2e8910ca715dc18f5e1e09a4e8048d258#1c5cb2b2e8910ca715dc18f5e1e09a4e8048d258"
+source = "git+https://github.com/Bastacyclop/egg/?rev=22657cb0942c16cb71c48345538394cbd60155ab#22657cb0942c16cb71c48345538394cbd60155ab"
 dependencies = [
  "coin_cbc",
  "env_logger",
