@@ -16,6 +16,7 @@ fn main() {
   let rules = vec![
 		rewrite!("sub-to-add-neg"; "(sub ?x ?y)" => "(add ?x (neg ?y))"),
     rewrite!("neg-to-mul"; "(neg ?y)" => "(mul const_-1 ?y)"),
+    rewrite!("useless-rule"; "(plop ?y)" => "(plip ?y)"),
   ];
   let cost = BanCost::from_available(vec![
     "add", "mul", "const_-1",
@@ -58,7 +59,7 @@ fn main() {
         let lhs_pat = r.searcher.get_pattern().unwrap();
         let rhs_pat = r.applier.get_pattern_ast().unwrap();
         let rhs_opt_pat = recexpr_to_pattern(rhs_pat, &rhs_opt);
-        Rewrite::new(r.name, lhs_pat.clone(), Pattern::new(rhs_opt_pat))
+        Rewrite::new(r.name, lhs_pat.clone(), Pattern::new(rhs_opt_pat)).unwrap()
       })
   }).collect();
   println!("extraction time: {:?}", extraction_start.elapsed());
