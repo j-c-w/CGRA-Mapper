@@ -1,0 +1,58 @@
+#!/bin/bash
+
+set -eu
+
+if [[ $# -lt 2 ]]; then
+	echo "Usage: $0 <output directory> [ ... C files to explore ... ]"
+	exit 1
+fi
+
+
+outdir=$1
+rm -rf $outdir
+mkdir -p $outdir
+
+shift
+
+typeset -a files
+while [[ $# -gt 0 ]]; do
+	files+=( $1 )
+	shift
+done
+i=0
+
+# Go through each file and do the run sequence --- storing the outputs.
+for file in ${files[@]}; do
+	echo "Using file $file as baseline now..."
+	cp $file kernel.cpp
+	./compile.sh kernel.cpp
+	rm param.json
+	./run.sh ../build/src/libmapperPass.so kernel.bc --build --params-file param_static.json &> $outdir/builder.$i
+	./build_param.sh param_skeleton operations.json param.json
+
+	# Now, go through every file and build:
+	for file2 in ${files[@]}; do
+		if [[ $file == $file2 ]]; then
+			continue
+		fi
+		i=$((i + 1))
+		cp $file kernel_internal.cpp
+		./compile.sh kernel_internal.cpp
+		./run.sh ../build/src/libmapperPass.so kernel_internal.bc --params-file param.json --use-egraphs --dump-egraph &> $outdir/$i.stdout
+
+		mv extract/* $outdir
+		cp $file $outdir/$i.file1
+		cp $file2 $outdir/$i.file2
+		grep --text -e 'Mapping:' -e 'Placed' $outdir/$i.stdout > $outdir/$i.stdout_filtered
+
+		python3 get_egraph_dumps.py $outdir/$i
+		if [[ ! -f $outdir/$i.output.json ]]; then
+			continue
+			# No luck -- delete things to keep the folder clean
+			rm $outdir/$i.file1
+			rm $outdir/$i.file2
+			rm $outdir/$i.stdout
+			rm $outdir/$i.stdout_filtered
+		fi
+	done
+done
