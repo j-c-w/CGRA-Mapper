@@ -1,0 +1,76 @@
+{
+  "kernel"              : "_Z6kernelPiS_S_",
+  "targetFunction"      : false,
+  "targetNested"        : true,
+  "targetLoopsID"       : [0, 1],
+  "doCGRAMapping"       : true,
+  "row"                 : 6,
+  "column"              : 6,
+  "precisionAware"      : true,
+  "heterogeneity"       : true,
+  "isTrimmedDemo"       : true,
+  "heuristicMapping"    : true,
+  "bypassConstraint"    : 4,
+  "isStaticElasticCGRA" : false,
+  "ctrlMemConstraint"   : 200,
+  "regConstraint"       : 8,
+  "optLatency"          : {
+                            "store": 2
+                          },
+  "optPipelined"        : ["store"],
+  "additionalFunc"      : {
+                            "store": [4]
+                          },
+
+  "operations":
+{
+"0": {
+"0": ["store", "store"],
+"1": ["ashr", "ashr"],
+"2": ["zext", "zext", "trunc"],
+"3": ["icmp", "sub", "and", "getelementptr", "icmp"],
+"4": ["load", "load", "load", "load", "load", "load", "load", "load", "load", "load", "load", "load", "load", "load", "load", "load", "load", "load", "load", "load", "load", "load", "load", "load", "load", "load", "load", "load", "load", "load", "load", "load", "load", "load", "load", "load", "load", "load", "load", "load", "load", "load", "load", "load", "load", "load", "load", "load", "load"],
+"5": ["zext", "trunc", "lshr", "getelementptr"]
+},
+"1": {
+"0": ["store", "store", "store", "store", "store", "store"],
+"1": ["shl", "shl", "const_1", "const_1"],
+"2": ["add", "const_2", "const_2"],
+"3": ["br", "getelementptr", "br", "const_0", "br", "br", "const_0"],
+"4": ["getelementptr", "add", "getelementptr", "zext", "getelementptr", "add"],
+"5": ["trunc", "getelementptr", "shl", "getelementptr"]
+},
+"2": {
+"0": ["store", "store", "store"],
+"1": ["const_1", "const_1"],
+"2": ["const_8", "const_8"],
+"3": ["br", "const_0", "br", "const_0"],
+"4": ["const_15", "add", "add", "sub", "const_15"],
+"5": ["ashr", "ashr"]
+},
+"3": {
+"0": ["store", "store"],
+"1": ["const_4", "const_4"],
+"2": ["add"],
+"3": ["const_1", "ashr", "const_1"],
+"4": ["getelementptr", "getelementptr", "getelementptr"],
+"5": ["shl", "sub"]
+},
+"4": {
+"0": ["store"],
+"1": ["const_0", "const_0"],
+"2": ["const_0", "const_0"],
+"3": ["const_1", "const_1"],
+"4": ["const_1", "const_1"],
+"5": ["add"]
+},
+"5": {
+"0": [],
+"1": [],
+"2": [],
+"3": [],
+"4": [],
+"5": []
+}
+}
+}

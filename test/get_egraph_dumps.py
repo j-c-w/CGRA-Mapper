@@ -10,6 +10,8 @@ if __name__ == "__main__":
     with open(args.number + ".stdout_filtered") as f:
         lines = f.readlines()
         passed = False
+        orig = None
+        targ = None
 
         for line in lines:
             if "Placed extracted files " in line:
