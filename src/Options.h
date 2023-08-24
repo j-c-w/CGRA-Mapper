@@ -25,6 +25,7 @@ class Options {
 		bool SkipBuild;
 		std::string DumpFeatures;
 		std::string DumpFrequencies;
+		std::string RuleFile;
 
 		bool UseRewriter;
 		bool UseEGraphs;

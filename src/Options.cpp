@@ -30,6 +30,7 @@ cl::opt<bool> DumpDFG("dump-dfg", cl::desc("Dump the DFG to a file (DFG.json) fo
 cl::opt<bool> SkipBuild("skip-build", cl::desc("Skip building for the CGRA. (for use with dumping functions) "));
 cl::opt<std::string> DumpFeatures("features", cl::desc("Dump the of the DFG to a file (specified as arg to flag) for use with other tools. "));
 cl::opt<std::string> DumpFrequencies("frequencies", cl::desc("Dump the operation frequencies into a file (specified as arg to flag) for use with other tools."));
+cl::opt<std::string> RuleFile("rule-file", cl::desc("A json file with the specific rules to use for this CGRA"));
 
 // op mode flags.
 cl::opt<bool> UseRewriter("use-rewriter", cl::desc("Use the simple rewriter"));
@@ -67,6 +68,7 @@ TClapOptions *setupOptionsTClap(int argc, char **argv) {
 TCLAP::CmdLine cmd("Tool to schedule a DFG Json file onto a CGRA");
   TCLAP::UnlabeledValueArg<std::string> dfg("DFGJson", "The JSON file with the DFG in it", true, "", "string");
   TCLAP::UnlabeledValueArg<std::string> cgra("CGRAJson", "The params.json file that describes the CGRA", true, "", "string");
+  TCLAP::ValueArg<std::string> ruleFile("", "rule-file", "A json file with the specific rules to use for this CGRA", false, "", "string");
 
   TCLAP::SwitchArg build_cgra("b", "build","Build the cgra rather than targeting a fixed one", cmd, false);
   TCLAP::SwitchArg use_egraphs("e", "use-egraphs", "Use the egraph rewriter", cmd, false);
@@ -93,6 +95,7 @@ TCLAP::CmdLine cmd("Tool to schedule a DFG Json file onto a CGRA");
   opt->SkipBuild = skip_build;
   opt->DumpFeatures = "";
   opt->DumpFrequencies = "";
+  opt->RuleFile = ruleFile;
 
   opt->UseEGraphs = use_egraphs;
   opt->UseRewriter = use_rewriter;
@@ -168,6 +171,7 @@ Options *setupOptions() {
   opt->SkipBuild = SkipBuild;
   opt->DumpFeatures = DumpFeatures;
   opt->DumpFrequencies = DumpFrequencies;
+  opt->RuleFile = RuleFile;
 
 	opt->UseRewriter = UseRewriter;
 	opt->UseEGraphs = UseEGraphs;

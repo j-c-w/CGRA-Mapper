@@ -209,7 +209,7 @@ list<DFG*> *rewrite_with_graphs(Options *opts, CGRA *cgra, DFG *dfg) {
 		errs() << "Using rulesets " << opts->getRulesetNames() << "\n";
 	}
   bool frequency_cost = false;
-	RustDFGList rust_results = optimize_with_graphs(rdfg, opts->getRulesets(), opts->Params.c_str(), frequency_cost, opts->PrintUsedRules);
+	RustDFGList rust_results = optimize_with_graphs(rdfg, opts->getRulesets(), opts->Params.c_str(), frequency_cost, opts->PrintUsedRules, opts->RuleFile.c_str());
 
 	if (opts->DebugRustConversion) {
 		errs() << "Sent over a graph to the graph rewriter: " << dfg->asString() << "\n";
