@@ -5,6 +5,9 @@ use std::mem::size_of;
 use std::collections::{HashSet, HashMap};
 use cost::*;
 use rules::*;
+use serde_json::Value;
+
+use std::fs;
 
 pub mod cost;
 mod rules;
@@ -326,10 +329,18 @@ pub extern "C" fn optimize_with_egraphs(
 }
 
 #[no_mangle]
-pub extern "C" fn optimize_with_graphs(dfg: CppDFG, rulesets: Rulesets, cgra_params: *const c_char, frequency_cost: bool, print_used_rules: bool) -> CppDFGs {
+pub extern "C" fn optimize_with_graphs(dfg: CppDFG, rulesets: Rulesets, cgra_params: *const c_char,
+    frequency_cost: bool, print_used_rules: bool, rules_file: *const c_char) -> CppDFGs {
     println!("entering Rust, using standard rewriting");
 
-	let rules = load_rulesets(rulesets);
+    let rules_file = unsafe { std::ffi::CStr::from_ptr(rules_file) }.to_str().unwrap();
+    let rules = if rules_file == "" {
+        load_rulesets(rulesets)
+    } else {
+        // Load rules from the rules file:
+        load_rulesets_from_file(rules_file)
+    };
+
     let mut graph = dfg_to_graph(dfg);
     // TODO:
     // println!("identified {} roots", graph.roots.len());
@@ -392,4 +403,25 @@ pub extern "C" fn optimize_with_graphs(dfg: CppDFG, rulesets: Rulesets, cgra_par
 	unsafe { *dfgs_ptr = expr_to_dfg(best) };
 	
 	CppDFGs { dfgs: dfgs_ptr, count: 1 }
+}
+
+fn load_rulesets_from_file(file: &str) -> Vec<Rewrite<SymbolLang, ()>> {
+    // File should be Json, with a 'rules' element that is a list.
+    // each element of the list has a name, a searcher, and an applier.
+    let file_contents = fs::read_to_string(file).expect("Unable to read file");
+    let json_data: Value = serde_json::from_str(&file_contents).expect("Unable to parse json");
+    let rules_data = json_data["rules"].as_array().expect("No rules found in json");
+    let mut rules = Vec::new();
+    for rule in rules_data {
+        let name = rule["name"].as_str().expect("No name found for rule");
+        let searcher = rule["searcher"].as_str().expect("No searcher found for rule");
+        let applier = rule["applier"].as_str().expect("No applier found for rule");
+
+        let searcher_pattern: Pattern<SymbolLang> = searcher.parse().unwrap();
+        let applier_pattern: Pattern<SymbolLang> = applier.parse().unwrap();
+
+        let rule: Rewrite<SymbolLang, ()> = Rewrite::new(name.to_string(), searcher_pattern, applier_pattern).unwrap();
+        rules.push(rule);
+    }
+    rules
 }

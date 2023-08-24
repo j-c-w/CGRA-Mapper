@@ -9,6 +9,7 @@ dependencies = [
  "egg",
  "egraph-serialize",
  "libc",
+ "serde_json",
  "tinyjson",
  "uuid",
 ]
