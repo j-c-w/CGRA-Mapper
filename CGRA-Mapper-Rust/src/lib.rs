@@ -119,15 +119,24 @@ fn dfg_to_graph(dfg: CppDFG) -> Graph<SymbolLang> {
 }
 
 fn load_rulesets(rsets: Rulesets) -> Vec<Rewrite<SymbolLang, ()>> {
-	let mut result = vec![];
+	let mut names_vec = vec![];
     let names = unsafe { std::slice::from_raw_parts(rsets.names, rsets.num_rulesets as usize) };
 	for name in names {
 		let rset_name = unsafe { std::ffi::CStr::from_ptr(*name) }.to_str().unwrap();
-		println!("Loading ruleset {}", rset_name);
-		result.extend(load_ruleset(rset_name).clone());
+        names_vec.push(rset_name.into())
 	}
 
-	result
+	load_rulesets_from_names(names_vec)
+}
+
+pub fn load_rulesets_from_names(rsets: Vec<String>) -> Vec<Rewrite<SymbolLang, ()>> {
+    let mut result = vec![];
+    for rset_name in rsets {
+        println!("Loading ruleset {}", rset_name);
+        result.extend(load_ruleset(rset_name.as_str()).clone());
+    }
+
+    result
 }
 
 pub fn load_ruleset(nm: &str) -> Vec<Rewrite<SymbolLang, ()>> {

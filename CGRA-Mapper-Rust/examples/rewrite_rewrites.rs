@@ -1,27 +1,68 @@
-use EggLib::{/*load_ruleset, */cost::BanCost};
+use EggLib::{load_rulesets_from_names, cost::BanCost};
 use egg::*;
 use std::collections::{HashSet, HashMap};
+use clap::{Arg,App,Values};
+use serde_json::{Map,Value};
+use std::sync::Arc;
 
 type EGraph = egg::EGraph<SymbolLang, ()>;
 type Rewrite = egg::Rewrite<SymbolLang, ()>;
 
 fn main() {
-  /*
   let ruleset_name = "int";
   let operations_file_path = "../test/param.json";
 
-	let rules = load_ruleset(ruleset_name);
-  let cost = BanCost::from_operations_file(operations_file_path);
-  */
+  let args = App::new("RewriteRuleGenerator")
+      .version("1.0")
+      .about("Generate static rules")
+      .arg(
+          Arg::with_name("operations_file")
+          .help("CGRA description file")
+          .required(true)
+          .index(1)
+      )
+      .arg(
+          Arg::with_name("output_file")
+          .help("Output file")
+          .required(true)
+          .index(2)
+      )
+      // take any number of --rulset <arg> where
+      // arg can be [int, fp, stochastic, boolean]
+      .arg(
+          Arg::with_name("ruleset")
+          .help("Ruleset type")
+          .required(false)
+          .multiple(true)
+          .takes_value(true)
+          .long("ruleset")
+      )
+      .get_matches();
+
+  let operations_file = args.value_of("operations_file").unwrap();
+  let output_file = args.value_of("output_file").unwrap();
+  let rulesets: Vec<&str> = args.values_of("ruleset").map(|x| x.collect()).unwrap_or(vec![]);
+
+  let rules = load_rulesets_from_names(rulesets.iter().map(|&x| x.into()).collect());
+  let variable_ops: Vec<String> = vec!["v0".to_string(), "v1".to_string(), "v2".to_string(),
+  "v3".to_string(), "v4".to_string(), "v5".to_string(), "v6".to_string(), "v7".to_string(),
+  "v8".to_string(), "v9".to_string(),
+  "v10".to_string()];
+  let cost = BanCost::from_operations_file_and_list(operations_file_path, variable_ops);
+  /*
+  let rules = vec![
+		rewrite!("sub-to-add-neg"; "(add ?x (neg ?y))" => "(sub ?x ?y)"),
+  ];
   let rules = vec![
 		rewrite!("sub-to-add-neg"; "(sub ?x ?y)" => "(add ?x (neg ?y))"),
     rewrite!("neg-to-mul"; "(neg ?y)" => "(mul const_-1 ?y)"),
     rewrite!("useless-rule"; "(plop ?y)" => "(plip ?y)"),
   ];
   let cost = BanCost::from_available(vec![
-    "add", "mul", "const_-1",
+    "sub", "mul", "const_-1",
     "v0", "v1", "v2", "v3", "v4",
   ]);
+  */
 
   let mut egraph = EGraph::default();
 
@@ -74,6 +115,27 @@ fn main() {
     
     println!("----");
   }
+
+  // construct a json like { "operations": [ { "name": ..., "searcher": ..., "applier": ...}, .. ] }
+ let mut operations = Vec::new();
+  for r in rules_opt.iter() {
+    match r {
+      Some(r) => {
+        let mut operation = Map::new();
+        operation.insert("name".into(), Value::String(r.name.clone().to_string()));
+        operation.insert("searcher".into(), Value::String(Arc::clone(&r.searcher).get_pattern_ast().unwrap().to_string()));
+        operation.insert("applier".into(), Value::String(r.applier.get_pattern_ast().unwrap().clone().to_string()));
+        operations.push(Value::Object(operation));
+      },
+      None => {},
+    }
+  }
+
+  let mut json = HashMap::new();
+  json.insert("operations", Value::Array(operations));
+
+  println!("---- JSON ----");
+  println!("{}", serde_json::to_string_pretty(&json).unwrap());
 }
 
 fn pattern_to_recexpr(p: &PatternAst<SymbolLang>) -> RecExpr<SymbolLang> {

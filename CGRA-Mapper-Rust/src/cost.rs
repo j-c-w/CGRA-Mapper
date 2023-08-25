@@ -115,6 +115,16 @@ pub struct BanCost {
 }
 
 impl BanCost {
+    pub fn from_operations_file_and_list<P,I>(path: P, available: I) -> Self
+        where P: AsRef<str>, I: IntoIterator<Item = std::string::String>, I::Item: AsRef<str>
+    {
+        let mut path_operations = get_available_operations(path.as_ref());
+        for op in available {
+            path_operations.insert(op, None);
+        }
+
+        BanCost::from_available(path_operations.keys())
+    }
     pub fn from_operations_file<P>(path: P) -> Self
         where P: AsRef<str>
     {
