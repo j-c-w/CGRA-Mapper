@@ -4,13 +4,15 @@ use std::collections::{HashSet, HashMap};
 use clap::{Arg,App,Values};
 use serde_json::{Map,Value};
 use std::sync::Arc;
+use std::fs::File;
+use std::io::{BufWriter, Write};
 
 type EGraph = egg::EGraph<SymbolLang, ()>;
 type Rewrite = egg::Rewrite<SymbolLang, ()>;
 
 fn main() {
-  let ruleset_name = "int";
-  let operations_file_path = "../test/param.json";
+  // let ruleset_name = "int";
+  // let operations_file_path = "../test/param.json";
 
   let args = App::new("RewriteRuleGenerator")
       .version("1.0")
@@ -37,9 +39,16 @@ fn main() {
           .takes_value(true)
           .long("ruleset")
       )
+      .arg(
+          Arg::with_name("explain")
+          .help("Enable equivalence explanations")
+          .required(false)
+          .long("explain")
+      )
       .get_matches();
 
-  let operations_file = args.value_of("operations_file").unwrap();
+  let explain: bool = args.is_present("explain");
+  let operations_file_path = args.value_of("operations_file").unwrap();
   let output_file = args.value_of("output_file").unwrap();
   let rulesets: Vec<&str> = args.values_of("ruleset").map(|x| x.collect()).unwrap_or(vec![]);
 
@@ -64,7 +73,12 @@ fn main() {
   ]);
   */
 
-  let mut egraph = EGraph::default();
+  let mut egraph =
+    if explain {
+      EGraph::default().with_explanations_enabled()
+    } else {
+      EGraph::default()
+    };
 
   // 1. add all RHS terms to the e-graph
   let init_start = std::time::Instant::now();
@@ -77,8 +91,8 @@ fn main() {
   egraph.dot().to_svg("/tmp/initial.svg").unwrap();
 
   // 2. rewrite RHS terms
-	let runner = Runner::default()
-    .with_iter_limit(10)
+	let mut runner = Runner::default()
+    .with_iter_limit(5)
     .with_node_limit(1_000_000)
     .with_time_limit(std::time::Duration::from_secs(60))
     .with_egraph(egraph)
@@ -87,11 +101,11 @@ fn main() {
     .run(&rules);
   runner.print_report();
 
-  runner.egraph.dot().to_svg("/tmp/final.svg").unwrap();
+  // runner.egraph.dot().to_svg("/tmp/final.svg").unwrap();
 
   // 3. extract best RHS terms and build optimized ruleset
   let extraction_start = std::time::Instant::now();
-  let rules_opt: Vec<_> = rules.iter().zip(rhs_vec.iter()).map(|(r, &rhs_id)| {
+  let mut rules_opt: Vec<_> = rules.iter().zip(rhs_vec.iter()).map(|(r, &rhs_id)| {
     LpExtractor2::new(&runner.egraph, cost.clone())
       .timeout(10.0)
       .solve(runner.egraph.find(rhs_id))
@@ -100,7 +114,13 @@ fn main() {
         let lhs_pat = r.searcher.get_pattern().unwrap();
         let rhs_pat = r.applier.get_pattern_ast().unwrap();
         let rhs_opt_pat = recexpr_to_pattern(rhs_pat, &rhs_opt);
-        Rewrite::new(r.name, lhs_pat.clone(), Pattern::new(rhs_opt_pat)).unwrap()
+        let rewrite = Rewrite::new(r.name, lhs_pat.clone(), Pattern::new(rhs_opt_pat)).unwrap();
+        let explanation = if explain {
+          Some(runner.explain_equivalence(&pattern_to_recexpr(&rhs_pat), &rhs_opt))
+        } else {
+          None
+        };
+        (rewrite, explanation)
       })
   }).collect();
   println!("extraction time: {:?}", extraction_start.elapsed());
@@ -109,7 +129,7 @@ fn main() {
   for (r, r_opt) in rules.iter().zip(rules_opt.iter()) {
     println!("{:?}", r);
     match r_opt {
-      Some(r_opt) => println!("{:?}", r_opt),
+      Some((r_opt, _explanation)) => println!("{:?}", r_opt),
       None => println!("[removed from ruleset]"),
     }
     
@@ -118,13 +138,16 @@ fn main() {
 
   // construct a json like { "operations": [ { "name": ..., "searcher": ..., "applier": ...}, .. ] }
  let mut operations = Vec::new();
-  for r in rules_opt.iter() {
+  for r in rules_opt.iter_mut() {
     match r {
-      Some(r) => {
+      Some((r, explanation)) => {
         let mut operation = Map::new();
         operation.insert("name".into(), Value::String(r.name.clone().to_string()));
         operation.insert("searcher".into(), Value::String(Arc::clone(&r.searcher).get_pattern_ast().unwrap().to_string()));
         operation.insert("applier".into(), Value::String(r.applier.get_pattern_ast().unwrap().clone().to_string()));
+        for e in explanation {
+          operation.insert("explanation".into(), Value::String(e.get_flat_string()));
+        }
         operations.push(Value::Object(operation));
       },
       None => {},
@@ -133,9 +156,10 @@ fn main() {
 
   let mut json = HashMap::new();
   json.insert("operations", Value::Array(operations));
-
-  println!("---- JSON ----");
-  println!("{}", serde_json::to_string_pretty(&json).unwrap());
+  let file = File::create(output_file).unwrap();
+  let mut writer = BufWriter::new(file);
+  serde_json::to_writer(&mut writer, &json).unwrap();
+  writer.flush().unwrap();
 }
 
 fn pattern_to_recexpr(p: &PatternAst<SymbolLang>) -> RecExpr<SymbolLang> {
