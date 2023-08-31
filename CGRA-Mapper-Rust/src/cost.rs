@@ -85,7 +85,7 @@ fn get_available_operations(path: &str) -> HashMap<String, Option<u16>> {
     let mut root: HashMap<_, _> = json
         .try_into().expect("expected JSON object at the root");
 	let op_rows: HashMap<_, _> = root
-        .remove("operations").expect("expected 'operations' key")
+        .remove("operations").expect("expected 'operations' key in file ")
         .try_into().expect("expected JSON object as 'operations' value");
         
     for (_, row_values) in op_rows {
@@ -168,6 +168,17 @@ impl DagCostFunction<SymbolLang> for BanCost {
     }
 }
 
+impl CostFunction<SymbolLang> for BanCost {
+    type Cost = f64;
+    fn cost<C>(&mut self, enode: &SymbolLang, mut costs: C) -> Self::Cost
+    where
+        C: FnMut(Id) -> Self::Cost
+    {
+        let ban_value = 10_000.0;
+        ban_cost(&self.available, &enode.op, ban_value)
+    }
+}
+
 impl LpCostFunction<SymbolLang, ()> for BanCost {
     fn node_cost(&mut self, _egraph: &EGraph<SymbolLang, ()>, _eclass: Id, enode: &SymbolLang) -> f64 {
         let ban_value = if USE_LPEXTRACTOR2 { std::f64::INFINITY } else { 10_000.0 };
@@ -229,6 +240,17 @@ impl DagCostFunction<SymbolLang> for LookupCost {
     fn node_cost(&mut self, enode: &SymbolLang) -> f64 {
         let default_cost = 1_000_000.0;
         lookup_cost(&self.costs, default_cost, &enode.op)
+    }
+}
+
+impl CostFunction<SymbolLang> for LookupCost {
+    type Cost = f64;
+    fn cost<C>(&mut self, enode: &SymbolLang, mut costs: C) -> Self::Cost
+    where
+        C: FnMut(Id) -> Self::Cost
+    {
+        let ban_value = 10_000.0;
+        lookup_cost(&self.costs, ban_value, &enode.op)
     }
 }
 

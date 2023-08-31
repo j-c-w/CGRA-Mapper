@@ -244,7 +244,8 @@ fn explanation_statistics(e: &Explanation<SymbolLang>) {
 	println!("done listing rules");
 }
 
-pub const USE_LPEXTRACTOR2: bool = true;
+pub const USE_LPEXTRACTOR2: bool = false;
+pub const USE_GREEDY_EXTRACTOR: bool = true;
 
 #[no_mangle]
 pub extern "C" fn optimize_with_egraphs(
@@ -261,27 +262,28 @@ pub extern "C" fn optimize_with_egraphs(
 
 	let cgrafilename = unsafe { std::ffi::CStr::from_ptr(cgra_params) }.to_str().unwrap();
 	let cost_mode_string = unsafe { std::ffi::CStr::from_ptr(cost_mode) }.to_str().unwrap();
-	let mut cost: Box<dyn Fn() -> Box<dyn MultiCostFunction>> =
+	let mut cost: BanCost =
 		if cost_mode_string == "frequency" {
-			println!("Running egraphs with frequency cost");
-			let c = LookupCost::from_operations_frequencies(cgrafilename);
-			Box::new(move || Box::new(c.clone()))
+			// println!("Running egraphs with frequency cost");
+			// let c = LookupCost::from_operations_frequencies(cgrafilename);
+			// Box::new(move || Box::new(c.clone()))
+            panic!()
 		} else {
 			println!("Running egraphs with ban cost");
 			println!("cgrafilename: {}", cgrafilename);
 			let c = BanCost::from_operations_file(cgrafilename);
-			Box::new(move || Box::new(c.clone()))
+            c
 		};
 		
 	// egraph.dot().to_svg("/tmp/initial.svg").unwrap();
 	let uuid = Uuid::new_v4();
-	serialize::to_file(&egraph, &roots[..], cost(),
-	   format!("{}{}{}", "extract/", uuid, ".initial.json"));
+	// serialize::to_file(&egraph, &roots[..], cost.clone(),
+	//    format!("{}{}{}", "extract/", uuid, ".initial.json"));
 
 	let runner =
 		Runner::default()
 			.with_iter_limit(15)
-			.with_node_limit(100_000)
+			.with_node_limit(100)
 			.with_time_limit(std::time::Duration::from_secs(40))
 			.with_egraph(egraph)
 			// .with_explanations_enabled()
@@ -295,18 +297,32 @@ pub extern "C" fn optimize_with_egraphs(
 	}
 
 	// runner.egraph.dot().to_svg("/tmp/egraph.svg").unwrap();
-	serialize::to_file(&runner.egraph, &roots[..], cost(),
-	  format!("{}{}{}", "extract/", uuid, ".final.json"));
+	// serialize::to_file(&runner.egraph, &roots[..], cost.clone(),
+	//   format!("{}{}{}", "extract/", uuid, ".final.json"));
 
 	let start_extraction = std::time::Instant::now();
 	let (best, best_roots) = 
-		if USE_LPEXTRACTOR2 {
-			LpExtractor2::new(&runner.egraph, cost())
+        if USE_GREEDY_EXTRACTOR {
+            let mut best_vecs = Vec::new();
+            for root in roots.clone() {
+                let (cost, best) = Extractor::new(&runner.egraph, cost.clone())
+                    .find_best(root);
+                best_vecs.push(best);
+            }
+            let mut result: RecExpr<SymbolLang> = RecExpr::default();
+            for best in best_vecs {
+                for node in best.as_ref() {
+                    result.add(node.clone());
+                }
+            };
+            (result, roots.clone())
+        } else if USE_LPEXTRACTOR2 {
+			LpExtractor2::new(&runner.egraph, cost.clone())
 				.timeout(30.0)
 				.solve_multiple(&roots[..])
 				.expect("no solution was found")
 		} else {
-			LpExtractor::new(&runner.egraph, cost())
+			LpExtractor::new(&runner.egraph, cost.clone())
 				.timeout(30.0)
 				.solve_multiple(&roots[..])
 		};
@@ -314,14 +330,16 @@ pub extern "C" fn optimize_with_egraphs(
 	
 	let extraction_time = start_extraction.elapsed();
 	println!("extraction took {:?}", extraction_time);
-	println!("best cost found: {}", egg::Graph::from_dfg(&best, best_roots.clone()).cost(cost()));
+    /*
+	println!("best cost found: {}", egg::Graph::from_dfg(&best, best_roots.clone()).cost(cost.clone()));
 	{ // serialize best DAG as egraph
 		let mut g: EGraph<SymbolLang, ()> = Default::default();
 		g.add_expr(&best);
 		// g.dot().to_svg("/tmp/final.svg").unwrap();
-		serialize::to_file(&runner.egraph, &roots[..], cost(),
+		serialize::to_file(&runner.egraph, &roots[..], cost.clone(),
 			format!("{}{}{}", "extract/", uuid, ".extracted.json"));
 	}
+    */
 
 	println!("Explanation required: {:?}", print_used_rules);
 	if print_used_rules {
@@ -376,7 +394,6 @@ pub extern "C" fn optimize_with_graphs(dfg: CppDFG, rulesets: Rulesets, cgra_par
         local_minima = true;
 
         for r in &rules {
-			// println!("trying {}", r.name);
             let lhs = r.searcher.get_pattern().unwrap();
             let rhs = r.applier.get_pattern_ast().unwrap();
 
@@ -419,7 +436,7 @@ fn load_rulesets_from_file(file: &str) -> Vec<Rewrite<SymbolLang, ()>> {
     // each element of the list has a name, a searcher, and an applier.
     let file_contents = fs::read_to_string(file).expect("Unable to read file");
     let json_data: Value = serde_json::from_str(&file_contents).expect("Unable to parse json");
-    let rules_data = json_data["rules"].as_array().expect("No rules found in json");
+    let rules_data = json_data["operations"].as_array().expect("No rules found in json");
     let mut rules = Vec::new();
     for rule in rules_data {
         let name = rule["name"].as_str().expect("No name found for rule");
@@ -429,8 +446,10 @@ fn load_rulesets_from_file(file: &str) -> Vec<Rewrite<SymbolLang, ()>> {
         let searcher_pattern: Pattern<SymbolLang> = searcher.parse().unwrap();
         let applier_pattern: Pattern<SymbolLang> = applier.parse().unwrap();
 
+        println!("Found rules ({}) {} => {}", rule["name"], rule["searcher"], rule["applier"]);
         let rule: Rewrite<SymbolLang, ()> = Rewrite::new(name.to_string(), searcher_pattern, applier_pattern).unwrap();
         rules.push(rule);
     }
+
     rules
 }
