@@ -209,7 +209,7 @@ list<DFG*> *rewrite_with_graphs(Options *opts, CGRA *cgra, DFG *dfg) {
 		errs() << "Using rulesets " << opts->getRulesetNames() << "\n";
 	}
   bool frequency_cost = false;
-	RustDFGList rust_results = optimize_with_graphs(rdfg, opts->getRulesets(), opts->Params.c_str(), frequency_cost, opts->PrintUsedRules, opts->Rulecache.c_str());
+	RustDFGList rust_results = optimize_with_graphs(rdfg, opts->getRulesets(), opts->Params.c_str(), frequency_cost, opts->PrintUsedRules, opts->RuleFile.c_str());
 
 	if (opts->DebugRustConversion) {
 		errs() << "Sent over a graph to the graph rewriter: " << dfg->asString() << "\n";
@@ -236,7 +236,7 @@ list<DFG*> *rewrite_with_egraphs(Options *opts, CGRA *cgra, DFG *dfg) {
 	if (opts->DebugRustConversion) {
 		errs() << "Using rulesets " << opts->getRulesetNames() << "\n";
 	}
-	RustDFGList rust_results = optimize_with_egraphs(rdfg, opts->getRulesets(), opts->Params.c_str(), opts->PrintUsedRules, opts->EGraphMode.c_str(), opts->DumpEGraphs, opts->Rulecache.c_str());
+	RustDFGList rust_results = optimize_with_egraphs(rdfg, opts->getRulesets(), opts->Params.c_str(), opts->PrintUsedRules, opts->EGraphMode.c_str(), opts->DumpEGraphs);
 	// Go through and look at the outputs
 
 	if (opts->DebugRustConversion) {

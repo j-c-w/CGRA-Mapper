@@ -26,6 +26,7 @@ class Options {
 		std::string DumpFeatures;
 		std::string DumpFrequencies;
 		bool DumpEGraphs;
+		std::string RuleFile;
 
 		bool UseRewriter;
 		bool UseEGraphs;
