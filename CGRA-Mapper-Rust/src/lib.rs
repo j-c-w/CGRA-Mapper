@@ -10,6 +10,7 @@ use serde_json::Value;
 use std::fs;
 
 pub mod cost;
+mod greedy_extractor;
 mod rules;
 pub mod serialize;
 
@@ -283,7 +284,7 @@ pub extern "C" fn optimize_with_egraphs(
 	let runner =
 		Runner::default()
 			.with_iter_limit(15)
-			.with_node_limit(100)
+			.with_node_limit(100_000)
 			.with_time_limit(std::time::Duration::from_secs(40))
 			.with_egraph(egraph)
 			// .with_explanations_enabled()
@@ -302,21 +303,9 @@ pub extern "C" fn optimize_with_egraphs(
 
 	let start_extraction = std::time::Instant::now();
 	let (best, best_roots) = 
-        if USE_GREEDY_EXTRACTOR {
-            let mut best_vecs = Vec::new();
-            for root in roots.clone() {
-                let (cost, best) = Extractor::new(&runner.egraph, cost.clone())
-                    .find_best(root);
-                best_vecs.push(best);
-            }
-            let mut result: RecExpr<SymbolLang> = RecExpr::default();
-            for best in best_vecs {
-                for node in best.as_ref() {
-                    result.add(node.clone());
-                }
-            };
-            (result, roots.clone())
-        } else if USE_LPEXTRACTOR2 {
+		if USE_GREEDY_EXTRACTOR {
+			greedy_extractor::find_bests(&runner.egraph, cost.clone(), &roots[..])
+		} else if USE_LPEXTRACTOR2 {
 			LpExtractor2::new(&runner.egraph, cost.clone())
 				.timeout(30.0)
 				.solve_multiple(&roots[..])

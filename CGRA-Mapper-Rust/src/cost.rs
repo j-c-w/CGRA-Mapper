@@ -149,7 +149,7 @@ fn ban_cost(available: &HashSet<Symbol>, symbol: &Symbol, ban_value: f64) -> f64
     if symbol.as_str().starts_with("Dummy") || symbol.as_str().starts_with("const") {
         // println!("Was a dummy node!");
         // The C part inserts dummy nodes to break cycles.
-        0.0
+        0.001
     } else if available.contains(symbol) {
         // println!("Found find symbol");
         1.0
@@ -175,7 +175,9 @@ impl CostFunction<SymbolLang> for BanCost {
         C: FnMut(Id) -> Self::Cost
     {
         let ban_value = 10_000.0;
-        ban_cost(&self.available, &enode.op, ban_value)
+        enode.fold(
+            ban_cost(&self.available, &enode.op, ban_value),
+            |sum, id| sum + costs(id))
     }
 }
 
@@ -218,6 +220,7 @@ impl LookupCost {
         let total_ops: f64 = operations.values().map(|c| c.unwrap_or(0) as f64).sum();
         let costs = operations.into_iter().map(|(s, c)| {
             let cost = (total_ops - (c.map(|n| n as f64).unwrap_or(total_ops - 1.0))) / total_ops;
+            assert!(cost > 0.0);
             (Symbol::from(s), cost)
         }).collect::<HashMap<Symbol, f64>>();
         println!("costs are {:?}", costs);
@@ -228,7 +231,7 @@ impl LookupCost {
 
 fn lookup_cost(costs: &HashMap<Symbol, f64>, default: f64, symbol: &Symbol) -> f64 {
     if symbol.as_str().starts_with("Dummy") || symbol.as_str().starts_with("const") {
-        0.0
+        0.001
     } else {
         costs.get(symbol).cloned().unwrap_or(default)
     }
@@ -250,7 +253,9 @@ impl CostFunction<SymbolLang> for LookupCost {
         C: FnMut(Id) -> Self::Cost
     {
         let ban_value = 10_000.0;
-        lookup_cost(&self.costs, ban_value, &enode.op)
+        enode.fold(
+            lookup_cost(&self.costs, ban_value, &enode.op),
+            |sum, id| sum + costs(id))
     }
 }
 
