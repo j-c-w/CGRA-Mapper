@@ -192,7 +192,7 @@ pub(crate) fn rules() -> Vec<Rewrite<SymbolLang, ()>> {
         // first icmp is icmp slt, second is sgt
 		rewrite!("sext-to-logic"; "(sext ?x)" => "(mul (bitcast ?x) (add (neg (icmp ?x const_0) (icmp ?x const_0))))"),
 		// Also do a version w/out the mul, since
-		rewrite!("to-logic-2"; "(mul (bitcast ?x) (add (neg (icmp ?x const_0) (icmp ?x const_0))))" => "(or (bitcast ?x) (shl (neg (icmp ?x const_0)) const_31))"),
+		// rewrite!("to-logic-2"; "(mul (bitcast ?x) (add (neg (icmp ?x const_0) (icmp ?x const_0))))" => "(or (bitcast ?x) (shl (neg (icmp ?x const_0)) const_31))"),
 
 		// note that there are in the GCC rules in more
 		// complex ways.
@@ -217,9 +217,9 @@ pub(crate) fn rules() -> Vec<Rewrite<SymbolLang, ()>> {
 
 		// Not sure what the 'not' in LLVM is called.
 		// This one is a logical not.
-		rewrite!("not-to-xor"; "(not ?x)" => "(xor ?x const_0)"),
+		rewrite!("not-to-xor"; "(not ?x)" => "(xor ?x const_-1)"),
 		// Similar rules from GCC's rewrite rules. (line 1790)
-		rewrite!("neg-to-not-sub"; "(neg ?a)" => "(not (sub ?a const_-1))"),
+		rewrite!("neg-to-not-sub"; "(neg ?a)" => "(not (sub ?a const_1))"),
 		rewrite!("not-to-sub"; "(not ?a)" => "(neg (add ?a const_1))"),
 		// Line 1810:
 		rewrite!("neg-to-add"; "(neg ?a)" => "(not (add ?a const_-1))"),
@@ -280,8 +280,8 @@ pub(crate) fn rules() -> Vec<Rewrite<SymbolLang, ()>> {
 		// TODO -- how to get the precision (it's a constant --- note that this is sufficient for
 		// proof of concept, but not for actually running the code)?
 		// (31 is actually meant to be precision - 1).
-		rewrite!("abs-expand-a"; "(abs ?x)" => "(xor (add (ashr ?x 31) ?x) (ashr ?x (31)))"),
-		rewrite!("abs-expand-l"; "(abs ?x)" => "(xor (add (lshr ?x 31) ?x) (lshr ?x (31)))"),
+		rewrite!("abs-expand-a"; "(abs ?x)" => "(xor (add (ashr ?x const_31) ?x) (ashr ?x (const_31)))"),
+		rewrite!("abs-expand-l"; "(abs ?x)" => "(xor (add (lshr ?x const_31) ?x) (lshr ?x (const_31)))"),
 		// Line: 280 (as above)
 		// rewrite!("neg-to-mul"; "(neg ?x)" => "(mul ?x (const_-1))"),
 		// rewrite!("mul-to-neg"; "(mul ?x (const_-1))" => "(neg ?x)"), // TODO -- Thomas: This is cyclical,
@@ -299,11 +299,13 @@ pub(crate) fn rules() -> Vec<Rewrite<SymbolLang, ()>> {
 		
 		// Line 585: TODO -- is there a way to make it match constants only?
 		// that would make this much simpler, as it could avoid introducing the lsl operation.
+        /*
 		rewrite!("ashr-to-logical-and"; "(ashr ?x ?a)" => "(sdiv (and ?x (neg (shl const_2 ?a))) (shl const_2 ?a))"),
 		rewrite!("lshr-to-logical-and"; "(lshr ?x ?a)" => "(sdiv (and ?x (neg (shl const_2 ?a))) (shl const_2 ?a))"),
 		// Line 685
 		rewrite!("mod-to-neg-div-times"; "(srem ?x ?y)" => "(sub ?x (mul (sdiv ?x ?y) ?y))"), // TODO
 		rewrite!("mod-to-neg-div-times"; "(urem ?x ?y)" => "(sub ?x (mul (udiv ?x ?y) ?y))"), // TODO
+        */
 		// -- maybe that backwards? (jcw)
 
 		// Line 1019
@@ -312,7 +314,7 @@ pub(crate) fn rules() -> Vec<Rewrite<SymbolLang, ()>> {
 		// Line 1044:
 		rewrite!("or-to-and-xor"; "(or ?x ?y)" => "(xor (and (not ?x) ?y) ?x)"),
 		// Line 1291:
-		rewrite!("neg-to-xor"; "(neg ?x)" => "(xor ?x const_-1)"),
+		rewrite!("neg-to-xor"; "(neg ?x)" => "(add (xor ?x const_-1) const_1)"),
 		// Abs rule on 1541
 
 		// Line 1790: -- possibly useful?
@@ -325,11 +327,14 @@ pub(crate) fn rules() -> Vec<Rewrite<SymbolLang, ()>> {
 		// rewrite!("commute-or"; "(or ?x ?y)" => "(or ?y ?x)"),
 		// rewrite!("commute-xor"; "(xor ?x ?y)" => "(xor ?y ?x)"),
 
-		rewrite!("add-0"; "(add ?x 0)" => "?x"),
-		rewrite!("mul-0"; "(mul ?x 0)" => "0"),
+		rewrite!("add-0"; "(add ?x const_0)" => "?x"),
+		rewrite!("mul-0"; "(mul ?x const_0)" => "const_0"),
 		// rewrite!("mul-1"; "(mul ?x 1)" => "?x"),
+    ]
+}/*
 	]
 }
+*/
 
 pub(crate) fn gcc_rules() -> Vec<Rewrite<SymbolLang, ()>> {
 	let mut intrules = rules().clone();
@@ -340,6 +345,7 @@ pub(crate) fn gcc_rules() -> Vec<Rewrite<SymbolLang, ()>> {
 
 // This is the rules in the style in which they appear in match.pd.
 // (i.e. to cannonicalize rather than to rewrite for HW use)
+/*
 pub(crate) fn gcc_style_rules() -> Vec<Rewrite<SymbolLang, ()>> {
     // DO NOT USE _---- BUGGY
     vec![
@@ -555,3 +561,4 @@ pub(crate) fn gcc_style_rules() -> Vec<Rewrite<SymbolLang, ()>> {
 		rewrite!("mul-1"; "(mul ?x 1)" => "?x"),
 	]
 }
+*/
