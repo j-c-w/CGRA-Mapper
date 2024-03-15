@@ -2,8 +2,8 @@
 
 set -eu
 
-typeset use_egraphs use_rewriter use_greedy use_llvm logic_bool_rules int_rules all_rules fp_rules stochastic_rules print_used_rules use_latencies
-zparseopts -D -E -use-latencies=use_latencies -use-egraphs=use_egraphs -use-rewriter=use_rewriter -logic-as-bool-rules=logic_bool_rules -fp-rules=fp_rules -int-rules=int_rules -all-rules=all_rules -use-greedy=use_greedy -stochastic-rules=stochastic_rules -print-used-rules=print_used_rules -use-llvm=use_llvm
+typeset use_egraphs use_rewriter use_greedy use_llvm logic_bool_rules int_rules all_rules fp_rules stochastic_rules print_used_rules use_latencies use_static_egraphs
+zparseopts -D -E -use-latencies=use_latencies -use-egraphs=use_egraphs -use-rewriter=use_rewriter -logic-as-bool-rules=logic_bool_rules -fp-rules=fp_rules -int-rules=int_rules -all-rules=all_rules -use-greedy=use_greedy -stochastic-rules=stochastic_rules -print-used-rules=print_used_rules -use-llvm=use_llvm -use-static-egraphs=use_static_egraphs
 
 if [[ $# -ne 4 ]]; then
 	echo "Usage: $0 <Reduction Rate> <CGRA Design File> <Other Input Files Base Folder> <Temp Folder>"
@@ -11,6 +11,7 @@ if [[ $# -ne 4 ]]; then
 	echo "--use-llvm to use the llvm rewriter"
 	echo "--use-greedy to use the greedy rewriter"
 	echo "--use-rewriter to use rewriting"
+	echo "--use-static-egraphs: use egraphs to generate a ruleset and apply that greedily"
 	echo "--use-latencies to use latencies for the A5 (estimated from scheduler)"
 	echo "-- other options see the otp of the bash file o--- for controlling what rulesets to use"
 	echo "Other files should all be in the format loopX.c (X a number)"
@@ -39,12 +40,14 @@ if [[ $2 == *.cpp ]] || [[ $2 == *.c ]]; then
 	cp $original_folder/param_example.json param.json #use the param example to build the actual params.
 	$original_folder/compile.sh kernel.cpp
 	$original_folder/run.sh $original_folder/$lmapper kernel.bc --build
+
 	if [[ ${#use_latencies} -eq 0 ]]; then
 		$original_folder/build_param.sh $original_folder/param_skeleton operations.json param.json
 	else
 		# Use the latencies for the A5 processor (modified to account for pipelining, which obviosuly doens't exist on CGRA ---taken from gcc scheduler for a5.)
 		$original_folder/build_param.sh $original_folder/param_skeleton_a5_latencies operations.json param.json
 	fi
+
 	timeout=30 # Use 300s timeout --- as we are using small CGRAs for this.
 elif [[ "$2" == *.json ]]; then
 	echo "Using a pre-specified CGRA"
@@ -69,11 +72,12 @@ echo "Before reducing, have ${#files[@]}"
 # Do this in python, because it is a bit easier to manage the
 # dict of arrays in python.
 files=( $(python3 $original_folder/reducer.py --rate $reduction_rate ${files[@]}) )
-echo "Running over files ${files[@]}"
+echo "Running over files ${#files[@]}"
 
 extra_flags=""
 extra_compile_flags=""
 egraphs="false"
+rulesets_flags=""
 if [[ ${#use_egraphs} -gt 0 ]]; then
 	extra_flags="$extra_flags --use-egraphs"
 	egraphs="true"
@@ -89,37 +93,57 @@ if [[ ${#use_llvm} -gt 0 ]]; then
 	extra_compile_flags="$extra_compile_flags --use-llvm-cannonicalizer"
 fi
 if [[ ${#logic_bool_rules} -gt 0 ]]; then
-	extra_flags="$extra_flags --ruleset boolean"
+	rulesets_flags="$rulesets_flags --ruleset boolean"
 fi
 if [[ ${#int_rules} -gt 0 ]]; then
-	extra_flags="$extra_flags --ruleset int"
+	rulesets_flags="$rulesets_flags --ruleset int"
 fi
 if [[ ${#fp_rules} -gt 0 ]]; then
-	extra_flags="$extra_flags --ruleset fp"
+	rulesets_flags="$rulesets_flags --ruleset fp"
 fi
 if [[ ${#stochastic_rules} -gt 0 ]]; then
-	extra_flags="$extra_flags --ruleset stochastic"
+	rulesets_flags="$rulesets_flags --ruleset stochastic"
 fi
 if [[ ${#all_rules} -gt 0 ]]; then
-	extra_flags="$extra_flags --ruleset boolean --ruleset int --ruleset fp --ruleset stochastic"
+	rulesets_flags="$rulesets_flags --ruleset boolean --ruleset int --ruleset fp --ruleset stochastic"
+fi
+if [[ ${#rulesets_flags[@]} -eq 0 ]]; then
+	# set the default rules, which is int+fp
+	rulesets_flags="--ruleset int --ruleset fp"
 fi
 if [[ ${#print_used_rules} -gt 0 ]]; then
 	extra_flags="$extra_flags --print-used-rules"
 fi
+extra_flags="$extra_flags $rulesets_flags"
 
-parallel -j 1 "(
+## Build the rulesets requied.
+rule_file=""
+if [[ ${#use_static_egraphs} -gt 0 ]]; then
+	# Generate the rewrite rules
+	echo "Generating rules"
+	echo "Rule flags are '$rulesets_flags'"
+	eval "time $original_folder/build_rules.sh $PWD/param.json $PWD/rules.json $rulesets_flags"
+
+	# set the rulefile and some extra flags
+	extra_flags="$extra_flags --use-greedy"
+	rule_file="--rule-file $PWD/rules.json"
+fi
+
+echo "Starting compile tests"
+
+parallel -j 3 "(
 	echo 'Starting {}'
 	cp {} kernel_{/.}.cpp
 	$original_folder/compile.sh $extra_compile_flags kernel_{/.}.cpp
 	# A small number seem to cause loops somewhere --- just want to get non-buggy results
-	time timeout $timeout $original_folder/run.sh $original_folder/$lmapper kernel_{/.}.bc --params-file $PWD/param.json $extra_flags
+	time timeout $timeout $original_folder/run.sh $original_folder/$lmapper $PWD/kernel_{/.}.bc --params-file $PWD/param.json $rule_file $extra_flags
 	if [[ \$? != 0 ]] && [[ $egraphs == \"true\" ]]; then
 		# We timed out, so we should fall back to the mapper without
 		# rewriting.  This would ideally happen interally within
 		# flex, but it means the same thing happening here :)
 		echo 'Rewriter timed out, running without rewriter.'
 		# Put a tmeout on this also to avoid infinit e hanging.
-		# timeout 90 $original_folder/run.sh $original_folder/$lmapper kernel_{/.}.bc --use-rewriter --params-file $PWD/param.json
+		# timeout 90 $original_folder/run.sh $original_folder/$lmapper kernel_{/.}.bc --rule-file $PWD/rules.json --use-rewriter --params-file $PWD/param.json
 		if [[ \$? == 124 ]]; then
 			echo 'Subrewriter timed out'
 		fi

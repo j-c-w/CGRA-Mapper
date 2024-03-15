@@ -4,8 +4,8 @@
   "targetNested"        : true,
   "targetLoopsID"       : [0, 1],
   "doCGRAMapping"       : true,
-  "row"                 : 4,
-  "column"              : 4,
+  "row"                 : 6,
+  "column"              : 6,
   "precisionAware"      : true,
   "heterogeneity"       : true,
   "isTrimmedDemo"       : true,
@@ -25,52 +25,28 @@
   "operations":
 {
 "0": {
-"0": ["load", "store"],
-"1": ["add", "sub"],
-"2": ["icmp"],
-"3": ["and", "or", "nor", "xor", "lsh", "lshr", "ashr"],
-"4": ["add", "sub"],
-"5": ["load", "store"]
+"0": ["getelementptr", "getelementptr", "store", "Constant", "const_0", "store", "getelementptr", "getelementptr", "Constant", "const_0"],
+"1": ["getelementptr", "fsub", "const_0", "Constant", "const_0", "fptosi", "getelementptr", "getelementptr", "getelementptr", "const_0", "Constant", "const_0"],
+"2": ["fmul", "const_0", "const_0", "Constant", "Constant", "const_0", "const_0", "Constant", "Constant"],
+"3": ["fadd", "Constant", "const_0", "Constant", "const_0"]
 },
 "1": {
-"0": ["load", "store"],
-"1": ["add", "sub"],
-"2": ["mul"],
-"3": ["add", "sub", "icmp"],
-"4": ["add", "sub"],
-"5": ["load", "store"]
+"0": ["load", "load", "load", "load", "load", "load", "load", "load", "load", "load", "load", "load", "load", "load", "load", "const_0", "Constant", "load", "load", "load", "load", "load", "load", "load", "load", "load", "load", "load", "load", "load", "load", "load", "load", "load", "load", "load", "load", "load", "load", "load", "load", "load", "load", "load", "load", "load", "load", "const_0", "Constant"],
+"1": ["getelementptr", "icmp", "add", "Constant", "Constant", "const_2047", "const_0", "fadd", "getelementptr", "getelementptr", "getelementptr", "getelementptr", "icmp", "add", "Constant", "Constant", "const_2047", "const_0"],
+"2": ["br", "br", "Constant", "const_1", "br", "br", "Constant", "const_1"],
+"3": ["const_1", "Constant", "const_0", "const_0", "const_1", "Constant", "const_0", "const_0"]
 },
 "2": {
-"0": ["load", "store"],
-"1": ["add", "sub", "icmp"],
-"2": ["add", "sub", "icmp", "and", "or", "nor", "xor", "lsh", "lshr", "ashr", "mul"],
-"3": ["add", "sub", "icmp", "and", "or", "nor", "xor", "lsh", "lshr", "ashr", "mul"],
-"4": ["mul"],
-"5": ["load", "store"]
+"0": ["store", "sitofp", "store", "sitofp", "Constant", "const_0", "getelementptr", "store", "Constant", "const_0"],
+"1": ["const_0", "Constant", "getelementptr", "getelementptr", "getelementptr", "getelementptr", "const_0", "Constant"],
+"2": ["Constant", "br", "Constant", "const_0", "getelementptr", "getelementptr", "getelementptr", "getelementptr", "Constant", "br", "Constant", "const_0"],
+"3": ["Constant", "const_0", "Constant", "const_0"]
 },
 "3": {
-"0": ["load", "store"],
-"1": ["mul"],
-"2": ["add", "sub", "icmp", "and", "or", "nor", "xor", "lsh", "lshr", "ashr", "mul"],
-"3": ["add", "sub", "icmp", "and", "or", "nor", "xor", "lsh", "lshr", "ashr", "mul"],
-"4": ["add", "sub", "and", "or", "nor", "xor", "lsh", "lshr", "ashr"],
-"5": ["load", "store"]
-},
-"4": {
-"0": ["load", "store"],
-"1": ["add"],
-"2": ["add", "sub", "and", "or", "nor", "xor", "lsh", "lshr", "ashr"],
-"3": ["mul"],
-"4": ["add", "sub"],
-"5": ["load", "store"]
-},
-"5": {
-"0": ["load", "store"],
-"1": ["add"],
-"2": ["and", "or", "nor", "xor", "lsh", "lshr", "ashr"],
-"3": ["icmp"],
-"4": ["add", "sub"],
-"5": ["load", "store"]
+"0": ["store", "fadd", "store", "store", "const_0", "Constant", "const_0", "Constant"],
+"1": ["and", "fsub", "const_0", "Constant", "const_0", "fadd", "getelementptr", "const_0", "Constant", "const_0"],
+"2": ["const_0", "Constant", "fadd", "const_0", "Constant"],
+"3": ["add", "Constant", "const_0", "Constant", "Constant", "const_0", "Constant"]
 }
 }
 }

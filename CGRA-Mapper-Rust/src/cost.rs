@@ -5,6 +5,11 @@ use crate::USE_LPEXTRACTOR2;
 // DagCostFunction<SymbolLang>
 pub trait MultiCostFunction: LpCostFunction<SymbolLang, ()> +  GraphCostFunction<SymbolLang> {}
 
+pub trait Coster {
+    fn cost(&self, g: &Graph<SymbolLang>) -> f64;
+    fn pattern_cost(&self, ast: &PatternAst<SymbolLang>) -> f64;
+}
+
 impl LpCostFunction<SymbolLang, ()> for Box<dyn MultiCostFunction> {
     fn node_cost(&mut self, egraph: &EGraph<SymbolLang, ()>, eclass: Id, enode: &SymbolLang) -> f64 {
         LpCostFunction::node_cost(self.as_mut(), egraph, eclass, enode)
@@ -15,6 +20,19 @@ impl GraphCostFunction<SymbolLang> for Box<dyn MultiCostFunction> {
     fn node_cost(&mut self, enode: &SymbolLang) -> f64 {
         GraphCostFunction::node_cost(self.as_mut(), enode)
     }
+}
+
+fn operations_in_pattern(ast: &PatternAst<SymbolLang>) -> Vec<String> {
+    // Get the enodes in the pattern.
+    let mut nodes = vec![];
+    for n in ast.as_ref() {
+        if let ENodeOrVar::ENode(v) = n {
+            // double-count operations
+            nodes.push(String::from(v.to_string()));
+        }
+    }
+
+    nodes
 }
 
 // This thing loads the operations in from a JSON file,
@@ -112,6 +130,34 @@ fn get_available_operations(path: &str) -> HashMap<String, Option<u16>> {
 pub struct BanCost {
     // could also have cost: HashMap<Symbol, f64>
     available: HashSet<Symbol>
+}
+
+impl Coster for BanCost {
+    fn cost(&self, g: &Graph<SymbolLang>) -> f64 {
+        g.cost(self)
+    }
+    fn pattern_cost(&self, ast: &PatternAst<SymbolLang>) -> f64 {
+        let ops = operations_in_pattern(ast);
+        let mut sum = 0.0;
+        for op in ops {
+            sum += ban_cost(&self.available, &Symbol::from(&op), 10_000.0);
+        }
+        sum
+    }
+}
+
+impl Coster for LookupCost {
+    fn cost(&self, g: &Graph<SymbolLang>) -> f64 {
+        g.cost(self)
+    }
+    fn pattern_cost(&self, ast: &PatternAst<SymbolLang>) -> f64 {
+        let ops = operations_in_pattern(ast);
+        let mut sum = 0.0;
+        for op in ops {
+            sum += lookup_cost(&self.costs, 10_000.0, &Symbol::from(&op));
+        }
+        sum
+    }
 }
 
 impl BanCost {

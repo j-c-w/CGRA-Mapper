@@ -317,9 +317,9 @@ pub extern "C" fn optimize_with_egraphs(
 		};
 		
 	// egraph.dot().to_svg("/tmp/initial.svg").unwrap();
-	let uuid = Uuid::new_v4();
-	serialize::to_file(&egraph, &roots[..], cost(),
-	   format!("{}{}{}", "extract/", uuid, ".initial.json"));
+	// let uuid = Uuid::new_v4();
+	// serialize::to_file(&egraph, &roots[..], cost(),
+	//    format!("{}{}{}", "extract/", uuid, ".initial.json"));
 
 	let runner =
 		Runner::default()
@@ -338,8 +338,8 @@ pub extern "C" fn optimize_with_egraphs(
 	}
 
 	// runner.egraph.dot().to_svg("/tmp/egraph.svg").unwrap();
-	serialize::to_file(&runner.egraph, &roots[..], cost(),
-	  format!("{}{}{}", "extract/", uuid, ".final.json"));
+	// serialize::to_file(&runner.egraph, &roots[..], cost(),
+	//   format!("{}{}{}", "extract/", uuid, ".final.json"));
 
 	let start_extraction = std::time::Instant::now();
 	let (best, best_roots) = if cost_mode_string == "frequency" {
@@ -395,8 +395,8 @@ pub extern "C" fn optimize_with_egraphs(
 		let mut g: EGraph<SymbolLang, ()> = Default::default();
 		g.add_expr(&best);
 		// g.dot().to_svg("/tmp/final.svg").unwrap();
-		serialize::to_file(&runner.egraph, &roots[..], cost(),
-			format!("{}{}{}", "extract/", uuid, ".extracted.json"));
+		// serialize::to_file(&runner.egraph, &roots[..], cost(),
+		// 	format!("{}{}{}", "extract/", uuid, ".extracted.json"));
 	}
 
 	println!("Explanation required: {:?}", print_used_rules);
@@ -437,21 +437,34 @@ pub extern "C" fn optimize_with_graphs(dfg: CppDFG, rulesets: Rulesets, cgra_par
 
     let cgrafilename = unsafe { std::ffi::CStr::from_ptr(cgra_params) }.to_str().unwrap();
 	let (freq_cost, ban_cost);
-    let cost: Box<dyn Fn(&Graph<SymbolLang>) -> f64> = if frequency_cost {
+    let cost: Box<dyn Coster> = if frequency_cost {
 		println!("Running with frequency cost");
 		freq_cost = LookupCost::from_operations_frequencies(cgrafilename);
-		Box::new(|g| g.cost(&freq_cost))
+		Box::new(freq_cost)
 	} else {
 		println!("Running with ban cost");
 		println!("cgrafilename: {}", cgrafilename);
 		ban_cost = BanCost::from_operations_file(cgrafilename);
-		Box::new(|g| g.cost(&ban_cost))
+		Box::new(ban_cost)
 	};
-	
+
     let start_rewriting = std::time::Instant::now();
 
     let mut local_minima = false;
     let mut applied = Vec::new();
+    // sort the rules by the ratio of the lhs and rhs of each pattern.
+    let mut rules: Vec<_> = rules.into_iter().collect();
+    rules.sort_by(|a, b| {
+        let a_ratio = cost.pattern_cost(a.applier.get_pattern_ast().unwrap()) / (cost.pattern_cost(a.searcher.get_pattern_ast().unwrap() + 1)) as f64;
+        let b_ratio = cost.pattern_cost(b.applier.get_pattern_ast().unwrap()) / (cost.pattern_cost(b.searcher.get_pattern_ast().unwrap() + 1)) as f64;
+        a_ratio.partial_cmp(&b_ratio).unwrap()
+    });
+
+    // for rule in rules.clone() {
+    //     println!("Score {}/{}", cost.pattern_cost(rule.applier.get_pattern_ast().unwrap()), cost.pattern_cost(rule.searcher.get_pattern_ast().unwrap()));
+    //     println!("osrted rules {} -> {}", rule.name, rule.name);
+    // }
+
     while !local_minima {
         local_minima = true;
 
@@ -461,7 +474,7 @@ pub extern "C" fn optimize_with_graphs(dfg: CppDFG, rulesets: Rulesets, cgra_par
             let rhs = r.applier.get_pattern_ast().unwrap();
 
             // while let Some((id, subst)) = lhs.search_graph(&graph) {
-			let current_cost = cost(&graph);
+			let current_cost = cost.cost(&graph);
 			if let Some(mut improved) = lhs.search_graph_until(&graph, |id, subst| {
 				let mut candidate = graph.clone();
                 candidate.replace(id, &rhs, &subst);
@@ -469,7 +482,7 @@ pub extern "C" fn optimize_with_graphs(dfg: CppDFG, rulesets: Rulesets, cgra_par
 				// TODO: computing costs could be cheaper,
 				// and maybe it can be predicted before actually replacing stuff,
 				// to avoid copy
-				let should_rewrite = cost(&candidate) < current_cost;
+				let should_rewrite = cost.cost(&candidate) < current_cost;
 				if should_rewrite { Some(candidate) } else { None }
             }) {
 				// println!("reducing cost to {}", improved.cost(&cost));

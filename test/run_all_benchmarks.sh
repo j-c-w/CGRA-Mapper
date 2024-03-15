@@ -13,13 +13,19 @@ if [[ $# -ne 3 ]]; then
 	exit 1
 fi
 
+# What fraction of the all benchmarks to run.
+all_benchmarks_reduction=0.2 # Due to limited computation power, run 1/10 (takes about 3-4 days on my 2020, i9 machine)
 reduction_rate=$1 #Reduce teh computation load --- 1.0 means run everything, 0.0 mean snothing.
 folder=$2
-target_files=( $(find $folder -name "loop*.c") )
+all_target_files=( $(find $folder -name "loop*.c") )
+target_files=( $(python3 ./reducer.py --rate $all_benchmarks_reduction ${all_target_files[@]} ) )
 temp_folder=$3
 if [[ ${#test_loops} -gt 0 ]]; then
 	echo "Testing loops ${test_loops[@]} only"
 fi
+
+echo "Running overall against ${#target_files[@]}"
+echo "Running each against, running each against $(( ${#all_target_files[@]} * $reduction_rate )) files"
 
 if [[ ${#plot_only} -eq 0 ]]; then
 	# Store the stdout of everything to make debugging
@@ -52,8 +58,11 @@ if [[ ${#plot_only} -eq 0 ]]; then
 		./run_tests_against.sh $reduction_rate $file $folder $temp_folder --use-greedy &> run_all_benchmarks_outputs/stdout/${bfile}.greedy
 		mv $temp_folder/run_output.old run_all_benchmarks_outputs/stdout/${bfile}.greedy.output
 		echo "Starting with rewriter $file"
-		./run_tests_against.sh $reduction_rate $file $folder $temp_folder --use-rewriter &> run_all_benchmarks_outputs/stdout/${bfile}.rewriter
+		./run_tests_against.sh $reduction_rate $file $folder $temp_folder --use-static-egraphs &> run_all_benchmarks_outputs/stdout/${bfile}.rewriter
 		mv $temp_folder/run_output.old run_all_benchmarks_outputs/stdout/${bfile}.rewriter.output
+		# echo "Starting with Egg $file"
+		# ./run_tests_against.sh $reduction_rate $file $folder $temp_folder --use-egraphs &> run_all_benchmarks_outputs/stdout/${bfile}.egg
+		# mv $temp_folder/run_output.old run_all_benchmarks_outputs/stdout/${bfile}.egg.output
 		echo "Staring with LLVM rewriter $file"
 		./run_tests_against.sh $reduction_rate $file $folder $temp_folder --use-llvm &> run_all_benchmarks_outputs/stdout/${bfile}.llvm
 		mv $temp_folder/run_output.old run_all_benchmarks_outputs/stdout/${bfile}.llvm.output
@@ -61,20 +70,20 @@ if [[ ${#plot_only} -eq 0 ]]; then
 		# Run the rewriter with just the boolean ruleset enabled.
 		if [[ ${#run_individual_rulesets} -gt 0 ]]; then
 			echo "Starting with logic-as-bool  $file"
-			./run_tests_against.sh $reduction_rate $file $folder $temp_folder --use-rewriter --logic-as-bool-rules &> run_all_benchmarks_outputs/stdout/${bfile}.logic_as_bool
+			./run_tests_against.sh $reduction_rate $file $folder $temp_folder --use-static-egraphs --int-rules --logic-as-bool-rules &> run_all_benchmarks_outputs/stdout/${bfile}.logic_as_bool
 			mv $temp_folder/run_output.old run_all_benchmarks_outputs/stdout/${bfile}.logic_as_bool.output
 
 			# echo "Starting with fp-rules $file"
 			echo "Starting with fp rules  $file"
-			./run_tests_against.sh $reduction_rate $file $folder $temp_folder --use-rewriter --fp-rules &> run_all_benchmarks_outputs/stdout/${bfile}.fp_rules
+			./run_tests_against.sh $reduction_rate $file $folder $temp_folder --use-static-egraphs --int-rules --fp-rules &> run_all_benchmarks_outputs/stdout/${bfile}.fp_rules
 			mv $temp_folder/run_output.old run_all_benchmarks_outputs/stdout/${bfile}.fp_rules.output
 
 			echo "Starting with int-rules $file"
-			./run_tests_against.sh $reduction_rate $file $folder $temp_folder --use-rewriter --int-rules &> run_all_benchmarks_outputs/stdout/${bfile}.int_rules
+			./run_tests_against.sh $reduction_rate $file $folder $temp_folder --use-static-egraphs --int-rules &> run_all_benchmarks_outputs/stdout/${bfile}.int_rules
 			mv $temp_folder/run_output.old run_all_benchmarks_outputs/stdout/${bfile}.int_rules.output
 
 			echo "Starting with all-rules $file"
-			./run_tests_against.sh $reduction_rate $file $folder $temp_folder --use-rewriter --all-rules &> run_all_benchmarks_outputs/stdout/${bfile}.all_rules
+			./run_tests_against.sh $reduction_rate $file $folder $temp_folder --use-static-egraphs --all-rules &> run_all_benchmarks_outputs/stdout/${bfile}.all_rules
 			mv $temp_folder/run_output.old run_all_benchmarks_outputs/stdout/${bfile}.all_rules.output
 		fi
 	done
@@ -109,11 +118,13 @@ if [[ ${#gather_only} -eq 0 ]]; then
 	echo -n "" > run_all_benchmarks_outputs/llvm_data
 	echo -n "" > run_all_benchmarks_outputs/greedy_data
 	echo -n "" > run_all_benchmarks_outputs/rewriter_data
+	echo -n "" > run_all_benchmarks_outputs/egg_data
 
 	echo -n "" > run_all_benchmarks_outputs/no_rules_data_by_benchmark
 	echo -n "" > run_all_benchmarks_outputs/llvm_data_by_benchmark
 	echo -n "" > run_all_benchmarks_outputs/greedy_data_by_benchmark
 	echo -n "" > run_all_benchmarks_outputs/rewriter_data_by_benchmark
+	echo -n "" > run_all_benchmarks_outputs/egg_data_by_benchmark
 
 	if [[ ${#run_individual_rulesets} -gt 0 ]]; then
 		echo -n "" > run_all_benchmarks_outputs/logic_as_bool_data
@@ -134,6 +145,7 @@ if [[ ${#gather_only} -eq 0 ]]; then
 		get_successes ${bfile}.llvm llvm_data
 		get_successes ${bfile}.greedy greedy_data
 		get_successes ${bfile}.rewriter rewriter_data
+		get_successes ${bfile}.egg egg_data
 
 		if [[ ${#run_individual_rulesets} -gt 0 ]]; then
 			get_successes ${bfile}.logic_as_bool logic_as_bool_data

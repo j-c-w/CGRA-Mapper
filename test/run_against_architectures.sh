@@ -17,7 +17,7 @@ shift 3
 # these only require 9,000 compiles per benchmark
 # rather than the 9 million or so required by the full
 # benchmarking run.
-fraction_to_run=1.0
+fraction_to_run=0.5
 
 # The print-used-rules flag only works for the egraph rewriter backend iirc.
 # Note that Egg (Egrpah library) is a bit buggy, so enabling this reduces
@@ -43,9 +43,13 @@ if [[ ${#rewriter_only} -eq 0 ]]; then
 	./run_tests_against.sh $fraction_to_run $param_file $bmarks $output/temp_architecture_llvm --use-llvm $@ &> $output/stdout/llvm.out
 	cp $output/temp_architecture_llvm/run_output.old $output/llvm.out
 	rm -rf $output/temp_architecture_llvm
+	echo "Starting $param_file with egg"
+	./run_tests_against.sh $fraction_to_run $param_file $bmarks $output/temp_architecture_egg --use-egraphs $@ &> $output/stdout/egg.out
+	cp $output/temp_architecture_llvm/run_output.old $output/egg.out
+	rm -rf $output/temp_architecture_llvm
 fi
 
 echo "Staring $param_file  with rewriter"
-./run_tests_against.sh $rewriter_extra_flags $fraction_to_run $param_file $bmarks $output/temp_architecture_rewriter --use-rewriter $@ &> $output/stdout/rewriter.out
+./run_tests_against.sh $rewriter_extra_flags $fraction_to_run $param_file $bmarks $output/temp_architecture_rewriter --use-static-egraphs $@ &> $output/stdout/rewriter.out
 cp $output/temp_architecture_rewriter/run_output.old $output/rewriter.out
 rm -rf $output/temp_architecture_rewriter
