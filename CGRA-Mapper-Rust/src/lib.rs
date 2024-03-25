@@ -455,8 +455,8 @@ pub extern "C" fn optimize_with_graphs(dfg: CppDFG, rulesets: Rulesets, cgra_par
     // sort the rules by the ratio of the lhs and rhs of each pattern.
     let mut rules: Vec<_> = rules.into_iter().collect();
     rules.sort_by(|a, b| {
-        let a_ratio = cost.pattern_cost(a.applier.get_pattern_ast().unwrap()) / (cost.pattern_cost(a.searcher.get_pattern_ast().unwrap() + 1)) as f64;
-        let b_ratio = cost.pattern_cost(b.applier.get_pattern_ast().unwrap()) / (cost.pattern_cost(b.searcher.get_pattern_ast().unwrap() + 1)) as f64;
+        let a_ratio = cost.pattern_cost(a.applier.get_pattern_ast().unwrap()) / (cost.pattern_cost(a.searcher.get_pattern_ast().unwrap()) + 1.0) as f64;
+        let b_ratio = cost.pattern_cost(b.applier.get_pattern_ast().unwrap()) / (cost.pattern_cost(b.searcher.get_pattern_ast().unwrap()) + 1.0) as f64;
         a_ratio.partial_cmp(&b_ratio).unwrap()
     });
 
