@@ -47,7 +47,7 @@ if [[ ${#plot_only} == 0 ]]; then
 	# note that --int-rules is implicit unless otherwise specified.
     eval "$slurm ./run_against_architectures.sh$use_slurm ../benchmark_scripts/architectures/cca.json $benchmark_folder cca_output" &
 	eval "$waiter"
-	Use the FP rules also for maeri since it supports FP expressions
+	# Use the FP rules also for maeri since it supports FP expressions
     eval "$slurm ./run_against_architectures.sh$use_slurm ../benchmark_scripts/architectures/maeri.json $benchmark_folder maeri_output --fp-rules --int-rules" &
 	eval "$waiter"
     eval "$slurm ./run_against_architectures.sh$use_slurm ../benchmark_scripts/architectures/revamp.json $benchmark_folder revamp_output" &

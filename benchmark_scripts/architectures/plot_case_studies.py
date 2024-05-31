@@ -5,7 +5,18 @@ import statistics
 
 colors=['#818fa6', '#6ea5ff', '#95c983', '#c99083', '#e079d6']
 hatching=['O', 'o', '.', '..', '-', 'x']
-skip_bars=["All Rules"] # Just plot individual rulesets
+skip_bars=["All Rules", "Greedy Rewriter"] # Just plot individual rulesets
+
+name_map = {
+        'OpenCGRA': 'No Rules',
+        'LLVM Rewriter': 'LLVM Rewriter',
+        'FlexC': 'FlexC',
+        'Greedy Rewriter': 'Greedy Rewriter',
+        'Int Rules': 'Int Rules',
+        'FP Rules': 'FP Rules',
+        'Stochastic Rules': 'Stochastic Rules',
+        'Logic-as-Boolean Rules': 'Logic-as-Boolean Rules',
+        }
 
 # Note that this function is used by the plot_case_studies_rules.py
 # script.
@@ -57,7 +68,7 @@ def plot(name, cca, maeri, revamp, sc_cgra):
 
     increases = []
     for i in range(len(baselines)):
-        increases.append(increase[i]/ baselines[i])
+        increases.append(increase[i] / baselines[i])
 
     print("Increases were: ", increases)
     if len(increases) > 0:
@@ -69,7 +80,8 @@ def plot(name, cca, maeri, revamp, sc_cgra):
     xvals = np.arange(len(series[0]))
 
     for i in range(len(series)):
-        plt.bar(xvals + offset, series[i], width=width, label=names[i], color=colors[i], hatch=hatching[i])
+        print("Plotting ", colors[i], "label", names[i])
+        plt.bar(xvals + offset, series[i], width=width, label=name_map[names[i]], color=colors[i], hatch=hatching[i])
         offset += width
     
     plt.gca().set_xticks(xvals)
