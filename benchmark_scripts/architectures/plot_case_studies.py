@@ -74,6 +74,12 @@ def plot(name, cca, maeri, revamp, sc_cgra):
     if len(increases) > 0:
         print("Geomean is: ", statistics.geometric_mean(increases))
 
+    # append the geomean to the series:
+    for i in range(len(series)):
+        arch = series[i]
+        geomean = statistics.geometric_mean([value for value in arch if value > 0])
+        series[i].append(geomean)
+
     width = 0.75 / float(len(series))
     offset = -width * len(series) / 2.5
     print("Offset is ", offset, "xvals is ", len(series[0]))
@@ -85,13 +91,14 @@ def plot(name, cca, maeri, revamp, sc_cgra):
         offset += width
     
     plt.gca().set_xticks(xvals)
-    xlabels = ["CCA", "Maeri", "REVAMP", "SC-CGRA"]
+    xlabels = ["CCA", "Maeri", "REVAMP", "SC-CGRA", "Geomean"]
     plt.gca().set_xticklabels(xlabels)
     plt.xlabel("Architecture")
     plt.ylabel("Fraction of Loops Compiled to Accelerator")
+    plt.axvline(x=(xvals[-1] + xvals[-2]) / 2 - 0.05, color='gray', linewidth=0.5, linestyle='--')
     if name == 'case_studies':
         plt.text(2.7, 0.68, 'Stochastic\n  Ruleset')
-        plt.legend()
+        plt.legend(loc=(0.05, 0.82))
         plt.ylim(0.0, 0.735)
     else:
         plt.legend(ncol=3, loc=(0, 1.08))
