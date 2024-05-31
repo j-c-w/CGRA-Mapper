@@ -45,11 +45,17 @@ if [[ ${#rewriter_only} -eq 0 ]]; then
 	rm -rf $output/temp_architecture_llvm
 	echo "Starting $param_file with egg"
 	./run_tests_against.sh $fraction_to_run $param_file $bmarks $output/temp_architecture_egg --use-egraphs $@ &> $output/stdout/egg.out
-	cp $output/temp_architecture_llvm/run_output.old $output/egg.out
-	rm -rf $output/temp_architecture_llvm
+	cp $output/temp_architecture_egg/run_output.old $output/egg.out
+	if [[ -f $output/temp_architecture_egg/rules.json ]]; then
+		cp $output/temp_architecture_egg/rules.json 
+	fi
+	rm -rf $output/temp_architecture_egg
 fi
 
 echo "Staring $param_file  with rewriter"
 ./run_tests_against.sh $rewriter_extra_flags $fraction_to_run $param_file $bmarks $output/temp_architecture_rewriter --use-static-egraphs $@ &> $output/stdout/rewriter.out
 cp $output/temp_architecture_rewriter/run_output.old $output/rewriter.out
+if [[ -f $output/temp_architecture_rewriter/rules.json ]]; then
+	cp $output/temp_architecture_rewriter/rules.json 
+fi
 rm -rf $output/temp_architecture_rewriter

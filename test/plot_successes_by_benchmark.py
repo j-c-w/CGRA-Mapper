@@ -7,6 +7,12 @@ colors=['#818fa6', '#6ea5ff', '#95c983', '#c99083', '#e079d6']
 hatching=['O', 'o', '.', '..', '-', 'x']
 
 labels = ['freeimage', 'ffmpeg', 'DarkNet', 'LivermoreC', 'bzip2']
+name_map = {
+        'opencgra': 'No Rules',
+        'llvm': 'LLVM Rewriter',
+        'flexc': 'FlexC',
+        'greedy': 'Greedy'
+        }
 
 def name_from_file(f):
     splitup = f.split('_')
@@ -173,16 +179,16 @@ def plot_same_and_different(baseline_dict, rewriter_dict, outname):
     print("Have labels", labels)
     # print("Same series is (baseline)", same_series_baseline)
     # print("Different series is (baseline)", diff_series_baseline)
-    plt.bar(xvals - width * 1.7, diff_series_baseline, hatch='x', color='#818fa6', label="OpenCGRA: Other Suites", width=width)
-    plt.bar(xvals - width * 0.7, same_series_baseline, hatch='x', color='#c99083', label="OpenCGRA: Same Suite", width=width)
-    plt.bar(xvals + width * 0.7, diff_series_rewriter, hatch='.', color='#818fa6', label="FlexC: Other Suites", width=width)
-    plt.bar(xvals + width * 1.7, same_series_rewriter, hatch='.', color='#c99083', label="FlexC: Same Suite", width=width)
+    plt.bar(xvals - width * 1.7, diff_series_baseline, hatch='x', color='#818fa6', label=name_map['opencgra'] + ": Other Suites", width=width)
+    plt.bar(xvals - width * 0.7, same_series_baseline, hatch='x', color='#c99083', label=name_map['opencgra'] + ": Same Suite", width=width)
+    plt.bar(xvals + width * 0.7, diff_series_rewriter, hatch='.', color='#818fa6', label=name_map['flexc'] + ": Other Suites", width=width)
+    plt.bar(xvals + width * 1.7, same_series_rewriter, hatch='.', color='#c99083', label=name_map['flexc'] + ": Same Suite", width=width)
     plt.gca().set_xticklabels([''] + labels) #not sure why we have to do this.
     plt.gca().set_ylabel("Fraction of Loops Compiled to Accelerator")
     plt.gca().set_xlabel("Benchmark Suite Original Accelerator was Selected From")
-    plt.text(-width * 1.7, 0.4, 'OpenCGRA', rotation=90)
+    plt.text(-width * 1.7, 0.4, name_map['opencgra'], rotation=90)
     plt.text(-width * 2.8, 0.35, '}', size=30, rotation=90)
-    plt.text(+width * 0.7, 0.5, 'FlexC', rotation=90)
+    plt.text(+width * 0.7, 0.5, name_map['flexc'], rotation=90)
     plt.text(-width * 0.5, 0.45, '}', size=30, rotation=90)
     plt.ylim([0, 1])
     plt.legend()
@@ -223,10 +229,10 @@ def plot_from_size(baseline_dict, llvm_dict, greedy_dict, rewriter_dict, outname
     # print(len(xvalues))
     # print(len(ys))
     width=0.20
-    plt.bar(base_xvalues-width*1.5, base_y, label='OpenCGRA', width=width, color=colors[0], hatch=hatching[0])
-    plt.bar(llvm_x-width*0.5, llvm_y, label='LLVM', width=width, color=colors[1], hatch=hatching[1])
-    plt.bar(greedy_x+width*0.5, greedy_y, label='Greedy Rewriter', width=width, color=colors[2], hatch=hatching[2])
-    plt.bar(xvalues+width*1.5, ys, label='FlexC', width=width, color=colors[3], hatch=hatching[3])
+    plt.bar(base_xvalues-width*1.0, base_y, label=name_map['opencgra'], width=width, color=colors[0], hatch=hatching[0])
+    plt.bar(llvm_x-width, llvm_y, label=name_map['llvm'], width=width, color=colors[1], hatch=hatching[1])
+    # plt.bar(greedy_x+width*0.5, greedy_y, label=name_map['greedy'], width=width, color=colors[2], hatch=hatching[2])
+    plt.bar(xvalues+width*1.0, ys, label=name_map['flexc'], width=width, color=colors[2], hatch=hatching[2])
     plt.legend()
     plt.gca().set_xticks(xvalues)
     plt.gca().set_xticklabels([str(x) for x in xs]) #not sure why we have to do this.
@@ -262,10 +268,10 @@ def plot_case_studies_graph(outname, opencgra, llvm, greedy, flexc):
         width = 0.15
 
         ax[i].set_title(arch)
-        ax[i].bar(xpoints - 1.5 * width, y_values_for(opencgra_data), width=width, label='OpenCGRA', color=colors[0], hatch=hatching[0])
-        ax[i].bar(xpoints - 0.5 * width, y_values_for(llvm_data), width=width, label='LLVM', color=colors[1], hatch=hatching[1])
-        ax[i].bar(xpoints + 0.5 * width, y_values_for(greedy_data), width=width, label='Greedy', color=colors[2], hatch=hatching[2])
-        ax[i].bar(xpoints + 1.5 * width, y_values_for(flexc_data), width=width, label='FlexC', color=colors[3], hatch=hatching[3])
+        ax[i].bar(xpoints - 1.0 * width, y_values_for(opencgra_data), width=width, label=name_map['opencgra'], color=colors[0], hatch=hatching[0])
+        ax[i].bar(xpoints - 0.0 * width, y_values_for(llvm_data), width=width, label=name_map['llvm'], color=colors[1], hatch=hatching[1])
+        # ax[i].bar(xpoints + 0.5 * width, y_values_for(greedy_data), width=width, label=name_map['greedy'], color=colors[2], hatch=hatching[2])
+        ax[i].bar(xpoints + 1.0 * width, y_values_for(flexc_data), width=width, label=name_map['flexc'], color=colors[2], hatch=hatching[2])
         ax[i].set_ylim([0, 1.0])
         ax[i].set_xticks(xpoints)
         ax[i].set_xticklabels(bmarks, rotation=90)

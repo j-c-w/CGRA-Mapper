@@ -3,6 +3,13 @@ import numpy as np
 import argparse
 import statistics
 
+name_map = {
+        'OpenCGRA': 'No Rules',
+        'LLVM': 'LLVM Rewriter',
+        'FlexC': 'FlexC',
+        'Greedy': 'Greedy'
+        }
+
 def load_from_file(f):
     res = {}
     with open(f) as f:
@@ -16,7 +23,9 @@ def load_from_file(f):
             res[bname] = succs
     return res
 
-rewriter_modes_labels = ['OpenCGRA', 'LLVM', 'Greedy', 'FlexC']
+
+rewriter_modes_labels = ['OpenCGRA', 'LLVM', \ # 'Greedy', # no greedy atm.
+                            'FlexC']
 rulesets_labels = ['Integer', 'Floating Point', 'Logic as Boolean', 'All']
 styles = ['--', '-.', ':', '-']
 def plot_line_from_dicts(labels, tname, dicts, plotting_rulesets):
@@ -68,7 +77,7 @@ def plot_line_from_dicts(labels, tname, dicts, plotting_rulesets):
     for i in range(len(lines)):
         maxy_this = max(lines[i])
         maxy = max(maxy_this, maxy)
-        plt.plot(xvalues, lines[i], label=labels[i], linestyle=styles[i]) 
+        plt.plot(xvalues, lines[i], label=name_map[labels[i]], linestyle=styles[i]) 
 
     plt.legend()
     plt.xlabel("CGRA Design No")
